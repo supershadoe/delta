@@ -1,0 +1,12 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    avoid_relative_lib_imports: true
+    avoid_classes_with_only_static_members: true
+    require_trailing_commas: true
+    use_super_parameters: true
+    avoid_void_async: true
+    unawaited_futures: true
+    unnecessary_await_in_return: true
