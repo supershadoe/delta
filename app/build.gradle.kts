@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -30,6 +31,7 @@ android {
 
     buildFeatures {
         compose = true
+        aidl = true
     }
 
     compileOptions {
@@ -44,17 +46,22 @@ android {
 
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
+
     implementation(composeBom)
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.compose)
-    implementation(libs.material)
-    implementation(libs.shizuku)
+    implementation(libs.bundles.shizuku)
     implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.hiddenapibypass)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.material)
 
     testImplementation(libs.junit)
+
     androidTestImplementation(composeBom)
     androidTestImplementation(libs.bundles.instTest)
     androidTestImplementation(libs.compose.ui.test.junit4)
-    debugImplementation(libs.compose.ui.tooling)
+
     debugImplementation(libs.compose.ui.test.manifest)
+    debugImplementation(libs.compose.ui.tooling)
 }

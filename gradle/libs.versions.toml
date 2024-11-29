@@ -5,19 +5,25 @@ composeBom = "2024.11.00"
 coreKtx = "1.15.0"
 datastore = "1.1.1"
 espressoCore = "3.6.1"
-kotlin = "2.0.21"
+hiddenapibypass = "4.3"
 junit = "4.13.2"
 junitx = "1.2.1"
+kotlin = "2.0.21"
 material = "1.12.0"
-splashscreen = "1.0.1"
+navigation-compose = "2.8.4"
+serialization-json = "1.7.3"
 shizuku = "13.1.5"
+splashscreen = "1.0.1"
+viewmodel-compose = "2.8.7"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 
+hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization-json" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-shizuku = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
 
 # For UI tests
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
@@ -37,16 +43,24 @@ compose-foundation = { group = "androidx.compose.foundation", name = "foundation
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodel-compose" }
 
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 junitx = { group = "androidx.test.ext", name = "junit", version.ref = "junitx" }
 
+shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
+shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]
 androidx = ["core-ktx", "core-splashscreen", "datastore-preferences"]
-compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended"]
+compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "compose-runtime-livedata", "navigation-compose", "viewmodel-compose"]
 instTest = ["espresso-core", "junitx"]
+shizuku = ["shizuku-api", "shizuku-provider"]
