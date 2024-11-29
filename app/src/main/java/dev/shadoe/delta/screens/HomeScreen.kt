@@ -1,4 +1,4 @@
-package dev.shadoe.delta.ui.screens
+package dev.shadoe.delta.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,8 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.shadoe.delta.ui.shizuku.LocalShizukuConnected
-import dev.shadoe.delta.ui.shizuku.LocalShizukuRunning
+import dev.shadoe.delta.shizuku.LocalShizukuConnected
+import dev.shadoe.delta.shizuku.LocalShizukuRunning
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview

@@ -1,4 +1,4 @@
-package dev.shadoe.delta.viewmodel
+package dev.shadoe.delta.shizuku
 
 import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData

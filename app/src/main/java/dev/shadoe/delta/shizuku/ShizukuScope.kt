@@ -1,11 +1,10 @@
-package dev.shadoe.delta.ui.shizuku
+package dev.shadoe.delta.shizuku
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.shadoe.delta.viewmodel.ShizukuViewModel
 
 val LocalShizukuRunning = compositionLocalOf<Boolean> { false }
 val LocalShizukuConnected = compositionLocalOf<Boolean> { false }

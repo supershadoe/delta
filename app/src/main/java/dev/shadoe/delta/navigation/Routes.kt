@@ -1,4 +1,4 @@
-package dev.shadoe.delta.ui.navigation
+package dev.shadoe.delta.navigation
 
 import kotlinx.serialization.Serializable
 
