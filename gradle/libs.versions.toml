@@ -1,0 +1,52 @@
+[versions]
+agp = "8.7.2"
+activityCompose = "1.9.3"
+composeBom = "2024.11.00"
+coreKtx = "1.15.0"
+datastore = "1.1.1"
+espressoCore = "3.6.1"
+kotlin = "2.0.21"
+junit = "4.13.2"
+junitx = "1.2.1"
+material = "1.12.0"
+splashscreen = "1.0.1"
+shizuku = "13.1.5"
+
+[libraries]
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+shizuku = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
+
+# For UI tests
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+
+# For preview in Android studio
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+
+# Bundles
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+junitx = { group = "androidx.test.ext", name = "junit", version.ref = "junitx" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+[bundles]
+androidx = ["core-ktx", "core-splashscreen", "datastore-preferences"]
+compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended"]
+instTest = ["espresso-core", "junitx"]
