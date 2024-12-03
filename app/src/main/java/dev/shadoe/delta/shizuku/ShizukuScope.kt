@@ -6,8 +6,8 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-val LocalShizukuRunning = compositionLocalOf<Boolean> { false }
-val LocalShizukuConnected = compositionLocalOf<Boolean> { false }
+val LocalShizukuRunning = compositionLocalOf { false }
+val LocalShizukuConnected = compositionLocalOf { false }
 
 @Composable
 fun ShizukuScope(

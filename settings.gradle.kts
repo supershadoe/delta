@@ -22,4 +22,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Delta"
 include(":app")
- 
