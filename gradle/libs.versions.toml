@@ -43,7 +43,6 @@ compose-foundation = { group = "androidx.compose.foundation", name = "foundation
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodel-compose" }
 
@@ -61,6 +60,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 
 [bundles]
 androidx = ["core-ktx", "core-splashscreen", "datastore-preferences"]
-compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "compose-runtime-livedata", "navigation-compose", "viewmodel-compose"]
+compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "navigation-compose", "viewmodel-compose"]
 instTest = ["espresso-core", "junitx"]
 shizuku = ["shizuku-api", "shizuku-provider"]

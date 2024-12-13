@@ -15,7 +15,6 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,11 +29,11 @@ import dev.shadoe.delta.shizuku.SystemApiAccess
 @Preview
 @Composable
 fun HomeScreen() {
-    val ssid = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-    LaunchedEffect(Unit) {
-        ssid.value = SystemApiAccess.ssid ?: ""
-        password.value = SystemApiAccess.passphrase ?: "Cannot get password"
+    val ssid = remember { mutableStateOf(SystemApiAccess.ssid ?: "") }
+    val password = remember {
+        mutableStateOf(
+            SystemApiAccess.passphrase ?: "Password not available"
+        )
     }
     Scaffold(
         topBar = {
