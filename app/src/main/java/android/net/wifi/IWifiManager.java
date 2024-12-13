@@ -15,6 +15,7 @@ public interface IWifiManager extends IInterface
             throw new UnsupportedOperationException();
         }
 
+        /** @noinspection unused */
         public static IWifiManager asInterface(IBinder obj)
         {
             throw new UnsupportedOperationException();

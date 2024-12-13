@@ -27,19 +27,6 @@ import rikka.shizuku.ShizukuProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShizukuSetup1() {
-    Scaffold(
-        topBar = {
-            LargeTopAppBar(title = { Text("Setup the app") })
-        }) {
-        Column(modifier = Modifier.padding(it)) {
-            ShizukuNotInstalled()
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
 fun ShizukuSetup() {
     val navController = LocalNavController.current
     val isShizukuInstalled =
