@@ -1,5 +1,8 @@
 package dev.shadoe.delta.screens
 
+import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -71,9 +74,12 @@ private fun ShizukuConnected(onClick: () -> Unit) {
 
 @Composable
 private fun ShizukuNotInstalled() {
+    val context = LocalContext.current
     Column {
         Text("Shizuku is not installed")
-        Button(onClick = {}) {
+        Button(onClick = {
+            context.startActivity(Intent(ACTION_VIEW, Uri.parse("https://github.com/RikkaApps/Shizuku/releases")))
+        }) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
@@ -82,7 +88,14 @@ private fun ShizukuNotInstalled() {
                 Text(text = "GitHub", modifier = Modifier.padding(start = 8.dp))
             }
         }
-        Button(onClick = {}) {
+        Button(onClick = {
+            context.startActivity(Intent(ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api"
+                )
+                `package` = "com.android.vending"
+            })
+        }) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Rounded.InstallMobile,

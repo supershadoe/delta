@@ -32,21 +32,25 @@ android {
 
     buildFeatures {
         compose = true
-        aidl = true
+        aidl = false
+        renderScript = false
+        shaders = false
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
+
+    compileOnly(project(path = ":system-api-stubs"))
 
     implementation(composeBom)
     implementation(libs.bundles.androidx)
