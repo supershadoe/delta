@@ -1,6 +1,8 @@
 package dev.shadoe.delta.shizuku
 
 import android.content.Context
+import android.net.ITetheringConnector
+import android.net.TetheringManager
 import android.net.wifi.ISoftApCallback
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApCapability
@@ -10,6 +12,7 @@ import android.net.wifi.WifiClient
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import dev.shadoe.delta.screens.ShizukuSetup
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
@@ -42,6 +45,16 @@ class SoftApCallback: Binder(), ISoftApCallback {
     override fun asBinder(): IBinder? = this
 }
 
+class StartTetheringCallback: TetheringManager.StartTetheringCallback {
+    override fun onTetheringStarted() {
+        println("Tethering started!!!!!!!!!!!!!!!!")
+    }
+
+    override fun onTetheringFailed(error: Int) {
+        println("Tethering failed :(:(:(:(")
+    }
+}
+
 object HotspotApi {
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -54,6 +67,11 @@ object HotspotApi {
             Context.WIFI_SERVICE
         )?.let {
             IWifiManager.Stub.asInterface(ShizukuBinderWrapper(it))
+        }
+
+    val tetheringManager: ITetheringConnector?
+        get() = SystemServiceHelper.getSystemService("tethering")?.let {
+            ITetheringConnector.Stub.asInterface(ShizukuBinderWrapper(it))
         }
 
     val softApConfiguration
@@ -72,4 +90,5 @@ object HotspotApi {
         }
 
     val softApCallback = SoftApCallback()
+    val startTetheringCallback = StartTetheringCallback()
 }

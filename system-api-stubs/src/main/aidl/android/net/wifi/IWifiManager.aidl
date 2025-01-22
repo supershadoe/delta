@@ -20,10 +20,10 @@ import android.net.wifi.SoftApConfiguration;
 
 interface IWifiManager
 {
+    boolean startTetheredHotspot(in SoftApConfiguration softApConfig, String packageName);
+    boolean validateSoftApConfiguration(in SoftApConfiguration config);
     SoftApConfiguration getSoftApConfiguration();
     boolean setSoftApConfiguration(in SoftApConfiguration softApConfig, String packageName);
-    boolean validateSoftApConfiguration(in SoftApConfiguration config);
-    boolean startTetheredHotspot(in SoftApConfiguration softApConfig, String packageName);
     void registerSoftApCallback(in ISoftApCallback callback);
     void unregisterSoftApCallback(in ISoftApCallback callback);
 }
