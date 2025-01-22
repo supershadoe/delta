@@ -6,6 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import dev.shadoe.delta.hotspot.HotspotApiScope
 import dev.shadoe.delta.navigation.Nav.AppNavGraph
 import dev.shadoe.delta.shizuku.ShizukuScope
 
@@ -19,7 +20,9 @@ fun App() {
 
     MaterialTheme(colorScheme = colorScheme) {
         ShizukuScope {
-            AppNavGraph()
+            HotspotApiScope {
+                AppNavGraph()
+            }
         }
     }
 }

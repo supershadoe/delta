@@ -24,6 +24,8 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.Executor;
 
 /**
@@ -140,14 +142,17 @@ public class TetheringManager {
         throw new UnsupportedOperationException();
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {TETHERING_WIFI, TETHERING_USB, TETHERING_BLUETOOTH, TETHERING_WIFI_P2P, TETHERING_NCM, TETHERING_ETHERNET, TETHERING_VIRTUAL,})
     public @interface TetheringType {
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {TETHER_ERROR_SERVICE_UNAVAIL, TETHER_ERROR_UNSUPPORTED, TETHER_ERROR_INTERNAL_ERROR, TETHER_ERROR_NO_CHANGE_TETHERING_PERMISSION, TETHER_ERROR_UNKNOWN_TYPE, TETHER_ERROR_DUPLICATE_REQUEST,})
     public @interface StartTetheringError {
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {TETHER_ERROR_NO_ERROR, TETHER_ERROR_UNKNOWN_REQUEST,})
     public @interface StopTetheringError {
     }
@@ -155,6 +160,7 @@ public class TetheringManager {
     /**
      * Connectivity scopes for {@link TetheringRequest.Builder#setConnectivityScope}.
      */
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {
             CONNECTIVITY_SCOPE_GLOBAL,
             CONNECTIVITY_SCOPE_LOCAL,

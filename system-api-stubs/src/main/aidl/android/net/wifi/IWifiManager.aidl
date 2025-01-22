@@ -15,15 +15,12 @@
  */
 package android.net.wifi;
 
-import android.net.wifi.ISoftApCallback;
 import android.net.wifi.SoftApConfiguration;
 
 interface IWifiManager
 {
-    boolean startTetheredHotspot(in SoftApConfiguration softApConfig, String packageName);
     boolean validateSoftApConfiguration(in SoftApConfiguration config);
+    int getWifiApEnabledState();
     SoftApConfiguration getSoftApConfiguration();
     boolean setSoftApConfiguration(in SoftApConfiguration softApConfig, String packageName);
-    void registerSoftApCallback(in ISoftApCallback callback);
-    void unregisterSoftApCallback(in ISoftApCallback callback);
 }

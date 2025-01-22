@@ -1,9 +1,5 @@
 package dev.shadoe.delta.screens
 
-import android.net.IIntResultListener
-import android.net.TetheringManager
-import android.net.TetheringManager.TETHER_ERROR_NO_ERROR
-import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,95 +32,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.shadoe.delta.shizuku.HotspotApi
-import java.util.concurrent.Executor
+import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
 
-class HotspotViewModel: ViewModel() {
-    private val intResultListener: IIntResultListener by lazy {
-        object : IIntResultListener.Stub() {
-            override fun onResult(resultCode: Int) {
-                Executor { c -> c.run() }.execute {
-                    if (resultCode == TETHER_ERROR_NO_ERROR) {
-                        HotspotApi.startTetheringCallback.onTetheringStarted()
-                    } else {
-                        HotspotApi.startTetheringCallback.onTetheringFailed(
-                            resultCode
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    fun startHotspot(
-        packageName: String,
-        attributionTag: String,
-    ): String {
-        try {
-            HotspotApi.wifiManager!!.registerSoftApCallback(HotspotApi.softApCallback)
-            val tetheringRequest =
-                TetheringManager.TetheringRequest.Builder(TetheringManager.TETHERING_WIFI)
-                    .setSoftApConfiguration(HotspotApi.wifiManager!!.softApConfiguration)
-                    .build()
-            HotspotApi.tetheringManager!!.startTethering(
-                tetheringRequest.parcel,
-                packageName,
-                attributionTag,
-                intResultListener,
-            )
-            return "Success"
-        } catch (e: Exception) {
-            return e.stackTraceToString()
-        }
-    }
-
-    fun stopHotspot(
-        packageName: String,
-        attributionTag: String,
-    ): String {
-        try {
-            HotspotApi.tetheringManager!!.stopTethering(
-                TetheringManager.TETHERING_WIFI,
-                packageName,
-                attributionTag,
-                intResultListener
-            )
-            HotspotApi.wifiManager!!.unregisterSoftApCallback(
-                HotspotApi.softApCallback
-            )
-            return "Success"
-        } catch (e: Exception) {
-            return e.stackTraceToString()
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun HomeScreen(
-    viewModel: HotspotViewModel = viewModel()
-) {
-    val errText = remember { mutableStateOf("") }
-    val ssid = remember { mutableStateOf(HotspotApi.ssid ?: "") }
+fun HomeScreen() {
+    val hotspotApi = LocalHotspotApiInstance.current!!
+    val ssid = remember { mutableStateOf(hotspotApi.ssid ?: "") }
     val password = remember {
-        mutableStateOf(HotspotApi.passphrase ?: "")
+        mutableStateOf(hotspotApi.passphrase ?: "")
     }
     val areDevicesAvailable = remember { mutableStateOf(false) }
-    val isHotspotRunning = remember { mutableStateOf(false) }
-
-    val packageName = LocalContext.current.packageName
-    val attributionTag =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) LocalContext.current.attributionTag
-        else {
-            ""
-        }
+    val isHotspotRunning = hotspotApi.isHotspotRunning.collectAsState(false)
+    val isHotspotDisabled = hotspotApi.isHotspotDisabled.collectAsState(true)
 
     Scaffold(
         topBar = {
@@ -150,24 +75,20 @@ fun HomeScreen(
                 maskValue = true,
                 value = password.value,
                 onSave = { password.value = it })
-            if (!isHotspotRunning.value)
-            Button(onClick = {
-                val res = viewModel.startHotspot(packageName, attributionTag.toString())
-                if (res == "Success") {
-                    isHotspotRunning.value = true
-                } else {
-                    errText.value = res
+            if (isHotspotDisabled.value) Button(onClick = {
+                try {
+                    hotspotApi.startHotspot()
+                } catch (e: Exception) {
+                    println(e.stackTraceToString())
                 }
             }) {
                 Text(text = "Start hotspot")
             }
-            if (isHotspotRunning.value)
-            Button(onClick = {
-                val res = viewModel.stopHotspot(packageName, attributionTag.toString())
-                if (res == "Success") {
-                    isHotspotRunning.value = false
-                } else {
-                    errText.value = res
+            if (isHotspotRunning.value) Button(onClick = {
+                try {
+                    hotspotApi.stopHotspot()
+                } catch (e: Exception) {
+                    println(e.stackTraceToString())
                 }
             }) {
                 Text(text = "Stop hotspot")
@@ -210,28 +131,6 @@ fun HomeScreen(
                     }
                 }
             }
-        }
-
-        if (errText.value.isNotEmpty()) {
-            AlertDialog(
-                onDismissRequest = { errText.value = "" },
-                title = { Text(text = "Error occurred") },
-                text = {
-                    LazyColumn {
-                        item {
-                            Text(
-                                text = errText.value,
-                                fontFamily = FontFamily.Monospace
-                            )
-                        }
-                    }
-                },
-                confirmButton = {
-                    TextButton(onClick = { errText.value = "" }) {
-                        Text(text = "Dismiss")
-                    }
-                },
-            )
         }
     }
 }
