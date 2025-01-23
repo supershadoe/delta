@@ -64,7 +64,7 @@ public class TetheringManager {
 
     /**
      * Wifi P2p tethering type.
-     * Wifi P2p tethering is set through events automatically, and don't
+     * Wifi P2p tethering is seWt through events automatically, and don't
      * need to start from #startTethering.
      */
     public static final int TETHERING_WIFI_P2P = 3;

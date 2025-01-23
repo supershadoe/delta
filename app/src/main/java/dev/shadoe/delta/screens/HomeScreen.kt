@@ -30,8 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
@@ -46,7 +46,7 @@ fun HomeScreen() {
     val password = remember {
         mutableStateOf(hotspotApi.passphrase ?: "")
     }
-    val areDevicesAvailable = remember { mutableStateOf(false) }
+    val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
     val isHotspotRunning = hotspotApi.isHotspotRunning.collectAsState(false)
     val isHotspotDisabled = hotspotApi.isHotspotDisabled.collectAsState(true)
 
@@ -75,26 +75,34 @@ fun HomeScreen() {
                 maskValue = true,
                 value = password.value,
                 onSave = { password.value = it })
-            if (isHotspotDisabled.value) Button(onClick = {
-                try {
-                    hotspotApi.startHotspot()
-                } catch (e: Exception) {
-                    println(e.stackTraceToString())
-                }
-            }) {
+            if (isHotspotDisabled.value) Button(
+                modifier = Modifier.padding(
+                    start = 24.dp
+                ), onClick = {
+                    try {
+                        hotspotApi.startHotspot()
+                    } catch (e: Exception) {
+                        println(e.stackTraceToString())
+                    }
+                }) {
                 Text(text = "Start hotspot")
             }
-            if (isHotspotRunning.value) Button(onClick = {
-                try {
-                    hotspotApi.stopHotspot()
-                } catch (e: Exception) {
-                    println(e.stackTraceToString())
-                }
-            }) {
+            if (isHotspotRunning.value) Button(
+                modifier = Modifier.padding(start = 24.dp), onClick = {
+                    try {
+                        hotspotApi.stopHotspot()
+                    } catch (e: Exception) {
+                        println(e.stackTraceToString())
+                    }
+                }) {
                 Text(text = "Stop hotspot")
             }
-            Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-                if (!areDevicesAvailable.value) {
+            Column(
+                modifier = Modifier.padding(
+                    vertical = 16.dp, horizontal = 24.dp
+                )
+            ) {
+                if (tetheredClients.value.isEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -102,7 +110,13 @@ fun HomeScreen() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(text = "No devices connected")
+                        Text(
+                            text = if (isHotspotRunning.value) {
+                                "No devices connected"
+                            } else {
+                                "Tap on \"Start Hotspot\" to start tethering to other devices"
+                            }, textAlign = TextAlign.Center
+                        )
                     }
                 } else {
                     Text(
@@ -113,17 +127,22 @@ fun HomeScreen() {
                         contentPadding = PaddingValues(vertical = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
-                        items(10) {
+                        items(tetheredClients.value.size) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column(modifier = Modifier.padding(horizontal = 8.dp)) {
-                                    Text(text = "some-device")
-                                    Text(text = "00:01:00")
+                                    with(tetheredClients.value[it]) {
+                                        Text(
+                                            text = addresses[0].hostname
+                                                ?: "Unknown"
+                                        )
+                                        Text(text = macAddress.toString())
+                                    }
                                 }
-                                Button(onClick = {}) {
+                                Button(onClick = {}, enabled = false) {
                                     Text(text = "BLOCK")
                                 }
                             }

@@ -6,38 +6,46 @@ import android.net.TetherStatesParcel
 import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
+import dev.shadoe.hotspotapi.HotspotState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-internal class TetheringEventCallback: ITetheringEventCallback.Stub() {
+internal class TetheringEventCallback(private val getHotspotState: () -> Int) :
+    ITetheringEventCallback.Stub() {
+
     override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
-//        TODO("Not yet implemented")
+        parcel ?: return
+        onTetherStatesChanged(parcel.states)
+        onTetherClientsChanged(parcel.tetheredClients)
     }
 
-    override fun onCallbackStopped(errorCode: Int) {
-//        TODO("Not yet implemented")
-    }
+    override fun onCallbackStopped(errorCode: Int) {}
 
-    override fun onUpstreamChanged(network: Network?) {
-//        TODO("Not yet implemented")
-    }
+    override fun onUpstreamChanged(network: Network?) {}
 
-    override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {
-//        TODO("Not yet implemented")
-    }
+    override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {}
 
     override fun onTetherStatesChanged(states: TetherStatesParcel?) {
-//        TODO("Not yet implemented")
+        runBlocking {
+            launch(Dispatchers.Unconfined) {
+                val state = getHotspotState()
+                println(state)
+                HotspotState.instance!!.enabledState.value = state
+            }
+        }
     }
 
     override fun onTetherClientsChanged(clients: List<TetheredClient?>?) {
-//        TODO("Not yet implemented")
-        println(clients?.map {client -> client?.addresses?.map { address -> address.hostname }.toString()}?.toString())
+        runBlocking {
+            launch(Dispatchers.Unconfined) {
+                HotspotState.instance!!.tetheredClients.value =
+                    clients?.filterNotNull() ?: emptyList()
+            }
+        }
     }
 
-    override fun onOffloadStatusChanged(status: Int) {
-//        TODO("Not yet implemented")
-    }
+    override fun onOffloadStatusChanged(status: Int) {}
 
-    override fun onSupportedTetheringTypes(supportedBitmap: Long) {
-//        TODO("Not yet implemented")
-    }
+    override fun onSupportedTetheringTypes(supportedBitmap: Long) {}
 }
