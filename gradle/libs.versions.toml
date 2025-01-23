@@ -1,9 +1,9 @@
 [versions]
 agp = "8.8.0"
-activityCompose = "1.9.3"
-composeBom = "2024.12.01"
+activityCompose = "1.10.0"
+composeBom = "2025.01.00"
 coreKtx = "1.15.0"
-datastore = "1.1.1"
+datastore = "1.1.2"
 espressoCore = "3.6.1"
 hiddenapibypass = "4.3"
 junit = "4.13.2"
