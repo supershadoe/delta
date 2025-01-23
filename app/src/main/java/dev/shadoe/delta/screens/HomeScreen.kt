@@ -34,13 +34,21 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.shadoe.delta.hotspot.HotspotApiScope
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
 
+@Preview
+@Composable
+fun HomeScreen() {
+    HotspotApiScope {
+        HomeScreenUi()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun HomeScreen() {
+private fun HomeScreenUi() {
     val hotspotApi = LocalHotspotApiInstance.current!!
     val ssid = remember { mutableStateOf(hotspotApi.ssid ?: "") }
     val password = remember {
