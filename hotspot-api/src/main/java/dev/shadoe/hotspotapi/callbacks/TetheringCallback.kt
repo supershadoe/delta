@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.callbacks
+package dev.shadoe.hotspotapi.callbacks
 
 internal interface TetheringCallback {
     fun onOpSucceeded()

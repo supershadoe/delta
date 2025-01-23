@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.callbacks
+package dev.shadoe.hotspotapi.callbacks
 
 import android.net.IIntResultListener
 import android.net.TetheringManager.TETHER_ERROR_NO_ERROR

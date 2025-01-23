@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.callbacks
+package dev.shadoe.hotspotapi.callbacks
 
 import android.net.ITetheringEventCallback
 import android.net.Network
@@ -7,7 +7,7 @@ import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 
-class TetheringEventCallback: ITetheringEventCallback.Stub() {
+internal class TetheringEventCallback: ITetheringEventCallback.Stub() {
     override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
 //        TODO("Not yet implemented")
     }

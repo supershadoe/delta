@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot
+package dev.shadoe.hotspotapi
 
 class TetheringExceptions private constructor() {
     class BinderAcquisitionException(message: String) : Exception(message)

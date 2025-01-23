@@ -12,7 +12,7 @@ val LocalSuiAvailable = compositionLocalOf { false }
 
 @Composable
 fun ShizukuScope(
-    shizukuViewModel: ShizukuUtils.ShizukuViewModel = viewModel(),
+    shizukuViewModel: ShizukuViewModel = viewModel(),
     content: @Composable () -> Unit
 ) {
     val shizukuConnected = shizukuViewModel.isConnected.collectAsState(initial = false)

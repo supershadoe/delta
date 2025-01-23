@@ -1,9 +1,9 @@
-package dev.shadoe.delta.hotspot
+package dev.shadoe.hotspotapi
 
 import androidx.annotation.IntDef
 import kotlin.intArrayOf
 
-object WifiApEnabledStates {
+internal object WifiApEnabledStates {
     /**
      * Wi-Fi AP is currently being disabled. The state will change to
      * {@link #WIFI_AP_STATE_DISABLED} if it finishes successfully.
