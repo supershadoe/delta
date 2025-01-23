@@ -29,9 +29,7 @@ internal class TetheringEventCallback(private val getHotspotState: () -> Int) :
     override fun onTetherStatesChanged(states: TetherStatesParcel?) {
         runBlocking {
             launch(Dispatchers.Unconfined) {
-                val state = getHotspotState()
-                println(state)
-                HotspotState.instance!!.enabledState.value = state
+                HotspotState.instance!!.enabledState.value = getHotspotState()
             }
         }
     }
