@@ -52,7 +52,9 @@ object HotspotControlButtons {
                 rounding = CornerRounding(0.1f)
             )
         }
-        val morphStarToPillStar = Morph(start = roundedStar, end = roundedPillStar)
+        val morphStarToPillStar = remember {
+            Morph(start = roundedStar, end = roundedPillStar)
+        }
 
         val startAnimState = animateFloatAsState(
             targetValue = 1f,
