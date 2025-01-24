@@ -5,6 +5,7 @@ composeBom = "2025.01.00"
 coreKtx = "1.15.0"
 datastore = "1.1.2"
 espressoCore = "3.6.1"
+graphics-shapes = "1.0.1"
 hiddenapibypass = "4.3"
 junit = "4.13.2"
 junitx = "1.2.1"
@@ -38,6 +39,7 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphics-shapes" }
 
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
@@ -62,7 +64,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]
-androidx = ["core-ktx", "core-splashscreen", "datastore-preferences"]
+androidx = ["core-ktx", "core-splashscreen", "datastore-preferences", "graphics-shapes"]
 compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "navigation-compose", "viewmodel-compose"]
 instTest = ["espresso-core", "junitx"]
 shizuku = ["shizuku-api", "shizuku-provider"]

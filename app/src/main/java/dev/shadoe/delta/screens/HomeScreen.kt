@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.HotspotApiScope
+import dev.shadoe.delta.hotspot.HotspotControlButtons
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
 
 @Preview
@@ -55,8 +56,8 @@ private fun HomeScreenUi() {
         mutableStateOf(hotspotApi.passphrase ?: "")
     }
     val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
+    val enabledState = hotspotApi.enabledState.collectAsState()
     val isHotspotRunning = hotspotApi.isHotspotRunning.collectAsState(false)
-    val isHotspotDisabled = hotspotApi.isHotspotDisabled.collectAsState(true)
 
     Scaffold(
         topBar = {
@@ -64,9 +65,7 @@ private fun HomeScreenUi() {
                 title = { Text(text = "Delta") })
         }) { scaffoldPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(scaffoldPadding)
+            modifier = Modifier.padding(scaffoldPadding)
         ) {
             EditWidget(
                 onClickLabel = "Edit SSID",
@@ -83,28 +82,11 @@ private fun HomeScreenUi() {
                 maskValue = true,
                 value = password.value,
                 onSave = { password.value = it })
-            if (isHotspotDisabled.value) Button(
-                modifier = Modifier.padding(
-                    start = 24.dp
-                ), onClick = {
-                    try {
-                        hotspotApi.startHotspot()
-                    } catch (e: Exception) {
-                        println(e.stackTraceToString())
-                    }
-                }) {
-                Text(text = "Start hotspot")
-            }
-            if (isHotspotRunning.value) Button(
-                modifier = Modifier.padding(start = 24.dp), onClick = {
-                    try {
-                        hotspotApi.stopHotspot()
-                    } catch (e: Exception) {
-                        println(e.stackTraceToString())
-                    }
-                }) {
-                Text(text = "Stop hotspot")
-            }
+            HotspotControlButtons.Button(
+                enabledState = enabledState.value,
+                startHotspot = { hotspotApi.startHotspot() },
+                stopHotspot = { hotspotApi.stopHotspot() },
+            )
             Column(
                 modifier = Modifier.padding(
                     vertical = 16.dp, horizontal = 24.dp
@@ -144,10 +126,8 @@ private fun HomeScreenUi() {
                                 Column(modifier = Modifier.padding(horizontal = 8.dp)) {
                                     with(tetheredClients.value[it]) {
                                         Text(
-                                            text = addresses[0].hostname
-                                                ?: "Unknown"
-                                        )
-                                        Text(text = macAddress.toString())
+                                            text = addresses.joinToString(limit = 3) { it.hostname.toString() })
+                                        Text(text = "$macAddress over $tetheringType")
                                     }
                                 }
                                 Button(onClick = {}, enabled = false) {
