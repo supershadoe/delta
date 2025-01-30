@@ -16,6 +16,10 @@ an issue if it doesn't work as expected. (time to respond to issues may be high)
 Get the pre-release APK from GitHub releases and install; also get Shizuku app
 from Play Store.
 
+[<img src="https://github.com/ImranR98/Obtainium/blob/main/assets/graphics/badge_obtainium.png"
+alt="Get it on Obtainium"
+height="80">](https://github.com/ImranR98/Obtainium)
+
 ### Features
 - [X] Trigger hotspot from in-app
 - [X] Connected devices info
