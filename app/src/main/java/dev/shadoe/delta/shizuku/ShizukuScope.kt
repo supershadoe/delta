@@ -6,23 +6,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-val LocalShizukuRunning = compositionLocalOf { false }
-val LocalShizukuConnected = compositionLocalOf { false }
-val LocalSuiAvailable = compositionLocalOf { false }
+val LocalShizukuState = compositionLocalOf { NOT_READY }
 
 @Composable
 fun ShizukuScope(
     shizukuViewModel: ShizukuViewModel = viewModel(),
     content: @Composable () -> Unit
 ) {
-    val shizukuConnected = shizukuViewModel.isConnected.collectAsState(initial = false)
-    val shizukuRunning = shizukuViewModel.isRunning.collectAsState(initial = false)
-    val isSuiAvailable = shizukuViewModel.isSuiAvailable.collectAsState(initial = false)
-
+    val shizukuState = shizukuViewModel.shizukuState.collectAsState(initial = NOT_READY)
     CompositionLocalProvider(
-        LocalShizukuRunning provides shizukuRunning.value,
-        LocalShizukuConnected provides shizukuConnected.value,
-        LocalSuiAvailable provides isSuiAvailable.value,
+        LocalShizukuState provides shizukuState.value,
         content = content
     )
 }

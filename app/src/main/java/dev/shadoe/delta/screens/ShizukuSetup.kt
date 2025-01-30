@@ -20,54 +20,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.shadoe.delta.navigation.LocalNavController
-import dev.shadoe.delta.navigation.Routes
-import dev.shadoe.delta.shizuku.LocalShizukuConnected
-import dev.shadoe.delta.shizuku.LocalShizukuRunning
-import dev.shadoe.delta.shizuku.LocalSuiAvailable
-import dev.shadoe.delta.shizuku.ShizukuUtils
+import dev.shadoe.delta.shizuku.CONNECTED
+import dev.shadoe.delta.shizuku.LocalShizukuState
+import dev.shadoe.delta.shizuku.NOT_AVAILABLE
+import dev.shadoe.delta.shizuku.NOT_READY
+import dev.shadoe.delta.shizuku.NOT_RUNNING
+import dev.shadoe.delta.shizuku.RUNNING
+import dev.shadoe.delta.shizuku.ShizukuViewModel
+import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShizukuSetup() {
-    val navController = LocalNavController.current
-    val isShizukuInstalled =
-        LocalSuiAvailable.current || ShizukuUtils.isShizukuInstalled(
-            LocalContext.current.packageManager
-        )
+    val shizukuState = LocalShizukuState.current
     Scaffold(
         topBar = {
-            LargeTopAppBar(title = { Text("Setup the app") })
+            if (shizukuState != NOT_READY && shizukuState != CONNECTED) {
+                LargeTopAppBar(title = { Text("Setup the app") })
+            }
         }) {
         Column(modifier = Modifier.padding(it)) {
-            when {
-                !isShizukuInstalled -> ShizukuNotInstalled()
-
-                LocalShizukuRunning.current -> if (LocalShizukuConnected.current) {
-                    ShizukuConnected {
-                        navController?.navigate(Routes.HomeScreen) {
-                            popUpTo(Routes.ShizukuSetup) {
-                                inclusive = true
-                            }
-                        }
-                    }
-                } else {
-                    ShizukuPrompt()
-                }
-
-                else -> ShizukuNotRunning()
+            when(LocalShizukuState.current) {
+                NOT_AVAILABLE -> ShizukuNotInstalled()
+                NOT_RUNNING -> ShizukuNotRunning()
+                RUNNING -> ShizukuPrompt()
+                else -> {}
             }
-        }
-    }
-}
-
-@Composable
-private fun ShizukuConnected(onClick: () -> Unit) {
-    Column {
-        Text("Connected to Shizuku, tap on the button to proceed with the next steps.")
-        Button(onClick = onClick) {
-            Text(text = "Finish setup")
         }
     }
 }
@@ -78,7 +57,12 @@ private fun ShizukuNotInstalled() {
     Column {
         Text("Shizuku is not installed")
         Button(onClick = {
-            context.startActivity(Intent(ACTION_VIEW, Uri.parse("https://github.com/RikkaApps/Shizuku/releases")))
+            context.startActivity(
+                Intent(
+                    ACTION_VIEW,
+                    Uri.parse("https://github.com/RikkaApps/Shizuku/releases")
+                )
+            )
         }) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -134,9 +118,7 @@ private fun ShizukuPrompt() {
     Column {
         Text("This app uses system APIs that are not generally accessible from the Android SDK and thus, requires Shizuku to get access to Hotspot API.")
         Button(onClick = {
-            if (!ShizukuUtils.checkShizukuPerm()) {
-                ShizukuUtils.getPerm()
-            }
+            Shizuku.requestPermission(ShizukuViewModel.PERM_REQ_CODE)
         }) {
             Text(text = "Grant access")
         }

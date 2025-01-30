@@ -3,48 +3,60 @@ package dev.shadoe.delta.shizuku
 import android.app.Application
 import android.content.pm.PackageManager
 import androidx.lifecycle.AndroidViewModel
-import dev.shadoe.delta.shizuku.ShizukuUtils.PERM_REQ_CODE
-import dev.shadoe.delta.shizuku.ShizukuUtils.checkShizukuPerm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import rikka.shizuku.Shizuku
+import rikka.shizuku.ShizukuProvider
 import rikka.sui.Sui
 
-class ShizukuViewModel(application: Application) :
+class ShizukuViewModel(private val application: Application) :
     AndroidViewModel(application) {
-    private val _isConnected = MutableStateFlow(false)
-    val isConnected: StateFlow<Boolean> = _isConnected
-    private val _isRunning = MutableStateFlow(false)
-    val isRunning: StateFlow<Boolean> = _isRunning
-    private val _isSuiAvailable = MutableStateFlow(false)
-    val isSuiAvailable: StateFlow<Boolean> = _isSuiAvailable
+    @ShizukuStates
+    private val _shizukuState = MutableStateFlow(NOT_READY)
+    @ShizukuStates
+    val shizukuState: StateFlow<Int> = _shizukuState
 
     private val permListener =
-        Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
-            if (requestCode == PERM_REQ_CODE) {
-                _isConnected.value =
-                    grantResult == PackageManager.PERMISSION_GRANTED
-            }
+        Shizuku.OnRequestPermissionResultListener permListener@{ requestCode, grantResult ->
+            requestCode.takeIf { it == PERM_REQ_CODE } ?: return@permListener
+            _shizukuState.value = determineShizukuStateIfAlive(grantResult)
         }
 
     private val binderReceivedListener = Shizuku.OnBinderReceivedListener {
-        _isRunning.value = true
         Shizuku.addRequestPermissionResultListener(permListener)
-        _isConnected.value = checkShizukuPerm()
     }
 
     private val binderDeadListener = Shizuku.OnBinderDeadListener {
-        _isRunning.value = false
+        _shizukuState.value = determineShizukuStateIfDead()
         Shizuku.removeRequestPermissionResultListener(permListener)
+    }
+
+    private fun isShizukuInstalled(packageManager: PackageManager) =
+        runCatching {
+            packageManager.getApplicationInfo(
+                ShizukuProvider.MANAGER_APPLICATION_ID, 0
+            )
+        }.getOrNull().let { it != null } || Sui.isSui()
+
+    private fun determineShizukuStateIfAlive(permResult: Int) =
+        if (permResult == PackageManager.PERMISSION_GRANTED) {
+            CONNECTED
+        } else {
+            RUNNING
+        }
+
+    private fun determineShizukuStateIfDead() = when {
+        isShizukuInstalled(application.packageManager) -> NOT_RUNNING
+        else -> NOT_AVAILABLE
     }
 
     init {
         Sui.init(application.packageName)
-        _isRunning.value = Shizuku.pingBinder()
-        if (_isRunning.value == true) {
-            _isConnected.value = checkShizukuPerm()
+        _shizukuState.value = when {
+            Shizuku.isPreV11() -> NOT_AVAILABLE
+            Shizuku.pingBinder() -> determineShizukuStateIfAlive(Shizuku.checkSelfPermission())
+            else -> determineShizukuStateIfDead()
         }
-        _isSuiAvailable.value = Sui.isSui()
         Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
         Shizuku.addBinderDeadListener(binderDeadListener)
     }
@@ -53,5 +65,9 @@ class ShizukuViewModel(application: Application) :
         Shizuku.removeBinderReceivedListener(binderReceivedListener)
         Shizuku.removeBinderDeadListener(binderDeadListener)
         super.onCleared()
+    }
+
+    companion object {
+        internal const val PERM_REQ_CODE = 2345
     }
 }

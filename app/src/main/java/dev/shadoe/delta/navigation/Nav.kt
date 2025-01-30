@@ -9,8 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.shadoe.delta.screens.HomeScreen
 import dev.shadoe.delta.screens.ShizukuSetup
-import dev.shadoe.delta.shizuku.LocalShizukuConnected
-import dev.shadoe.delta.shizuku.LocalShizukuRunning
+import dev.shadoe.delta.shizuku.CONNECTED
+import dev.shadoe.delta.shizuku.LocalShizukuState
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
 
@@ -20,7 +20,7 @@ fun AppNavGraph() {
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
             navController = LocalNavController.current!!,
-            startDestination = if (LocalShizukuConnected.current && LocalShizukuRunning.current) {
+            startDestination = if (LocalShizukuState.current == CONNECTED) {
                 Routes.HomeScreen
             } else {
                 Routes.ShizukuSetup
