@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.shadoe.delta.navigation.Nav.LocalNavController
+import dev.shadoe.delta.navigation.LocalNavController
 import dev.shadoe.delta.navigation.Routes
 import dev.shadoe.delta.shizuku.LocalShizukuConnected
 import dev.shadoe.delta.shizuku.LocalShizukuRunning

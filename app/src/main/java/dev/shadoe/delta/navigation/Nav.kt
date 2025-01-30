@@ -12,24 +12,22 @@ import dev.shadoe.delta.screens.ShizukuSetup
 import dev.shadoe.delta.shizuku.LocalShizukuConnected
 import dev.shadoe.delta.shizuku.LocalShizukuRunning
 
-object Nav {
-    val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
+val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
 
-    @Composable
-    fun AppNavGraph() {
-        val navController = rememberNavController()
-        CompositionLocalProvider(LocalNavController provides navController) {
-            NavHost(
-                navController = LocalNavController.current!!,
-                startDestination = if (LocalShizukuConnected.current && LocalShizukuRunning.current) {
-                    Routes.HomeScreen
-                } else {
-                    Routes.ShizukuSetup
-                }
-            ) {
-                composable<Routes.ShizukuSetup> { ShizukuSetup() }
-                composable<Routes.HomeScreen> { HomeScreen() }
+@Composable
+fun AppNavGraph() {
+    val navController = rememberNavController()
+    CompositionLocalProvider(LocalNavController provides navController) {
+        NavHost(
+            navController = LocalNavController.current!!,
+            startDestination = if (LocalShizukuConnected.current && LocalShizukuRunning.current) {
+                Routes.HomeScreen
+            } else {
+                Routes.ShizukuSetup
             }
+        ) {
+            composable<Routes.ShizukuSetup> { ShizukuSetup() }
+            composable<Routes.HomeScreen> { HomeScreen() }
         }
     }
 }
