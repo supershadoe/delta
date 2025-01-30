@@ -6,6 +6,7 @@ import android.net.TetherStatesParcel
 import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
+import android.net.TetheringManager
 import dev.shadoe.hotspotapi.HotspotState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,7 +39,9 @@ internal class TetheringEventCallback(private val getHotspotState: () -> Int) :
         runBlocking {
             launch(Dispatchers.Unconfined) {
                 HotspotState.instance!!.tetheredClients.value =
-                    clients?.filterNotNull() ?: emptyList()
+                    clients?.filterNotNull()
+                        ?.filter { it.tetheringType == TetheringManager.TETHERING_WIFI }
+                        ?: emptyList()
             }
         }
     }
