@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot
+package dev.shadoe.delta.hotspot.components
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarVisuals

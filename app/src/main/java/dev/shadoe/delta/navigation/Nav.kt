@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.shadoe.delta.screens.HomeScreen
+import dev.shadoe.delta.hotspot.HotspotScreen
 import dev.shadoe.delta.screens.ShizukuSetup
 import dev.shadoe.delta.shizuku.CONNECTED
 import dev.shadoe.delta.shizuku.LocalShizukuState
@@ -27,7 +27,7 @@ fun AppNavGraph() {
             }
         ) {
             composable<Routes.ShizukuSetup> { ShizukuSetup() }
-            composable<Routes.HomeScreen> { HomeScreen() }
+            composable<Routes.HomeScreen> { HotspotScreen() }
         }
     }
 }
