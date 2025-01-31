@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 class Routes {
     @Serializable
-    object ShizukuSetup
+    object ShizukuSetupScreen
     @Serializable
-    object HomeScreen
+    object HotspotScreen
 }

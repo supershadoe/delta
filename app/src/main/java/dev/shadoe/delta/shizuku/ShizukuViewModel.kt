@@ -42,7 +42,7 @@ class ShizukuViewModel(private val application: Application) :
         if (permResult == PackageManager.PERMISSION_GRANTED) {
             CONNECTED
         } else {
-            RUNNING
+            NOT_CONNECTED
         }
 
     private fun determineShizukuStateIfDead() = when {
