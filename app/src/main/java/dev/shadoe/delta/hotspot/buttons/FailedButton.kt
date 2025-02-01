@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.circle
-import dev.shadoe.delta.hotspot.buttons.shapes.PolygonShape
+import dev.shadoe.delta.shapes.PolygonShape
 
 @Composable
 internal fun FailedButton() {

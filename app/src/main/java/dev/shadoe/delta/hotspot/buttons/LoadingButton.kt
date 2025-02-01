@@ -20,8 +20,8 @@ import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import androidx.graphics.shapes.star
-import dev.shadoe.delta.hotspot.buttons.shapes.MorphingShape
-import dev.shadoe.delta.hotspot.buttons.shapes.RotatingShape
+import dev.shadoe.delta.shapes.MorphingShape
+import dev.shadoe.delta.shapes.RotatingShape
 
 @Composable
 internal fun LoadingButton() {

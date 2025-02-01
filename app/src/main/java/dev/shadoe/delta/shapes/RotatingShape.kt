@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.buttons.shapes
+package dev.shadoe.delta.shapes
 
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size

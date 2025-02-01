@@ -21,7 +21,7 @@ import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.circle
 import androidx.graphics.shapes.pillStar
 import androidx.graphics.shapes.star
-import dev.shadoe.delta.hotspot.buttons.shapes.MorphingShape
+import dev.shadoe.delta.shapes.MorphingShape
 
 @Composable
 internal fun LoadedButton(isEnabled: Boolean, onClick: () -> Unit) {
