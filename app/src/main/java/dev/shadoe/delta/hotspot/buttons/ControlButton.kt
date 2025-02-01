@@ -42,6 +42,12 @@ internal fun ControlButton(
     } else {
         "Start hotspot"
     }
+    // TODO: remove this comment
+//    val btnSize = min(
+//        LocalConfiguration.current.screenWidthDp.dp,
+//        LocalConfiguration.current.screenHeightDp.dp
+//    ) / 2
+//    println("btnSize: $btnSize")
     Box(
         modifier = Modifier
             .size(

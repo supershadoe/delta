@@ -1,7 +1,7 @@
 package dev.shadoe.delta.hotspot.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
@@ -13,13 +13,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 
 @Preview
 @Composable
@@ -29,8 +27,9 @@ internal fun PasswordDisplay(
     val isPasswordShown = remember { mutableStateOf(false) }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
+        Box(modifier = Modifier.weight(1f)) {}
         Text(
-            modifier = Modifier.width((LocalConfiguration.current.screenWidthDp / 2).dp),
+            modifier = Modifier.weight(2f),
             text = if (isPasswordShown.value) {
                 password
             } else {
@@ -42,7 +41,7 @@ internal fun PasswordDisplay(
                 } else {
                     FontStyle.Italic
                 }
-            )
+            ),
         )
         IconButton(
             onClick = {
@@ -58,6 +57,7 @@ internal fun PasswordDisplay(
                 contentDescription = "Show password",
             )
         }
+        Box(modifier = Modifier.weight(1f)) {}
     }
 }
 

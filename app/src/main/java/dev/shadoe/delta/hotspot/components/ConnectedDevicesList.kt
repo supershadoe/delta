@@ -2,6 +2,7 @@ package dev.shadoe.delta.hotspot.components
 
 import android.net.TetheredClient
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -21,25 +22,26 @@ internal fun ConnectedDevicesList(tetheredClients: List<TetheredClient>) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 24.dp, vertical = 16.dp)
             .fillMaxWidth()
     ) {
         Text(
             text = "Connected Devices",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleLarge,
         )
+        if (tetheredClients.isEmpty()) {
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(text = "No devices connected")
+            }
+        }
         LazyColumn(
             contentPadding = PaddingValues(vertical = 32.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            if (tetheredClients.isEmpty()) {
-                item {
-                    Text(
-                        text = "No devices connected",
-                        modifier = Modifier.padding(vertical = 32.dp)
-                    )
-                }
-            }
             items(tetheredClients.size) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

@@ -3,7 +3,7 @@ package dev.shadoe.delta.hotspot
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
@@ -27,11 +27,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.buttons.HotspotButton
 import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
-import dev.shadoe.delta.hotspot.components.HotspotNotEnabledSnackbar
 import dev.shadoe.delta.hotspot.components.PasswordDisplay
 import dev.shadoe.hotspotapi.WifiApEnabledStates
 import kotlinx.coroutines.launch
@@ -50,6 +51,9 @@ private fun HomeScreenUi() {
     val showConnectedDevices = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
+    // TODO: remove this comment
+//    println("isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}")
 
     val hotspotApi = LocalHotspotApiInstance.current!!
     val ssid = remember { mutableStateOf(hotspotApi.ssid ?: "") }
@@ -59,77 +63,93 @@ private fun HomeScreenUi() {
     val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
     val enabledState = hotspotApi.enabledState.collectAsState()
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(title = {
-                Text(text = "Delta")
-            })
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                scope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = "This functionality hasn't been added yet.",
-                        withDismissAction = true,
-                        duration = SnackbarDuration.Short,
-                    )
-                }
-            }) {
-                Icon(
-                    imageVector = Icons.Rounded.Edit,
-                    contentDescription = "Edit"
-                )
-            }
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
-    ) { scaffoldPadding ->
-        Column(
-            modifier = Modifier
-                .padding(scaffoldPadding)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.Center
-            ) {
-                HotspotButton(
-                    enabledState = enabledState.value,
-                    startHotspot = { hotspotApi.startHotspot() },
-                    stopHotspot = { hotspotApi.stopHotspot() },
-                )
-            }
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom,
-            ) {
-                Text(text = ssid.value)
-                PasswordDisplay(password = password.value)
-                TextButton(onClick = {
-                    if (enabledState.value == WifiApEnabledStates.WIFI_AP_STATE_ENABLED) {
-                        showConnectedDevices.value = true
-                    } else if (snackbarHostState.currentSnackbarData == null) {
-                        scope.launch {
-                            val result = snackbarHostState.showSnackbar(
-                                visuals = HotspotNotEnabledSnackbar(),
-                            )
-                            when (result) {
-                                SnackbarResult.ActionPerformed -> {
-                                    hotspotApi.startHotspot()
-                                }
-
-                                SnackbarResult.Dismissed -> {}
-                            }
-                        }
+    Row {
+        Scaffold(
+            modifier = Modifier.weight(1f),
+            topBar = {
+                CenterAlignedTopAppBar(title = {
+                    Text(text = "Delta")
+                })
+            },
+            floatingActionButton = {
+                FloatingActionButton(onClick = {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = "This functionality hasn't been added yet.",
+                            withDismissAction = true,
+                            duration = SnackbarDuration.Short,
+                        )
                     }
                 }) {
-                    Text(
-                        "Connected Devices (${tetheredClients.value.size})",
-                        style = TextStyle(textDecoration = TextDecoration.Underline)
+                    Icon(
+                        imageVector = Icons.Rounded.Edit,
+                        contentDescription = "Edit"
                     )
+                }
+            },
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
+        ) { scaffoldPadding ->
+            Column(
+                modifier = Modifier.padding(scaffoldPadding),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    HotspotButton(
+                        enabledState = enabledState.value,
+                        startHotspot = { hotspotApi.startHotspot() },
+                        stopHotspot = { hotspotApi.stopHotspot() },
+                    )
+                }
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Bottom,
+                ) {
+                    Text(text = ssid.value)
+                    Box(modifier = Modifier.padding(bottom = 16.dp)) {
+                        PasswordDisplay(password = password.value)
+                    }
+                    if (!isBigScreen) {
+                        TextButton(onClick = {
+                            if (enabledState.value == WifiApEnabledStates.WIFI_AP_STATE_ENABLED) {
+                                if (tetheredClients.value.isEmpty()) {
+                                    if (snackbarHostState.currentSnackbarData == null) {
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar(
+                                                message = "There are no connected devices.",
+                                                withDismissAction = true,
+                                                duration = SnackbarDuration.Short
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    showConnectedDevices.value = true
+                                }
+                            } else if (snackbarHostState.currentSnackbarData == null) {
+                                scope.launch {
+                                    val result = snackbarHostState.showSnackbar(
+                                        message = "Hotspot is not yet enabled.",
+                                        actionLabel = "ENABLE",
+                                        withDismissAction = true,
+                                        duration = SnackbarDuration.Short,
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        hotspotApi.startHotspot()
+                                    }
+                                }
+                            }
+                        }) {
+                            Text(
+                                "Connected Devices (${tetheredClients.value.size})",
+                                style = TextStyle(textDecoration = TextDecoration.Underline)
+                            )
+                        }
+                    }
                 }
             }
             if (showConnectedDevices.value) {
@@ -139,6 +159,13 @@ private fun HomeScreenUi() {
                     },
                     sheetState = sheetState,
                 ) {
+                    ConnectedDevicesList(tetheredClients.value)
+                }
+            }
+        }
+        if (isBigScreen) {
+            Scaffold(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.padding(it)) {
                     ConnectedDevicesList(tetheredClients.value)
                 }
             }
