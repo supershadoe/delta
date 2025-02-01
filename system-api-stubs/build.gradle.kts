@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.shadoe.delta"
+    namespace = "dev.shadoe.systemapistubs"
     compileSdk = 35
 
     defaultConfig {
