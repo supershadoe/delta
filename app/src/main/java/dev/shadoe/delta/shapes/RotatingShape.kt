@@ -50,9 +50,8 @@ class RotatingShape(
 
         matrix.scale(scaleX, scaleY)
 
-        // centerX and centerY of polygons are (0,0) of the whole square
-        // radius = 1 for the RoundedPolygons so you see a quarter of the
-        // shape in view.
+        // The polygon is centered at origin (0, 0) so for a circle of
+        // radius = 1, you can only see a quarter of the shape in view.
 
         // The bounds for a circle of radius 1f would be (-1f, -1f, 1f, 1f)
         // So, translating by (-bounds.left, -bounds.top) would move the polygon
