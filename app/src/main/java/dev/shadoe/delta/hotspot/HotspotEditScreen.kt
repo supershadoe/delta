@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Password
@@ -28,8 +30,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,7 +50,7 @@ fun HotspotEditScreen() {
     Scaffold(
         topBar = {
             LargeTopAppBar(
-                title = { Text(text = "Delta") },
+                title = { Text(text = "Settings") },
                 navigationIcon = {
                     IconButton(onClick = { navController?.navigateUp() }) {
                         Icon(
@@ -86,6 +94,15 @@ private fun EditWidget(
     onSave: (String) -> Unit = {},
 ) {
     val isEditing = remember { mutableStateOf(false) }
+    val textFieldState = remember(value) { mutableStateOf(value) }
+    val onDone = {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                onSave(textFieldState.value)
+            }
+        }
+        isEditing.value = false
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -104,20 +121,31 @@ private fun EditWidget(
             )
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(text = text)
-                Text(text = if (maskValue) "********" else value)
+                Text(text = if (maskValue) "********" else textFieldState.value)
             }
         }
     }
     if (isEditing.value) AlertDialog(
-        onDismissRequest = { isEditing.value = false },
-        title = { Text(text = "Edit Password") },
+        onDismissRequest = {
+            textFieldState.value = value
+            isEditing.value = false
+        },
+        title = { Text(text = "Edit $text") },
         text = {
             TextField(
-                value = value, onValueChange = onSave
+                value = textFieldState.value,
+                onValueChange = { textFieldState.value = it },
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    autoCorrectEnabled = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done,
+                ),
+                keyboardActions = KeyboardActions(onDone = { onDone() }),
             )
         },
         confirmButton = {
-            TextButton(onClick = { isEditing.value = false }) {
+            TextButton(onClick = onDone) {
                 Text(text = "Save")
             }
         },
