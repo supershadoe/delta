@@ -42,7 +42,7 @@ class HotspotApi(
     private val _getSoftApConfigFlow: Flow<SoftApConfiguration> = flow {
         while (true) {
             emit(wifiManager.softApConfiguration)
-            delay(3.seconds)
+            delay(1.seconds)
         }
     }
     private val _enabledState: MutableStateFlow<Int>
