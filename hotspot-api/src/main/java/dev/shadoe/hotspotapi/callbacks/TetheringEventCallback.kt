@@ -7,13 +7,14 @@ import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 import android.net.TetheringManager
-import dev.shadoe.hotspotapi.HotspotState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-internal class TetheringEventCallback(private val getHotspotState: () -> Int) :
-    ITetheringEventCallback.Stub() {
+internal class TetheringEventCallback(
+    private val updateEnabledState: () -> Unit,
+    private val setTetheredClients: (List<TetheredClient>) -> Unit,
+) : ITetheringEventCallback.Stub() {
 
     override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
         parcel ?: return
@@ -28,20 +29,15 @@ internal class TetheringEventCallback(private val getHotspotState: () -> Int) :
     override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {}
 
     override fun onTetherStatesChanged(states: TetherStatesParcel?) {
-        runBlocking {
-            launch(Dispatchers.Unconfined) {
-                HotspotState.instance!!.enabledState.value = getHotspotState()
-            }
-        }
+        updateEnabledState()
     }
 
     override fun onTetherClientsChanged(clients: List<TetheredClient?>?) {
         runBlocking {
             launch(Dispatchers.Unconfined) {
-                HotspotState.instance!!.tetheredClients.value =
-                    clients?.filterNotNull()
-                        ?.filter { it.tetheringType == TetheringManager.TETHERING_WIFI }
-                        ?: emptyList()
+                (clients ?: emptyList()).filterNotNull()
+                    .filter { it.tetheringType == TetheringManager.TETHERING_WIFI }
+                    .let { setTetheredClients(it) }
             }
         }
     }
