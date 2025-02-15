@@ -37,23 +37,19 @@ import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.buttons.HotspotButton
 import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
 import dev.shadoe.delta.hotspot.components.PasswordDisplay
+import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.delta.hotspot.navigation.Routes
 import dev.shadoe.hotspotapi.WifiApEnabledStates
 import kotlinx.coroutines.launch
 
-@Composable
-fun HotspotScreen() {
-    HotspotApiScope {
-        HomeScreenUi()
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HomeScreenUi() {
+fun HotspotScreen() {
     val sheetState = rememberModalBottomSheetState()
     val showConnectedDevices = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val navController = LocalNavController.current
     val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
     // TODO: remove this comment
 //    println("isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}")
@@ -74,13 +70,7 @@ private fun HomeScreenUi() {
             },
             floatingActionButton = {
                 FloatingActionButton(onClick = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = "This functionality hasn't been added yet.",
-                            withDismissAction = true,
-                            duration = SnackbarDuration.Short,
-                        )
-                    }
+                    navController?.navigate(route = Routes.HotspotEditScreen)
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.Edit,

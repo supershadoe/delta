@@ -1,10 +1,10 @@
-package dev.shadoe.delta.navigation
+package dev.shadoe.delta.hotspot.navigation
 
 import kotlinx.serialization.Serializable
 
 class Routes {
     @Serializable
-    object ShizukuSetupScreen
-    @Serializable
     object HotspotScreen
+    @Serializable
+    object HotspotEditScreen
 }

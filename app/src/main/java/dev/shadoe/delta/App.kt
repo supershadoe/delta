@@ -6,8 +6,11 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import dev.shadoe.delta.navigation.AppNavGraph
+import dev.shadoe.delta.hotspot.navigation.HotspotNavGraph
+import dev.shadoe.delta.shizuku.CONNECTED
+import dev.shadoe.delta.shizuku.LocalShizukuState
 import dev.shadoe.delta.shizuku.ShizukuScope
+import dev.shadoe.delta.shizuku.ShizukuSetupScreen
 
 @Composable
 fun App() {
@@ -19,7 +22,11 @@ fun App() {
 
     MaterialTheme(colorScheme = colorScheme) {
         ShizukuScope {
-            AppNavGraph()
+            if (LocalShizukuState.current == CONNECTED) {
+                HotspotNavGraph()
+            } else {
+                ShizukuSetupScreen()
+            }
         }
     }
 }
