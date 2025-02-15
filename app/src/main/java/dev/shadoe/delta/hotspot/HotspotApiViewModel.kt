@@ -2,7 +2,9 @@ package dev.shadoe.delta.hotspot
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import dev.shadoe.hotspotapi.HotspotApi
+import kotlinx.coroutines.launch
 
 class HotspotApiViewModel(application: Application) :
     AndroidViewModel(application) {
@@ -12,6 +14,9 @@ class HotspotApiViewModel(application: Application) :
 
     init {
         hotspotApi.registerCallback()
+        viewModelScope.launch {
+            hotspotApi.launchBackgroundTasks()
+        }
     }
 
     override fun onCleared() {

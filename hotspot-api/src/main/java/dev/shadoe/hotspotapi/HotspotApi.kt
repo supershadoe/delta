@@ -19,13 +19,16 @@ import dev.shadoe.hotspotapi.callbacks.StopTetheringCallback
 import dev.shadoe.hotspotapi.callbacks.TetheringEventCallback
 import dev.shadoe.hotspotapi.callbacks.TetheringResultListener
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.runBlocking
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
+import kotlin.time.Duration.Companion.seconds
 import android.net.wifi.SoftApConfiguration.Builder as SoftApConfBuilder
 
 class HotspotApi(
@@ -36,10 +39,14 @@ class HotspotApi(
     private val wifiManager: IWifiManager
 
     private val _softApConfiguration: MutableStateFlow<SoftApConfiguration>
+    private val _getSoftApConfigFlow: Flow<SoftApConfiguration> = flow {
+        while (true) {
+            emit(wifiManager.softApConfiguration)
+            delay(3.seconds)
+        }
+    }
     private val _enabledState: MutableStateFlow<Int>
-    val enabledState: MutableStateFlow<Int>
     private val _tetheredClients: MutableStateFlow<List<TetheredClient>>
-    val tetheredClients: MutableStateFlow<List<TetheredClient>>
 
     private val tetheringEventCallback: ITetheringEventCallback
     private val softApCallback: ISoftApCallback
@@ -63,22 +70,9 @@ class HotspotApi(
             ?.let { IWifiManager.Stub.asInterface(it) }
             ?: throw BinderAcquisitionException("Unable to get IWifiManager")
 
-        _softApConfiguration =
-            MutableStateFlow(wifiManager.softApConfiguration).also { flow ->
-                runBlocking {
-                    flow.onEach {
-                        // lie to the OS with ADB's package name, else we can't
-                        // set soft AP config
-                        wifiManager.setSoftApConfiguration(
-                            it, ADB_PACKAGE_NAME
-                        )
-                    }
-                }
-            }
+        _softApConfiguration = MutableStateFlow(wifiManager.softApConfiguration)
         _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
-        enabledState = _enabledState
         _tetheredClients = MutableStateFlow(emptyList())
-        tetheredClients = _tetheredClients
 
         tetheringEventCallback = TetheringEventCallback(
             updateEnabledState = {
@@ -89,6 +83,9 @@ class HotspotApi(
 
         softApCallback = SoftApCallback()
     }
+
+    val enabledState: StateFlow<Int> = _enabledState
+    val tetheredClients: StateFlow<List<TetheredClient>> = _tetheredClients
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val ssid = _softApConfiguration.mapLatest {
@@ -101,59 +98,66 @@ class HotspotApi(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val passphrase = _softApConfiguration.mapLatest { it.passphrase }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val securityType = _softApConfiguration.mapLatest { it.securityType }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val bssid = _softApConfiguration.mapLatest { it.bssid }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val isHidden = _softApConfiguration.mapLatest { it.isHiddenSsid }
 
-    fun setSsid(newSsid: String?) {
-        _softApConfiguration.value =
-            SoftApConfBuilder(_softApConfiguration.value).apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    setWifiSsid(newSsid?.encodeToByteArray()?.let {
-                        WifiSsid.fromBytes(it)
-                    })
-                } else {
-                    @Suppress("DEPRECATION") setSsid(newSsid)
-                }
-            }.build()
+    private fun updateSoftApConfiguration(conf: SoftApConfiguration): Boolean {
+        if (!wifiManager.validateSoftApConfiguration(conf)) return false
+        _softApConfiguration.value = conf
+        wifiManager.setSoftApConfiguration(conf, ADB_PACKAGE_NAME)
+        return true
     }
 
-    fun setPassphrase(newPassphrase: String?) {
-        _softApConfiguration.value = _softApConfiguration.value.let { other ->
+    fun setSsid(newSsid: String?): Boolean =
+        SoftApConfBuilder(_softApConfiguration.value).apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                setWifiSsid(newSsid?.encodeToByteArray()?.let {
+                    WifiSsid.fromBytes(it)
+                })
+            } else {
+                @Suppress("DEPRECATION") setSsid(newSsid)
+            }
+        }.build().let { updateSoftApConfiguration(it) }
+
+    fun setPassphrase(newPassphrase: String?): Boolean =
+        _softApConfiguration.value.let { other ->
             @SuppressLint("WrongConstant") SoftApConfBuilder(other).setPassphrase(
                 newPassphrase, other.securityType
-            ).build()
+            ).build().let { updateSoftApConfiguration(it) }
         }
-    }
 
-    fun setSecurityType(@SoftApConfiguration.SecurityType newSecurityType: Int) {
-        _softApConfiguration.value = _softApConfiguration.value.let { other ->
+    fun setSecurityType(@SoftApConfiguration.SecurityType newSecurityType: Int): Boolean =
+        _softApConfiguration.value.let { other ->
             SoftApConfBuilder(other).setPassphrase(
                 other.passphrase, newSecurityType
-            ).build()
+            ).build().let { updateSoftApConfiguration(it) }
         }
-    }
 
-    fun setBssid(newBssid: MacAddress?) {
-        _softApConfiguration.value = _softApConfiguration.value.let { other ->
-            SoftApConfBuilder(other).setBssid(newBssid).build()
-        }
-    }
+    fun setBssid(newBssid: MacAddress?): Boolean =
+        SoftApConfBuilder(_softApConfiguration.value).setBssid(newBssid).build()
+            .let { updateSoftApConfiguration(it) }
 
-    fun setIsHidden(newIsHidden: Boolean) {
-        _softApConfiguration.value = _softApConfiguration.value.let { other ->
-            SoftApConfBuilder(other).setHiddenSsid(newIsHidden).build()
-        }
-    }
+
+    fun setIsHidden(newIsHidden: Boolean): Boolean =
+        SoftApConfBuilder(_softApConfiguration.value).setHiddenSsid(newIsHidden)
+            .build().let { updateSoftApConfiguration(it) }
 
     fun registerCallback() {
         tetheringConnector.registerTetheringEventCallback(
             tetheringEventCallback, packageName
         )
         wifiManager.registerSoftApCallback(softApCallback)
+    }
+
+    suspend fun launchBackgroundTasks() {
+        _getSoftApConfigFlow.collect { _softApConfiguration.value = it }
     }
 
     fun unregisterCallback() {
@@ -167,8 +171,8 @@ class HotspotApi(
         if (_enabledState.value != WifiApEnabledStates.WIFI_AP_STATE_DISABLED) {
             return
         }
-        val request = TetheringManager.TetheringRequest.Builder(TETHERING_WIFI)
-            .setSoftApConfiguration(_softApConfiguration.value).build()
+        val request =
+            TetheringManager.TetheringRequest.Builder(TETHERING_WIFI).build()
         tetheringConnector.startTethering(
             request.parcel,
             packageName,
