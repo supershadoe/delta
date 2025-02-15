@@ -15,6 +15,7 @@
  */
 package android.net.wifi;
 
+import android.net.wifi.ISoftApCallback;
 import android.net.wifi.SoftApConfiguration;
 
 interface IWifiManager
@@ -23,4 +24,6 @@ interface IWifiManager
     int getWifiApEnabledState();
     SoftApConfiguration getSoftApConfiguration();
     boolean setSoftApConfiguration(in SoftApConfiguration softApConfig, String packageName);
+    void registerSoftApCallback(in ISoftApCallback callback);
+    void unregisterSoftApCallback(in ISoftApCallback callback);
 }
