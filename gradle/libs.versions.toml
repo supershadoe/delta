@@ -1,7 +1,7 @@
 [versions]
-agp = "8.8.0"
+agp = "8.8.1"
 activityCompose = "1.10.0"
-composeBom = "2025.01.00"
+composeBom = "2025.02.00"
 coreKtx = "1.15.0"
 datastore = "1.1.2"
 espressoCore = "3.6.1"
@@ -11,12 +11,11 @@ junit = "4.13.2"
 junitx = "1.2.1"
 kotlin = "2.0.21"
 material = "1.12.0"
-navigation-compose = "2.8.5"
+navigation-compose = "2.8.7"
 serialization-json = "1.7.3"
 shizuku = "13.1.5"
 splashscreen = "1.0.1"
 viewmodel-compose = "2.8.7"
-appcompat = "1.7.0"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -54,7 +53,6 @@ junitx = { group = "androidx.test.ext", name = "junit", version.ref = "junitx" }
 
 shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
 shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

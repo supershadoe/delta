@@ -35,10 +35,8 @@ android {
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
     implementation(libs.hiddenapibypass)
-    implementation(libs.bundles.shizuku)
     implementation(libs.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.shizuku.api)
     testImplementation(libs.junit)
     androidTestImplementation(libs.junitx)
     androidTestImplementation(libs.espresso.core)
