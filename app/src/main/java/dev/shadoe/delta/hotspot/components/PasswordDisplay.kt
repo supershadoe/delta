@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 @Preview
 @Composable
 internal fun PasswordDisplay(
-    @PreviewParameter(provider = PasswordProvider::class) password: String,
+    @PreviewParameter(provider = PasswordProvider::class) password: String?,
 ) {
     val isPasswordShown = remember { mutableStateOf(false) }
 
@@ -30,13 +30,15 @@ internal fun PasswordDisplay(
         Box(modifier = Modifier.weight(1f)) {}
         Text(
             modifier = Modifier.weight(2f),
-            text = if (isPasswordShown.value) {
+            text = if (password == null) {
+                "(no password)"
+            } else if (isPasswordShown.value) {
                 password
             } else {
                 "(password hidden)"
             },
             style = TextStyle(
-                fontStyle = if (isPasswordShown.value) {
+                fontStyle = if (isPasswordShown.value && password != null) {
                     FontStyle.Normal
                 } else {
                     FontStyle.Italic
@@ -61,7 +63,7 @@ internal fun PasswordDisplay(
     }
 }
 
-private class PasswordProvider : PreviewParameterProvider<String> {
-    override val values: Sequence<String>
-        get() = sequenceOf("somepass123")
+private class PasswordProvider : PreviewParameterProvider<String?> {
+    override val values: Sequence<String?>
+        get() = sequenceOf("somepass123", null)
 }

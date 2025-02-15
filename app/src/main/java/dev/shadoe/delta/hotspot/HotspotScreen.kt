@@ -59,10 +59,8 @@ private fun HomeScreenUi() {
 //    println("isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}")
 
     val hotspotApi = LocalHotspotApiInstance.current!!
-    val ssid = remember { mutableStateOf(hotspotApi.ssid ?: "") }
-    val password = remember {
-        mutableStateOf(hotspotApi.passphrase ?: "")
-    }
+    val ssid = hotspotApi.ssid.collectAsState(null)
+    val password = hotspotApi.passphrase.collectAsState(null)
     val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
     val enabledState = hotspotApi.enabledState.collectAsState()
 
@@ -113,7 +111,7 @@ private fun HomeScreenUi() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom,
                 ) {
-                    Text(text = ssid.value)
+                    Text(text = ssid.value ?: "no ssid")
                     Box(modifier = Modifier.padding(bottom = 16.dp)) {
                         PasswordDisplay(password = password.value)
                     }
