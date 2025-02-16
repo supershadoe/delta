@@ -1,6 +1,5 @@
 package dev.shadoe.hotspotapi
 
-import android.annotation.SuppressLint
 import android.net.ITetheringConnector
 import android.net.ITetheringEventCallback
 import android.net.MacAddress
@@ -126,35 +125,15 @@ class HotspotApi(
             }
         }.build().let { updateSoftApConfiguration(it) }
 
-    fun setPassphrase(newPassphrase: String?): Boolean =
-        _softApConfiguration.value.let { other ->
-            val passphrase =
-                if (other.securityType != SoftApConfiguration.SECURITY_TYPE_OPEN) {
-                    newPassphrase
-                } else {
-                    null
-                }
-            SoftApConfBuilder(other).setPassphrase(
-                passphrase, @SuppressLint("WrongConstant") other.securityType
-            ).build().let { updateSoftApConfiguration(it) }
-        }
-
-    fun setSecurityType(@SoftApConfiguration.SecurityType newSecurityType: Int): Boolean =
-        _softApConfiguration.value.let { other ->
-            val passphrase =
-                if (newSecurityType != SoftApConfiguration.SECURITY_TYPE_OPEN) {
-                    other.passphrase
-                } else {
-                    null
-                }
-            SoftApConfBuilder(other).setPassphrase(passphrase, newSecurityType)
-                .build().let { updateSoftApConfiguration(it) }
-        }
+    fun setPassphrase(newPassphrase: String?, newSecurityType: Int): Boolean =
+        SoftApConfBuilder(_softApConfiguration.value).setPassphrase(
+            newPassphrase,
+            newSecurityType,
+        ).build().let { updateSoftApConfiguration(it) }
 
     fun setBssid(newBssid: MacAddress?): Boolean =
         SoftApConfBuilder(_softApConfiguration.value).setBssid(newBssid).build()
             .let { updateSoftApConfiguration(it) }
-
 
     fun setIsHidden(newIsHidden: Boolean): Boolean =
         SoftApConfBuilder(_softApConfiguration.value).setHiddenSsid(newIsHidden)
