@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.settings
+package dev.shadoe.delta.hotspot
 
 import android.net.wifi.SoftApConfiguration
 import android.net.wifi.SoftApConfiguration.SecurityType
@@ -38,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.hotspotapi.WifiApEnabledStates
 import kotlinx.coroutines.delay
