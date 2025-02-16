@@ -128,16 +128,27 @@ class HotspotApi(
 
     fun setPassphrase(newPassphrase: String?): Boolean =
         _softApConfiguration.value.let { other ->
-            @SuppressLint("WrongConstant") SoftApConfBuilder(other).setPassphrase(
-                newPassphrase, other.securityType
+            val passphrase =
+                if (other.securityType != SoftApConfiguration.SECURITY_TYPE_OPEN) {
+                    newPassphrase
+                } else {
+                    null
+                }
+            SoftApConfBuilder(other).setPassphrase(
+                passphrase, @SuppressLint("WrongConstant") other.securityType
             ).build().let { updateSoftApConfiguration(it) }
         }
 
     fun setSecurityType(@SoftApConfiguration.SecurityType newSecurityType: Int): Boolean =
         _softApConfiguration.value.let { other ->
-            SoftApConfBuilder(other).setPassphrase(
-                other.passphrase, newSecurityType
-            ).build().let { updateSoftApConfiguration(it) }
+            val passphrase =
+                if (newSecurityType != SoftApConfiguration.SECURITY_TYPE_OPEN) {
+                    other.passphrase
+                } else {
+                    null
+                }
+            SoftApConfBuilder(other).setPassphrase(passphrase, newSecurityType)
+                .build().let { updateSoftApConfiguration(it) }
         }
 
     fun setBssid(newBssid: MacAddress?): Boolean =
