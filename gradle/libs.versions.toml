@@ -3,7 +3,6 @@ agp = "8.8.1"
 activityCompose = "1.10.0"
 composeBom = "2025.02.00"
 coreKtx = "1.15.0"
-datastore = "1.1.2"
 espressoCore = "3.6.1"
 graphics-shapes = "1.0.1"
 hiddenapibypass = "4.3"
@@ -12,8 +11,6 @@ junitx = "1.2.1"
 kotlin = "2.0.21"
 material = "1.12.0"
 navigation-compose = "2.8.7"
-protobuf = "4.29.3"
-protobuf-plugin = "0.9.4"
 serialization-json = "1.7.3"
 shizuku = "13.1.5"
 splashscreen = "1.0.1"
@@ -39,8 +36,6 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 # Bundles
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
-protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
 graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphics-shapes" }
 
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -63,10 +58,9 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-protobuf-plugin = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 
 [bundles]
-androidx = ["core-ktx", "core-splashscreen", "datastore", "protobuf-javalite", "graphics-shapes"]
+androidx = ["core-ktx", "core-splashscreen", "graphics-shapes"]
 compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "navigation-compose", "viewmodel-compose"]
 instTest = ["espresso-core", "junitx"]
 shizuku = ["shizuku-api", "shizuku-provider"]
