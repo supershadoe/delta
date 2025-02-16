@@ -18,6 +18,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun EditSsidField(
@@ -33,8 +35,11 @@ internal fun EditSsidField(
 ) {
     val isEditing = remember { mutableStateOf(false) }
     val textFieldState = remember(value) { mutableStateOf(value) }
+    val scope = rememberCoroutineScope()
     val onDone = {
-        onSave(textFieldState.value)
+        scope.launch {
+            onSave(textFieldState.value)
+        }
         isEditing.value = false
     }
     Box(

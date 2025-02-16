@@ -20,10 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 private fun getNameOfSecurityType(@SecurityType securityType: Int): String {
     return when (securityType) {
@@ -42,6 +44,7 @@ internal fun EditSecurityType(
 ) {
     val isEditing = remember { mutableStateOf(false) }
     val selectedType = remember(value) { mutableIntStateOf(value) }
+    val scope = rememberCoroutineScope()
     val supportedSecurityTypes = remember {
         intArrayOf(
             SoftApConfiguration.SECURITY_TYPE_WPA3_SAE_TRANSITION,
@@ -51,7 +54,9 @@ internal fun EditSecurityType(
         )
     }
     val onDone = {
-        onSave(selectedType.intValue)
+        scope.launch {
+            onSave(selectedType.intValue)
+        }
         isEditing.value = false
     }
     Box(

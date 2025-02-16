@@ -27,10 +27,7 @@ import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.hotspotapi.WifiApEnabledStates
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 @Composable
 fun HotspotEditScreen() {
@@ -87,40 +84,24 @@ fun HotspotEditScreen() {
                 EditSsidField(
                     value = ssid.value ?: "",
                     onSave = {
-                        runBlocking {
-                            launch(Dispatchers.IO) {
-                                hotspotApi.setSsid(it)
-                            }
-                            launch(Dispatchers.Main) {
-                                updateCounter.intValue++
-                            }
-                        }
+                        hotspotApi.setSsid(it)
+                        updateCounter.intValue++
                     },
                 )
-                EditPassphraseField(
-                    value = password.value ?: "",
-                    onSave = {
-                        runBlocking {
-                            launch(Dispatchers.IO) {
-                                hotspotApi.setPassphrase(it)
-                            }
-                            launch(Dispatchers.Main) {
-                                updateCounter.intValue++
-                            }
-                        }
-                    },
-                )
+                if (securityType.value != SoftApConfiguration.SECURITY_TYPE_OPEN) {
+                    EditPassphraseField(
+                        value = password.value ?: "",
+                        onSave = {
+                            hotspotApi.setPassphrase(it)
+                            updateCounter.intValue++
+                        },
+                    )
+                }
                 EditSecurityType(
                     value = securityType.value,
                     onSave = {
-                        runBlocking {
-                            launch(Dispatchers.IO) {
-                                hotspotApi.setSecurityType(it)
-                            }
-                            launch(Dispatchers.Main) {
-                                updateCounter.intValue++
-                            }
-                        }
+                        hotspotApi.setSecurityType(it)
+                        updateCounter.intValue++
                     },
                 )
             }
