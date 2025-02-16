@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.protobuf.plugin)
 }
 
 android {
@@ -51,6 +52,21 @@ android {
 
     kotlinOptions {
         jvmTarget = "21"
+    }
+}
+protobuf {
+    protoc {
+        // SMH Google, you still gotta do this manually????
+        artifact = "com.google.protobuf:protoc:4.29.3"
+    }
+    generateProtoTasks {
+        all().forEach {
+            it.builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
     }
 }
 
