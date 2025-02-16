@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.shadoe.delta.hotspot.HotspotApiScope
-import dev.shadoe.delta.hotspot.HotspotEditScreen
+import dev.shadoe.delta.hotspot.settings.HotspotEditScreen
 import dev.shadoe.delta.hotspot.HotspotScreen
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
