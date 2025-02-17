@@ -27,44 +27,31 @@ import androidx.annotation.Nullable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-
 public final class SoftApCapability implements Parcelable {
 
     public static final long SOFTAP_FEATURE_ACS_OFFLOAD = 1 << 0;
 
-
     public static final long SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT = 1 << 1;
-
 
     public static final long SOFTAP_FEATURE_WPA3_SAE = 1 << 2;
 
-
     public static final long SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION = 1 << 3;
-
 
     public static final long SOFTAP_FEATURE_IEEE80211_AX = 1 << 4;
 
-
     public static final long SOFTAP_FEATURE_BAND_24G_SUPPORTED = 1 << 5;
-
 
     public static final long SOFTAP_FEATURE_BAND_5G_SUPPORTED = 1 << 6;
 
-
     public static final long SOFTAP_FEATURE_BAND_6G_SUPPORTED = 1 << 7;
-
 
     public static final long SOFTAP_FEATURE_BAND_60G_SUPPORTED = 1 << 8;
 
-
     public static final long SOFTAP_FEATURE_IEEE80211_BE = 1 << 9;
-
 
     public static final long SOFTAP_FEATURE_WPA3_OWE_TRANSITION = 1 << 10;
 
-
     public static final long SOFTAP_FEATURE_WPA3_OWE = 1 << 11;
-
 
     @Retention(RetentionPolicy.SOURCE)
     @LongDef(flag = true, value = {SOFTAP_FEATURE_ACS_OFFLOAD, SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT, SOFTAP_FEATURE_WPA3_SAE, SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION, SOFTAP_FEATURE_IEEE80211_AX, SOFTAP_FEATURE_IEEE80211_BE, SOFTAP_FEATURE_BAND_24G_SUPPORTED, SOFTAP_FEATURE_BAND_5G_SUPPORTED, SOFTAP_FEATURE_BAND_6G_SUPPORTED, SOFTAP_FEATURE_BAND_60G_SUPPORTED, SOFTAP_FEATURE_WPA3_OWE_TRANSITION, SOFTAP_FEATURE_WPA3_OWE,})
@@ -75,36 +62,29 @@ public final class SoftApCapability implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     public String getCountryCode() {
         throw new RuntimeException("stub!");
     }
-
 
     public int getMaxSupportedClients() {
         throw new RuntimeException("stub!");
     }
 
-
     public void setMaxSupportedClients(int maxClient) {
         throw new RuntimeException("stub!");
     }
-
 
     public boolean areFeaturesSupported(@HotspotFeatures long features) {
         throw new RuntimeException("stub!");
     }
 
-
     public void setSupportedFeatures(boolean value, @HotspotFeatures long features) {
         throw new RuntimeException("stub!");
     }
 
-
     public boolean setSupportedChannelList(@BandType int band, @Nullable int[] supportedChannelList) {
         throw new RuntimeException("stub!");
     }
-
 
     @NonNull
     public int[] getSupportedChannelList(@BandType int band) {

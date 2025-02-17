@@ -33,7 +33,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-
 public final class SoftApConfiguration implements Parcelable {
     @VisibleForTesting
     static final int PSK_MIN_LEN = 8;
@@ -41,21 +40,15 @@ public final class SoftApConfiguration implements Parcelable {
     @VisibleForTesting
     static final int PSK_MAX_LEN = 63;
 
-
     public static final int BAND_2GHZ = 1 << 0;
-
 
     public static final int BAND_5GHZ = 1 << 1;
 
-
     public static final int BAND_6GHZ = 1 << 2;
-
 
     public static final int BAND_60GHZ = 1 << 3;
 
-
     public static final int BAND_ANY = BAND_2GHZ | BAND_5GHZ | BAND_6GHZ;
-
 
     public static final long DEFAULT_TIMEOUT = -1;
 
@@ -64,7 +57,6 @@ public final class SoftApConfiguration implements Parcelable {
     public @interface BandType {
     }
 
-
     public static int[] BAND_TYPES = {BAND_2GHZ, BAND_5GHZ, BAND_6GHZ, BAND_60GHZ};
 
     @Retention(RetentionPolicy.SOURCE)
@@ -72,33 +64,23 @@ public final class SoftApConfiguration implements Parcelable {
     public @interface MacRandomizationSetting {
     }
 
-
     public static final int RANDOMIZATION_NONE = 0;
-
 
     public static final int RANDOMIZATION_PERSISTENT = 1;
 
-
     public static final int RANDOMIZATION_NON_PERSISTENT = 2;
-
 
     public static final int SECURITY_TYPE_OPEN = 0;
 
-
     public static final int SECURITY_TYPE_WPA2_PSK = 1;
-
 
     public static final int SECURITY_TYPE_WPA3_SAE_TRANSITION = 2;
 
-
     public static final int SECURITY_TYPE_WPA3_SAE = 3;
-
 
     public static final int SECURITY_TYPE_WPA3_OWE_TRANSITION = 4;
 
-
     public static final int SECURITY_TYPE_WPA3_OWE = 5;
-
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {SECURITY_TYPE_OPEN, SECURITY_TYPE_WPA2_PSK, SECURITY_TYPE_WPA3_SAE_TRANSITION, SECURITY_TYPE_WPA3_SAE, SECURITY_TYPE_WPA3_OWE_TRANSITION, SECURITY_TYPE_WPA3_OWE,})
@@ -128,19 +110,16 @@ public final class SoftApConfiguration implements Parcelable {
         }
     };
 
-
     @Nullable
     @Deprecated
     public String getSsid() {
         throw new RuntimeException("stub!");
     }
 
-
     @Nullable
     public WifiSsid getWifiSsid() {
         throw new RuntimeException("stub!");
     }
-
 
     @NonNull
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -148,39 +127,32 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     public List<ScanResult.InformationElement> getVendorElementsInternal() {
         throw new RuntimeException("stub!");
     }
-
 
     @Nullable
     public MacAddress getBssid() {
         throw new RuntimeException("stub!");
     }
 
-
     @Nullable
     public String getPassphrase() {
         throw new RuntimeException("stub!");
     }
 
-
     public boolean isHiddenSsid() {
         throw new RuntimeException("stub!");
     }
-
 
     @Deprecated
     public @BandType int getBand() {
         throw new RuntimeException("stub!");
     }
 
-
     public @NonNull int[] getBands() {
         throw new RuntimeException("stub!");
     }
-
 
     @Deprecated
 
@@ -188,37 +160,30 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     @RequiresApi(Build.VERSION_CODES.S)
     public @NonNull SparseIntArray getChannels() {
         throw new RuntimeException("stub!");
     }
 
-
     public @SecurityType int getSecurityType() {
         throw new RuntimeException("stub!");
     }
-
 
     public int getMaxNumberOfClients() {
         throw new RuntimeException("stub!");
     }
 
-
     public boolean isAutoShutdownEnabled() {
         throw new RuntimeException("stub!");
     }
-
 
     public long getShutdownTimeoutMillis() {
         throw new RuntimeException("stub!");
     }
 
-
     public boolean isClientControlByUserEnabled() {
         throw new RuntimeException("stub!");
     }
-
 
     @NonNull
 
@@ -226,13 +191,11 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     @NonNull
 
     public List<MacAddress> getAllowedClientList() {
         throw new RuntimeException("stub!");
     }
-
 
     @RequiresApi(Build.VERSION_CODES.S)
 
@@ -241,12 +204,10 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     @MacRandomizationSetting
     public int getMacRandomizationSettingInternal() {
         throw new RuntimeException("stub!");
     }
-
 
     @RequiresApi(Build.VERSION_CODES.S)
 
@@ -254,16 +215,13 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     public boolean isBridgedModeOpportunisticShutdownEnabledInternal() {
         throw new RuntimeException("stub!");
     }
 
-
     public boolean isIeee80211axEnabledInternal() {
         throw new RuntimeException("stub!");
     }
-
 
     @RequiresApi(Build.VERSION_CODES.S)
 
@@ -271,13 +229,11 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 
     public boolean isIeee80211beEnabled() {
         throw new RuntimeException("stub!");
     }
-
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @NonNull
@@ -286,13 +242,11 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 
     public int getMaxChannelBandwidth() {
         throw new RuntimeException("stub!");
     }
-
 
     @RequiresApi(Build.VERSION_CODES.S)
 
@@ -300,16 +254,13 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     public @NonNull MacAddress getPersistentRandomizedMacAddress() {
         throw new RuntimeException("stub!");
     }
 
-
     public boolean isUserConfigurationInternal() {
         throw new RuntimeException("stub!");
     }
-
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 
@@ -317,11 +268,9 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     public long getBridgedModeOpportunisticShutdownTimeoutMillisInternal() {
         throw new RuntimeException("stub!");
     }
-
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 
@@ -331,13 +280,11 @@ public final class SoftApConfiguration implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-
     @Nullable
 
     public WifiConfiguration toWifiConfiguration() {
         throw new RuntimeException("stub!");
     }
-
 
     public static final class Builder {
 
@@ -345,17 +292,14 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         public Builder(@NonNull SoftApConfiguration other) {
             throw new RuntimeException("stub!");
         }
-
 
         @NonNull
         public SoftApConfiguration build() {
             throw new RuntimeException("stub!");
         }
-
 
         @NonNull
         @Deprecated
@@ -363,13 +307,11 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         public Builder setWifiSsid(@Nullable WifiSsid wifiSsid) {
             throw new RuntimeException("stub!");
         }
-
 
         @NonNull
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -377,30 +319,25 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setBssid(@Nullable MacAddress bssid) {
             throw new RuntimeException("stub!");
         }
-
 
         @NonNull
         public Builder setPassphrase(@Nullable String passphrase, @SecurityType int securityType) {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setHiddenSsid(boolean hiddenSsid) {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setBand(@BandType int band) {
             throw new RuntimeException("stub!");
         }
-
 
         @RequiresApi(Build.VERSION_CODES.S)
         @NonNull
@@ -408,12 +345,10 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setChannel(int channel, @BandType int band) {
             throw new RuntimeException("stub!");
         }
-
 
         @RequiresApi(Build.VERSION_CODES.S)
         @NonNull
@@ -421,30 +356,25 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setMaxNumberOfClients(@IntRange(from = 0) int maxNumberOfClients) {
             throw new RuntimeException("stub!");
         }
-
 
         @NonNull
         public Builder setAutoShutdownEnabled(boolean enable) {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setShutdownTimeoutMillis(@IntRange(from = -1) long timeoutMillis) {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setClientControlByUserEnabled(boolean enabled) {
             throw new RuntimeException("stub!");
         }
-
 
         @NonNull
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -452,25 +382,21 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         public Builder setMaxChannelBandwidth(int maxChannelBandwidth) {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setAllowedClientList(@NonNull List<MacAddress> allowedClientList) {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setBlockedClientList(@NonNull List<MacAddress> blockedClientList) {
             throw new RuntimeException("stub!");
         }
-
 
         @RequiresApi(Build.VERSION_CODES.S)
         @NonNull
@@ -478,13 +404,11 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @RequiresApi(Build.VERSION_CODES.S)
         @NonNull
         public Builder setBridgedModeOpportunisticShutdownEnabled(boolean enable) {
             throw new RuntimeException("stub!");
         }
-
 
         @RequiresApi(Build.VERSION_CODES.S)
         @NonNull
@@ -492,19 +416,16 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         @NonNull
         public Builder setIeee80211beEnabled(boolean enable) {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setUserConfiguration(boolean isUserConfigured) {
             throw new RuntimeException("stub!");
         }
-
 
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         @NonNull
@@ -512,12 +433,10 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-
         @NonNull
         public Builder setRandomizedMacAddress(@NonNull MacAddress mac) {
             throw new RuntimeException("stub!");
         }
-
 
         @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 

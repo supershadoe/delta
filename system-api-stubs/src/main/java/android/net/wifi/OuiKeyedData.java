@@ -22,18 +22,15 @@ import android.os.PersistableBundle;
 
 import androidx.annotation.NonNull;
 
-
 public final class OuiKeyedData implements Parcelable {
 
     public int getOui() {
         throw new RuntimeException("stub!");
     }
 
-
     public @NonNull PersistableBundle getData() {
         throw new RuntimeException("stub!");
     }
-
 
     public boolean validate() {
         throw new RuntimeException("stub!");
@@ -52,7 +49,6 @@ public final class OuiKeyedData implements Parcelable {
     OuiKeyedData(@NonNull Parcel in) {
         throw new RuntimeException("stub!");
     }
-
 
     @NonNull
     public static final Parcelable.Creator<OuiKeyedData> CREATOR = new Parcelable.Creator<>() {
