@@ -93,7 +93,9 @@ fun HotspotEditScreen() {
     }
 
     LaunchedEffect(securityType.value) {
-        hotspotApi.queryLastUsedPassphraseSinceBoot()
+        if (securityType.value == SoftApSecurityType.SECURITY_TYPE_OPEN) {
+            hotspotApi.queryLastUsedPassphraseSinceBoot()
+        }
     }
 
     Scaffold(
