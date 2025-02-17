@@ -3,14 +3,15 @@ package dev.shadoe.hotspotapi
 import android.net.ITetheringConnector
 import android.net.ITetheringEventCallback
 import android.net.MacAddress
-import android.net.TetheredClient
 import android.net.TetheringManager
 import android.net.TetheringManager.TETHERING_WIFI
 import android.net.wifi.ISoftApCallback
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfiguration
+import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
+import dev.rikka.tools.refine.Refine
 import dev.shadoe.hotspotapi.TetheringExceptions.BinderAcquisitionException
 import dev.shadoe.hotspotapi.callbacks.SoftApCallback
 import dev.shadoe.hotspotapi.callbacks.StartTetheringCallback
@@ -28,7 +29,6 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 import kotlin.time.Duration.Companion.seconds
-import android.net.wifi.SoftApConfiguration.Builder as SoftApConfBuilder
 
 class HotspotApi(
     private val packageName: String,
@@ -37,15 +37,15 @@ class HotspotApi(
     private val tetheringConnector: ITetheringConnector
     private val wifiManager: IWifiManager
 
-    private val _softApConfiguration: MutableStateFlow<SoftApConfiguration>
-    private val _getSoftApConfigFlow: Flow<SoftApConfiguration> = flow {
+    private val _softApConfiguration: MutableStateFlow<SoftApConfigurationHidden>
+    private val _getSoftApConfigFlow: Flow<SoftApConfigurationHidden> = flow {
         while (true) {
-            emit(wifiManager.softApConfiguration)
+            emit(Refine.unsafeCast<SoftApConfigurationHidden>(wifiManager.softApConfiguration))
             delay(1.seconds)
         }
     }
     private val _enabledState: MutableStateFlow<Int>
-    private val _tetheredClients: MutableStateFlow<List<TetheredClient>>
+    private val _tetheredClients: MutableStateFlow<List<TetheredClientWrapper>>
 
     private val tetheringEventCallback: ITetheringEventCallback
     private val softApCallback: ISoftApCallback
@@ -69,7 +69,9 @@ class HotspotApi(
             ?.let { IWifiManager.Stub.asInterface(it) }
             ?: throw BinderAcquisitionException("Unable to get IWifiManager")
 
-        _softApConfiguration = MutableStateFlow(wifiManager.softApConfiguration)
+        _softApConfiguration = MutableStateFlow(
+            Refine.unsafeCast<SoftApConfigurationHidden>(wifiManager.softApConfiguration)
+        )
         _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
         _tetheredClients = MutableStateFlow(emptyList())
 
@@ -84,7 +86,8 @@ class HotspotApi(
     }
 
     val enabledState: StateFlow<Int> = _enabledState
-    val tetheredClients: StateFlow<List<TetheredClient>> = _tetheredClients
+    val tetheredClients: StateFlow<List<TetheredClientWrapper>> =
+        _tetheredClients
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val ssid = _softApConfiguration.mapLatest {
@@ -107,15 +110,25 @@ class HotspotApi(
     @OptIn(ExperimentalCoroutinesApi::class)
     val isHidden = _softApConfiguration.mapLatest { it.isHiddenSsid }
 
-    private fun updateSoftApConfiguration(conf: SoftApConfiguration): Boolean {
-        if (!wifiManager.validateSoftApConfiguration(conf)) return false
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val blockedDevices = _softApConfiguration.mapLatest { it.blockedClientList }
+
+    private fun updateSoftApConfigurationHidden(conf: SoftApConfigurationHidden): Boolean {
+        if (!wifiManager.validateSoftApConfiguration(
+                Refine.unsafeCast<SoftApConfiguration>(conf)
+            )
+        ) return false
         _softApConfiguration.value = conf
-        wifiManager.setSoftApConfiguration(conf, ADB_PACKAGE_NAME)
+        wifiManager.setSoftApConfiguration(
+            Refine.unsafeCast<SoftApConfiguration>(
+                conf
+            ), ADB_PACKAGE_NAME
+        )
         return true
     }
 
     fun setSsid(newSsid: String?): Boolean =
-        SoftApConfBuilder(_softApConfiguration.value).apply {
+        SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 setWifiSsid(newSsid?.encodeToByteArray()?.let {
                     WifiSsid.fromBytes(it)
@@ -123,21 +136,29 @@ class HotspotApi(
             } else {
                 @Suppress("DEPRECATION") setSsid(newSsid)
             }
-        }.build().let { updateSoftApConfiguration(it) }
+        }.build().let { updateSoftApConfigurationHidden(it) }
 
     fun setPassphrase(newPassphrase: String?, newSecurityType: Int): Boolean =
-        SoftApConfBuilder(_softApConfiguration.value).setPassphrase(
-            newPassphrase,
-            newSecurityType,
-        ).build().let { updateSoftApConfiguration(it) }
+        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
+            .setPassphrase(
+                newPassphrase,
+                newSecurityType,
+            ).build().let { updateSoftApConfigurationHidden(it) }
 
     fun setBssid(newBssid: MacAddress?): Boolean =
-        SoftApConfBuilder(_softApConfiguration.value).setBssid(newBssid).build()
-            .let { updateSoftApConfiguration(it) }
+        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
+            .setBssid(newBssid).build()
+            .let { updateSoftApConfigurationHidden(it) }
 
     fun setIsHidden(newIsHidden: Boolean): Boolean =
-        SoftApConfBuilder(_softApConfiguration.value).setHiddenSsid(newIsHidden)
-            .build().let { updateSoftApConfiguration(it) }
+        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
+            .setHiddenSsid(newIsHidden).build()
+            .let { updateSoftApConfigurationHidden(it) }
+
+    fun setBlockedDevices(newList: List<MacAddress>): Boolean =
+        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
+            .setBlockedClientList(newList).build()
+            .let { updateSoftApConfigurationHidden(it) }
 
     fun registerCallback() {
         tetheringConnector.registerTetheringEventCallback(

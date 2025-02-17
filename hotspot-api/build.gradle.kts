@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.refine)
 }
 
 android {
@@ -35,6 +36,7 @@ android {
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
     implementation(libs.hiddenapibypass)
+    implementation(libs.refine.runtime)
     implementation(libs.core.ktx)
     implementation(libs.shizuku.api)
     testImplementation(libs.junit)

@@ -33,7 +33,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-public final class SoftApConfiguration implements Parcelable {
+import dev.rikka.tools.refine.RefineAs;
+
+@RefineAs(SoftApConfiguration.class)
+public final class SoftApConfigurationHidden implements Parcelable {
     @VisibleForTesting
     static final int PSK_MIN_LEN = 8;
 
@@ -98,14 +101,14 @@ public final class SoftApConfiguration implements Parcelable {
     }
 
     @NonNull
-    public static final Creator<SoftApConfiguration> CREATOR = new Creator<>() {
+    public static final Creator<SoftApConfigurationHidden> CREATOR = new Creator<>() {
         @Override
-        public SoftApConfiguration createFromParcel(Parcel in) {
+        public SoftApConfigurationHidden createFromParcel(Parcel in) {
             throw new RuntimeException("stub!");
         }
 
         @Override
-        public SoftApConfiguration[] newArray(int size) {
+        public SoftApConfigurationHidden[] newArray(int size) {
             throw new RuntimeException("stub!");
         }
     };
@@ -292,12 +295,12 @@ public final class SoftApConfiguration implements Parcelable {
             throw new RuntimeException("stub!");
         }
 
-        public Builder(@NonNull SoftApConfiguration other) {
+        public Builder(@NonNull SoftApConfigurationHidden other) {
             throw new RuntimeException("stub!");
         }
 
         @NonNull
-        public SoftApConfiguration build() {
+        public SoftApConfigurationHidden build() {
             throw new RuntimeException("stub!");
         }
 

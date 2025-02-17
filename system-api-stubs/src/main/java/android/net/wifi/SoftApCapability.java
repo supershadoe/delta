@@ -16,7 +16,7 @@
 
 package android.net.wifi;
 
-import android.net.wifi.SoftApConfiguration.BandType;
+import android.net.wifi.SoftApConfigurationHidden.BandType;
 import android.os.Parcel;
 import android.os.Parcelable;
 

@@ -12,6 +12,7 @@ junitx = "1.2.1"
 kotlin = "2.0.21"
 material = "1.12.0"
 navigation-compose = "2.8.7"
+refine = "4.4.0"
 serialization-json = "1.7.3"
 shizuku = "13.1.5"
 splashscreen = "1.0.1"
@@ -26,6 +27,11 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+# Refine plugin
+refine-processor = { group = "dev.rikka.tools.refine", name = "annotation-processor", version.ref = "refine" }
+refine-annotation = { group = "dev.rikka.tools.refine", name = "annotation", version.ref = "refine" }
+refine-runtime = { group = "dev.rikka.tools.refine", name = "runtime", version.ref = "refine" }
 
 # For UI tests
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
@@ -60,6 +66,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
 
 [bundles]
 androidx = ["core-ktx", "core-splashscreen", "graphics-shapes"]

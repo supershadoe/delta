@@ -1,7 +1,6 @@
 package dev.shadoe.delta.hotspot
 
 import android.net.wifi.SoftApConfiguration
-import android.net.wifi.SoftApConfiguration.SecurityType
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -39,17 +38,18 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.WifiApEnabledStates
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
-private fun getNameOfSecurityType(@SecurityType securityType: Int): String {
+private fun getNameOfSecurityType(@SoftApSecurityType.SecurityType securityType: Int): String {
     return when (securityType) {
-        SoftApConfiguration.SECURITY_TYPE_OPEN -> "None"
-        SoftApConfiguration.SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
-        SoftApConfiguration.SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
-        SoftApConfiguration.SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
+        SoftApSecurityType.SECURITY_TYPE_OPEN -> "None"
+        SoftApSecurityType.SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
+        SoftApSecurityType.SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
+        SoftApSecurityType.SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
         else -> "Not supported"
     }
 }

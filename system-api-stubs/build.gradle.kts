@@ -52,4 +52,6 @@ android {
 
 dependencies {
     implementation(libs.androidx.annotation)
+    annotationProcessor(libs.refine.processor)
+    implementation(libs.refine.annotation)
 }

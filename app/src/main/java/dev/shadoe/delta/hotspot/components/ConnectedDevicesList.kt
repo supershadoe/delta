@@ -1,6 +1,5 @@
 package dev.shadoe.delta.hotspot.components
 
-import android.net.TetheredClient
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,9 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.shadoe.hotspotapi.TetheredClientWrapper
 
 @Composable
-internal fun ConnectedDevicesList(tetheredClients: List<TetheredClient>) {
+internal fun ConnectedDevicesList(tetheredClients: List<TetheredClientWrapper>) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -53,12 +53,12 @@ internal fun ConnectedDevicesList(tetheredClients: List<TetheredClient>) {
                             horizontal = 8.dp
                         )
                     ) {
-                        with(tetheredClients[it].addresses.firstOrNull()) {
+                        with(tetheredClients[it]) {
                             Text(
-                                text = this?.hostname ?: "No name"
+                                text = hostnames.firstOrNull() ?: "No name"
                             )
                             Text(
-                                text = this?.address?.address?.hostAddress
+                                text = addresses.firstOrNull()?.address?.hostAddress
                                     ?: "Link address not allocated",
                             )
                         }
