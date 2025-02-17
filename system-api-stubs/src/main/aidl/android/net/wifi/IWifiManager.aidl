@@ -16,6 +16,7 @@
 package android.net.wifi;
 
 import android.net.wifi.ISoftApCallback;
+import android.net.wifi.IStringListener;
 import android.net.wifi.SoftApConfiguration;
 
 interface IWifiManager
@@ -23,6 +24,7 @@ interface IWifiManager
     boolean validateSoftApConfiguration(in SoftApConfiguration config);
     int getWifiApEnabledState();
     SoftApConfiguration getSoftApConfiguration();
+    void queryLastConfiguredTetheredApPassphraseSinceBoot(IStringListener listener);
     boolean setSoftApConfiguration(in SoftApConfiguration softApConfig, String packageName);
     void registerSoftApCallback(in ISoftApCallback callback);
     void unregisterSoftApCallback(in ISoftApCallback callback);

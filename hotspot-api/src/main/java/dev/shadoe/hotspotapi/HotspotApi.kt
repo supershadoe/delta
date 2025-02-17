@@ -6,6 +6,7 @@ import android.net.MacAddress
 import android.net.TetheringManager
 import android.net.TetheringManager.TETHERING_WIFI
 import android.net.wifi.ISoftApCallback
+import android.net.wifi.IStringListener
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfiguration
 import android.net.wifi.SoftApConfigurationHidden
@@ -23,11 +24,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
+import java.util.UUID
 import kotlin.time.Duration.Companion.seconds
 
 class HotspotApi(
@@ -46,12 +49,37 @@ class HotspotApi(
     }
     private val _enabledState: MutableStateFlow<Int>
     private val _tetheredClients: MutableStateFlow<List<TetheredClientWrapper>>
+    private val _lastUsedPassphraseSinceBoot: MutableStateFlow<String?>
 
     private val tetheringEventCallback: ITetheringEventCallback
     private val softApCallback: ISoftApCallback
+    private val lastPassphraseListener: IStringListener
 
     companion object {
         private const val ADB_PACKAGE_NAME = "com.android.shell"
+
+        private fun generateRandomPassword(): String {
+            /*
+             * Copyright (C) 2023 The Android Open Source Project
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *      http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             *
+             * From https://cs.android.com/android/platform/superproject/main/+/29fbb69343c063b65d71180d04f5d2acaf4f050c:packages/apps/Settings/src/com/android/settings/wifi/repository/WifiHotspotRepository.java;l=168
+             */
+            val randomUUID = UUID.randomUUID().toString()
+            //first 12 chars from xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+            return randomUUID.substring(0, 8) + randomUUID.substring(9, 13)
+        }
     }
 
     init {
@@ -74,6 +102,7 @@ class HotspotApi(
         )
         _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
         _tetheredClients = MutableStateFlow(emptyList())
+        _lastUsedPassphraseSinceBoot = MutableStateFlow(null)
 
         tetheringEventCallback = TetheringEventCallback(
             updateEnabledState = {
@@ -83,6 +112,11 @@ class HotspotApi(
         )
 
         softApCallback = SoftApCallback()
+        lastPassphraseListener = object : IStringListener.Stub() {
+            override fun onResult(value: String) {
+                _lastUsedPassphraseSinceBoot.value = value
+            }
+        }
     }
 
     val enabledState: StateFlow<Int> = _enabledState
@@ -99,7 +133,12 @@ class HotspotApi(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val passphrase = _softApConfiguration.mapLatest { it.passphrase }
+    val passphrase = combine(
+        _softApConfiguration.mapLatest { it.passphrase },
+        _lastUsedPassphraseSinceBoot
+    ) { val1, val2 ->
+        val1 ?: val2 ?: generateRandomPassword()
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val securityType = _softApConfiguration.mapLatest { it.securityType }
@@ -112,6 +151,10 @@ class HotspotApi(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val blockedDevices = _softApConfiguration.mapLatest { it.blockedClientList }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val isAutoShutdownEnabled =
+        _softApConfiguration.mapLatest { it.isAutoShutdownEnabled }
 
     private fun updateSoftApConfigurationHidden(conf: SoftApConfigurationHidden): Boolean {
         if (!wifiManager.validateSoftApConfiguration(
@@ -159,6 +202,14 @@ class HotspotApi(
         SoftApConfigurationHidden.Builder(_softApConfiguration.value)
             .setBlockedClientList(newList).build()
             .let { updateSoftApConfigurationHidden(it) }
+
+    fun setAutoShutdownState(newState: Boolean): Boolean =
+        SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
+            setAutoShutdownEnabled(newState)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                setBridgedModeOpportunisticShutdownEnabled(newState)
+            }
+        }.build().let { updateSoftApConfigurationHidden(it) }
 
     fun registerCallback() {
         tetheringConnector.registerTetheringEventCallback(
