@@ -14,6 +14,7 @@ import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
 import dev.rikka.tools.refine.Refine
+import dev.shadoe.hotspotapi.SoftApSpeedType.hasBand
 import dev.shadoe.hotspotapi.TetheringExceptions.BinderAcquisitionException
 import dev.shadoe.hotspotapi.callbacks.SoftApCallback
 import dev.shadoe.hotspotapi.callbacks.StartTetheringCallback
@@ -162,7 +163,24 @@ class HotspotApi(
     val isHidden = _softApConfiguration.mapLatest { it.isHiddenSsid }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val speedType = _softApConfiguration.mapLatest { it.bands.max() }
+    val speedType = _softApConfiguration.mapLatest {
+        it.bands.max().run {
+            when {
+                this hasBand SoftApSpeedType.BAND_6GHZ -> {
+                    SoftApSpeedType.BAND_6GHZ
+                }
+                this hasBand SoftApSpeedType.BAND_5GHZ  -> {
+                    SoftApSpeedType.BAND_5GHZ
+                }
+                this hasBand SoftApSpeedType.BAND_2GHZ  -> {
+                    SoftApSpeedType.BAND_2GHZ
+                }
+                else -> {
+                    SoftApSpeedType.BAND_UNKNOWN
+                }
+            }
+        }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val blockedDevices = _softApConfiguration.mapLatest { it.blockedClientList }

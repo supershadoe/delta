@@ -4,6 +4,9 @@ import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.IntDef
 
 object SoftApSpeedType {
+    /** Wi-Fi hotspot band unknown. */
+    const val BAND_UNKNOWN = 0
+
     const val BAND_2GHZ = SoftApConfigurationHidden.BAND_2GHZ
 
     const val BAND_5GHZ = SoftApConfigurationHidden.BAND_5GHZ
@@ -27,4 +30,6 @@ object SoftApSpeedType {
             else -> "Not supported"
         }
     }
+
+    infix fun Int.hasBand(other: Int): Boolean = (this and other) == other
 }
