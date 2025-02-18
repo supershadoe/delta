@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.NetworkWifi
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.SettingsPower
 import androidx.compose.material.icons.rounded.Wifi
@@ -50,6 +51,8 @@ import dev.shadoe.hotspotapi.SoftApEnabledState
 import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.getNameOfSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.supportedSecurityTypes
+import dev.shadoe.hotspotapi.SoftApSpeedType
+import dev.shadoe.hotspotapi.SoftApSpeedType.getNameOfSpeedType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
@@ -69,6 +72,10 @@ fun HotspotEditScreen() {
         hotspotApi.securityType.collectAsState(SoftApConfiguration.SECURITY_TYPE_OPEN)
     val isAutoShutdownEnabled =
         hotspotApi.isAutoShutdownEnabled.collectAsState(false)
+    val speedType =
+        hotspotApi.speedType.collectAsState(SoftApSpeedType.BAND_2GHZ)
+    val supportedSpeedTypes = hotspotApi.supportedSpeedTypes.collectAsState()
+
     val ssidField = remember(ssid.value) { mutableStateOf(ssid.value) }
     val passphraseField =
         remember(passphrase.value) { mutableStateOf(passphrase.value) }
@@ -77,6 +84,8 @@ fun HotspotEditScreen() {
     val autoShutdownField = remember(isAutoShutdownEnabled.value) {
         mutableStateOf(isAutoShutdownEnabled.value)
     }
+    val speedTypeField =
+        remember(speedType.value) { mutableIntStateOf(speedType.value) }
 
     LaunchedEffect(securityType.value) {
         if (securityType.value == SoftApSecurityType.SECURITY_TYPE_OPEN) {
@@ -238,6 +247,43 @@ fun HotspotEditScreen() {
                         checked = autoShutdownField.value,
                         onCheckedChange = { autoShutdownField.value = it },
                     )
+                }
+            }
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.NetworkWifi,
+                        contentDescription = "Frequency band icon"
+                    )
+                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        Text(
+                            "Frequency band",
+                            modifier = Modifier.padding(start = 8.dp),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        LazyRow {
+                            items(supportedSpeedTypes.value.size) {
+                                FilterChip(
+                                    selected = speedTypeField.intValue == supportedSpeedTypes.value[it],
+                                    onClick = {
+                                        speedTypeField.intValue =
+                                            supportedSpeedTypes.value[it]
+                                    },
+                                    label = {
+                                        Text(
+                                            text = getNameOfSpeedType(
+                                                supportedSpeedTypes.value[it]
+                                            )
+                                        )
+                                    },
+                                    modifier = Modifier.padding(horizontal = 2.dp)
+                                )
+                            }
+                        }
+                    }
                 }
             }
             item {
