@@ -1,5 +1,6 @@
 package dev.shadoe.hotspotapi
 
+import android.content.AttributionSource
 import android.net.ITetheringConnector
 import android.net.ITetheringEventCallback
 import android.net.MacAddress
@@ -13,6 +14,7 @@ import android.net.wifi.SoftApConfiguration
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
+//import android.os.Bundle
 import dev.rikka.tools.refine.Refine
 import dev.shadoe.hotspotapi.SoftApSpeedType.hasBand
 import dev.shadoe.hotspotapi.TetheringExceptions.BinderAcquisitionException
@@ -38,6 +40,7 @@ import kotlin.time.Duration.Companion.seconds
 class HotspotApi(
     private val packageName: String,
     private val attributionTag: String?,
+    private val attributionSource: AttributionSource? = null,
 ) {
     private val tetheringConnector: ITetheringConnector
     private val wifiManager: IWifiManager
@@ -169,12 +172,15 @@ class HotspotApi(
                 this hasBand SoftApSpeedType.BAND_6GHZ -> {
                     SoftApSpeedType.BAND_6GHZ
                 }
-                this hasBand SoftApSpeedType.BAND_5GHZ  -> {
+
+                this hasBand SoftApSpeedType.BAND_5GHZ -> {
                     SoftApSpeedType.BAND_5GHZ
                 }
-                this hasBand SoftApSpeedType.BAND_2GHZ  -> {
+
+                this hasBand SoftApSpeedType.BAND_2GHZ -> {
                     SoftApSpeedType.BAND_2GHZ
                 }
+
                 else -> {
                     SoftApSpeedType.BAND_UNKNOWN
                 }
@@ -322,10 +328,10 @@ class HotspotApi(
         if (wifiManager.is24GHzBandSupported) {
             supportedSpeedTypes.add(SoftApSpeedType.BAND_2GHZ)
         }
-        if (wifiManager.is5GHzBandSupported) {
+        if (wifiManager.is5GHzBandSupported && is5GAvailable()) {
             supportedSpeedTypes.add(SoftApSpeedType.BAND_5GHZ)
         }
-        if (wifiManager.is6GHzBandSupported) {
+        if (wifiManager.is6GHzBandSupported && is6GAvailable()) {
             supportedSpeedTypes.add(SoftApSpeedType.BAND_6GHZ)
         }
         return supportedSpeedTypes.toList()
@@ -333,4 +339,48 @@ class HotspotApi(
 
     private fun isDualBandSupported() =
         wifiManager.supportedFeatures and SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP == SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP
+
+    // These functions are no-ops for now
+    // Check out https://github.com/supershadoe/delta/issues/17
+    private fun is6GAvailable() = true
+    private fun is5GAvailable() = true
+//    private fun is6GAvailable(): Boolean {
+//        val bundle = Bundle()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            bundle.putParcelable(
+//                "EXTRA_PARAM_KEY_ATTRIBUTION_SOURCE",
+//                attributionSource
+//            )
+//        }
+//        return runCatching {
+//            wifiManager.getUsableChannels(
+//                WifiScannerUtils.WIFI_BAND_6_GHZ,
+//                WifiScannerUtils.OP_MODE_SAP,
+//                WifiScannerUtils.FILTER_REGULATORY,
+//                packageName,
+//                bundle,
+//            )
+//        }.onFailure { println(it.stackTraceToString()) }.getOrNull()
+//            ?.isNotEmpty() == true
+//    }
+//
+//    private fun is5GAvailable(): Boolean {
+//        val bundle = Bundle()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            bundle.putParcelable(
+//                "EXTRA_PARAM_KEY_ATTRIBUTION_SOURCE",
+//                attributionSource
+//            )
+//        }
+//        return runCatching {
+//            wifiManager.getUsableChannels(
+//                WifiScannerUtils.WIFI_BAND_5_GHZ_WITH_DFS,
+//                WifiScannerUtils.OP_MODE_SAP,
+//                WifiScannerUtils.FILTER_REGULATORY,
+//                packageName,
+//                bundle,
+//            )
+//        }.onFailure { println(it.stackTraceToString()) }.getOrNull()
+//            ?.isNotEmpty() == true
+//    }
 }

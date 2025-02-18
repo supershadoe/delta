@@ -19,6 +19,7 @@ import android.net.wifi.IOnWifiDriverCountryCodeChangedListener;
 import android.net.wifi.ISoftApCallback;
 import android.net.wifi.IStringListener;
 import android.net.wifi.SoftApConfiguration;
+import android.net.wifi.WifiAvailableChannel;
 
 interface IWifiManager
 {
@@ -39,4 +40,5 @@ interface IWifiManager
     boolean setSoftApConfiguration(in SoftApConfiguration softApConfig, String packageName);
     void registerSoftApCallback(in ISoftApCallback callback);
     void unregisterSoftApCallback(in ISoftApCallback callback);
+    List<WifiAvailableChannel> getUsableChannels(int band, int mode, int filter, String packageName, in Bundle extras);
 }
