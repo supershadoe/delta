@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -45,8 +46,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
-import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.SoftApEnabledState
+import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.getNameOfSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.supportedSecurityTypes
 import kotlinx.coroutines.delay
@@ -99,7 +100,7 @@ fun HotspotEditScreen() {
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { scaffoldPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(scaffoldPadding)
@@ -110,164 +111,175 @@ fun HotspotEditScreen() {
                     })
                 },
         ) {
-            Text(
-                text = "Configure all the values below as per your liking :)",
-                modifier = Modifier.padding(8.dp)
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Wifi,
-                    contentDescription = "SSID icon"
-                )
-                OutlinedTextField(
-                    value = ssidField.value ?: "",
-                    onValueChange = { ssidField.value = it },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.None,
-                        autoCorrectEnabled = false,
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next,
-                    ),
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth(),
-                    label = { Text("SSID") },
+            item {
+                Text(
+                    text = "Configure all the values below as per your liking :)",
+                    modifier = Modifier.padding(8.dp)
                 )
             }
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.WifiPassword,
-                    contentDescription = "Security Type icon"
-                )
-                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    Text(
-                        "Security Type",
-                        modifier = Modifier.padding(start = 8.dp),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    LazyRow {
-                        items(supportedSecurityTypes.size) {
-                            FilterChip(
-                                selected = securityTypeField.intValue == supportedSecurityTypes[it],
-                                onClick = {
-                                    securityTypeField.intValue =
-                                        supportedSecurityTypes[it]
-                                },
-                                label = {
-                                    Text(
-                                        text = getNameOfSecurityType(
-                                            supportedSecurityTypes[it]
-                                        )
-                                    )
-                                },
-                                modifier = Modifier.padding(horizontal = 2.dp)
-                            )
-                        }
-                    }
-                }
-            }
-            if (securityTypeField.intValue != SoftApConfiguration.SECURITY_TYPE_OPEN) {
+            item {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(vertical = 8.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.Password,
-                        contentDescription = "Passphrase icon"
+                        imageVector = Icons.Rounded.Wifi,
+                        contentDescription = "SSID icon"
                     )
                     OutlinedTextField(
-                        value = passphraseField.value,
-                        onValueChange = { passphraseField.value = it },
+                        value = ssidField.value ?: "",
+                        onValueChange = { ssidField.value = it },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
                             capitalization = KeyboardCapitalization.None,
                             autoCorrectEnabled = false,
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done,
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Next,
                         ),
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
-                        label = { Text("Passphrase") },
+                        label = { Text("SSID") },
                     )
                 }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.SettingsPower,
-                    contentDescription = "Auto Shutdown icon"
-                )
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 16.dp),
-                    horizontalAlignment = Alignment.Start
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 8.dp)
                 ) {
-                    Text(
-                        text = "Turn off hotspot automatically?",
-                        style = MaterialTheme.typography.titleLarge
+                    Icon(
+                        imageVector = Icons.Rounded.WifiPassword,
+                        contentDescription = "Security Type icon"
                     )
-                    Text(
-                        text = "When no devices are connected.",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        Text(
+                            "Security Type",
+                            modifier = Modifier.padding(start = 8.dp),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        LazyRow {
+                            items(supportedSecurityTypes.size) {
+                                FilterChip(
+                                    selected = securityTypeField.intValue == supportedSecurityTypes[it],
+                                    onClick = {
+                                        securityTypeField.intValue =
+                                            supportedSecurityTypes[it]
+                                    },
+                                    label = {
+                                        Text(
+                                            text = getNameOfSecurityType(
+                                                supportedSecurityTypes[it]
+                                            )
+                                        )
+                                    },
+                                    modifier = Modifier.padding(horizontal = 2.dp)
+                                )
+                            }
+                        }
+                    }
                 }
-                Switch(
-                    checked = autoShutdownField.value,
-                    onCheckedChange = { autoShutdownField.value = it },
-                )
             }
-
-            Button(onClick = onClick@{
-                var passphrase: String? = passphraseField.value
-                when {
-                    securityTypeField.intValue == SoftApSecurityType.SECURITY_TYPE_OPEN -> {
-                        passphrase = null
-                    }
-
-                    passphraseField.value.isEmpty() -> {
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = "Enter a password.",
-                                withDismissAction = true,
-                                duration = SnackbarDuration.Short,
-                            )
-                        }
-                        return@onClick
+            if (securityTypeField.intValue != SoftApConfiguration.SECURITY_TYPE_OPEN) {
+                item {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Password,
+                            contentDescription = "Passphrase icon"
+                        )
+                        OutlinedTextField(
+                            value = passphraseField.value,
+                            onValueChange = { passphraseField.value = it },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(
+                                capitalization = KeyboardCapitalization.None,
+                                autoCorrectEnabled = false,
+                                keyboardType = KeyboardType.Password,
+                                imeAction = ImeAction.Done,
+                            ),
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .fillMaxWidth(),
+                            label = { Text("Passphrase") },
+                        )
                     }
                 }
-                scope.launch {
-                    hotspotApi.setSsid(ssidField.value)
-                    hotspotApi.setPassphrase(
-                        passphrase, securityTypeField.intValue
+            }
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.SettingsPower,
+                        contentDescription = "Auto Shutdown icon"
                     )
-                    hotspotApi.setAutoShutdownState(autoShutdownField.value)
-                    if (hotspotApi.enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-                        hotspotApi.stopHotspot()
-                        while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
-                            delay(500.milliseconds)
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 16.dp),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Text(
+                            text = "Turn off hotspot automatically?",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Text(
+                            text = "When no devices are connected.",
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = autoShutdownField.value,
+                        onCheckedChange = { autoShutdownField.value = it },
+                    )
+                }
+            }
+            item {
+                Button(onClick = onClick@{
+                    var passphrase: String? = passphraseField.value
+                    when {
+                        securityTypeField.intValue == SoftApSecurityType.SECURITY_TYPE_OPEN -> {
+                            passphrase = null
                         }
-                        hotspotApi.startHotspot()
-                        while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-                            delay(500.milliseconds)
+
+                        passphraseField.value.isEmpty() -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = "Enter a password.",
+                                    withDismissAction = true,
+                                    duration = SnackbarDuration.Short,
+                                )
+                            }
+                            return@onClick
                         }
                     }
+                    scope.launch {
+                        hotspotApi.setSsid(ssidField.value)
+                        hotspotApi.setPassphrase(
+                            passphrase, securityTypeField.intValue
+                        )
+                        hotspotApi.setAutoShutdownState(autoShutdownField.value)
+                        if (hotspotApi.enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+                            hotspotApi.stopHotspot()
+                            while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
+                                delay(500.milliseconds)
+                            }
+                            hotspotApi.startHotspot()
+                            while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+                                delay(500.milliseconds)
+                            }
+                        }
+                    }
+                        .invokeOnCompletion { if (it == null) navController?.navigateUp() }
+                }) {
+                    Text(text = "Save")
                 }
-                    .invokeOnCompletion { if (it == null) navController?.navigateUp() }
-            }) {
-                Text(text = "Save")
             }
         }
     }
