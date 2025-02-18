@@ -27,10 +27,10 @@ object SoftApSecurityType {
 
     fun getNameOfSecurityType(@SecurityType securityType: Int): String {
         return when (securityType) {
-            SoftApSecurityType.SECURITY_TYPE_OPEN -> "None"
-            SoftApSecurityType.SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
-            SoftApSecurityType.SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
-            SoftApSecurityType.SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
+            SECURITY_TYPE_OPEN -> "None"
+            SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
+            SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
+            SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
             else -> "Not supported"
         }
     }
