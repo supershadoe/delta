@@ -15,6 +15,7 @@
  */
 package android.net.wifi;
 
+import android.net.wifi.IOnWifiDriverCountryCodeChangedListener;
 import android.net.wifi.ISoftApCallback;
 import android.net.wifi.IStringListener;
 import android.net.wifi.SoftApConfiguration;
@@ -22,6 +23,15 @@ import android.net.wifi.SoftApConfiguration;
 interface IWifiManager
 {
     long getSupportedFeatures();
+    void registerDriverCountryCodeChangedListener(
+            in IOnWifiDriverCountryCodeChangedListener listener, String packageName,
+            String featureId);
+    void unregisterDriverCountryCodeChangedListener(
+            in IOnWifiDriverCountryCodeChangedListener listener);
+    boolean is24GHzBandSupported();
+    boolean is5GHzBandSupported();
+    boolean is6GHzBandSupported();
+    boolean is60GHzBandSupported();
     boolean validateSoftApConfiguration(in SoftApConfiguration config);
     int getWifiApEnabledState();
     SoftApConfiguration getSoftApConfiguration();

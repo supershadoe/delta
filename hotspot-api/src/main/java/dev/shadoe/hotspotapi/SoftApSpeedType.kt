@@ -15,6 +15,16 @@ object SoftApSpeedType {
     const val BAND_ANY = SoftApConfigurationHidden.BAND_ANY
 
     @Retention(AnnotationRetention.SOURCE)
-    @IntDef(flag = true, value = [BAND_2GHZ, BAND_5GHZ, BAND_6GHZ, BAND_60GHZ,])
+    @IntDef(flag = true, value = [BAND_2GHZ, BAND_5GHZ, BAND_6GHZ, BAND_60GHZ])
     annotation class BandType
+
+    fun getNameOfSpeedType(@BandType speedType: Int): String {
+        return when (speedType) {
+            BAND_2GHZ -> "2.4 GHz"
+            BAND_5GHZ -> "5 GHz"
+            BAND_6GHZ -> "6 GHz"
+            BAND_60GHZ -> "60 GHz"
+            else -> "Not supported"
+        }
+    }
 }

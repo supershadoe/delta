@@ -5,6 +5,7 @@ import android.net.ITetheringEventCallback
 import android.net.MacAddress
 import android.net.TetheringManager
 import android.net.TetheringManager.TETHERING_WIFI
+import android.net.wifi.IOnWifiDriverCountryCodeChangedListener
 import android.net.wifi.ISoftApCallback
 import android.net.wifi.IStringListener
 import android.net.wifi.IWifiManager
@@ -50,7 +51,9 @@ class HotspotApi(
     private val _enabledState: MutableStateFlow<Int>
     private val _tetheredClients: MutableStateFlow<List<TetheredClientWrapper>>
     private val _lastUsedPassphraseSinceBoot: MutableStateFlow<String?>
+    private val _supportedSpeedTypes: MutableStateFlow<List<Int>>
 
+    private val countryCodeChangedListener: IOnWifiDriverCountryCodeChangedListener
     private val tetheringEventCallback: ITetheringEventCallback
     private val softApCallback: ISoftApCallback
     private val lastPassphraseListener: IStringListener
@@ -103,6 +106,14 @@ class HotspotApi(
         _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
         _tetheredClients = MutableStateFlow(emptyList())
         _lastUsedPassphraseSinceBoot = MutableStateFlow(null)
+        _supportedSpeedTypes = MutableStateFlow(emptyList())
+
+        countryCodeChangedListener =
+            object : IOnWifiDriverCountryCodeChangedListener.Stub() {
+                override fun onDriverCountryCodeChanged(countryCode: String?) {
+                    _supportedSpeedTypes.value = querySupportedSpeedTypes()
+                }
+            }
 
         tetheringEventCallback = TetheringEventCallback(
             updateEnabledState = {
@@ -122,6 +133,7 @@ class HotspotApi(
     val enabledState: StateFlow<Int> = _enabledState
     val tetheredClients: StateFlow<List<TetheredClientWrapper>> =
         _tetheredClients
+    val supportedSpeedTypes: StateFlow<List<Int>> = _supportedSpeedTypes
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val ssid = _softApConfiguration.mapLatest {
@@ -210,24 +222,24 @@ class HotspotApi(
 
     fun setSpeedType(newSpeedType: Int): Boolean =
         SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
-                val band2To5 =
-                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
-                val band2To6 =
-                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
-                if (newSpeedType == SoftApSpeedType.BAND_6GHZ) {
-                    setBand(band2To6)
-                } else if (newSpeedType == SoftApSpeedType.BAND_5GHZ) {
-                    setBand(band2To5)
-                } else if (isDualBandSupported() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    setBands(
-                        intArrayOf(
-                            SoftApSpeedType.BAND_2GHZ, band2To5,
-                        )
+            val band2To5 =
+                SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
+            val band2To6 =
+                SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
+            if (newSpeedType == SoftApSpeedType.BAND_6GHZ) {
+                setBand(band2To6)
+            } else if (newSpeedType == SoftApSpeedType.BAND_5GHZ) {
+                setBand(band2To5)
+            } else if (isDualBandSupported() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                setBands(
+                    intArrayOf(
+                        SoftApSpeedType.BAND_2GHZ, band2To5,
                     )
-                } else {
-                    setBand(SoftApSpeedType.BAND_2GHZ)
-                }
-            }.build().let { updateSoftApConfigurationHidden(it) }
+                )
+            } else {
+                setBand(SoftApSpeedType.BAND_2GHZ)
+            }
+        }.build().let { updateSoftApConfigurationHidden(it) }
 
     fun setAutoShutdownState(newState: Boolean): Boolean =
         SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
@@ -242,6 +254,9 @@ class HotspotApi(
             tetheringEventCallback, packageName
         )
         wifiManager.registerSoftApCallback(softApCallback)
+        wifiManager.registerDriverCountryCodeChangedListener(
+            countryCodeChangedListener, ADB_PACKAGE_NAME, attributionTag
+        )
     }
 
     suspend fun launchBackgroundTasks() {
@@ -253,6 +268,9 @@ class HotspotApi(
             tetheringEventCallback, packageName
         )
         wifiManager.unregisterSoftApCallback(softApCallback)
+        wifiManager.unregisterDriverCountryCodeChangedListener(
+            countryCodeChangedListener
+        )
     }
 
     fun startHotspot() {
@@ -285,6 +303,20 @@ class HotspotApi(
         wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
             lastPassphraseListener
         )
+
+    private fun querySupportedSpeedTypes(): List<Int> {
+        val supportedSpeedTypes = mutableListOf<Int>()
+        if (wifiManager.is24GHzBandSupported) {
+            supportedSpeedTypes.add(SoftApSpeedType.BAND_2GHZ)
+        }
+        if (wifiManager.is5GHzBandSupported) {
+            supportedSpeedTypes.add(SoftApSpeedType.BAND_5GHZ)
+        }
+        if (wifiManager.is6GHzBandSupported) {
+            supportedSpeedTypes.add(SoftApSpeedType.BAND_6GHZ)
+        }
+        return supportedSpeedTypes.toList()
+    }
 
     private fun isDualBandSupported() =
         wifiManager.supportedFeatures and SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP == SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP
