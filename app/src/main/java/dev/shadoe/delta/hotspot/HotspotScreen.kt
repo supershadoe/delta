@@ -39,7 +39,7 @@ import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
 import dev.shadoe.delta.hotspot.components.PasswordDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
-import dev.shadoe.hotspotapi.WifiApEnabledStates
+import dev.shadoe.hotspotapi.SoftApEnabledState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -107,7 +107,7 @@ fun HotspotScreen() {
                     }
                     if (!isBigScreen) {
                         TextButton(onClick = {
-                            if (enabledState.value == WifiApEnabledStates.WIFI_AP_STATE_ENABLED) {
+                            if (enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
                                 if (tetheredClients.value.isEmpty()) {
                                     if (snackbarHostState.currentSnackbarData == null) {
                                         scope.launch {

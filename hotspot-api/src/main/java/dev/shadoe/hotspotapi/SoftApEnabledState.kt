@@ -19,7 +19,7 @@
 
 package dev.shadoe.hotspotapi
 
-object WifiApEnabledStates {
+object SoftApEnabledState {
     /**
      * Wi-Fi AP is currently being disabled. The state will change to
      * {@link #WIFI_AP_STATE_DISABLED} if it finishes successfully.

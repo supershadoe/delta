@@ -46,7 +46,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.hotspotapi.SoftApSecurityType
-import dev.shadoe.hotspotapi.WifiApEnabledStates
+import dev.shadoe.hotspotapi.SoftApEnabledState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
@@ -269,13 +269,13 @@ fun HotspotEditScreen() {
                         passphrase, securityTypeField.intValue
                     )
                     hotspotApi.setAutoShutdownState(autoShutdownField.value)
-                    if (hotspotApi.enabledState.value == WifiApEnabledStates.WIFI_AP_STATE_ENABLED) {
+                    if (hotspotApi.enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
                         hotspotApi.stopHotspot()
-                        while (hotspotApi.enabledState.value != WifiApEnabledStates.WIFI_AP_STATE_DISABLED) {
+                        while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
                             delay(500.milliseconds)
                         }
                         hotspotApi.startHotspot()
-                        while (hotspotApi.enabledState.value != WifiApEnabledStates.WIFI_AP_STATE_ENABLED) {
+                        while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
                             delay(500.milliseconds)
                         }
                     }

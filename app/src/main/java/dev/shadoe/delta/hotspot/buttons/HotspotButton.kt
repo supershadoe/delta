@@ -1,7 +1,7 @@
 package dev.shadoe.delta.hotspot.buttons
 
 import androidx.compose.runtime.Composable
-import dev.shadoe.hotspotapi.WifiApEnabledStates
+import dev.shadoe.hotspotapi.SoftApEnabledState
 
 @Composable
 internal fun HotspotButton(
@@ -10,20 +10,20 @@ internal fun HotspotButton(
     stopHotspot: () -> Unit
 ) {
     when (enabledState) {
-        WifiApEnabledStates.WIFI_AP_STATE_DISABLED -> LoadedButton(
+        SoftApEnabledState.WIFI_AP_STATE_DISABLED -> LoadedButton(
             isEnabled = false
         ) {
             startHotspot()
         }
 
-        WifiApEnabledStates.WIFI_AP_STATE_ENABLING -> LoadingButton()
-        WifiApEnabledStates.WIFI_AP_STATE_ENABLED -> LoadedButton(
+        SoftApEnabledState.WIFI_AP_STATE_ENABLING -> LoadingButton()
+        SoftApEnabledState.WIFI_AP_STATE_ENABLED -> LoadedButton(
             isEnabled = true
         ) {
             stopHotspot()
         }
 
-        WifiApEnabledStates.WIFI_AP_STATE_DISABLING -> LoadingButton()
-        WifiApEnabledStates.WIFI_AP_STATE_FAILED -> FailedButton()
+        SoftApEnabledState.WIFI_AP_STATE_DISABLING -> LoadingButton()
+        SoftApEnabledState.WIFI_AP_STATE_FAILED -> FailedButton()
     }
 }

@@ -232,7 +232,7 @@ class HotspotApi(
     }
 
     fun startHotspot() {
-        if (_enabledState.value != WifiApEnabledStates.WIFI_AP_STATE_DISABLED) {
+        if (_enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
             return
         }
         val request =
@@ -246,7 +246,7 @@ class HotspotApi(
     }
 
     fun stopHotspot() {
-        if (_enabledState.value != WifiApEnabledStates.WIFI_AP_STATE_ENABLED) {
+        if (_enabledState.value != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
             return
         }
         tetheringConnector.stopTethering(
