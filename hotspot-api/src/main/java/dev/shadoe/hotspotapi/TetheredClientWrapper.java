@@ -8,6 +8,7 @@ import android.net.TetheredClient.AddressInfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,11 +28,12 @@ public final class TetheredClientWrapper {
 
     public TetheredClientWrapper(TetheredClient c) {
         this.mMacAddress = c.getMacAddress();
-        List<LinkAddress> addresses = Collections.emptyList();
-        List<String> hostnames = Collections.emptyList();
+        List<LinkAddress> addresses = new ArrayList<>();
+        List<String> hostnames = new ArrayList<>();
         this.mTetheringType = c.getTetheringType();
 
         for (final AddressInfo address : c.getAddresses()) {
+            System.out.println(address);
             addresses.add(address.getAddress());
             hostnames.add(address.getHostname());
         }
