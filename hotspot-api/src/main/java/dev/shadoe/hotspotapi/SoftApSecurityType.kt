@@ -24,4 +24,21 @@ object SoftApSecurityType {
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(value = [SECURITY_TYPE_OPEN, SECURITY_TYPE_WPA2_PSK, SECURITY_TYPE_WPA3_SAE_TRANSITION, SECURITY_TYPE_WPA3_SAE, SECURITY_TYPE_WPA3_OWE_TRANSITION, SECURITY_TYPE_WPA3_OWE])
     annotation class SecurityType
+
+    fun getNameOfSecurityType(@SecurityType securityType: Int): String {
+        return when (securityType) {
+            SoftApSecurityType.SECURITY_TYPE_OPEN -> "None"
+            SoftApSecurityType.SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
+            SoftApSecurityType.SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
+            SoftApSecurityType.SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
+            else -> "Not supported"
+        }
+    }
+
+    val supportedSecurityTypes = listOf(
+        SECURITY_TYPE_WPA3_SAE,
+        SECURITY_TYPE_WPA3_SAE_TRANSITION,
+        SECURITY_TYPE_WPA2_PSK,
+        SECURITY_TYPE_OPEN,
+    )
 }

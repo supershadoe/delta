@@ -47,26 +47,11 @@ import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.SoftApEnabledState
+import dev.shadoe.hotspotapi.SoftApSecurityType.getNameOfSecurityType
+import dev.shadoe.hotspotapi.SoftApSecurityType.supportedSecurityTypes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
-
-private fun getNameOfSecurityType(@SoftApSecurityType.SecurityType securityType: Int): String {
-    return when (securityType) {
-        SoftApSecurityType.SECURITY_TYPE_OPEN -> "None"
-        SoftApSecurityType.SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
-        SoftApSecurityType.SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
-        SoftApSecurityType.SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
-        else -> "Not supported"
-    }
-}
-
-private val supportedSecurityTypes = intArrayOf(
-    SoftApConfiguration.SECURITY_TYPE_WPA3_SAE,
-    SoftApConfiguration.SECURITY_TYPE_WPA3_SAE_TRANSITION,
-    SoftApConfiguration.SECURITY_TYPE_WPA2_PSK,
-    SoftApConfiguration.SECURITY_TYPE_OPEN,
-)
 
 @Composable
 fun HotspotEditScreen() {
