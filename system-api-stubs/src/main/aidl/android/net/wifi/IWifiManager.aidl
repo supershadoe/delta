@@ -21,6 +21,7 @@ import android.net.wifi.SoftApConfiguration;
 
 interface IWifiManager
 {
+    long getSupportedFeatures();
     boolean validateSoftApConfiguration(in SoftApConfiguration config);
     int getWifiApEnabledState();
     SoftApConfiguration getSoftApConfiguration();

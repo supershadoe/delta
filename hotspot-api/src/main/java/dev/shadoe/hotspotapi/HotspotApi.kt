@@ -150,6 +150,9 @@ class HotspotApi(
     val isHidden = _softApConfiguration.mapLatest { it.isHiddenSsid }
 
     @OptIn(ExperimentalCoroutinesApi::class)
+    val speedType = _softApConfiguration.mapLatest { it.bands.max() }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     val blockedDevices = _softApConfiguration.mapLatest { it.blockedClientList }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -204,6 +207,27 @@ class HotspotApi(
         SoftApConfigurationHidden.Builder(_softApConfiguration.value)
             .setBlockedClientList(newList).build()
             .let { updateSoftApConfigurationHidden(it) }
+
+    fun setSpeedType(newSpeedType: Int): Boolean =
+        SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
+                val band2To5 =
+                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
+                val band2To6 =
+                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
+                if (newSpeedType == SoftApSpeedType.BAND_6GHZ) {
+                    setBand(band2To6)
+                } else if (newSpeedType == SoftApSpeedType.BAND_5GHZ) {
+                    setBand(band2To5)
+                } else if (isDualBandSupported() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    setBands(
+                        intArrayOf(
+                            SoftApSpeedType.BAND_2GHZ, band2To5,
+                        )
+                    )
+                } else {
+                    setBand(SoftApSpeedType.BAND_2GHZ)
+                }
+            }.build().let { updateSoftApConfigurationHidden(it) }
 
     fun setAutoShutdownState(newState: Boolean): Boolean =
         SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
@@ -261,4 +285,7 @@ class HotspotApi(
         wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
             lastPassphraseListener
         )
+
+    private fun isDualBandSupported() =
+        wifiManager.supportedFeatures and SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP == SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP
 }
