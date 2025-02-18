@@ -190,19 +190,14 @@ class HotspotApi(
         _softApConfiguration.mapLatest { it.isAutoShutdownEnabled }
 
     private fun updateSoftApConfigurationHidden(conf: SoftApConfigurationHidden): Boolean {
-        if (!wifiManager.validateSoftApConfiguration(
-                Refine.unsafeCast<SoftApConfiguration>(conf),
-            )
-        ) {
-            return false
+        Refine.unsafeCast<SoftApConfiguration>(conf).let {
+            if (!wifiManager.validateSoftApConfiguration(it)) {
+                return false
+            }
+            _softApConfiguration.value = conf
+            wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+            return true
         }
-        _softApConfiguration.value = conf
-        wifiManager.setSoftApConfiguration(
-            Refine.unsafeCast<SoftApConfiguration>(
-                conf
-            ), ADB_PACKAGE_NAME
-        )
-        return true
     }
 
     fun setSsid(newSsid: String?): Boolean =
