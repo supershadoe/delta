@@ -1,5 +1,6 @@
 package dev.shadoe.hotspotapi
 
+import android.annotation.SuppressLint
 import android.content.AttributionSource
 import android.net.ITetheringConnector
 import android.net.ITetheringEventCallback
@@ -195,78 +196,56 @@ class HotspotApi(
     val isAutoShutdownEnabled =
         _softApConfiguration.mapLatest { it.isAutoShutdownEnabled }
 
-    private fun updateSoftApConfigurationHidden(conf: SoftApConfigurationHidden): Boolean {
-        Refine.unsafeCast<SoftApConfiguration>(conf).let {
-            if (!wifiManager.validateSoftApConfiguration(it)) {
-                return false
-            }
-            _softApConfiguration.value = conf
-            wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-            return true
-        }
-    }
-
-    fun setSsid(newSsid: String?): Boolean =
-        SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
+    fun setSoftApConfiguration(c: dev.shadoe.hotspotapi.SoftApConfiguration): Boolean =
+        SoftApConfigurationHidden.Builder().apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                setWifiSsid(newSsid?.encodeToByteArray()?.let {
+                setWifiSsid(c.ssid?.encodeToByteArray()?.let {
                     WifiSsid.fromBytes(it)
                 })
             } else {
-                @Suppress("DEPRECATION") setSsid(newSsid)
+                @Suppress("DEPRECATION") setSsid(c.ssid)
             }
-        }.build().let { updateSoftApConfigurationHidden(it) }
 
-    fun setPassphrase(newPassphrase: String?, newSecurityType: Int): Boolean =
-        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
-            .setPassphrase(
-                newPassphrase,
-                newSecurityType,
-            ).build().let { updateSoftApConfigurationHidden(it) }
+            setPassphrase(
+                c.passphrase,
+                @SuppressLint("WrongConstant") c.securityType,
+            )
 
-    fun setBssid(newBssid: MacAddress?): Boolean =
-        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
-            .setBssid(newBssid).build()
-            .let { updateSoftApConfigurationHidden(it) }
+            setBssid(c.bssid)
+            setHiddenSsid(c.isHidden)
+            setBlockedClientList(c.blockedDevices)
 
-    fun setIsHidden(newIsHidden: Boolean): Boolean =
-        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
-            .setHiddenSsid(newIsHidden).build()
-            .let { updateSoftApConfigurationHidden(it) }
-
-    fun setBlockedDevices(newList: List<MacAddress>): Boolean =
-        SoftApConfigurationHidden.Builder(_softApConfiguration.value)
-            .setBlockedClientList(newList).build()
-            .let { updateSoftApConfigurationHidden(it) }
-
-    fun setSpeedType(newSpeedType: Int): Boolean =
-        SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
             val band2To5 =
                 SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
             val band2To6 =
                 SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
-            if (newSpeedType == SoftApSpeedType.BAND_6GHZ) {
-                setBand(band2To6)
-            } else if (newSpeedType == SoftApSpeedType.BAND_5GHZ) {
-                setBand(band2To5)
-            } else if (isDualBandSupported() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                setBands(
-                    intArrayOf(
-                        SoftApSpeedType.BAND_2GHZ, band2To5,
-                    )
-                )
-            } else {
-                setBand(SoftApSpeedType.BAND_2GHZ)
-            }
-        }.build().let { updateSoftApConfigurationHidden(it) }
+            when (c.speedType) {
+                SoftApSpeedType.BAND_6GHZ -> setBand(band2To6)
+                SoftApSpeedType.BAND_5GHZ -> setBand(band2To5)
+                SoftApSpeedType.BAND_2GHZ -> {
+                    if (isDualBandSupported() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        setBands(
+                            intArrayOf(
+                                SoftApSpeedType.BAND_2GHZ, band2To5,
+                            )
+                        )
+                    } else {
+                        setBand(SoftApSpeedType.BAND_2GHZ)
+                    }
+                }
 
-    fun setAutoShutdownState(newState: Boolean): Boolean =
-        SoftApConfigurationHidden.Builder(_softApConfiguration.value).apply {
-            setAutoShutdownEnabled(newState)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                setBridgedModeOpportunisticShutdownEnabled(newState)
+                else -> {}
             }
-        }.build().let { updateSoftApConfigurationHidden(it) }
+        }.build().let { conf ->
+            Refine.unsafeCast<SoftApConfiguration>(conf).let {
+                if (!wifiManager.validateSoftApConfiguration(it)) {
+                    return false
+                }
+                _softApConfiguration.value = conf
+                wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+                return true
+            }
+        }
 
     fun registerCallback() {
         tetheringConnector.registerTetheringEventCallback(

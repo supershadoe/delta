@@ -1,6 +1,5 @@
 package dev.shadoe.delta.hotspot
 
-import android.net.wifi.SoftApConfiguration
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,6 +46,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.hotspotapi.SoftApConfiguration
 import dev.shadoe.hotspotapi.SoftApEnabledState
 import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.getNameOfSecurityType
@@ -69,12 +69,14 @@ fun HotspotEditScreen() {
     val ssid = hotspotApi.ssid.collectAsState(null)
     val passphrase = hotspotApi.passphrase.collectAsState("")
     val securityType =
-        hotspotApi.securityType.collectAsState(SoftApConfiguration.SECURITY_TYPE_OPEN)
+        hotspotApi.securityType.collectAsState(SoftApSecurityType.SECURITY_TYPE_OPEN)
     val isAutoShutdownEnabled =
         hotspotApi.isAutoShutdownEnabled.collectAsState(false)
     val speedType =
         hotspotApi.speedType.collectAsState(SoftApSpeedType.BAND_2GHZ)
     val supportedSpeedTypes = hotspotApi.supportedSpeedTypes.collectAsState()
+    val bssid = hotspotApi.bssid.collectAsState(null)
+    val isHidden = hotspotApi.isHidden.collectAsState(false)
 
     val ssidField = remember(ssid.value) { mutableStateOf(ssid.value) }
     val passphraseField =
@@ -189,7 +191,7 @@ fun HotspotEditScreen() {
                     }
                 }
             }
-            if (securityTypeField.intValue != SoftApConfiguration.SECURITY_TYPE_OPEN) {
+            if (securityTypeField.intValue != SoftApSecurityType.SECURITY_TYPE_OPEN) {
                 item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -306,11 +308,18 @@ fun HotspotEditScreen() {
                         }
                     }
                     scope.launch {
-                        hotspotApi.setSsid(ssidField.value)
-                        hotspotApi.setPassphrase(
-                            passphrase, securityTypeField.intValue
+                        hotspotApi.setSoftApConfiguration(
+                            SoftApConfiguration(
+                                ssid = ssidField.value,
+                                passphrase = passphrase,
+                                securityType = securityTypeField.intValue,
+                                bssid = bssid.value,
+                                isHidden = isHidden.value,
+                                isAutoShutdownEnabled = autoShutdownField.value,
+                                speedType = speedTypeField.intValue,
+                                blockedDevices = emptyList(),
+                            )
                         )
-                        hotspotApi.setAutoShutdownState(autoShutdownField.value)
                         if (hotspotApi.enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
                             hotspotApi.stopHotspot()
                             while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
