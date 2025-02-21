@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
@@ -40,6 +41,7 @@ import dev.shadoe.delta.hotspot.components.PasswordDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
 import dev.shadoe.hotspotapi.SoftApEnabledState
+import dev.shadoe.hotspotapi.SoftApSecurityType
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,7 +84,7 @@ fun HotspotScreen() {
             },
         ) { scaffoldPadding ->
             Column(
-                modifier = Modifier.padding(scaffoldPadding),
+                modifier = Modifier.padding(scaffoldPadding).fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -102,7 +104,9 @@ fun HotspotScreen() {
                 ) {
                     Text(text = config.value.ssid ?: "no ssid")
                     Box(modifier = Modifier.padding(bottom = 16.dp)) {
-                        PasswordDisplay(password = config.value.passphrase)
+                        if (config.value.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+                            PasswordDisplay(password = config.value.passphrase)
+                        }
                     }
                     if (!isBigScreen) {
                         TextButton(onClick = {
