@@ -1,6 +1,5 @@
 package dev.shadoe.hotspotapi
 
-import android.annotation.SuppressLint
 import android.net.ITetheringConnector
 import android.net.ITetheringEventCallback
 import android.net.TetheringManager
@@ -9,12 +8,11 @@ import android.net.wifi.ISoftApCallback
 import android.net.wifi.IStringListener
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfigurationHidden
-import android.net.wifi.WifiSsid
-import android.os.Build
 import dev.rikka.tools.refine.Refine
+import dev.shadoe.hotspotapi.Extensions.toBridgeClass
+import dev.shadoe.hotspotapi.Extensions.toOriginalClass
 import dev.shadoe.hotspotapi.TetheringExceptions.BinderAcquisitionException
 import dev.shadoe.hotspotapi.Utils.generateRandomPassword
-import dev.shadoe.hotspotapi.Utils.hasBit
 import dev.shadoe.hotspotapi.callbacks.SoftApCallback
 import dev.shadoe.hotspotapi.callbacks.StartTetheringCallback
 import dev.shadoe.hotspotapi.callbacks.StopTetheringCallback
@@ -74,14 +72,15 @@ class HotspotApi(
 
         val softApConfiguration =
             Refine.unsafeCast<SoftApConfigurationHidden>(wifiManager.softApConfiguration)
-        _config =
-            MutableStateFlow(parseSoftApConfiguration(softApConfiguration))
         _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
         _tetheredClients = MutableStateFlow(emptyList())
         _fallbackPassphrase = MutableStateFlow(generateRandomPassword())
         _supportedSpeedTypes = MutableStateFlow(emptyList())
         _maxClientLimit =
             MutableStateFlow(softApConfiguration.maxNumberOfClients)
+        _config = MutableStateFlow(
+            softApConfiguration.toBridgeClass(fallbackPassphrase = _fallbackPassphrase.value)
+        )
 
         tetheringEventCallback = TetheringEventCallback(
             updateEnabledState = {
@@ -99,13 +98,12 @@ class HotspotApi(
 
         // It is enough to call this function only once per session as
         // our config data class remembers previous passphrase.
-        wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
-            object : IStringListener.Stub() {
-                override fun onResult(value: String?) {
-                    _fallbackPassphrase.value = value ?: generateRandomPassword()
-                }
+        wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(object :
+            IStringListener.Stub() {
+            override fun onResult(value: String?) {
+                _fallbackPassphrase.value = value ?: generateRandomPassword()
             }
-        )
+        })
     }
 
     val config: StateFlow<SoftApConfiguration> = _config
@@ -115,63 +113,17 @@ class HotspotApi(
     val supportedSpeedTypes: StateFlow<List<Int>> = _supportedSpeedTypes
 
     fun setSoftApConfiguration(c: SoftApConfiguration): Boolean =
-        SoftApConfigurationHidden.Builder().apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                setWifiSsid(c.ssid?.encodeToByteArray()?.let {
-                    WifiSsid.fromBytes(it)
-                })
-            } else {
-                @Suppress("DEPRECATION") setSsid(c.ssid)
-            }
-
-            val passphrase =
-                if (c.securityType == SoftApSecurityType.SECURITY_TYPE_OPEN) {
-                    null
-                } else {
-                    c.passphrase
-                }
-
-            setPassphrase(
-                passphrase,
-                @SuppressLint("WrongConstant") c.securityType
-            )
-
-            setBssid(c.bssid)
-            setHiddenSsid(c.isHidden)
-            setBlockedClientList(c.blockedDevices)
-
-            val band2To5 =
-                SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
-            val band2To6 =
-                SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
-            when (c.speedType) {
-                SoftApSpeedType.BAND_6GHZ -> setBand(band2To6)
-                SoftApSpeedType.BAND_5GHZ -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        setBands(
-                            intArrayOf(
-                                SoftApSpeedType.BAND_2GHZ, band2To5,
-                            )
-                        )
+        runCatching {
+            Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(c.toOriginalClass())
+                .let {
+                    if (!wifiManager.validateSoftApConfiguration(it)) {
+                        return false
                     }
-                    setBand(band2To5)
+                    _config.value = c
+                    wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+                    return true
                 }
-                SoftApSpeedType.BAND_2GHZ -> {
-                    setBand(SoftApSpeedType.BAND_2GHZ)
-                }
-
-                else -> {}
-            }
-        }.build().let {
-            Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(it).let {
-                if (!wifiManager.validateSoftApConfiguration(it)) {
-                    return false
-                }
-                _config.value = c
-                wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-                return true
-            }
-        }
+        }.getOrDefault(false)
 
     fun registerCallback() {
         tetheringConnector.registerTetheringEventCallback(
@@ -182,7 +134,8 @@ class HotspotApi(
 
     suspend fun launchBackgroundTasks() {
         _getSoftApConfigFlow.collect {
-            _config.value = parseSoftApConfiguration(it)
+            _config.value =
+                it.toBridgeClass(fallbackPassphrase = _fallbackPassphrase.value)
         }
     }
 
@@ -218,38 +171,4 @@ class HotspotApi(
             TetheringResultListener(StopTetheringCallback()),
         )
     }
-
-    private fun parseSoftApConfiguration(c: SoftApConfigurationHidden) =
-        SoftApConfiguration(
-            ssid = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                c.wifiSsid?.bytes?.decodeToString()
-            } else {
-                @Suppress("DEPRECATION") c.ssid
-            },
-            passphrase = c.passphrase ?: _fallbackPassphrase.value,
-            securityType = @SuppressLint("WrongConstant") c.securityType,
-            bssid = c.bssid,
-            isHidden = c.isHiddenSsid,
-            speedType = c.bands.max().run {
-                when {
-                    this hasBit SoftApSpeedType.BAND_6GHZ -> {
-                        SoftApSpeedType.BAND_6GHZ
-                    }
-
-                    this hasBit SoftApSpeedType.BAND_5GHZ -> {
-                        SoftApSpeedType.BAND_5GHZ
-                    }
-
-                    this hasBit SoftApSpeedType.BAND_2GHZ -> {
-                        SoftApSpeedType.BAND_2GHZ
-                    }
-
-                    else -> {
-                        SoftApSpeedType.BAND_UNKNOWN
-                    }
-                }
-            },
-            blockedDevices = c.blockedClientList,
-            isAutoShutdownEnabled = c.isAutoShutdownEnabled,
-        )
 }
