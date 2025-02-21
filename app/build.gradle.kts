@@ -14,8 +14,8 @@ android {
         applicationId = "dev.shadoe.delta"
         minSdk = 30
         targetSdk = 35
-        versionCode = 6
-        versionName = "0.2.1"
+        versionCode = 7
+        versionName = "0.2.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
