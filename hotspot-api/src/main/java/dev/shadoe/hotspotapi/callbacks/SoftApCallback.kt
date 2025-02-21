@@ -5,28 +5,36 @@ import android.net.wifi.SoftApCapability
 import android.net.wifi.SoftApInfo
 import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
+import dev.shadoe.hotspotapi.SoftApSpeedType
 
-class SoftApCallback: ISoftApCallback.Stub() {
-    override fun onStateChanged(state: SoftApState?) {
-//        TODO("Not yet implemented")
-        println("soft ap state changed $state")
-    }
+class SoftApCallback(
+    private val setSupportedSpeedTypes: (List<Int>) -> Unit,
+    private val setMaxClientLimit: (Int) -> Unit,
+) : ISoftApCallback.Stub() {
+    /**
+     * Results in a no-op because already [TetheringEventCallback] handles it
+     */
+    override fun onStateChanged(state: SoftApState?) {}
 
+    /**
+     * Results in a no-op because already [TetheringEventCallback] handles it
+     */
     override fun onConnectedClientsOrInfoChanged(
         infos: Map<String?, SoftApInfo?>?,
         clients: Map<String?, List<WifiClient?>?>?,
         isBridged: Boolean,
         isRegistration: Boolean
-    ) {
-//        TODO("Not yet implemented")
-        println("soft ap info changed $infos")
-        println("soft ap clients changed $clients")
-        println("soft ap change isRegistration = $isRegistration isBridged = $isBridged")
-    }
+    ) {}
 
+    /**
+     * Gets supported bands, max client limit and other capabilities and
+     * update state.
+     */
     override fun onCapabilityChanged(capability: SoftApCapability?) {
-//        TODO("Not yet implemented")
+        capability ?: return
         println("soft ap cap changed $capability")
+        updateSupportedSpeedTypes(capability)
+        setMaxClientLimit(capability.maxSupportedClients)
     }
 
     /**
@@ -40,10 +48,25 @@ class SoftApCallback: ISoftApCallback.Stub() {
      * TODO: think about how to use this in the going forward.
      */
     override fun onBlockedClientConnecting(
-        client: WifiClient?,
-        blockedReason: Int
+        client: WifiClient?, blockedReason: Int
     ) {
-//        TODO("Not yet implemented")
         println("blocked client ${client?.macAddress} $blockedReason")
+    }
+
+    private fun updateSupportedSpeedTypes(capability: SoftApCapability) {
+        val bandToSoftApFeatureMap = mapOf(
+            SoftApSpeedType.BAND_2GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_24G_SUPPORTED,
+            SoftApSpeedType.BAND_5GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_5G_SUPPORTED,
+            SoftApSpeedType.BAND_6GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_6G_SUPPORTED,
+        )
+
+        bandToSoftApFeatureMap.keys.filter { band: Int ->
+            val isSupported = capability.areFeaturesSupported(
+                bandToSoftApFeatureMap.getValue(band)
+            )
+            val isAvailable =
+                capability.getSupportedChannelList(band).isNotEmpty()
+            isSupported && isAvailable
+        }.let { setSupportedSpeedTypes(it) }
     }
 }

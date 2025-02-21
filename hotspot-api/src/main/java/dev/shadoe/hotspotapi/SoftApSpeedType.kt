@@ -30,6 +30,4 @@ object SoftApSpeedType {
             else -> "Not supported"
         }
     }
-
-    infix fun Int.hasBand(other: Int): Boolean = (this and other) == other
 }

@@ -4,10 +4,8 @@ import android.annotation.SuppressLint
 import android.content.AttributionSource
 import android.net.ITetheringConnector
 import android.net.ITetheringEventCallback
-import android.net.MacAddress
 import android.net.TetheringManager
 import android.net.TetheringManager.TETHERING_WIFI
-import android.net.wifi.IOnWifiDriverCountryCodeChangedListener
 import android.net.wifi.ISoftApCallback
 import android.net.wifi.IStringListener
 import android.net.wifi.IWifiManager
@@ -15,10 +13,9 @@ import android.net.wifi.SoftApConfiguration
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
-//import android.os.Bundle
 import dev.rikka.tools.refine.Refine
-import dev.shadoe.hotspotapi.SoftApSpeedType.hasBand
 import dev.shadoe.hotspotapi.TetheringExceptions.BinderAcquisitionException
+import dev.shadoe.hotspotapi.Utils.hasBit
 import dev.shadoe.hotspotapi.callbacks.SoftApCallback
 import dev.shadoe.hotspotapi.callbacks.StartTetheringCallback
 import dev.shadoe.hotspotapi.callbacks.StopTetheringCallback
@@ -57,8 +54,8 @@ class HotspotApi(
     private val _tetheredClients: MutableStateFlow<List<TetheredClientWrapper>>
     private val _lastUsedPassphraseSinceBoot: MutableStateFlow<String?>
     private val _supportedSpeedTypes: MutableStateFlow<List<Int>>
+    private val _maxClientLimit: MutableStateFlow<Int>
 
-    private val countryCodeChangedListener: IOnWifiDriverCountryCodeChangedListener
     private val tetheringEventCallback: ITetheringEventCallback
     private val softApCallback: ISoftApCallback
     private val lastPassphraseListener: IStringListener
@@ -112,13 +109,8 @@ class HotspotApi(
         _tetheredClients = MutableStateFlow(emptyList())
         _lastUsedPassphraseSinceBoot = MutableStateFlow(null)
         _supportedSpeedTypes = MutableStateFlow(emptyList())
-
-        countryCodeChangedListener =
-            object : IOnWifiDriverCountryCodeChangedListener.Stub() {
-                override fun onDriverCountryCodeChanged(countryCode: String?) {
-                    _supportedSpeedTypes.value = querySupportedSpeedTypes()
-                }
-            }
+        _maxClientLimit =
+            MutableStateFlow(_softApConfiguration.value.maxNumberOfClients)
 
         tetheringEventCallback = TetheringEventCallback(
             updateEnabledState = {
@@ -127,7 +119,12 @@ class HotspotApi(
             setTetheredClients = { _tetheredClients.value = it },
         )
 
-        softApCallback = SoftApCallback()
+        softApCallback = SoftApCallback(
+            setSupportedSpeedTypes = {
+                _supportedSpeedTypes.value = it
+            },
+            setMaxClientLimit = { _maxClientLimit.value },
+        )
         lastPassphraseListener = object : IStringListener.Stub() {
             override fun onResult(value: String) {
                 _lastUsedPassphraseSinceBoot.value = value
@@ -170,15 +167,15 @@ class HotspotApi(
     val speedType = _softApConfiguration.mapLatest {
         it.bands.max().run {
             when {
-                this hasBand SoftApSpeedType.BAND_6GHZ -> {
+                this hasBit SoftApSpeedType.BAND_6GHZ -> {
                     SoftApSpeedType.BAND_6GHZ
                 }
 
-                this hasBand SoftApSpeedType.BAND_5GHZ -> {
+                this hasBit SoftApSpeedType.BAND_5GHZ -> {
                     SoftApSpeedType.BAND_5GHZ
                 }
 
-                this hasBand SoftApSpeedType.BAND_2GHZ -> {
+                this hasBit SoftApSpeedType.BAND_2GHZ -> {
                     SoftApSpeedType.BAND_2GHZ
                 }
 
@@ -252,9 +249,6 @@ class HotspotApi(
             tetheringEventCallback, packageName
         )
         wifiManager.registerSoftApCallback(softApCallback)
-        wifiManager.registerDriverCountryCodeChangedListener(
-            countryCodeChangedListener, ADB_PACKAGE_NAME, attributionTag
-        )
     }
 
     suspend fun launchBackgroundTasks() {
@@ -266,9 +260,6 @@ class HotspotApi(
             tetheringEventCallback, packageName
         )
         wifiManager.unregisterSoftApCallback(softApCallback)
-        wifiManager.unregisterDriverCountryCodeChangedListener(
-            countryCodeChangedListener
-        )
     }
 
     fun startHotspot() {
@@ -302,64 +293,6 @@ class HotspotApi(
             lastPassphraseListener
         )
 
-    private fun querySupportedSpeedTypes(): List<Int> {
-        val supportedSpeedTypes = mutableListOf<Int>()
-        if (wifiManager.is24GHzBandSupported) {
-            supportedSpeedTypes.add(SoftApSpeedType.BAND_2GHZ)
-        }
-        if (wifiManager.is5GHzBandSupported && is5GAvailable()) {
-            supportedSpeedTypes.add(SoftApSpeedType.BAND_5GHZ)
-        }
-        if (wifiManager.is6GHzBandSupported && is6GAvailable()) {
-            supportedSpeedTypes.add(SoftApSpeedType.BAND_6GHZ)
-        }
-        return supportedSpeedTypes.toList()
-    }
-
     private fun isDualBandSupported() =
-        wifiManager.supportedFeatures and SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP == SoftApFeature.WIFI_FEATURE_STA_BRIDGED_AP
-
-    // These functions are no-ops for now
-    // Check out https://github.com/supershadoe/delta/issues/17
-    private fun is6GAvailable() = true
-    private fun is5GAvailable() = true
-//    private fun is6GAvailable(): Boolean {
-//        val bundle = Bundle()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//            bundle.putParcelable(
-//                "EXTRA_PARAM_KEY_ATTRIBUTION_SOURCE",
-//                attributionSource
-//            )
-//        }
-//        return runCatching {
-//            wifiManager.getUsableChannels(
-//                WifiScannerUtils.WIFI_BAND_6_GHZ,
-//                WifiScannerUtils.OP_MODE_SAP,
-//                WifiScannerUtils.FILTER_REGULATORY,
-//                packageName,
-//                bundle,
-//            )
-//        }.onFailure { println(it.stackTraceToString()) }.getOrNull()
-//            ?.isNotEmpty() == true
-//    }
-//
-//    private fun is5GAvailable(): Boolean {
-//        val bundle = Bundle()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//            bundle.putParcelable(
-//                "EXTRA_PARAM_KEY_ATTRIBUTION_SOURCE",
-//                attributionSource
-//            )
-//        }
-//        return runCatching {
-//            wifiManager.getUsableChannels(
-//                WifiScannerUtils.WIFI_BAND_5_GHZ_WITH_DFS,
-//                WifiScannerUtils.OP_MODE_SAP,
-//                WifiScannerUtils.FILTER_REGULATORY,
-//                packageName,
-//                bundle,
-//            )
-//        }.onFailure { println(it.stackTraceToString()) }.getOrNull()
-//            ?.isNotEmpty() == true
-//    }
+        wifiManager.supportedFeatures hasBit WifiFeature.WIFI_FEATURE_STA_BRIDGED_AP
 }
