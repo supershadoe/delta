@@ -146,17 +146,18 @@ class HotspotApi(
                 SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
             when (c.speedType) {
                 SoftApSpeedType.BAND_6GHZ -> setBand(band2To6)
-                SoftApSpeedType.BAND_5GHZ -> setBand(band2To5)
-                SoftApSpeedType.BAND_2GHZ -> {
-                    if (isDualBandSupported() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                SoftApSpeedType.BAND_5GHZ -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         setBands(
                             intArrayOf(
                                 SoftApSpeedType.BAND_2GHZ, band2To5,
                             )
                         )
-                    } else {
-                        setBand(SoftApSpeedType.BAND_2GHZ)
                     }
+                    setBand(band2To5)
+                }
+                SoftApSpeedType.BAND_2GHZ -> {
+                    setBand(SoftApSpeedType.BAND_2GHZ)
                 }
 
                 else -> {}
@@ -251,7 +252,4 @@ class HotspotApi(
             blockedDevices = c.blockedClientList,
             isAutoShutdownEnabled = c.isAutoShutdownEnabled,
         )
-
-    private fun isDualBandSupported() =
-        wifiManager.supportedFeatures hasBit WifiFeature.WIFI_FEATURE_STA_BRIDGED_AP
 }

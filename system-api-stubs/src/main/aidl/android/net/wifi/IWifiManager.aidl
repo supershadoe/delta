@@ -23,7 +23,6 @@ import android.net.wifi.WifiAvailableChannel;
 
 interface IWifiManager
 {
-    long getSupportedFeatures();
     void registerDriverCountryCodeChangedListener(
             in IOnWifiDriverCountryCodeChangedListener listener, String packageName,
             String featureId);
