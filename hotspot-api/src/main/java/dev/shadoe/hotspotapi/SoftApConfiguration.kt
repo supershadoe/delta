@@ -4,7 +4,7 @@ import android.net.MacAddress
 
 data class SoftApConfiguration(
     val ssid: String?,
-    val passphrase: String?,
+    val passphrase: String,
     @SoftApSecurityType.SecurityType val securityType: Int,
     val bssid: MacAddress?,
     val isHidden: Boolean,

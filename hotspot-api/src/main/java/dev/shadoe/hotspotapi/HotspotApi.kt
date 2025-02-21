@@ -37,7 +37,6 @@ class HotspotApi(
     private val tetheringConnector: ITetheringConnector
     private val wifiManager: IWifiManager
 
-    private val _softApConfiguration: MutableStateFlow<SoftApConfigurationHidden>
     private val _config: MutableStateFlow<SoftApConfiguration>
     private val _getSoftApConfigFlow: Flow<SoftApConfigurationHidden> = flow {
         while (true) {
@@ -47,13 +46,12 @@ class HotspotApi(
     }
     private val _enabledState: MutableStateFlow<Int>
     private val _tetheredClients: MutableStateFlow<List<TetheredClientWrapper>>
-    private val _lastUsedPassphraseSinceBoot: MutableStateFlow<String?>
+    private val _fallbackPassphrase: MutableStateFlow<String>
     private val _supportedSpeedTypes: MutableStateFlow<List<Int>>
     private val _maxClientLimit: MutableStateFlow<Int>
 
     private val tetheringEventCallback: ITetheringEventCallback
     private val softApCallback: ISoftApCallback
-    private val lastPassphraseListener: IStringListener
 
     companion object {
         private const val ADB_PACKAGE_NAME = "com.android.shell"
@@ -74,20 +72,16 @@ class HotspotApi(
             ?.let { IWifiManager.Stub.asInterface(it) }
             ?: throw BinderAcquisitionException("Unable to get IWifiManager")
 
-        _softApConfiguration = MutableStateFlow(
+        val softApConfiguration =
             Refine.unsafeCast<SoftApConfigurationHidden>(wifiManager.softApConfiguration)
-        )
-        _config = MutableStateFlow(
-            parseSoftApConfiguration(
-                Refine.unsafeCast<SoftApConfigurationHidden>(wifiManager.softApConfiguration)
-            )
-        )
+        _config =
+            MutableStateFlow(parseSoftApConfiguration(softApConfiguration))
         _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
         _tetheredClients = MutableStateFlow(emptyList())
-        _lastUsedPassphraseSinceBoot = MutableStateFlow(null)
+        _fallbackPassphrase = MutableStateFlow(generateRandomPassword())
         _supportedSpeedTypes = MutableStateFlow(emptyList())
         _maxClientLimit =
-            MutableStateFlow(_softApConfiguration.value.maxNumberOfClients)
+            MutableStateFlow(softApConfiguration.maxNumberOfClients)
 
         tetheringEventCallback = TetheringEventCallback(
             updateEnabledState = {
@@ -102,11 +96,16 @@ class HotspotApi(
             },
             setMaxClientLimit = { _maxClientLimit.value },
         )
-        lastPassphraseListener = object : IStringListener.Stub() {
-            override fun onResult(value: String) {
-                _lastUsedPassphraseSinceBoot.value = value
+
+        // It is enough to call this function only once per session as
+        // our config data class remembers previous passphrase.
+        wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
+            object : IStringListener.Stub() {
+                override fun onResult(value: String?) {
+                    _fallbackPassphrase.value = value ?: generateRandomPassword()
+                }
             }
-        }
+        )
     }
 
     val config: StateFlow<SoftApConfiguration> = _config
@@ -125,9 +124,16 @@ class HotspotApi(
                 @Suppress("DEPRECATION") setSsid(c.ssid)
             }
 
+            val passphrase =
+                if (c.securityType == SoftApSecurityType.SECURITY_TYPE_OPEN) {
+                    null
+                } else {
+                    c.passphrase
+                }
+
             setPassphrase(
-                c.passphrase,
-                @SuppressLint("WrongConstant") c.securityType,
+                passphrase,
+                @SuppressLint("WrongConstant") c.securityType
             )
 
             setBssid(c.bssid)
@@ -155,12 +161,12 @@ class HotspotApi(
 
                 else -> {}
             }
-        }.build().let { conf ->
-            Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(conf).let {
+        }.build().let {
+            Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(it).let {
                 if (!wifiManager.validateSoftApConfiguration(it)) {
                     return false
                 }
-                _softApConfiguration.value = conf
+                _config.value = c
                 wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
                 return true
             }
@@ -174,7 +180,9 @@ class HotspotApi(
     }
 
     suspend fun launchBackgroundTasks() {
-        _getSoftApConfigFlow.collect { _softApConfiguration.value = it }
+        _getSoftApConfigFlow.collect {
+            _config.value = parseSoftApConfiguration(it)
+        }
     }
 
     fun unregisterCallback() {
@@ -210,11 +218,6 @@ class HotspotApi(
         )
     }
 
-    fun queryLastUsedPassphraseSinceBoot() =
-        wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
-            lastPassphraseListener
-        )
-
     private fun parseSoftApConfiguration(c: SoftApConfigurationHidden) =
         SoftApConfiguration(
             ssid = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -222,8 +225,7 @@ class HotspotApi(
             } else {
                 @Suppress("DEPRECATION") c.ssid
             },
-            passphrase = c.passphrase ?: _lastUsedPassphraseSinceBoot.value
-            ?: generateRandomPassword(),
+            passphrase = c.passphrase ?: _fallbackPassphrase.value,
             securityType = @SuppressLint("WrongConstant") c.securityType,
             bssid = c.bssid,
             isHidden = c.isHiddenSsid,

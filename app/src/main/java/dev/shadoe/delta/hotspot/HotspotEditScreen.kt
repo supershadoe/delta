@@ -31,12 +31,12 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -46,7 +46,6 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
-import dev.shadoe.hotspotapi.SoftApConfiguration
 import dev.shadoe.hotspotapi.SoftApEnabledState
 import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.getNameOfSecurityType
@@ -67,25 +66,9 @@ fun HotspotEditScreen() {
     val supportedSpeedTypes = hotspotApi.supportedSpeedTypes.collectAsState()
     val config = hotspotApi.config.collectAsState()
 
-    val ssidField =
-        remember(config.value.ssid) { mutableStateOf(config.value.ssid) }
-    val passphraseField = remember(config.value.passphrase) {
-        mutableStateOf(
-            config.value.passphrase ?: ""
-        )
-    }
-    val securityTypeField =
-        remember(config.value.securityType) { mutableIntStateOf(config.value.securityType) }
-    val autoShutdownField = remember(config.value.isAutoShutdownEnabled) {
-        mutableStateOf(config.value.isAutoShutdownEnabled)
-    }
-    val speedTypeField =
-        remember(config.value.speedType) { mutableIntStateOf(config.value.speedType) }
-
-    LaunchedEffect(config.value.securityType) {
-        if (config.value.securityType == SoftApSecurityType.SECURITY_TYPE_OPEN) {
-            hotspotApi.queryLastUsedPassphraseSinceBoot()
-        }
+    var mutableConfig by remember(config.value) {
+        println("triggering change")
+        mutableStateOf(config.value)
     }
 
     Scaffold(
@@ -131,8 +114,10 @@ fun HotspotEditScreen() {
                         contentDescription = "SSID icon"
                     )
                     OutlinedTextField(
-                        value = ssidField.value ?: "",
-                        onValueChange = { ssidField.value = it },
+                        value = mutableConfig.ssid ?: "",
+                        onValueChange = {
+                            mutableConfig = mutableConfig.copy(ssid = it)
+                        },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
                             capitalization = KeyboardCapitalization.None,
@@ -165,10 +150,9 @@ fun HotspotEditScreen() {
                         LazyRow {
                             items(supportedSecurityTypes.size) {
                                 FilterChip(
-                                    selected = securityTypeField.intValue == supportedSecurityTypes[it],
+                                    selected = mutableConfig.securityType == supportedSecurityTypes[it],
                                     onClick = {
-                                        securityTypeField.intValue =
-                                            supportedSecurityTypes[it]
+                                        mutableConfig = mutableConfig.copy(securityType = supportedSecurityTypes[it])
                                     },
                                     label = {
                                         Text(
@@ -184,7 +168,7 @@ fun HotspotEditScreen() {
                     }
                 }
             }
-            if (securityTypeField.intValue != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+            if (mutableConfig.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
                 item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -195,8 +179,12 @@ fun HotspotEditScreen() {
                             contentDescription = "Passphrase icon"
                         )
                         OutlinedTextField(
-                            value = passphraseField.value,
-                            onValueChange = { passphraseField.value = it },
+                            value = mutableConfig.passphrase,
+                            onValueChange = {
+                                mutableConfig = mutableConfig.copy(
+                                    passphrase = it
+                                )
+                            },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(
                                 capitalization = KeyboardCapitalization.None,
@@ -239,8 +227,11 @@ fun HotspotEditScreen() {
                         )
                     }
                     Switch(
-                        checked = autoShutdownField.value,
-                        onCheckedChange = { autoShutdownField.value = it },
+                        checked = mutableConfig.isAutoShutdownEnabled,
+                        onCheckedChange = {
+                            mutableConfig =
+                                mutableConfig.copy(isAutoShutdownEnabled = it)
+                        },
                     )
                 }
             }
@@ -262,10 +253,10 @@ fun HotspotEditScreen() {
                         LazyRow {
                             items(supportedSpeedTypes.value.size) {
                                 FilterChip(
-                                    selected = speedTypeField.intValue == supportedSpeedTypes.value[it],
+                                    selected = mutableConfig.speedType == supportedSpeedTypes.value[it],
                                     onClick = {
-                                        speedTypeField.intValue =
-                                            supportedSpeedTypes.value[it]
+                                        mutableConfig =
+                                            mutableConfig.copy(speedType = supportedSpeedTypes.value[it])
                                     },
                                     label = {
                                         Text(
@@ -283,36 +274,18 @@ fun HotspotEditScreen() {
             }
             item {
                 Button(onClick = onClick@{
-                    var passphrase: String? = passphraseField.value
-                    when {
-                        securityTypeField.intValue == SoftApSecurityType.SECURITY_TYPE_OPEN -> {
-                            passphrase = null
+                    if (mutableConfig.passphrase.isEmpty()) {
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "Enter a password.",
+                                withDismissAction = true,
+                                duration = SnackbarDuration.Short,
+                            )
                         }
-
-                        passphraseField.value.isEmpty() -> {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = "Enter a password.",
-                                    withDismissAction = true,
-                                    duration = SnackbarDuration.Short,
-                                )
-                            }
-                            return@onClick
-                        }
+                        return@onClick
                     }
                     scope.launch {
-                        hotspotApi.setSoftApConfiguration(
-                            SoftApConfiguration(
-                                ssid = ssidField.value,
-                                passphrase = passphrase,
-                                securityType = securityTypeField.intValue,
-                                bssid = config.value.bssid,
-                                isHidden = config.value.isHidden,
-                                isAutoShutdownEnabled = autoShutdownField.value,
-                                speedType = speedTypeField.intValue,
-                                blockedDevices = emptyList(),
-                            )
-                        )
+                        hotspotApi.setSoftApConfiguration(mutableConfig)
                         if (hotspotApi.enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
                             hotspotApi.stopHotspot()
                             while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
