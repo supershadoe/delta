@@ -38,7 +38,6 @@ import kotlin.time.Duration.Companion.seconds
 class HotspotApi(
     private val packageName: String,
     private val attributionTag: String?,
-    private val attributionSource: AttributionSource? = null,
 ) {
     private val tetheringConnector: ITetheringConnector
     private val wifiManager: IWifiManager
