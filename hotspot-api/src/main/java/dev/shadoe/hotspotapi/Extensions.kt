@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
+import dev.shadoe.hotspotapi.helper.SoftApSecurityType
+import dev.shadoe.hotspotapi.helper.SoftApSpeedType
 
 object Extensions {
     infix fun Int.hasBit(other: Int): Boolean = (this and other) == other

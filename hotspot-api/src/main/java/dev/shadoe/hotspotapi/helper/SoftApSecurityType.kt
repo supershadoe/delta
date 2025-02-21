@@ -1,4 +1,4 @@
-package dev.shadoe.hotspotapi
+package dev.shadoe.hotspotapi.helper
 
 import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.IntDef

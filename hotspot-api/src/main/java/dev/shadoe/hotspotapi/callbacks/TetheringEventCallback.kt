@@ -7,7 +7,7 @@ import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 import android.net.TetheringManager
-import dev.shadoe.hotspotapi.TetheredClientWrapper
+import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

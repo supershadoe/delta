@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.shadoe.hotspotapi.TetheredClientWrapper
+import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
 
 @Composable
 internal fun ConnectedDevicesList(tetheredClients: List<TetheredClientWrapper>) {

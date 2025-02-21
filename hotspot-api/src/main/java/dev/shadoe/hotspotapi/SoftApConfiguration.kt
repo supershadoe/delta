@@ -1,6 +1,8 @@
 package dev.shadoe.hotspotapi
 
 import android.net.MacAddress
+import dev.shadoe.hotspotapi.helper.SoftApSecurityType
+import dev.shadoe.hotspotapi.helper.SoftApSpeedType
 
 data class SoftApConfiguration(
     val ssid: String?,

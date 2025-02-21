@@ -17,7 +17,7 @@
  *
  */
 
-package dev.shadoe.hotspotapi
+package dev.shadoe.hotspotapi.helper
 
 object SoftApEnabledState {
     /**

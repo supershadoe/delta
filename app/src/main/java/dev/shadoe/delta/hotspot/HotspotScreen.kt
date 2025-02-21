@@ -40,8 +40,8 @@ import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
 import dev.shadoe.delta.hotspot.components.PasswordDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
-import dev.shadoe.hotspotapi.SoftApEnabledState
-import dev.shadoe.hotspotapi.SoftApSecurityType
+import dev.shadoe.hotspotapi.helper.SoftApEnabledState
+import dev.shadoe.hotspotapi.helper.SoftApSecurityType
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

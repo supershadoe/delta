@@ -1,4 +1,4 @@
-package dev.shadoe.hotspotapi
+package dev.shadoe.hotspotapi.helper
 
 import android.net.LinkAddress
 import android.net.MacAddress

@@ -46,11 +46,11 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
-import dev.shadoe.hotspotapi.SoftApEnabledState
-import dev.shadoe.hotspotapi.SoftApSecurityType
-import dev.shadoe.hotspotapi.SoftApSecurityType.getNameOfSecurityType
-import dev.shadoe.hotspotapi.SoftApSecurityType.supportedSecurityTypes
-import dev.shadoe.hotspotapi.SoftApSpeedType.getNameOfSpeedType
+import dev.shadoe.hotspotapi.helper.SoftApEnabledState
+import dev.shadoe.hotspotapi.helper.SoftApSecurityType
+import dev.shadoe.hotspotapi.helper.SoftApSecurityType.getNameOfSecurityType
+import dev.shadoe.hotspotapi.helper.SoftApSecurityType.supportedSecurityTypes
+import dev.shadoe.hotspotapi.helper.SoftApSpeedType.getNameOfSpeedType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
