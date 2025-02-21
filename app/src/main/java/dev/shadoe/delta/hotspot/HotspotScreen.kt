@@ -55,8 +55,7 @@ fun HotspotScreen() {
 //    println("isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}")
 
     val hotspotApi = LocalHotspotApiInstance.current!!
-    val ssid = hotspotApi.ssid.collectAsState(null)
-    val password = hotspotApi.passphrase.collectAsState(null)
+    val config = hotspotApi.config.collectAsState()
     val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
     val enabledState = hotspotApi.enabledState.collectAsState()
 
@@ -101,9 +100,9 @@ fun HotspotScreen() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom,
                 ) {
-                    Text(text = ssid.value ?: "no ssid")
+                    Text(text = config.value.ssid ?: "no ssid")
                     Box(modifier = Modifier.padding(bottom = 16.dp)) {
-                        PasswordDisplay(password = password.value)
+                        PasswordDisplay(password = config.value.passphrase)
                     }
                     if (!isBigScreen) {
                         TextButton(onClick = {

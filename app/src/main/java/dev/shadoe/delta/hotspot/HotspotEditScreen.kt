@@ -51,7 +51,6 @@ import dev.shadoe.hotspotapi.SoftApEnabledState
 import dev.shadoe.hotspotapi.SoftApSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.getNameOfSecurityType
 import dev.shadoe.hotspotapi.SoftApSecurityType.supportedSecurityTypes
-import dev.shadoe.hotspotapi.SoftApSpeedType
 import dev.shadoe.hotspotapi.SoftApSpeedType.getNameOfSpeedType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -65,32 +64,26 @@ fun HotspotEditScreen() {
     val snackbarHostState = remember { SnackbarHostState() }
 
     val hotspotApi = LocalHotspotApiInstance.current!!
-
-    val ssid = hotspotApi.ssid.collectAsState(null)
-    val passphrase = hotspotApi.passphrase.collectAsState("")
-    val securityType =
-        hotspotApi.securityType.collectAsState(SoftApSecurityType.SECURITY_TYPE_OPEN)
-    val isAutoShutdownEnabled =
-        hotspotApi.isAutoShutdownEnabled.collectAsState(false)
-    val speedType =
-        hotspotApi.speedType.collectAsState(SoftApSpeedType.BAND_2GHZ)
     val supportedSpeedTypes = hotspotApi.supportedSpeedTypes.collectAsState()
-    val bssid = hotspotApi.bssid.collectAsState(null)
-    val isHidden = hotspotApi.isHidden.collectAsState(false)
+    val config = hotspotApi.config.collectAsState()
 
-    val ssidField = remember(ssid.value) { mutableStateOf(ssid.value) }
-    val passphraseField =
-        remember(passphrase.value) { mutableStateOf(passphrase.value) }
+    val ssidField =
+        remember(config.value.ssid) { mutableStateOf(config.value.ssid) }
+    val passphraseField = remember(config.value.passphrase) {
+        mutableStateOf(
+            config.value.passphrase ?: ""
+        )
+    }
     val securityTypeField =
-        remember(securityType.value) { mutableIntStateOf(securityType.value) }
-    val autoShutdownField = remember(isAutoShutdownEnabled.value) {
-        mutableStateOf(isAutoShutdownEnabled.value)
+        remember(config.value.securityType) { mutableIntStateOf(config.value.securityType) }
+    val autoShutdownField = remember(config.value.isAutoShutdownEnabled) {
+        mutableStateOf(config.value.isAutoShutdownEnabled)
     }
     val speedTypeField =
-        remember(speedType.value) { mutableIntStateOf(speedType.value) }
+        remember(config.value.speedType) { mutableIntStateOf(config.value.speedType) }
 
-    LaunchedEffect(securityType.value) {
-        if (securityType.value == SoftApSecurityType.SECURITY_TYPE_OPEN) {
+    LaunchedEffect(config.value.securityType) {
+        if (config.value.securityType == SoftApSecurityType.SECURITY_TYPE_OPEN) {
             hotspotApi.queryLastUsedPassphraseSinceBoot()
         }
     }
@@ -313,8 +306,8 @@ fun HotspotEditScreen() {
                                 ssid = ssidField.value,
                                 passphrase = passphrase,
                                 securityType = securityTypeField.intValue,
-                                bssid = bssid.value,
-                                isHidden = isHidden.value,
+                                bssid = config.value.bssid,
+                                isHidden = config.value.isHidden,
                                 isAutoShutdownEnabled = autoShutdownField.value,
                                 speedType = speedTypeField.intValue,
                                 blockedDevices = emptyList(),
