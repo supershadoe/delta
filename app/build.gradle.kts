@@ -8,7 +8,6 @@ plugins {
 android {
     namespace = "dev.shadoe.delta"
     compileSdk = 35
-    compileSdkPreview = "Baklava"
 
     defaultConfig {
         applicationId = "dev.shadoe.delta"
