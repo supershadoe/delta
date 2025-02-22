@@ -16,6 +16,7 @@ navigation-compose = "2.8.7"
 refine = "4.4.0"
 serialization-json = "1.7.3"
 shizuku = "13.1.5"
+spotless = "7.0.2"
 splashscreen = "1.0.1"
 viewmodel-compose = "2.8.7"
 
@@ -69,6 +70,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlin-dsl" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
 androidx = ["core-ktx", "core-splashscreen", "graphics-shapes"]
