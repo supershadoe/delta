@@ -1,3 +1,5 @@
+import delta.buildsrc.readSigningConfig
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
@@ -17,6 +19,30 @@ android {
         versionName = "0.2.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("default") {
+            readSigningConfig(file("sign.json"))?.let { c ->
+                keyAlias = c.keyAlias
+                keyPassword = c.keyPassword
+                storeFile = file(c.storeFile)
+                storePassword = c.storePassword
+            }
+        }
+    }
+
+    flavorDimensions += "default"
+
+    productFlavors {
+        create("debugKeySigned") {
+            dimension = "default"
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        create("defaultKeySigned") {
+            dimension = "default"
+            signingConfig = signingConfigs.getByName("default")
+        }
     }
 
     buildTypes {
