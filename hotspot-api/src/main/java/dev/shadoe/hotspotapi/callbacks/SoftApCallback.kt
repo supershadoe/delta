@@ -57,9 +57,12 @@ class SoftApCallback(
     private fun updateSupportedSpeedTypes(capability: SoftApCapability) {
         val bandToSoftApFeatureMap =
             mapOf(
-                SoftApSpeedType.BAND_2GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_24G_SUPPORTED,
-                SoftApSpeedType.BAND_5GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_5G_SUPPORTED,
-                SoftApSpeedType.BAND_6GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_6G_SUPPORTED,
+                SoftApSpeedType.BAND_2GHZ to
+                    SoftApCapability.SOFTAP_FEATURE_BAND_24G_SUPPORTED,
+                SoftApSpeedType.BAND_5GHZ to
+                    SoftApCapability.SOFTAP_FEATURE_BAND_5G_SUPPORTED,
+                SoftApSpeedType.BAND_6GHZ to
+                    SoftApCapability.SOFTAP_FEATURE_BAND_6G_SUPPORTED,
             )
 
         bandToSoftApFeatureMap.keys

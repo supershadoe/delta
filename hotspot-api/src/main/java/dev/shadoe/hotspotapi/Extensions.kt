@@ -82,7 +82,8 @@ object Extensions {
                 val band2To5 =
                     SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
                 val band2To6 =
-                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
+                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or
+                        SoftApSpeedType.BAND_6GHZ
                 when (speedType) {
                     SoftApSpeedType.BAND_6GHZ -> setBand(band2To6)
                     SoftApSpeedType.BAND_5GHZ -> {
@@ -107,7 +108,9 @@ object Extensions {
                 setBlockedClientList(blockedDevices)
                 setAutoShutdownEnabled(isAutoShutdownEnabled)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    setBridgedModeOpportunisticShutdownEnabled(isAutoShutdownEnabled)
+                    setBridgedModeOpportunisticShutdownEnabled(
+                        isAutoShutdownEnabled,
+                    )
                 }
             }.build()
 }
