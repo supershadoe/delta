@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotspotScreen() {
+fun HotspotScreen(modifier: Modifier = Modifier) {
     val sheetState = rememberModalBottomSheetState()
     val showConnectedDevices = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -54,14 +54,47 @@ fun HotspotScreen() {
     val navController = LocalNavController.current
     val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
     // TODO: remove this comment
-//    println("isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}")
+    println(
+        "isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}",
+    )
 
     val hotspotApi = LocalHotspotApiInstance.current!!
     val config = hotspotApi.config.collectAsState()
     val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
     val enabledState = hotspotApi.enabledState.collectAsState()
 
-    Row {
+    val onConnectedDevicesClicked = {
+        if (enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+            if (tetheredClients.value.isEmpty()) {
+                if (snackbarHostState.currentSnackbarData == null) {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = "There are no connected devices.",
+                            withDismissAction = true,
+                            duration = SnackbarDuration.Short,
+                        )
+                    }
+                }
+            } else {
+                showConnectedDevices.value = true
+            }
+        } else if (snackbarHostState.currentSnackbarData == null) {
+            scope.launch {
+                val result =
+                    snackbarHostState.showSnackbar(
+                        message = "Hotspot is not yet enabled.",
+                        actionLabel = "ENABLE",
+                        withDismissAction = true,
+                        duration = SnackbarDuration.Short,
+                    )
+                if (result == SnackbarResult.ActionPerformed) {
+                    hotspotApi.startHotspot()
+                }
+            }
+        }
+    }
+
+    Row(modifier = modifier) {
         Scaffold(
             modifier = Modifier.weight(1f),
             topBar = {
@@ -75,7 +108,7 @@ fun HotspotScreen() {
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.Edit,
-                        contentDescription = "Edit"
+                        contentDescription = "Edit",
                     )
                 }
             },
@@ -90,7 +123,7 @@ fun HotspotScreen() {
             ) {
                 Box(
                     modifier = Modifier.weight(1f),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     HotspotButton(
                         enabledState = enabledState.value,
@@ -104,43 +137,22 @@ fun HotspotScreen() {
                 ) {
                     Text(text = config.value.ssid ?: "no ssid")
                     Box(modifier = Modifier.padding(bottom = 16.dp)) {
-                        if (config.value.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+                        if (config.value.securityType !=
+                            SoftApSecurityType.SECURITY_TYPE_OPEN
+                        ) {
                             PasswordDisplay(password = config.value.passphrase)
                         }
                     }
                     if (!isBigScreen) {
-                        TextButton(onClick = {
-                            if (enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-                                if (tetheredClients.value.isEmpty()) {
-                                    if (snackbarHostState.currentSnackbarData == null) {
-                                        scope.launch {
-                                            snackbarHostState.showSnackbar(
-                                                message = "There are no connected devices.",
-                                                withDismissAction = true,
-                                                duration = SnackbarDuration.Short
-                                            )
-                                        }
-                                    }
-                                } else {
-                                    showConnectedDevices.value = true
-                                }
-                            } else if (snackbarHostState.currentSnackbarData == null) {
-                                scope.launch {
-                                    val result = snackbarHostState.showSnackbar(
-                                        message = "Hotspot is not yet enabled.",
-                                        actionLabel = "ENABLE",
-                                        withDismissAction = true,
-                                        duration = SnackbarDuration.Short,
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        hotspotApi.startHotspot()
-                                    }
-                                }
-                            }
-                        }) {
+                        TextButton(onClick = onConnectedDevicesClicked) {
+                            val size = "(${tetheredClients.value.size})"
+                            val style =
+                                TextStyle(
+                                    textDecoration = TextDecoration.Underline,
+                                )
                             Text(
-                                "Connected Devices (${tetheredClients.value.size})",
-                                style = TextStyle(textDecoration = TextDecoration.Underline)
+                                "Connected Devices $size",
+                                style = style,
                             )
                         }
                     }
@@ -159,11 +171,14 @@ fun HotspotScreen() {
         }
         if (isBigScreen) {
             Scaffold(modifier = Modifier.weight(1f)) {
+                val background =
+                    MaterialTheme.colorScheme.surfaceContainerLowest
                 Box(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.surfaceContainerLowest)
-                        .padding(it)
-                        .fillMaxHeight(),
+                    modifier =
+                        Modifier
+                            .background(background)
+                            .padding(it)
+                            .fillMaxHeight(),
                 ) {
                     ConnectedDevicesList(tetheredClients.value)
                 }
