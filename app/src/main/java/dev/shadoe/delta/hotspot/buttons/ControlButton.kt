@@ -26,22 +26,24 @@ internal fun ControlButton(
     isEnabled: Boolean,
     isLoading: Boolean,
     onClick: () -> Unit,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit,
 ) {
-    val color = if (isLoading) {
-        MaterialTheme.colorScheme.tertiaryContainer
-    } else if (isEnabled) {
-        MaterialTheme.colorScheme.primaryContainer
-    } else {
-        MaterialTheme.colorScheme.surfaceBright
-    }
-    val description = if (isLoading) {
-        "Loading"
-    } else if (isEnabled) {
-        "Stop hotspot"
-    } else {
-        "Start hotspot"
-    }
+    val color =
+        if (isLoading) {
+            MaterialTheme.colorScheme.tertiaryContainer
+        } else if (isEnabled) {
+            MaterialTheme.colorScheme.primaryContainer
+        } else {
+            MaterialTheme.colorScheme.surfaceBright
+        }
+    val description =
+        if (isLoading) {
+            "Loading"
+        } else if (isEnabled) {
+            "Stop hotspot"
+        } else {
+            "Start hotspot"
+        }
     // TODO: remove this comment
 //    val btnSize = min(
 //        LocalConfiguration.current.screenWidthDp.dp,
@@ -49,27 +51,26 @@ internal fun ControlButton(
 //    ) / 2
 //    println("btnSize: $btnSize")
     Box(
-        modifier = Modifier
-            .size(
-                min(
-                    LocalConfiguration.current.screenWidthDp.dp,
-                    LocalConfiguration.current.screenHeightDp.dp
-                ) / 2
-            )
-            .padding(16.dp)
-            .clip(shape = shape)
-            .background(color)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick
-            )
-            .semantics(
-                mergeDescendants = true,
-                properties = {
-                    contentDescription = description
-                },
-            ),
+        modifier =
+            Modifier
+                .size(
+                    min(
+                        LocalConfiguration.current.screenWidthDp.dp,
+                        LocalConfiguration.current.screenHeightDp.dp,
+                    ) / 2,
+                ).padding(16.dp)
+                .clip(shape = shape)
+                .background(color)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onClick,
+                ).semantics(
+                    mergeDescendants = true,
+                    properties = {
+                        contentDescription = description
+                    },
+                ),
         contentAlignment = Alignment.Center,
         content = content,
     )

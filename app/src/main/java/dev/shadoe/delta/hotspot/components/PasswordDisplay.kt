@@ -30,20 +30,23 @@ internal fun PasswordDisplay(
         Box(modifier = Modifier.weight(1f)) {}
         Text(
             modifier = Modifier.weight(2f),
-            text = if (password == null) {
-                "(no password)"
-            } else if (isPasswordShown.value) {
-                password
-            } else {
-                "(password hidden)"
-            },
-            style = TextStyle(
-                fontStyle = if (isPasswordShown.value && password != null) {
-                    FontStyle.Normal
+            text =
+                if (password == null) {
+                    "(no password)"
+                } else if (isPasswordShown.value) {
+                    password
                 } else {
-                    FontStyle.Italic
-                }
-            ),
+                    "(password hidden)"
+                },
+            style =
+                TextStyle(
+                    fontStyle =
+                        if (isPasswordShown.value && password != null) {
+                            FontStyle.Normal
+                        } else {
+                            FontStyle.Italic
+                        },
+                ),
         )
         IconButton(
             onClick = {
@@ -51,11 +54,12 @@ internal fun PasswordDisplay(
             },
         ) {
             Icon(
-                imageVector = if (isPasswordShown.value) {
-                    Icons.Rounded.VisibilityOff
-                } else {
-                    Icons.Rounded.Visibility
-                },
+                imageVector =
+                    if (isPasswordShown.value) {
+                        Icons.Rounded.VisibilityOff
+                    } else {
+                        Icons.Rounded.Visibility
+                    },
                 contentDescription = "Show password",
             )
         }

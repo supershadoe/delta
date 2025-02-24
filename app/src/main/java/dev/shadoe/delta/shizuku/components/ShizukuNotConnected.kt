@@ -10,7 +10,9 @@ import rikka.shizuku.Shizuku
 @Composable
 internal fun ShizukuNotConnected() {
     Column {
-        Text("This app uses system APIs that are not generally accessible from the Android SDK and thus, requires Shizuku to get access to Hotspot API.")
+        Text(
+            "This app uses system APIs that are not generally accessible from the Android SDK and thus, requires Shizuku to get access to Hotspot API.",
+        )
         Button(onClick = {
             Shizuku.requestPermission(ShizukuViewModel.PERM_REQ_CODE)
         }) {

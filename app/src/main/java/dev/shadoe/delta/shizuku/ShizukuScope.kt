@@ -11,11 +11,14 @@ val LocalShizukuState = compositionLocalOf { NOT_READY }
 @Composable
 fun ShizukuScope(
     shizukuViewModel: ShizukuViewModel = viewModel(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val shizukuState = shizukuViewModel.shizukuState.collectAsState(initial = NOT_READY)
+    val shizukuState =
+        shizukuViewModel.shizukuState.collectAsState(
+            initial = NOT_READY,
+        )
     CompositionLocalProvider(
         LocalShizukuState provides shizukuState.value,
-        content = content
+        content = content,
     )
 }

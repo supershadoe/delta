@@ -43,14 +43,17 @@ import kotlin.math.min
  * size and interpolates from red to green as more recompositions occur before a timeout.
  */
 @Stable
-fun Modifier.recomposeHighlighter(): Modifier = this.then(RecomposeHighlighterElement())
+fun Modifier.recomposeHighlighter(): Modifier =
+    this.then(RecomposeHighlighterElement())
 
-private class RecomposeHighlighterElement : ModifierNodeElement<RecomposeHighlighterModifier>() {
+private class RecomposeHighlighterElement :
+    ModifierNodeElement<RecomposeHighlighterModifier>() {
     override fun InspectorInfo.inspectableProperties() {
         debugInspectorInfo { name = "recomposeHighlighter" }
     }
 
-    override fun create(): RecomposeHighlighterModifier = RecomposeHighlighterModifier()
+    override fun create(): RecomposeHighlighterModifier =
+        RecomposeHighlighterModifier()
 
     override fun update(node: RecomposeHighlighterModifier) {
         node.incrementCompositions()
@@ -138,7 +141,11 @@ private class RecomposeHighlighterModifier :
 
         val halfStroke = strokeWidthPx / 2
         val topLeft = Offset(halfStroke, halfStroke)
-        val borderSize = Size(size.width - strokeWidthPx, size.height - strokeWidthPx)
+        val borderSize =
+            Size(
+                size.width - strokeWidthPx,
+                size.height - strokeWidthPx,
+            )
 
         val fillArea = (strokeWidthPx * 2) > size.minDimension
         val rectTopLeft = if (fillArea) Offset.Zero else topLeft

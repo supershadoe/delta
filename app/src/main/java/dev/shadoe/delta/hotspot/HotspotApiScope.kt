@@ -11,10 +11,10 @@ val LocalHotspotApiInstance = compositionLocalOf<HotspotApi?> { null }
 @Composable
 fun HotspotApiScope(
     hotspotApiViewModel: HotspotApiViewModel = viewModel(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
         LocalHotspotApiInstance provides hotspotApiViewModel.hotspotApi,
-        content = content
+        content = content,
     )
 }

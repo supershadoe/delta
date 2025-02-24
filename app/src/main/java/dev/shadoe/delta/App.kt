@@ -14,11 +14,12 @@ import dev.shadoe.delta.shizuku.ShizukuSetupScreen
 
 @Composable
 fun App() {
-    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        dynamicDarkColorScheme(LocalContext.current)
-    } else {
-        darkColorScheme()
-    }
+    val colorScheme =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            dynamicDarkColorScheme(LocalContext.current)
+        } else {
+            darkColorScheme()
+        }
 
     MaterialTheme(colorScheme = colorScheme) {
         ShizukuScope {

@@ -27,34 +27,37 @@ internal fun ShizukuNotInstalled() {
             context.startActivity(
                 Intent(
                     ACTION_VIEW,
-                    Uri.parse("https://github.com/RikkaApps/Shizuku/releases")
-                )
+                    Uri.parse("https://github.com/RikkaApps/Shizuku/releases"),
+                ),
             )
         }) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-                    contentDescription = "Open"
+                    contentDescription = "Open",
                 )
                 Text(text = "GitHub", modifier = Modifier.padding(start = 8.dp))
             }
         }
         Button(onClick = {
-            context.startActivity(Intent(ACTION_VIEW).apply {
-                data = Uri.parse(
-                    "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api"
-                )
-                `package` = "com.android.vending"
-            })
+            context.startActivity(
+                Intent(ACTION_VIEW).apply {
+                    data =
+                        Uri.parse(
+                            "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api",
+                        )
+                    `package` = "com.android.vending"
+                },
+            )
         }) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Rounded.InstallMobile,
-                    contentDescription = "Install from"
+                    contentDescription = "Install from",
                 )
                 Text(
                     text = "Play store",
-                    modifier = Modifier.padding(start = 8.dp)
+                    modifier = Modifier.padding(start = 8.dp),
                 )
             }
         }

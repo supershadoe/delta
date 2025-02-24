@@ -19,7 +19,10 @@ class ShizukuViewModel(
     val shizukuState: StateFlow<Int> = _shizukuState
 
     private val permListener =
-        Shizuku.OnRequestPermissionResultListener permListener@{ requestCode, grantResult ->
+        Shizuku.OnRequestPermissionResultListener permListener@{
+            requestCode,
+            grantResult,
+            ->
             requestCode.takeIf { it == PERM_REQ_CODE } ?: return@permListener
             _shizukuState.value = determineShizukuStateIfAlive(grantResult)
         }
@@ -62,7 +65,10 @@ class ShizukuViewModel(
         _shizukuState.value =
             when {
                 Shizuku.isPreV11() -> NOT_AVAILABLE
-                Shizuku.pingBinder() -> determineShizukuStateIfAlive(Shizuku.checkSelfPermission())
+                Shizuku.pingBinder() ->
+                    determineShizukuStateIfAlive(
+                        Shizuku.checkSelfPermission(),
+                    )
                 else -> determineShizukuStateIfDead()
             }
         Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)

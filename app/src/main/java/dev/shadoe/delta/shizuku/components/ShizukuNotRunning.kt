@@ -16,8 +16,8 @@ internal fun ShizukuNotRunning() {
             with(context) {
                 startActivity(
                     packageManager.getLaunchIntentForPackage(
-                        ShizukuProvider.MANAGER_APPLICATION_ID
-                    )
+                        ShizukuProvider.MANAGER_APPLICATION_ID,
+                    ),
                 )
             }
         }) {
