@@ -10,7 +10,9 @@ import kotlin.collections.List
  * the app use the data without needing to compile with the stubs which
  * makes the app layer kinda messy.
  */
-class TetheredClientWrapper(c: TetheredClient) {
+class TetheredClientWrapper(
+    c: TetheredClient,
+) {
     val macAddress: MacAddress = c.macAddress
     val addresses: List<LinkAddress?>
     val hostnames: List<String?>

@@ -16,7 +16,6 @@ internal class TetheringEventCallback(
     private val updateEnabledState: () -> Unit,
     private val setTetheredClients: (List<TetheredClientWrapper>) -> Unit,
 ) : ITetheringEventCallback.Stub() {
-
     override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
         parcel ?: return
         onTetherStatesChanged(parcel.states)
@@ -36,7 +35,8 @@ internal class TetheringEventCallback(
     override fun onTetherClientsChanged(clients: List<TetheredClient?>?) {
         runBlocking {
             launch(Dispatchers.Unconfined) {
-                (clients ?: emptyList()).filterNotNull()
+                (clients ?: emptyList())
+                    .filterNotNull()
                     .filter { it.tetheringType == TetheringManager.TETHERING_WIFI }
                     .map { TetheredClientWrapper(it) }
                     .let { setTetheredClients(it) }

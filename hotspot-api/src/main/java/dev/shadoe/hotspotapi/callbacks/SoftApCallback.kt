@@ -23,7 +23,7 @@ class SoftApCallback(
         infos: Map<String?, SoftApInfo?>?,
         clients: Map<String?, List<WifiClient?>?>?,
         isBridged: Boolean,
-        isRegistration: Boolean
+        isRegistration: Boolean,
     ) {}
 
     /**
@@ -48,25 +48,29 @@ class SoftApCallback(
      * TODO: think about how to use this in the going forward.
      */
     override fun onBlockedClientConnecting(
-        client: WifiClient?, blockedReason: Int
+        client: WifiClient?,
+        blockedReason: Int,
     ) {
         println("blocked client ${client?.macAddress} $blockedReason")
     }
 
     private fun updateSupportedSpeedTypes(capability: SoftApCapability) {
-        val bandToSoftApFeatureMap = mapOf(
-            SoftApSpeedType.BAND_2GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_24G_SUPPORTED,
-            SoftApSpeedType.BAND_5GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_5G_SUPPORTED,
-            SoftApSpeedType.BAND_6GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_6G_SUPPORTED,
-        )
-
-        bandToSoftApFeatureMap.keys.filter { band: Int ->
-            val isSupported = capability.areFeaturesSupported(
-                bandToSoftApFeatureMap.getValue(band)
+        val bandToSoftApFeatureMap =
+            mapOf(
+                SoftApSpeedType.BAND_2GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_24G_SUPPORTED,
+                SoftApSpeedType.BAND_5GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_5G_SUPPORTED,
+                SoftApSpeedType.BAND_6GHZ to SoftApCapability.SOFTAP_FEATURE_BAND_6G_SUPPORTED,
             )
-            val isAvailable =
-                capability.getSupportedChannelList(band).isNotEmpty()
-            isSupported && isAvailable
-        }.let { setSupportedSpeedTypes(it) }
+
+        bandToSoftApFeatureMap.keys
+            .filter { band: Int ->
+                val isSupported =
+                    capability.areFeaturesSupported(
+                        bandToSoftApFeatureMap.getValue(band),
+                    )
+                val isAvailable =
+                    capability.getSupportedChannelList(band).isNotEmpty()
+                isSupported && isAvailable
+            }.let { setSupportedSpeedTypes(it) }
     }
 }

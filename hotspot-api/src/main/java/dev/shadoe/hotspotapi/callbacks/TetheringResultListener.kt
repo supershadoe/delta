@@ -6,8 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-internal class TetheringResultListener(val callback: TetheringCallback) :
-    IIntResultListener.Stub() {
+internal class TetheringResultListener(
+    val callback: TetheringCallback,
+) : IIntResultListener.Stub() {
     override fun onResult(resultCode: Int) {
         runBlocking {
             launch(Dispatchers.Unconfined) {

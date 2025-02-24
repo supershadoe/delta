@@ -8,7 +8,9 @@ internal class StartTetheringCallback : TetheringCallback {
         println("tethering started")
     }
 
-    override fun onOpFailed(@StartTetheringError resultCode: Int) {
+    override fun onOpFailed(
+        @StartTetheringError resultCode: Int,
+    ) {
 //        TODO("Not yet implemented")
         println("tethering failed due to $resultCode")
     }

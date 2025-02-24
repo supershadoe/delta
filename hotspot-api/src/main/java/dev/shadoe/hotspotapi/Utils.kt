@@ -10,8 +10,7 @@ internal object Utils {
      */
     fun generateRandomPassword(): String {
         val randomUUID = UUID.randomUUID().toString()
-        //first 12 chars from xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+        // first 12 chars from xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
         return randomUUID.substring(0, 8) + randomUUID.substring(9, 13)
     }
 }
-

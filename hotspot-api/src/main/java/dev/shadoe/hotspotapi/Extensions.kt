@@ -9,94 +9,105 @@ import dev.shadoe.hotspotapi.helper.SoftApSpeedType
 
 object Extensions {
     infix fun Int.hasBit(other: Int): Boolean = (this and other) == other
+
     infix fun Long.hasBit(other: Long): Boolean = (this and other) == other
 
     fun SoftApConfigurationHidden.toBridgeClass(fallbackPassphrase: String) =
         SoftApConfiguration(
-            ssid = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                wifiSsid?.bytes?.decodeToString()
-            } else {
-                @Suppress("DEPRECATION") ssid
-            },
+            ssid =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    wifiSsid?.bytes?.decodeToString()
+                } else {
+                    @Suppress("DEPRECATION")
+                    ssid
+                },
             passphrase = passphrase ?: fallbackPassphrase,
             securityType = @SuppressLint("WrongConstant") securityType,
             bssid = bssid,
             isHidden = isHiddenSsid,
-            speedType = bands.max().run {
-                when {
-                    this hasBit SoftApSpeedType.BAND_6GHZ -> {
-                        SoftApSpeedType.BAND_6GHZ
-                    }
+            speedType =
+                bands.max().run {
+                    when {
+                        this hasBit SoftApSpeedType.BAND_6GHZ -> {
+                            SoftApSpeedType.BAND_6GHZ
+                        }
 
-                    this hasBit SoftApSpeedType.BAND_5GHZ -> {
-                        SoftApSpeedType.BAND_5GHZ
-                    }
+                        this hasBit SoftApSpeedType.BAND_5GHZ -> {
+                            SoftApSpeedType.BAND_5GHZ
+                        }
 
-                    this hasBit SoftApSpeedType.BAND_2GHZ -> {
-                        SoftApSpeedType.BAND_2GHZ
-                    }
+                        this hasBit SoftApSpeedType.BAND_2GHZ -> {
+                            SoftApSpeedType.BAND_2GHZ
+                        }
 
-                    else -> {
-                        SoftApSpeedType.BAND_UNKNOWN
+                        else -> {
+                            SoftApSpeedType.BAND_UNKNOWN
+                        }
                     }
-                }
-            },
+                },
             blockedDevices = blockedClientList,
             isAutoShutdownEnabled = isAutoShutdownEnabled,
         )
 
     fun SoftApConfiguration.toOriginalClass() =
-        SoftApConfigurationHidden.Builder().apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                setWifiSsid(ssid?.encodeToByteArray()?.let {
-                    WifiSsid.fromBytes(it)
-                })
-            } else {
-                @Suppress("DEPRECATION") setSsid(ssid)
-            }
-
-            val passphrase =
-                if (securityType == SoftApSecurityType.SECURITY_TYPE_OPEN) {
-                    null
+        SoftApConfigurationHidden
+            .Builder()
+            .apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    setWifiSsid(
+                        ssid?.encodeToByteArray()?.let {
+                            WifiSsid.fromBytes(it)
+                        },
+                    )
                 } else {
-                    passphrase
+                    @Suppress("DEPRECATION")
+                    setSsid(ssid)
                 }
 
-            setPassphrase(
-                passphrase, @SuppressLint("WrongConstant") securityType
-            )
-
-            setBssid(bssid)
-            setHiddenSsid(isHidden)
-
-            val band2To5 =
-                SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
-            val band2To6 =
-                SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
-            when (speedType) {
-                SoftApSpeedType.BAND_6GHZ -> setBand(band2To6)
-                SoftApSpeedType.BAND_5GHZ -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        setBands(
-                            intArrayOf(
-                                SoftApSpeedType.BAND_2GHZ, band2To5,
-                            )
-                        )
+                val passphrase =
+                    if (securityType == SoftApSecurityType.SECURITY_TYPE_OPEN) {
+                        null
+                    } else {
+                        passphrase
                     }
-                    setBand(band2To5)
+
+                setPassphrase(
+                    passphrase,
+                    @SuppressLint("WrongConstant") securityType,
+                )
+
+                setBssid(bssid)
+                setHiddenSsid(isHidden)
+
+                val band2To5 =
+                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
+                val band2To6 =
+                    SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ or SoftApSpeedType.BAND_6GHZ
+                when (speedType) {
+                    SoftApSpeedType.BAND_6GHZ -> setBand(band2To6)
+                    SoftApSpeedType.BAND_5GHZ -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            setBands(
+                                intArrayOf(
+                                    SoftApSpeedType.BAND_2GHZ,
+                                    band2To5,
+                                ),
+                            )
+                        }
+                        setBand(band2To5)
+                    }
+
+                    SoftApSpeedType.BAND_2GHZ -> {
+                        setBand(SoftApSpeedType.BAND_2GHZ)
+                    }
+
+                    else -> {}
                 }
 
-                SoftApSpeedType.BAND_2GHZ -> {
-                    setBand(SoftApSpeedType.BAND_2GHZ)
+                setBlockedClientList(blockedDevices)
+                setAutoShutdownEnabled(isAutoShutdownEnabled)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    setBridgedModeOpportunisticShutdownEnabled(isAutoShutdownEnabled)
                 }
-
-                else -> {}
-            }
-
-            setBlockedClientList(blockedDevices)
-            setAutoShutdownEnabled(isAutoShutdownEnabled)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                setBridgedModeOpportunisticShutdownEnabled(isAutoShutdownEnabled)
-            }
-        }.build()
+            }.build()
 }
