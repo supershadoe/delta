@@ -19,7 +19,6 @@ package android.net.wifi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
-
 import androidx.annotation.NonNull;
 
 public final class OuiKeyedData implements Parcelable {
@@ -50,26 +49,25 @@ public final class OuiKeyedData implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-    @NonNull
-    public static final Parcelable.Creator<OuiKeyedData> CREATOR = new Parcelable.Creator<>() {
-        @Override
-        public OuiKeyedData createFromParcel(Parcel in) {
-            throw new RuntimeException("stub!");
-        }
+    @NonNull public static final Parcelable.Creator<OuiKeyedData> CREATOR =
+            new Parcelable.Creator<>() {
+                @Override
+                public OuiKeyedData createFromParcel(Parcel in) {
+                    throw new RuntimeException("stub!");
+                }
 
-        @Override
-        public OuiKeyedData[] newArray(int size) {
-            throw new RuntimeException("stub!");
-        }
-    };
+                @Override
+                public OuiKeyedData[] newArray(int size) {
+                    throw new RuntimeException("stub!");
+                }
+            };
 
     public static final class Builder {
         public Builder(int oui, @NonNull PersistableBundle data) {
             throw new RuntimeException("stub!");
         }
 
-        @NonNull
-        public OuiKeyedData build() {
+        @NonNull public OuiKeyedData build() {
             throw new RuntimeException("stub!");
         }
     }

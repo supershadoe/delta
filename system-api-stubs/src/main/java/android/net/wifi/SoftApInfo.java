@@ -20,11 +20,9 @@ import android.net.MacAddress;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
 import java.util.List;
 
 public final class SoftApInfo implements Parcelable {
@@ -72,13 +70,11 @@ public final class SoftApInfo implements Parcelable {
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
-    @Nullable
-    public MacAddress getBssid() {
+    @Nullable public MacAddress getBssid() {
         throw new RuntimeException("stub!");
     }
 
-    @Nullable
-    public MacAddress getBssidInternal() {
+    @Nullable public MacAddress getBssidInternal() {
         throw new RuntimeException("stub!");
     }
 
@@ -103,8 +99,7 @@ public final class SoftApInfo implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-    @Nullable
-    public String getApInstanceIdentifier() {
+    @Nullable public String getApInstanceIdentifier() {
         throw new RuntimeException("stub!");
     }
 
@@ -122,8 +117,7 @@ public final class SoftApInfo implements Parcelable {
     }
 
     @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    @NonNull
-    public List<OuiKeyedData> getVendorData() {
+    @NonNull public List<OuiKeyedData> getVendorData() {
         throw new RuntimeException("stub!");
     }
 
@@ -141,14 +135,14 @@ public final class SoftApInfo implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-    @NonNull
-    public static final Creator<SoftApInfo> CREATOR = new Creator<>() {
-        public SoftApInfo createFromParcel(Parcel in) {
-            throw new RuntimeException("stub!");
-        }
+    @NonNull public static final Creator<SoftApInfo> CREATOR =
+            new Creator<>() {
+                public SoftApInfo createFromParcel(Parcel in) {
+                    throw new RuntimeException("stub!");
+                }
 
-        public SoftApInfo[] newArray(int size) {
-            throw new RuntimeException("stub!");
-        }
-    };
+                public SoftApInfo[] newArray(int size) {
+                    throw new RuntimeException("stub!");
+                }
+            };
 }

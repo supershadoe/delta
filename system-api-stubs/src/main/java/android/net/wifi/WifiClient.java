@@ -19,18 +19,15 @@ package android.net.wifi;
 import android.net.MacAddress;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 
 public final class WifiClient implements Parcelable {
 
-    @NonNull
-    public MacAddress getMacAddress() {
+    @NonNull public MacAddress getMacAddress() {
         throw new RuntimeException("stub!");
     }
 
-    @NonNull
-    public String getApInstanceIdentifier() {
+    @NonNull public String getApInstanceIdentifier() {
         throw new RuntimeException("stub!");
     }
 
@@ -48,14 +45,14 @@ public final class WifiClient implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-    @NonNull
-    public static final Creator<WifiClient> CREATOR = new Creator<>() {
-        public WifiClient createFromParcel(Parcel in) {
-            throw new RuntimeException("stub!");
-        }
+    @NonNull public static final Creator<WifiClient> CREATOR =
+            new Creator<>() {
+                public WifiClient createFromParcel(Parcel in) {
+                    throw new RuntimeException("stub!");
+                }
 
-        public WifiClient[] newArray(int size) {
-            throw new RuntimeException("stub!");
-        }
-    };
+                public WifiClient[] newArray(int size) {
+                    throw new RuntimeException("stub!");
+                }
+            };
 }

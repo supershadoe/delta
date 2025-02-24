@@ -16,33 +16,31 @@
 
 package android.net;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.annotation.SuppressLint;
 import android.net.TetheringManager.TetheringType;
 import android.net.wifi.SoftApConfiguration;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import java.util.Objects;
 
-/**
- * The mapping of tethering interface and type.
- */
+/** The mapping of tethering interface and type. */
 @SuppressLint("UnflaggedApi")
 public final class TetheringInterface implements Parcelable {
     private final int mType;
     private final String mInterface;
-    @Nullable
-    private final SoftApConfiguration mSoftApConfig;
+    @Nullable private final SoftApConfiguration mSoftApConfig;
 
     @SuppressLint("UnflaggedApi")
     public TetheringInterface(@TetheringType int type, @NonNull String iface) {
         this(type, iface, null);
     }
 
-    public TetheringInterface(@TetheringType int type, @NonNull String iface,
-                              @Nullable SoftApConfiguration softApConfig) {
+    public TetheringInterface(
+            @TetheringType int type,
+            @NonNull String iface,
+            @Nullable SoftApConfiguration softApConfig) {
         Objects.requireNonNull(iface);
         mType = type;
         mInterface = iface;
@@ -56,19 +54,17 @@ public final class TetheringInterface implements Parcelable {
     }
 
     /** Get tethering interface. */
-    @NonNull
-    @SuppressLint("UnflaggedApi")
+    @NonNull @SuppressLint("UnflaggedApi")
     public String getInterface() {
         return mInterface;
     }
 
     /**
      * Get the SoftApConfiguration provided for this interface, if any. This will only be populated
-     * for apps with the same uid that specified the configuration, or apps with permission
-     * {@link android.Manifest.permission.NETWORK_SETTINGS}.
+     * for apps with the same uid that specified the configuration, or apps with permission {@link
+     * android.Manifest.permission.NETWORK_SETTINGS}.
      */
-    @Nullable
-    @SuppressLint("UnflaggedApi")
+    @Nullable @SuppressLint("UnflaggedApi")
     public SoftApConfiguration getSoftApConfiguration() {
         return mSoftApConfig;
     }
@@ -92,7 +88,8 @@ public final class TetheringInterface implements Parcelable {
     public boolean equals(@Nullable Object obj) {
         if (!(obj instanceof TetheringInterface)) return false;
         final TetheringInterface other = (TetheringInterface) obj;
-        return mType == other.mType && mInterface.equals(other.mInterface)
+        return mType == other.mType
+                && mInterface.equals(other.mInterface)
                 && Objects.equals(mSoftApConfig, other.mSoftApConfig);
     }
 
@@ -102,30 +99,31 @@ public final class TetheringInterface implements Parcelable {
         return 0;
     }
 
-    @NonNull
-    @SuppressLint("UnflaggedApi")
-    public static final Creator<TetheringInterface> CREATOR = new Creator<TetheringInterface>() {
-        @NonNull
-        @Override
-        @SuppressLint("UnflaggedApi")
-        public TetheringInterface createFromParcel(@NonNull Parcel in) {
-            return new TetheringInterface(in.readInt(), in.readString(),
-                    in.readParcelable(SoftApConfiguration.class.getClassLoader()));
-        }
+    @NonNull @SuppressLint("UnflaggedApi")
+    public static final Creator<TetheringInterface> CREATOR =
+            new Creator<TetheringInterface>() {
+                @NonNull @Override
+                @SuppressLint("UnflaggedApi")
+                public TetheringInterface createFromParcel(@NonNull Parcel in) {
+                    return new TetheringInterface(
+                            in.readInt(),
+                            in.readString(),
+                            in.readParcelable(SoftApConfiguration.class.getClassLoader()));
+                }
 
-        @NonNull
-        @Override
-        @SuppressLint("UnflaggedApi")
-        public TetheringInterface[] newArray(int size) {
-            return new TetheringInterface[size];
-        }
-    };
+                @NonNull @Override
+                @SuppressLint("UnflaggedApi")
+                public TetheringInterface[] newArray(int size) {
+                    return new TetheringInterface[size];
+                }
+            };
 
-    @NonNull
-    @Override
+    @NonNull @Override
     public String toString() {
-        return "TetheringInterface {mType=" + mType
-                + ", mInterface=" + mInterface
+        return "TetheringInterface {mType="
+                + mType
+                + ", mInterface="
+                + mInterface
                 + ((mSoftApConfig == null) ? "" : ", mSoftApConfig=" + mSoftApConfig)
                 + "}";
     }

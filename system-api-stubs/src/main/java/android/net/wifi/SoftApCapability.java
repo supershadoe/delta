@@ -19,11 +19,9 @@ package android.net.wifi;
 import android.net.wifi.SoftApConfigurationHidden.BandType;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -54,9 +52,23 @@ public final class SoftApCapability implements Parcelable {
     public static final long SOFTAP_FEATURE_WPA3_OWE = 1 << 11;
 
     @Retention(RetentionPolicy.SOURCE)
-    @LongDef(flag = true, value = {SOFTAP_FEATURE_ACS_OFFLOAD, SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT, SOFTAP_FEATURE_WPA3_SAE, SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION, SOFTAP_FEATURE_IEEE80211_AX, SOFTAP_FEATURE_IEEE80211_BE, SOFTAP_FEATURE_BAND_24G_SUPPORTED, SOFTAP_FEATURE_BAND_5G_SUPPORTED, SOFTAP_FEATURE_BAND_6G_SUPPORTED, SOFTAP_FEATURE_BAND_60G_SUPPORTED, SOFTAP_FEATURE_WPA3_OWE_TRANSITION, SOFTAP_FEATURE_WPA3_OWE,})
-    public @interface HotspotFeatures {
-    }
+    @LongDef(
+            flag = true,
+            value = {
+                SOFTAP_FEATURE_ACS_OFFLOAD,
+                SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT,
+                SOFTAP_FEATURE_WPA3_SAE,
+                SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION,
+                SOFTAP_FEATURE_IEEE80211_AX,
+                SOFTAP_FEATURE_IEEE80211_BE,
+                SOFTAP_FEATURE_BAND_24G_SUPPORTED,
+                SOFTAP_FEATURE_BAND_5G_SUPPORTED,
+                SOFTAP_FEATURE_BAND_6G_SUPPORTED,
+                SOFTAP_FEATURE_BAND_60G_SUPPORTED,
+                SOFTAP_FEATURE_WPA3_OWE_TRANSITION,
+                SOFTAP_FEATURE_WPA3_OWE,
+            })
+    public @interface HotspotFeatures {}
 
     public void setCountryCode(String countryCode) {
         throw new RuntimeException("stub!");
@@ -82,12 +94,12 @@ public final class SoftApCapability implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-    public boolean setSupportedChannelList(@BandType int band, @Nullable int[] supportedChannelList) {
+    public boolean setSupportedChannelList(
+            @BandType int band, @Nullable int[] supportedChannelList) {
         throw new RuntimeException("stub!");
     }
 
-    @NonNull
-    public int[] getSupportedChannelList(@BandType int band) {
+    @NonNull public int[] getSupportedChannelList(@BandType int band) {
         throw new RuntimeException("stub!");
     }
 
@@ -105,14 +117,14 @@ public final class SoftApCapability implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-    @NonNull
-    public static final Creator<SoftApCapability> CREATOR = new Creator<>() {
-        public SoftApCapability createFromParcel(Parcel in) {
-            throw new RuntimeException("stub!");
-        }
+    @NonNull public static final Creator<SoftApCapability> CREATOR =
+            new Creator<>() {
+                public SoftApCapability createFromParcel(Parcel in) {
+                    throw new RuntimeException("stub!");
+                }
 
-        public SoftApCapability[] newArray(int size) {
-            return new SoftApCapability[size];
-        }
-    };
+                public SoftApCapability[] newArray(int size) {
+                    return new SoftApCapability[size];
+                }
+            };
 }

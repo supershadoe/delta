@@ -19,13 +19,16 @@ package android.net.wifi;
 import android.net.TetheringManager;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public final class SoftApState implements Parcelable {
 
-    public SoftApState(int state, int failureReason, @Nullable TetheringManager.TetheringRequest tetheringRequest, @Nullable String iface) {
+    public SoftApState(
+            int state,
+            int failureReason,
+            @Nullable TetheringManager.TetheringRequest tetheringRequest,
+            @Nullable String iface) {
         throw new RuntimeException("stub!");
     }
 
@@ -39,20 +42,18 @@ public final class SoftApState implements Parcelable {
         return 0;
     }
 
-    @NonNull
-    public static final Creator<SoftApState> CREATOR = new Creator<>() {
-        @Override
-        @NonNull
-        public SoftApState createFromParcel(Parcel in) {
-            throw new RuntimeException("stub!");
-        }
+    @NonNull public static final Creator<SoftApState> CREATOR =
+            new Creator<>() {
+                @Override
+                @NonNull public SoftApState createFromParcel(Parcel in) {
+                    throw new RuntimeException("stub!");
+                }
 
-        @Override
-        @NonNull
-        public SoftApState[] newArray(int size) {
-            throw new RuntimeException("stub!");
-        }
-    };
+                @Override
+                @NonNull public SoftApState[] newArray(int size) {
+                    throw new RuntimeException("stub!");
+                }
+            };
 
     public int getState() {
         throw new RuntimeException("stub!");
@@ -66,13 +67,11 @@ public final class SoftApState implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
-    @Nullable
-    public TetheringManager.TetheringRequest getTetheringRequest() {
+    @Nullable public TetheringManager.TetheringRequest getTetheringRequest() {
         throw new RuntimeException("stub!");
     }
 
-    @Nullable
-    public String getIface() {
+    @Nullable public String getIface() {
         throw new RuntimeException("stub!");
     }
 }
