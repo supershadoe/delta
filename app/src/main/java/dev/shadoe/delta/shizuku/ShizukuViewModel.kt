@@ -9,10 +9,12 @@ import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
 import rikka.sui.Sui
 
-class ShizukuViewModel(private val application: Application) :
-    AndroidViewModel(application) {
+class ShizukuViewModel(
+    private val application: Application,
+) : AndroidViewModel(application) {
     @ShizukuStates
     private val _shizukuState = MutableStateFlow(NOT_READY)
+
     @ShizukuStates
     val shizukuState: StateFlow<Int> = _shizukuState
 
@@ -22,21 +24,25 @@ class ShizukuViewModel(private val application: Application) :
             _shizukuState.value = determineShizukuStateIfAlive(grantResult)
         }
 
-    private val binderReceivedListener = Shizuku.OnBinderReceivedListener {
-        Shizuku.addRequestPermissionResultListener(permListener)
-    }
+    private val binderReceivedListener =
+        Shizuku.OnBinderReceivedListener {
+            Shizuku.addRequestPermissionResultListener(permListener)
+        }
 
-    private val binderDeadListener = Shizuku.OnBinderDeadListener {
-        _shizukuState.value = determineShizukuStateIfDead()
-        Shizuku.removeRequestPermissionResultListener(permListener)
-    }
+    private val binderDeadListener =
+        Shizuku.OnBinderDeadListener {
+            _shizukuState.value = determineShizukuStateIfDead()
+            Shizuku.removeRequestPermissionResultListener(permListener)
+        }
 
     private fun isShizukuInstalled(packageManager: PackageManager) =
         runCatching {
             packageManager.getApplicationInfo(
-                ShizukuProvider.MANAGER_APPLICATION_ID, 0
+                ShizukuProvider.MANAGER_APPLICATION_ID,
+                0,
             )
-        }.getOrNull().let { it != null } || Sui.isSui()
+        }.getOrNull().let { it != null } ||
+            Sui.isSui()
 
     private fun determineShizukuStateIfAlive(permResult: Int) =
         if (permResult == PackageManager.PERMISSION_GRANTED) {
@@ -45,18 +51,20 @@ class ShizukuViewModel(private val application: Application) :
             NOT_CONNECTED
         }
 
-    private fun determineShizukuStateIfDead() = when {
-        isShizukuInstalled(application.packageManager) -> NOT_RUNNING
-        else -> NOT_AVAILABLE
-    }
+    private fun determineShizukuStateIfDead() =
+        when {
+            isShizukuInstalled(application.packageManager) -> NOT_RUNNING
+            else -> NOT_AVAILABLE
+        }
 
     init {
         Sui.init(application.packageName)
-        _shizukuState.value = when {
-            Shizuku.isPreV11() -> NOT_AVAILABLE
-            Shizuku.pingBinder() -> determineShizukuStateIfAlive(Shizuku.checkSelfPermission())
-            else -> determineShizukuStateIfDead()
-        }
+        _shizukuState.value =
+            when {
+                Shizuku.isPreV11() -> NOT_AVAILABLE
+                Shizuku.pingBinder() -> determineShizukuStateIfAlive(Shizuku.checkSelfPermission())
+                else -> determineShizukuStateIfDead()
+            }
         Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
         Shizuku.addBinderDeadListener(binderDeadListener)
     }

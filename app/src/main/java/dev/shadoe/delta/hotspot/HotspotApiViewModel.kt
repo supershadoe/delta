@@ -6,13 +6,14 @@ import androidx.lifecycle.viewModelScope
 import dev.shadoe.hotspotapi.HotspotApi
 import kotlinx.coroutines.launch
 
-class HotspotApiViewModel(application: Application) :
-    AndroidViewModel(application) {
-
-    val hotspotApi = HotspotApi(
-        application.packageName,
-        application.attributionTag,
-    )
+class HotspotApiViewModel(
+    application: Application,
+) : AndroidViewModel(application) {
+    val hotspotApi =
+        HotspotApi(
+            application.packageName,
+            application.attributionTag,
+        )
 
     init {
         hotspotApi.registerCallback()

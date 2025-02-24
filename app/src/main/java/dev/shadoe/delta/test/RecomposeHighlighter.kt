@@ -32,11 +32,11 @@ import androidx.compose.ui.node.invalidateDraw
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.dp
-import java.util.Objects
-import kotlin.math.min
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Objects
+import kotlin.math.min
 
 /**
  * A [Modifier] that draws a border around elements that are recomposing. The border increases in
@@ -46,7 +46,6 @@ import kotlinx.coroutines.launch
 fun Modifier.recomposeHighlighter(): Modifier = this.then(RecomposeHighlighterElement())
 
 private class RecomposeHighlighterElement : ModifierNodeElement<RecomposeHighlighterModifier>() {
-
     override fun InspectorInfo.inspectableProperties() {
         debugInspectorInfo { name = "recomposeHighlighter" }
     }
@@ -63,8 +62,9 @@ private class RecomposeHighlighterElement : ModifierNodeElement<RecomposeHighlig
     override fun hashCode(): Int = Objects.hash(this)
 }
 
-private class RecomposeHighlighterModifier : Modifier.Node(), DrawModifierNode {
-
+private class RecomposeHighlighterModifier :
+    Modifier.Node(),
+    DrawModifierNode {
     private var timerJob: Job? = null
 
     /**
@@ -100,10 +100,11 @@ private class RecomposeHighlighterModifier : Modifier.Node(), DrawModifierNode {
         if (!isAttached) return
 
         timerJob?.cancel()
-        timerJob = coroutineScope.launch {
-            delay(3000)
-            totalCompositions = 0
-        }
+        timerJob =
+            coroutineScope.launch {
+                delay(3000)
+                totalCompositions = 0
+            }
     }
 
     override fun ContentDrawScope.draw() {

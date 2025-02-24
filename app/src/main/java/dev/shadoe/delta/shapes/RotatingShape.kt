@@ -13,13 +13,16 @@ import androidx.graphics.shapes.toPath
 import kotlin.math.max
 
 class RotatingShape(
-    private val polygon: RoundedPolygon, private val degrees: Float,
+    private val polygon: RoundedPolygon,
+    private val degrees: Float,
 ) : Shape {
     // 4x4 xyzw matrix for transformations on the polygon.
     private val matrix = Matrix()
 
     override fun createOutline(
-        size: Size, layoutDirection: LayoutDirection, density: Density
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density,
     ): Outline {
         // Generate the cubic path for the polygon to draw at every frame
         // during the animation.
@@ -35,9 +38,10 @@ class RotatingShape(
         // polygon) for the polygon.
 
         // Calculate the bounds of the polygon.
-        val bounds = polygon.calculateBounds().let {
-            Rect(it[0], it[1], it[2], it[3])
-        }
+        val bounds =
+            polygon.calculateBounds().let {
+                Rect(it[0], it[1], it[2], it[3])
+            }
 
         // Take the bigger side out of the two
         // (it's usually almost same in this app as it's all circles
