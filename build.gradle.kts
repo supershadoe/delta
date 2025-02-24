@@ -10,10 +10,19 @@ plugins {
 }
 
 spotless {
+    format("misc") {
+        target("*.gradle", ".gitattributes", ".gitignore", ".txt")
+        trimTrailingWhitespace()
+        leadingTabsToSpaces()
+        endWithNewline()
+    }
+    flexmark {
+        target("**/*.md")
+        flexmark()
+    }
     java {
         importOrder()
         removeUnusedImports()
-        cleanthat()
         googleJavaFormat().aosp().reflowLongStrings()
         formatAnnotations()
         target("**/*.java")
