@@ -37,13 +37,9 @@ spotless {
                     "io.nlopez.compose.rules:ktlint:0.4.22",
                 ),
             )
-        trimTrailingWhitespace()
-        endWithNewline()
     }
     kotlinGradle {
         target("*.gradle.kts")
         ktlint("1.5.0")
-        trimTrailingWhitespace()
-        endWithNewline()
     }
 }
