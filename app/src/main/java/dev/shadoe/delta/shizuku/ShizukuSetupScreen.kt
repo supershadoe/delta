@@ -14,14 +14,15 @@ import dev.shadoe.delta.shizuku.components.ShizukuNotRunning
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShizukuSetupScreen() {
+fun ShizukuSetupScreen(modifier: Modifier = Modifier) {
     val shizukuState = LocalShizukuState.current
     Scaffold(
         topBar = {
             if (shizukuState != NOT_READY && shizukuState != CONNECTED) {
                 LargeTopAppBar(title = { Text("Setup the app") })
             }
-        }) {
+        },
+    ) {
         Column(modifier = Modifier.padding(it)) {
             when (LocalShizukuState.current) {
                 NOT_AVAILABLE -> ShizukuNotInstalled()

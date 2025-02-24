@@ -18,12 +18,15 @@ import androidx.compose.ui.unit.dp
 import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
 
 @Composable
-internal fun ConnectedDevicesList(tetheredClients: List<TetheredClientWrapper>) {
+internal fun ConnectedDevicesList(
+    tetheredClients: List<TetheredClientWrapper>,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 16.dp)
-            .fillMaxWidth()
+        modifier =
+            Modifier
+                .padding(horizontal = 24.dp, vertical = 16.dp)
+                .fillMaxWidth(),
     ) {
         Text(
             text = "Connected Devices",
@@ -46,20 +49,25 @@ internal fun ConnectedDevicesList(tetheredClients: List<TetheredClientWrapper>) 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(
-                        modifier = Modifier.padding(
-                            horizontal = 8.dp
-                        )
+                        modifier =
+                            Modifier.padding(
+                                horizontal = 8.dp,
+                            ),
                     ) {
                         with(tetheredClients[it]) {
                             Text(
-                                text = hostnames.firstOrNull() ?: "No name"
+                                text = hostnames.firstOrNull() ?: "No name",
                             )
                             Text(
-                                text = addresses.firstOrNull()?.address?.hostAddress
-                                    ?: "Link address not allocated",
+                                text =
+                                    addresses
+                                        .firstOrNull()
+                                        ?.address
+                                        ?.hostAddress
+                                        ?: "Link address not allocated",
                             )
                         }
                     }
