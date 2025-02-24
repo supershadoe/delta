@@ -6,8 +6,10 @@ import java.io.File
 import java.nio.charset.Charset
 
 fun Project.readSigningConfig(file: File) =
-    file.takeIf { it.exists() }?.runCatching {
-        Json.decodeFromString<SigningConfig>(
-            string = readText(charset = Charset.defaultCharset()),
-        )
-    }?.getOrNull()
+    file
+        .takeIf { it.exists() }
+        ?.runCatching {
+            Json.decodeFromString<SigningConfig>(
+                string = readText(charset = Charset.defaultCharset()),
+            )
+        }?.getOrNull()
