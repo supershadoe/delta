@@ -46,6 +46,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.hotspotapi.HotspotApi
+import dev.shadoe.hotspotapi.SoftApConfiguration
 import dev.shadoe.hotspotapi.helper.SoftApEnabledState
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType.getNameOfSecurityType
@@ -56,7 +58,7 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
-fun HotspotEditScreen() {
+fun HotspotEditScreen(modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
@@ -73,13 +75,14 @@ fun HotspotEditScreen() {
 
     Scaffold(
         topBar = {
-            @OptIn(ExperimentalMaterial3Api::class) LargeTopAppBar(
+            @OptIn(ExperimentalMaterial3Api::class)
+            LargeTopAppBar(
                 title = { Text(text = "Settings") },
                 navigationIcon = {
                     IconButton(onClick = { navController?.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
                         )
                     }
                 },
@@ -88,219 +91,312 @@ fun HotspotEditScreen() {
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { scaffoldPadding ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(scaffoldPadding)
-                .padding(horizontal = 16.dp)
-                .pointerInput(Unit) {
-                    detectTapGestures(onTap = {
-                        focusManager.clearFocus()
-                    })
-                },
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(scaffoldPadding)
+                    .padding(horizontal = 16.dp)
+                    .pointerInput(Unit) {
+                        detectTapGestures(onTap = {
+                            focusManager.clearFocus()
+                        })
+                    }.then(modifier),
         ) {
             item {
                 Text(
-                    text = "Configure all the values below as per your" + " liking :)",
-                    modifier = Modifier.padding(8.dp)
+                    text =
+                        "Configure all the values below as per your" +
+                            " liking :)",
+                    modifier = Modifier.padding(8.dp),
                 )
             }
             item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Wifi,
-                        contentDescription = "SSID icon"
-                    )
-                    OutlinedTextField(
-                        value = mutableConfig.ssid ?: "",
-                        onValueChange = {
-                            mutableConfig = mutableConfig.copy(ssid = it)
-                        },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            capitalization = KeyboardCapitalization.None,
-                            autoCorrectEnabled = false,
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next,
-                        ),
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        label = { Text("SSID") },
-                    )
-                }
+                SSIDField(
+                    ssid = mutableConfig.ssid ?: "",
+                    onSSIDChange = {
+                        mutableConfig = mutableConfig.copy(ssid = it)
+                    },
+                )
             }
             item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.WifiPassword,
-                        contentDescription = "Security Type icon"
-                    )
-                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                        Text(
-                            "Security Type",
-                            modifier = Modifier.padding(start = 8.dp),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        LazyRow {
-                            items(supportedSecurityTypes.size) {
-                                FilterChip(
-                                    selected = mutableConfig.securityType ==
-                                        supportedSecurityTypes[it],
-                                    onClick = {
-                                        mutableConfig = mutableConfig.copy(securityType = supportedSecurityTypes[it],)
-                                    },
-                                    label = {
-                                        Text(
-                                            text = getNameOfSecurityType(
-                                                supportedSecurityTypes[it]
-                                            )
-                                        )
-                                    },
-                                    modifier = Modifier.padding(horizontal = 2.dp)
-                                )
-                            }
-                        }
-                    }
-                }
+                SecurityTypeField(
+                    securityType = mutableConfig.securityType,
+                    onSecurityTypeChange = {
+                        mutableConfig = mutableConfig.copy(securityType = it)
+                    },
+                )
             }
-            if (mutableConfig.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+            if (mutableConfig.securityType !=
+                SoftApSecurityType.SECURITY_TYPE_OPEN
+            ) {
                 item {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Password,
-                            contentDescription = "Passphrase icon"
-                        )
-                        OutlinedTextField(
-                            value = mutableConfig.passphrase,
-                            onValueChange = {
-                                mutableConfig = mutableConfig.copy(
-                                    passphrase = it
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(
-                                capitalization = KeyboardCapitalization.None,
-                                autoCorrectEnabled = false,
-                                keyboardType = KeyboardType.Password,
-                                imeAction = ImeAction.Done,
-                            ),
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .fillMaxWidth(),
-                            label = { Text("Passphrase") },
-                        )
-                    }
-                }
-            }
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.SettingsPower,
-                        contentDescription = "Auto Shutdown icon"
-                    )
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = 16.dp),
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        Text(
-                            text = "Turn off hotspot automatically?",
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                        Text(
-                            text = "When no devices are connected.",
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    Switch(
-                        checked = mutableConfig.isAutoShutdownEnabled,
-                        onCheckedChange = {
-                            mutableConfig =
-                                mutableConfig.copy(isAutoShutdownEnabled = it)
+                    PassphraseField(
+                        passphrase = mutableConfig.passphrase,
+                        onPassphraseChange = {
+                            mutableConfig = mutableConfig.copy(passphrase = it)
                         },
                     )
                 }
             }
             item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.NetworkWifi,
-                        contentDescription = "Frequency band icon"
-                    )
-                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                        Text(
-                            "Frequency band",
-                            modifier = Modifier.padding(start = 8.dp),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        LazyRow {
-                            items(supportedSpeedTypes.value.size) {
-                                FilterChip(
-                                    selected = mutableConfig.speedType == supportedSpeedTypes.value[it],
-                                    onClick = {
-                                        mutableConfig =
-                                            mutableConfig.copy(speedType = supportedSpeedTypes.value[it])
-                                    },
-                                    label = {
-                                        Text(
-                                            text = getNameOfSpeedType(
-                                                supportedSpeedTypes.value[it]
-                                            )
-                                        )
-                                    },
-                                    modifier = Modifier.padding(horizontal = 2.dp)
-                                )
-                            }
-                        }
-                    }
-                }
+                AutoShutdownField(
+                    isAutoShutdownEnabled =
+                        mutableConfig.isAutoShutdownEnabled,
+                    onAutoShutdownChange = {
+                        mutableConfig =
+                            mutableConfig.copy(
+                                isAutoShutdownEnabled = it,
+                            )
+                    },
+                )
             }
             item {
-                Button(onClick = onClick@{
-                    if (mutableConfig.passphrase.isEmpty()) {
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = "Enter a password.",
-                                withDismissAction = true,
-                                duration = SnackbarDuration.Short,
-                            )
-                        }
-                        return@onClick
-                    }
-                    scope.launch {
-                        hotspotApi.setSoftApConfiguration(mutableConfig)
-                        if (hotspotApi.enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-                            hotspotApi.stopHotspot()
-                            while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
-                                delay(500.milliseconds)
+                SpeedTypeField(
+                    speedType = mutableConfig.speedType,
+                    supportedSpeedTypes = supportedSpeedTypes.value,
+                    onSpeedTypeChange = {
+                        mutableConfig = mutableConfig.copy(speedType = it)
+                    },
+                )
+            }
+            item {
+                Button(
+                    onClick = onClick@{
+                        if (mutableConfig.passphrase.isEmpty()) {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = "Enter a password.",
+                                    withDismissAction = true,
+                                    duration = SnackbarDuration.Short,
+                                )
                             }
-                            hotspotApi.startHotspot()
-                            while (hotspotApi.enabledState.value != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-                                delay(500.milliseconds)
-                            }
+                            return@onClick
                         }
-                    }
-                        .invokeOnCompletion { if (it == null) navController?.navigateUp() }
-                }) {
+                        scope
+                            .launch {
+                                setSoftApConfiguration(
+                                    hotspotApi,
+                                    mutableConfig,
+                                )
+                            }.invokeOnCompletion {
+                                if (it == null) {
+                                    navController?.navigateUp()
+                                }
+                            }
+                    },
+                ) {
                     Text(text = "Save")
+                }
+            }
+        }
+    }
+}
+
+private suspend fun setSoftApConfiguration(
+    hotspotApi: HotspotApi,
+    config: SoftApConfiguration,
+) {
+    hotspotApi.setSoftApConfiguration(config)
+    val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
+    val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
+    if (hotspotApi.enabledState.value != enabled) {
+        hotspotApi.stopHotspot()
+        while (hotspotApi.enabledState.value != disabled) {
+            delay(500.milliseconds)
+        }
+        hotspotApi.startHotspot()
+        while (hotspotApi.enabledState.value != enabled) {
+            delay(500.milliseconds)
+        }
+    }
+}
+
+@Composable
+private fun SSIDField(
+    ssid: String,
+    onSSIDChange: (String) -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Wifi,
+            contentDescription = "SSID icon",
+        )
+        OutlinedTextField(
+            value = ssid,
+            onValueChange = { onSSIDChange(it) },
+            singleLine = true,
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    autoCorrectEnabled = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
+                ),
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+            label = { Text("SSID") },
+        )
+    }
+}
+
+@Composable
+private fun SecurityTypeField(
+    securityType: Int,
+    onSecurityTypeChange: (Int) -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.WifiPassword,
+            contentDescription = "Security Type icon",
+        )
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Text(
+                "Security Type",
+                modifier = Modifier.padding(start = 8.dp),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            LazyRow {
+                items(supportedSecurityTypes.size) {
+                    FilterChip(
+                        selected = securityType == supportedSecurityTypes[it],
+                        onClick = {
+                            onSecurityTypeChange(supportedSecurityTypes[it])
+                        },
+                        label = {
+                            Text(
+                                text =
+                                    getNameOfSecurityType(
+                                        supportedSecurityTypes[it],
+                                    ),
+                            )
+                        },
+                        modifier = Modifier.padding(horizontal = 2.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PassphraseField(
+    passphrase: String,
+    onPassphraseChange: (String) -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Password,
+            contentDescription = "Passphrase icon",
+        )
+        OutlinedTextField(
+            value = passphrase,
+            onValueChange = { onPassphraseChange(it) },
+            singleLine = true,
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    autoCorrectEnabled = false,
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done,
+                ),
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+            label = { Text("Passphrase") },
+        )
+    }
+}
+
+@Composable
+private fun AutoShutdownField(
+    isAutoShutdownEnabled: Boolean,
+    onAutoShutdownChange: (Boolean) -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.SettingsPower,
+            contentDescription = "Auto Shutdown icon",
+        )
+        Column(
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.Start,
+        ) {
+            Text(
+                text = "Turn off hotspot automatically?",
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Text(
+                text = "When no devices are connected.",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Switch(
+            checked = isAutoShutdownEnabled,
+            onCheckedChange = { onAutoShutdownChange(it) },
+        )
+    }
+}
+
+@Composable
+private fun SpeedTypeField(
+    speedType: Int,
+    supportedSpeedTypes: List<Int>,
+    onSpeedTypeChange: (Int) -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.NetworkWifi,
+            contentDescription = "Frequency band icon",
+        )
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Text(
+                "Frequency band",
+                modifier = Modifier.padding(start = 8.dp),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            LazyRow {
+                items(supportedSpeedTypes.size) {
+                    FilterChip(
+                        selected = speedType == supportedSpeedTypes[it],
+                        onClick = {
+                            onSpeedTypeChange(
+                                supportedSpeedTypes[it],
+                            )
+                        },
+                        label = {
+                            Text(
+                                text =
+                                    getNameOfSpeedType(
+                                        supportedSpeedTypes[it],
+                                    ),
+                            )
+                        },
+                        modifier = Modifier.padding(horizontal = 2.dp),
+                    )
                 }
             }
         }
