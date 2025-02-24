@@ -23,7 +23,7 @@ fun ShizukuSetupScreen(modifier: Modifier = Modifier) {
             }
         },
     ) {
-        Column(modifier = Modifier.padding(it)) {
+        Column(modifier = Modifier.padding(it).then(modifier)) {
             when (LocalShizukuState.current) {
                 NOT_AVAILABLE -> ShizukuNotInstalled()
                 NOT_RUNNING -> ShizukuNotRunning()

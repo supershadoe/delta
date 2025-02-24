@@ -54,11 +54,10 @@ class ShizukuViewModel(
             NOT_CONNECTED
         }
 
-    private fun determineShizukuStateIfDead() =
-        when {
-            isShizukuInstalled(application.packageManager) -> NOT_RUNNING
-            else -> NOT_AVAILABLE
-        }
+    private fun determineShizukuStateIfDead() = when {
+        isShizukuInstalled(application.packageManager) -> NOT_RUNNING
+        else -> NOT_AVAILABLE
+    }
 
     init {
         Sui.init(application.packageName)

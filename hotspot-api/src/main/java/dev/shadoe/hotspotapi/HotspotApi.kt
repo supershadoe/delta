@@ -131,20 +131,19 @@ class HotspotApi(
         _tetheredClients
     val supportedSpeedTypes: StateFlow<List<Int>> = _supportedSpeedTypes
 
-    fun setSoftApConfiguration(c: SoftApConfiguration): Boolean =
-        runCatching {
-            Refine
-                .unsafeCast<android.net.wifi.SoftApConfiguration>(
-                    c.toOriginalClass(),
-                ).let {
-                    if (!wifiManager.validateSoftApConfiguration(it)) {
-                        return false
-                    }
-                    _config.value = c
-                    wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-                    return true
+    fun setSoftApConfiguration(c: SoftApConfiguration): Boolean = runCatching {
+        Refine
+            .unsafeCast<android.net.wifi.SoftApConfiguration>(
+                c.toOriginalClass(),
+            ).let {
+                if (!wifiManager.validateSoftApConfiguration(it)) {
+                    return false
                 }
-        }.getOrDefault(false)
+                _config.value = c
+                wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+                return true
+            }
+    }.getOrDefault(false)
 
     fun registerCallback() {
         tetheringConnector.registerTetheringEventCallback(

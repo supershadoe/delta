@@ -100,7 +100,7 @@ fun HotspotEditScreen() {
         ) {
             item {
                 Text(
-                    text = "Configure all the values below as per your liking :)",
+                    text = "Configure all the values below as per your" + " liking :)",
                     modifier = Modifier.padding(8.dp)
                 )
             }
@@ -150,9 +150,10 @@ fun HotspotEditScreen() {
                         LazyRow {
                             items(supportedSecurityTypes.size) {
                                 FilterChip(
-                                    selected = mutableConfig.securityType == supportedSecurityTypes[it],
+                                    selected = mutableConfig.securityType ==
+                                        supportedSecurityTypes[it],
                                     onClick = {
-                                        mutableConfig = mutableConfig.copy(securityType = supportedSecurityTypes[it])
+                                        mutableConfig = mutableConfig.copy(securityType = supportedSecurityTypes[it],)
                                     },
                                     label = {
                                         Text(

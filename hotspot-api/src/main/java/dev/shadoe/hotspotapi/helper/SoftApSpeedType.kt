@@ -23,12 +23,11 @@ object SoftApSpeedType {
 
     fun getNameOfSpeedType(
         @BandType speedType: Int,
-    ): String =
-        when (speedType) {
-            BAND_2GHZ -> "2.4 GHz"
-            BAND_5GHZ -> "5 GHz"
-            BAND_6GHZ -> "6 GHz"
-            BAND_60GHZ -> "60 GHz"
-            else -> "Not supported"
-        }
+    ): String = when (speedType) {
+        BAND_2GHZ -> "2.4 GHz"
+        BAND_5GHZ -> "5 GHz"
+        BAND_6GHZ -> "6 GHz"
+        BAND_60GHZ -> "60 GHz"
+        else -> "Not supported"
+    }
 }

@@ -36,14 +36,13 @@ object SoftApSecurityType {
 
     fun getNameOfSecurityType(
         @SecurityType securityType: Int,
-    ): String =
-        when (securityType) {
-            SECURITY_TYPE_OPEN -> "None"
-            SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
-            SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
-            SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
-            else -> "Not supported"
-        }
+    ): String = when (securityType) {
+        SECURITY_TYPE_OPEN -> "None"
+        SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
+        SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
+        SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
+        else -> "Not supported"
+    }
 
     val supportedSecurityTypes =
         listOf(
