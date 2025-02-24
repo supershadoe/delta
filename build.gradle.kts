@@ -10,6 +10,15 @@ plugins {
 }
 
 spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        cleanthat()
+        googleJavaFormat().aosp().reflowLongStrings()
+        formatAnnotations()
+        target("**/*.java")
+        targetExclude("build/**")
+    }
     kotlin {
         target("**/*.kt", "**/*.kts")
         targetExclude("**/build/**/*.kt")
