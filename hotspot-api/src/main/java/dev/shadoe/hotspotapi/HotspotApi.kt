@@ -38,17 +38,12 @@ class HotspotApi(
     private val wifiManager: IWifiManager
 
     private val _config: MutableStateFlow<SoftApConfiguration>
-    private val _getSoftApConfigFlow: Flow<SoftApConfigurationHidden> = flow {
-        while (true) {
-            emit(Refine.unsafeCast<SoftApConfigurationHidden>(wifiManager.softApConfiguration))
-            delay(1.seconds)
-        }
-    }
+    private val pollSoftApConfigFlow: Flow<SoftApConfigurationHidden>
     private val _enabledState: MutableStateFlow<Int>
     private val _tetheredClients: MutableStateFlow<List<TetheredClientWrapper>>
-    private val _fallbackPassphrase: MutableStateFlow<String>
+    private val fallbackPassphrase: MutableStateFlow<String>
     private val _supportedSpeedTypes: MutableStateFlow<List<Int>>
-    private val _maxClientLimit: MutableStateFlow<Int>
+    private val maxClientLimit: MutableStateFlow<Int>
 
     private val tetheringEventCallback: ITetheringEventCallback
     private val softApCallback: ISoftApCallback
@@ -60,52 +55,74 @@ class HotspotApi(
     init {
         HiddenApiBypass.setHiddenApiExemptions("L")
 
-        tetheringConnector = SystemServiceHelper.getSystemService("tethering")
+        tetheringConnector = SystemServiceHelper
+            .getSystemService("tethering")
             ?.let { ShizukuBinderWrapper(it) }
             ?.let { ITetheringConnector.Stub.asInterface(it) }
             ?: throw BinderAcquisitionException(
-                "Unable to get ITetheringConnector"
+                "Unable to get ITetheringConnector",
             )
 
-        wifiManager = SystemServiceHelper.getSystemService("wifi")
+        wifiManager = SystemServiceHelper
+            .getSystemService("wifi")
             ?.let { ShizukuBinderWrapper(it) }
             ?.let { IWifiManager.Stub.asInterface(it) }
             ?: throw BinderAcquisitionException("Unable to get IWifiManager")
 
         val softApConfiguration =
-            Refine.unsafeCast<SoftApConfigurationHidden>(wifiManager.softApConfiguration)
+            Refine.unsafeCast<SoftApConfigurationHidden>(
+                wifiManager.softApConfiguration,
+            )
         _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
         _tetheredClients = MutableStateFlow(emptyList())
-        _fallbackPassphrase = MutableStateFlow(generateRandomPassword())
+        fallbackPassphrase = MutableStateFlow(generateRandomPassword())
         _supportedSpeedTypes = MutableStateFlow(emptyList())
-        _maxClientLimit =
+        maxClientLimit =
             MutableStateFlow(softApConfiguration.maxNumberOfClients)
-        _config = MutableStateFlow(
-            softApConfiguration.toBridgeClass(fallbackPassphrase = _fallbackPassphrase.value)
-        )
+        _config =
+            MutableStateFlow(
+                softApConfiguration.toBridgeClass(
+                    fallbackPassphrase = fallbackPassphrase.value,
+                ),
+            )
+        pollSoftApConfigFlow =
+            flow {
+                while (true) {
+                    emit(
+                        Refine.unsafeCast<SoftApConfigurationHidden>(
+                            wifiManager.softApConfiguration,
+                        ),
+                    )
+                    delay(1.seconds)
+                }
+            }
 
-        tetheringEventCallback = TetheringEventCallback(
-            updateEnabledState = {
-                _enabledState.value = wifiManager.wifiApEnabledState
-            },
-            setTetheredClients = { _tetheredClients.value = it },
-        )
+        tetheringEventCallback =
+            TetheringEventCallback(
+                updateEnabledState = {
+                    _enabledState.value = wifiManager.wifiApEnabledState
+                },
+                setTetheredClients = { _tetheredClients.value = it },
+            )
 
-        softApCallback = SoftApCallback(
-            setSupportedSpeedTypes = {
-                _supportedSpeedTypes.value = it
-            },
-            setMaxClientLimit = { _maxClientLimit.value },
-        )
+        softApCallback =
+            SoftApCallback(
+                setSupportedSpeedTypes = {
+                    _supportedSpeedTypes.value = it
+                },
+                setMaxClientLimit = { maxClientLimit.value },
+            )
 
         // It is enough to call this function only once per session as
         // our config data class remembers previous passphrase.
-        wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(object :
-            IStringListener.Stub() {
-            override fun onResult(value: String?) {
-                _fallbackPassphrase.value = value ?: generateRandomPassword()
-            }
-        })
+        wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
+            object :
+                IStringListener.Stub() {
+                override fun onResult(value: String?) {
+                    fallbackPassphrase.value = value ?: generateRandomPassword()
+                }
+            },
+        )
     }
 
     val config: StateFlow<SoftApConfiguration> = _config
@@ -116,8 +133,10 @@ class HotspotApi(
 
     fun setSoftApConfiguration(c: SoftApConfiguration): Boolean =
         runCatching {
-            Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(c.toOriginalClass())
-                .let {
+            Refine
+                .unsafeCast<android.net.wifi.SoftApConfiguration>(
+                    c.toOriginalClass(),
+                ).let {
                     if (!wifiManager.validateSoftApConfiguration(it)) {
                         return false
                     }
@@ -129,21 +148,23 @@ class HotspotApi(
 
     fun registerCallback() {
         tetheringConnector.registerTetheringEventCallback(
-            tetheringEventCallback, packageName
+            tetheringEventCallback,
+            packageName,
         )
         wifiManager.registerSoftApCallback(softApCallback)
     }
 
     suspend fun launchBackgroundTasks() {
-        _getSoftApConfigFlow.collect {
+        pollSoftApConfigFlow.collect {
             _config.value =
-                it.toBridgeClass(fallbackPassphrase = _fallbackPassphrase.value)
+                it.toBridgeClass(fallbackPassphrase = fallbackPassphrase.value)
         }
     }
 
     fun unregisterCallback() {
         tetheringConnector.unregisterTetheringEventCallback(
-            tetheringEventCallback, packageName
+            tetheringEventCallback,
+            packageName,
         )
         wifiManager.unregisterSoftApCallback(softApCallback)
     }

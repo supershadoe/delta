@@ -26,7 +26,10 @@ internal class TetheringEventCallback(
 
     override fun onUpstreamChanged(network: Network?) {}
 
-    override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {}
+    override fun onConfigurationChanged(
+        config: TetheringConfigurationParcel?,
+    ) {
+    }
 
     override fun onTetherStatesChanged(states: TetherStatesParcel?) {
         updateEnabledState()
@@ -37,8 +40,10 @@ internal class TetheringEventCallback(
             launch(Dispatchers.Unconfined) {
                 (clients ?: emptyList())
                     .filterNotNull()
-                    .filter { it.tetheringType == TetheringManager.TETHERING_WIFI }
-                    .map { TetheredClientWrapper(it) }
+                    .filter {
+                        it.tetheringType ==
+                            TetheringManager.TETHERING_WIFI
+                    }.map { TetheredClientWrapper(it) }
                     .let { setTetheredClients(it) }
             }
         }
