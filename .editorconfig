@@ -12,14 +12,19 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 
 [*.{kt,kts}]
+ij_kotlin_packages_to_use_import_on_demand = unset
+ij_kotlin_name_count_to_use_star_import = 65535
+ij_kotlin_name_count_to_use_star_import_for_members = 65535
+
+# ktlint config
 # noinspection EditorConfigKeyCorrectness
 ktlint_code_style = ktlint_official
 # noinspection EditorConfigKeyCorrectness
 ktlint_ignore_back_ticked_identifier = true
+# noinspection EditorConfigKeyCorrectness
+ktlint_function_naming_ignore_when_annotated_with = Composable
 
-# Don't allow any wildcard imports
-ij_kotlin_packages_to_use_import_on_demand = unset
+# compose-rules ruleset config
+# noinspection EditorConfigKeyCorrectness
+compose_allowed_composition_locals = LocalNavController,LocalShizukuState,LocalHotspotApiInstance
 
-# Prevent wildcard imports
-ij_kotlin_name_count_to_use_star_import = 99
-ij_kotlin_name_count_to_use_star_import_for_members = 99
