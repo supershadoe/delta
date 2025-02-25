@@ -2,6 +2,7 @@ import com.android.build.gradle.tasks.AidlCompile
 
 plugins {
     alias(libs.plugins.android.library)
+    id("delta.lint")
 }
 
 android {

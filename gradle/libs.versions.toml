@@ -27,6 +27,7 @@ androidx-annotation = { group = "androidx.annotation", name = "annotation", vers
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization-json" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+spotless = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
@@ -70,7 +71,6 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlin-dsl" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
-spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
 androidx = ["core-ktx", "core-splashscreen", "graphics-shapes"]
