@@ -8,8 +8,6 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-permissions:
-  contents: write
 jobs:
   build-apk:
     name: Build app
@@ -35,15 +33,6 @@ jobs:
         run: ./gradlew spotlessCheck
       - name: Build app
         run: ./gradlew assembleDefaultKeySignedRelease
-      - name: Delete APK before uploading new APK
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.actions.deleteArtifact({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              artifact_id: ${{ steps.upload-apk.outputs.artifact-id }}
-            });
       - name: Upload APK
         id: upload-apk
         uses: actions/upload-artifact@v4
@@ -51,16 +40,3 @@ jobs:
           name: app-release.apk
           path: app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk
           retention-days: 7
-  dep-subm:
-    name: Dependency submission
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone repo
-        uses: actions/checkout@v4
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-      - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@v4
