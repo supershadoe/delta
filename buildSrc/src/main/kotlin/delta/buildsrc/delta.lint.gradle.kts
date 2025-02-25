@@ -30,7 +30,7 @@ spotless {
         targetExclude("build/**")
     }
     kotlin {
-        target("**/*.kt", "**/*.kts")
+        target("**/*.kt")
         targetExclude("**/build/**/*.kt")
         ktlint("1.5.0")
             .customRuleSets(
@@ -40,7 +40,8 @@ spotless {
             )
     }
     kotlinGradle {
-        target("*.gradle.kts")
+        target("**/*.gradle.kts")
+        targetExclude("**/build/**/*.gradle.kts")
         ktlint("1.5.0")
     }
 }
