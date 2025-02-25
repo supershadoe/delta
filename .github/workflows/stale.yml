@@ -1,0 +1,38 @@
+name: delta-ci-stale
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  stale:
+    name: Mark issues/PRs stale after 60 days
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v5
+        with:
+          days-before-stale: 60
+          days-before-close: 7
+          stale-issue-message: |
+            Due to no activity on this issue for over 2 months, this issue has been marked stale.
+
+            Please chime in with a response if the issue still persists.
+          close-issue-message: |
+            This issue has been closed by the stale bot as no activity was observed.
+
+            Please create a new issue if the issue still persists.
+          stale-pr-message: |
+            Due to no activity on this PR for over 2 months, this PR has been marked stale.
+
+            Stale PRs increase overhead on maintainer's side and also quickly grow outdated as the
+            codebase changes, thus making merging harder.
+
+            If this PR is still relevant and required, make sure the PR is rebased over the current
+            code.
+          close-pr-message: |
+            This PR has been closed by the stale bot as no activity was observed.
+
+            Please create a new issue if the issue still persists.
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
