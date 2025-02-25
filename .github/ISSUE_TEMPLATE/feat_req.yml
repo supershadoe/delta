@@ -1,0 +1,28 @@
+name: Feature request
+description: To suggest a new feature for the app.
+labels: ["enhancement", "user"]
+body:
+  - type: textarea
+    id: prob-statement
+    attributes:
+      label: Why is this feature needed?
+      description: Describe what problem(s) would this feature solve.
+    validations:
+      required: true
+
+  - type: textarea
+    id: feat-desc
+    attributes:
+      label: Potential solution
+      description: Describe how the problem might be tackled here.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Make sure to tick all the following boxes.
+      options:
+        - label: I have searched through the existing issues and am pretty sure that this is not a duplicate.
+          required: true

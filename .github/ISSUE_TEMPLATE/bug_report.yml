@@ -1,0 +1,77 @@
+name: Bug report
+description: To report a bug or issue with the app.
+labels: ["bug", "user"]
+body:
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to reproduce
+      description: Describe the steps to be taken to reproduce the bug.
+      value: |
+        1.
+        2.
+        3.
+        4.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Describe what should have happened if the bug wasn't there.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      description: The erroneous behavior that is manifested instead of the expected behavior.
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: Android version
+      description: Mostly in Settings -> About phone.
+      placeholder: |
+        Example: "Android 15"
+    validations:
+      required: true
+
+  - type: input
+    id: device-model
+    attributes:
+      label: Device model
+      description: Provide your device model.
+      placeholder: |
+        Example: "Pixel 6A"
+    validations:
+      required: true
+
+  - type: textarea
+    id: crash-logs
+    attributes:
+      label: Crash logs
+      description: Can obtain from adb logcat or through android studio.
+      placeholder: |
+        You can either paste the crash log here or attach it as an attachment.
+
+  - type: textarea
+    id: other-info
+    attributes:
+      label: Other info
+      description: Any other info or images to share with us goes here.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Make sure to tick all the following boxes.
+      options:
+        - label: I have searched through the existing issues and am pretty sure that this is not a duplicate.
+          required: true
+        - label: I am using the latest version of the app, linked [here](https://github.com/supershadoe/delta/releases/latest)
+          required: true
