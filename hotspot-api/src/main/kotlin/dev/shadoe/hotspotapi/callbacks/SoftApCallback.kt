@@ -19,6 +19,15 @@ class SoftApCallback(
     /**
      * Results in a no-op because already [TetheringEventCallback] handles it
      */
+    @Deprecated("Removed in API 35")
+    override fun onStateChanged(
+        state: Int,
+        failureReason: Int,
+    ) {}
+
+    /**
+     * Results in a no-op because already [TetheringEventCallback] handles it
+     */
     override fun onConnectedClientsOrInfoChanged(
         infos: Map<String?, SoftApInfo?>?,
         clients: Map<String?, List<WifiClient?>?>?,
