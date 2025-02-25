@@ -1,0 +1,38 @@
+name: delta-ci
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-apk:
+    name: Build app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Configure signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          SIGN_BASE64: ${{ secrets.SIGN_BASE64 }}
+        run: |
+          echo $KEYSTORE_BASE64 | base64 -d > sign.keystore
+          echo $SIGN_BASE64 | base64 -d > app/sign.json
+      - name: Build app
+        run: ./gradlew assembleDefaultKeySignedRelease
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release.apk
+          path: app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk
