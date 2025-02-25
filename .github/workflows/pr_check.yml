@@ -1,0 +1,30 @@
+name: delta-ci-pr
+on:
+  pull_request:
+    paths:
+      - '**'
+      - '!*.yml'
+      - '!*.yaml'
+      - '!*.md'
+      - '!*.txt'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-apk:
+    name: Build app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Lint check
+        run: ./gradlew spotlessCheck
+      - name: Build app
+        run: ./gradlew assembleDebugKeySignedRelease
