@@ -29,6 +29,8 @@ jobs:
         run: |
           echo $KEYSTORE_BASE64 | base64 -d > app/sign.keystore
           echo $SIGN_BASE64 | base64 -d > app/sign.json
+      - name: Lint check
+        run: ./gradlew spotlessCheck
       - name: Build app
         run: ./gradlew assembleDefaultKeySignedRelease
       - name: Upload APK
