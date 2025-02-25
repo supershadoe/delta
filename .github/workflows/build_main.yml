@@ -42,7 +42,7 @@ jobs:
             github.rest.actions.deleteArtifact({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              artifact_id: ${{ steps.upload-apk.outputs.artifact-id }},
+              artifact_id: ${{ steps.upload-apk.outputs.artifact-id }}
             });
       - name: Upload APK
         id: upload-apk
@@ -50,6 +50,7 @@ jobs:
         with:
           name: app-release.apk
           path: app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk
+          retention-days: 7
   dep-subm:
     name: Dependency submission
     runs-on: ubuntu-latest
