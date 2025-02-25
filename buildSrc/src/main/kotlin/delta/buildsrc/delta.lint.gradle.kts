@@ -4,7 +4,15 @@ plugins {
 
 spotless {
     format("misc") {
-        target("*.gradle", ".gitattributes", ".gitignore", ".txt")
+        target(
+            "*.gradle",
+            ".gitattributes",
+            ".gitignore",
+            "*.txt",
+            "*.yml",
+            "*.yaml",
+            "*.toml",
+        )
         trimTrailingWhitespace()
         leadingTabsToSpaces()
         endWithNewline()
