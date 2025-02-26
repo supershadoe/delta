@@ -30,7 +30,7 @@ internal fun ControlButton(
 ) {
     val color =
         if (isLoading) {
-            MaterialTheme.colorScheme.tertiaryContainer
+            MaterialTheme.colorScheme.secondaryContainer
         } else if (isEnabled) {
             MaterialTheme.colorScheme.primaryContainer
         } else {
