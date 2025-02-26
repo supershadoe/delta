@@ -59,4 +59,25 @@
     <string name="hotspot_not_enabled">Hotspot is not yet enabled.</string>
     <string name="hotspot_enable_action">ENABLE</string>
     <string name="edit_button">Edit</string>
+
+    <!-- dev.shadoe.delta.shizuku.ShizukuSetupScreen -->
+    <string name="shizuku_setup">Setup the app</string>
+
+    <!-- dev.shadoe.delta.shizuku.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">
+        This app uses system APIs that are not generally accessible from the
+        Android SDK and thus, requires Shizuku to get access to Hotspot API.
+    </string>
+    <string name="shizuku_grant_access">Grant access</string>
+
+    <!-- dev.shadoe.delta.shizuku.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">Shizuku is not installed.</string>
+    <string name="open_link_icon">Open link</string>
+    <string name="github">GitHub</string>
+    <string name="install_from_icon">Install from</string>
+    <string name="play_store">Play Store</string>
+
+    <!-- dev.shadoe.delta.shizuku.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku is not running.</string>
+    <string name="shizuku_start">Start Shizuku</string>
 </resources>

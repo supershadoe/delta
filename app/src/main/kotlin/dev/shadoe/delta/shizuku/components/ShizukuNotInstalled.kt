@@ -15,14 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import dev.shadoe.delta.R
 
 @Composable
 internal fun ShizukuNotInstalled() {
     val context = LocalContext.current
     Column {
-        Text("Shizuku is not installed")
+        Text(stringResource(R.string.shizuku_not_installed))
         Button(onClick = {
             context.startActivity(
                 Intent(
@@ -34,9 +36,15 @@ internal fun ShizukuNotInstalled() {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-                    contentDescription = "Open",
+                    contentDescription =
+                        stringResource(
+                            R.string.open_link_icon,
+                        ),
                 )
-                Text(text = "GitHub", modifier = Modifier.padding(start = 8.dp))
+                Text(
+                    text = stringResource(R.string.github),
+                    modifier = Modifier.padding(start = 8.dp),
+                )
             }
         }
         Button(onClick = {
@@ -52,10 +60,13 @@ internal fun ShizukuNotInstalled() {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Rounded.InstallMobile,
-                    contentDescription = "Install from",
+                    contentDescription =
+                        stringResource(
+                            R.string.install_from_icon,
+                        ),
                 )
                 Text(
-                    text = "Play store",
+                    text = stringResource(R.string.play_store),
                     modifier = Modifier.padding(start = 8.dp),
                 )
             }

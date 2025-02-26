@@ -8,6 +8,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import dev.shadoe.delta.R
 import dev.shadoe.delta.shizuku.components.ShizukuNotConnected
 import dev.shadoe.delta.shizuku.components.ShizukuNotInstalled
 import dev.shadoe.delta.shizuku.components.ShizukuNotRunning
@@ -19,7 +21,9 @@ fun ShizukuSetupScreen(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             if (shizukuState != NOT_READY && shizukuState != CONNECTED) {
-                LargeTopAppBar(title = { Text("Setup the app") })
+                LargeTopAppBar(
+                    title = { Text(stringResource(R.string.shizuku_setup)) },
+                )
             }
         },
     ) {

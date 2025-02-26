@@ -5,13 +5,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import dev.shadoe.delta.R
 import rikka.shizuku.ShizukuProvider
 
 @Composable
 internal fun ShizukuNotRunning() {
     val context = LocalContext.current
     Column {
-        Text("Shizuku is not running")
+        Text(stringResource(R.string.shizuku_not_running))
         Button(onClick = {
             with(context) {
                 startActivity(
@@ -21,7 +23,7 @@ internal fun ShizukuNotRunning() {
                 )
             }
         }) {
-            Text(text = "Start Shizuku")
+            Text(text = stringResource(R.string.shizuku_start))
         }
     }
 }
