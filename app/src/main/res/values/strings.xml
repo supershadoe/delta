@@ -1,15 +1,13 @@
 <resources>
+    <!-- dev.shadoe.delta -->
     <string name="app_name">Delta</string>
     <string name="back_button">Go back</string>
-
-    <!-- dev.shadoe.delta.hotspot.HotspotScreen -->
     <string name="blocklist">Blocklist</string>
-    <string name="no_ssid">no ssid</string>
-    <string name="connected_devices">Connected Devices (%d)</string>
-    <string name="no_connected_devices">There are no connected devices.</string>
-    <string name="hotspot_not_enabled">Hotspot is not yet enabled.</string>
-    <string name="hotspot_enable_action">ENABLE</string>
-    <string name="edit_button">Edit</string>
+
+    <!-- dev.shadoe.delta.hotspot.BlocklistScreen -->
+    <string name="blocklist_none_blocked">No devices are blocked.</string>
+    <string name="unblock_button">UNBLOCK</string>
+    <string name="blocklist_unblocked">Device removed from blocklist.</string>
 
     <!-- dev.shadoe.delta.hotspot.HotspotEditScreen -->
     <string name="settings">Settings</string>
@@ -34,9 +32,11 @@
     <string name="save_button">Save</string>
     <string name="passphrase_empty_warning">Enter a password.</string>
 
-    <!-- dev.shadoe.delta.hotspot.BlocklistScreen -->
-    <string name="blocklist_none_blocked">No devices are blocked.</string>
-    <string name="unblock_button">UNBLOCK</string>
-    <string name="blocklist_unblocked">Device removed from blocklist.</string>
-
+    <!-- dev.shadoe.delta.hotspot.HotspotScreen -->
+    <string name="no_ssid">no ssid</string>
+    <string name="connected_devices">Connected Devices (%d)</string>
+    <string name="no_connected_devices">There are no connected devices.</string>
+    <string name="hotspot_not_enabled">Hotspot is not yet enabled.</string>
+    <string name="hotspot_enable_action">ENABLE</string>
+    <string name="edit_button">Edit</string>
 </resources>
