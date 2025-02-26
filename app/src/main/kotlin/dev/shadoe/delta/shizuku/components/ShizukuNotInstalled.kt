@@ -2,7 +2,6 @@ package dev.shadoe.delta.shizuku.components
 
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
-import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -17,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 
 @Composable
 internal fun ShizukuNotInstalled() {
@@ -27,7 +27,7 @@ internal fun ShizukuNotInstalled() {
             context.startActivity(
                 Intent(
                     ACTION_VIEW,
-                    Uri.parse("https://github.com/RikkaApps/Shizuku/releases"),
+                    "https://github.com/RikkaApps/Shizuku/releases".toUri(),
                 ),
             )
         }) {
@@ -43,9 +43,8 @@ internal fun ShizukuNotInstalled() {
             context.startActivity(
                 Intent(ACTION_VIEW).apply {
                     data =
-                        Uri.parse(
-                            "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api",
-                        )
+                        "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api"
+                            .toUri()
                     `package` = "com.android.vending"
                 },
             )
