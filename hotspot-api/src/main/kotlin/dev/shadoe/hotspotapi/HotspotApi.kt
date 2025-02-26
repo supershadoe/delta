@@ -168,10 +168,15 @@ class HotspotApi(
         wifiManager.unregisterSoftApCallback(softApCallback)
     }
 
-    fun startHotspot() {
-        if (_enabledState.value != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
-            return
+    fun startHotspot(forceRestart: Boolean = false) {
+        var shouldStart =
+            _enabledState.value ==
+                SoftApEnabledState.WIFI_AP_STATE_DISABLED
+        if (forceRestart) {
+            shouldStart = _enabledState.value ==
+                SoftApEnabledState.WIFI_AP_STATE_FAILED
         }
+        if (!shouldStart) return
         val request =
             TetheringManager.TetheringRequest.Builder(TETHERING_WIFI).build()
         tetheringConnector.startTethering(

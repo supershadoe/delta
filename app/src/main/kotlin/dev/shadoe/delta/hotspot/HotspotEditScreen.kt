@@ -199,7 +199,13 @@ private suspend fun setSoftApConfiguration(
     hotspotApi.setSoftApConfiguration(config)
     val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
     val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
-    if (hotspotApi.enabledState.value == enabled) {
+    val failed = SoftApEnabledState.WIFI_AP_STATE_FAILED
+    if (hotspotApi.enabledState.value == failed) {
+        hotspotApi.startHotspot(forceRestart = true)
+        while (hotspotApi.enabledState.value != enabled) {
+            delay(500.milliseconds)
+        }
+    } else if (hotspotApi.enabledState.value == enabled) {
         hotspotApi.stopHotspot()
         while (hotspotApi.enabledState.value != disabled) {
             delay(500.milliseconds)
