@@ -46,16 +46,11 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
-import dev.shadoe.hotspotapi.HotspotApi
-import dev.shadoe.hotspotapi.SoftApConfiguration
-import dev.shadoe.hotspotapi.helper.SoftApEnabledState
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType.getNameOfSecurityType
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType.supportedSecurityTypes
 import dev.shadoe.hotspotapi.helper.SoftApSpeedType.getNameOfSpeedType
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun HotspotEditScreen(modifier: Modifier = Modifier) {
@@ -188,31 +183,6 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
                     Text(text = "Save")
                 }
             }
-        }
-    }
-}
-
-private suspend fun setSoftApConfiguration(
-    hotspotApi: HotspotApi,
-    config: SoftApConfiguration,
-) {
-    hotspotApi.setSoftApConfiguration(config)
-    val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
-    val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
-    val failed = SoftApEnabledState.WIFI_AP_STATE_FAILED
-    if (hotspotApi.enabledState.value == failed) {
-        hotspotApi.startHotspot(forceRestart = true)
-        while (hotspotApi.enabledState.value != enabled) {
-            delay(500.milliseconds)
-        }
-    } else if (hotspotApi.enabledState.value == enabled) {
-        hotspotApi.stopHotspot()
-        while (hotspotApi.enabledState.value != disabled) {
-            delay(500.milliseconds)
-        }
-        hotspotApi.startHotspot()
-        while (hotspotApi.enabledState.value != enabled) {
-            delay(500.milliseconds)
         }
     }
 }

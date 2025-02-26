@@ -12,15 +12,24 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
+import dev.shadoe.delta.hotspot.setSoftApConfiguration
 import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun ConnectedDevicesList(
     tetheredClients: List<TetheredClientWrapper>,
 ) {
+    val hotspotApi = LocalHotspotApiInstance.current!!
+    val config by hotspotApi.config.collectAsState()
+    val scope = rememberCoroutineScope()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
@@ -51,13 +60,13 @@ internal fun ConnectedDevicesList(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Column(
-                        modifier =
-                            Modifier.padding(
-                                horizontal = 8.dp,
-                            ),
-                    ) {
-                        with(tetheredClients[it]) {
+                    with(tetheredClients[it]) {
+                        Column(
+                            modifier =
+                                Modifier.padding(
+                                    horizontal = 8.dp,
+                                ),
+                        ) {
                             Text(
                                 text = hostnames.firstOrNull() ?: "No name",
                             )
@@ -70,9 +79,29 @@ internal fun ConnectedDevicesList(
                                         ?: "Link address not allocated",
                             )
                         }
-                    }
-                    Button(onClick = {}, enabled = false) {
-                        Text(text = "BLOCK")
+                        Button(onClick = {
+                            scope.launch {
+                                val devices =
+                                    if (macAddress in config.blockedDevices) {
+                                        config.blockedDevices - macAddress
+                                    } else {
+                                        config.blockedDevices + macAddress
+                                    }
+                                setSoftApConfiguration(
+                                    hotspotApi,
+                                    config.copy(blockedDevices = devices),
+                                )
+                            }
+                        }) {
+                            Text(
+                                text =
+                                    if (macAddress in config.blockedDevices) {
+                                        "BLOCK"
+                                    } else {
+                                        "UNBLOCK"
+                                    },
+                            )
+                        }
                     }
                 }
             }
