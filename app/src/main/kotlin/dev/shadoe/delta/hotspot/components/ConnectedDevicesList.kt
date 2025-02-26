@@ -81,12 +81,13 @@ internal fun ConnectedDevicesList(
                         }
                         Button(onClick = {
                             scope.launch {
+                                val d = config.blockedDevices + macAddress
                                 setSoftApConfiguration(
                                     hotspotApi = hotspotApi,
-                                    config = config.copy(
-                                        blockedDevices =
-                                            config.blockedDevices + macAddress,
-                                    ),
+                                    config =
+                                        config.copy(
+                                            blockedDevices = d,
+                                        ),
                                 )
                             }
                         }) {
