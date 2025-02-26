@@ -41,15 +41,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType
-import dev.shadoe.hotspotapi.helper.SoftApSecurityType.getNameOfSecurityType
+import dev.shadoe.hotspotapi.helper.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType.supportedSecurityTypes
-import dev.shadoe.hotspotapi.helper.SoftApSpeedType.getNameOfSpeedType
+import dev.shadoe.hotspotapi.helper.SoftApSpeedType.getResOfSpeedType
 import kotlinx.coroutines.launch
 
 @Composable
@@ -64,20 +66,25 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
     val config = hotspotApi.config.collectAsState()
 
     var mutableConfig by remember(config.value) {
-        println("triggering change")
         mutableStateOf(config.value)
     }
+
+    val passphraseEmptyWarningText =
+        stringResource(R.string.passphrase_empty_warning)
 
     Scaffold(
         topBar = {
             @OptIn(ExperimentalMaterial3Api::class)
             LargeTopAppBar(
-                title = { Text(text = "Settings") },
+                title = { Text(text = stringResource(R.string.settings)) },
                 navigationIcon = {
                     IconButton(onClick = { navController?.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription =
+                                stringResource(
+                                    R.string.back_button,
+                                ),
                         )
                     }
                 },
@@ -99,9 +106,7 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
         ) {
             item {
                 Text(
-                    text =
-                        "Configure all the values below as per your" +
-                            " liking :)",
+                    text = stringResource(R.string.settings_desc),
                     modifier = Modifier.padding(8.dp),
                 )
             }
@@ -160,7 +165,7 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
                         if (mutableConfig.passphrase.isEmpty()) {
                             scope.launch {
                                 snackbarHostState.showSnackbar(
-                                    message = "Enter a password.",
+                                    message = passphraseEmptyWarningText,
                                     withDismissAction = true,
                                     duration = SnackbarDuration.Short,
                                 )
@@ -180,7 +185,7 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
                             }
                     },
                 ) {
-                    Text(text = "Save")
+                    Text(text = stringResource(R.string.save_button))
                 }
             }
         }
@@ -198,7 +203,7 @@ private fun SSIDField(
     ) {
         Icon(
             imageVector = Icons.Rounded.Wifi,
-            contentDescription = "SSID icon",
+            contentDescription = stringResource(R.string.ssid_field_icon),
         )
         OutlinedTextField(
             value = ssid,
@@ -215,7 +220,7 @@ private fun SSIDField(
                 Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
-            label = { Text("SSID") },
+            label = { Text(text = stringResource(R.string.ssid_field_label)) },
         )
     }
 }
@@ -231,11 +236,14 @@ private fun SecurityTypeField(
     ) {
         Icon(
             imageVector = Icons.Rounded.WifiPassword,
-            contentDescription = "Security Type icon",
+            contentDescription =
+                stringResource(
+                    R.string.security_proto_field_icon,
+                ),
         )
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Text(
-                "Security Type",
+                text = stringResource(R.string.security_proto_field_label),
                 modifier = Modifier.padding(start = 8.dp),
                 style = MaterialTheme.typography.titleMedium,
             )
@@ -249,8 +257,10 @@ private fun SecurityTypeField(
                         label = {
                             Text(
                                 text =
-                                    getNameOfSecurityType(
-                                        supportedSecurityTypes[it],
+                                    stringResource(
+                                        getResOfSecurityType(
+                                            supportedSecurityTypes[it],
+                                        ),
                                     ),
                             )
                         },
@@ -273,7 +283,7 @@ private fun PassphraseField(
     ) {
         Icon(
             imageVector = Icons.Rounded.Password,
-            contentDescription = "Passphrase icon",
+            contentDescription = stringResource(R.string.passphrase_field_icon),
         )
         OutlinedTextField(
             value = passphrase,
@@ -290,7 +300,11 @@ private fun PassphraseField(
                 Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
-            label = { Text("Passphrase") },
+            label = {
+                Text(
+                    text = stringResource(R.string.passphrase_field_label),
+                )
+            },
         )
     }
 }
@@ -309,7 +323,10 @@ private fun AutoShutdownField(
     ) {
         Icon(
             imageVector = Icons.Rounded.SettingsPower,
-            contentDescription = "Auto Shutdown icon",
+            contentDescription =
+                stringResource(
+                    R.string.auto_shutdown_field_icon,
+                ),
         )
         Column(
             modifier =
@@ -319,11 +336,11 @@ private fun AutoShutdownField(
             horizontalAlignment = Alignment.Start,
         ) {
             Text(
-                text = "Turn off hotspot automatically?",
+                text = stringResource(R.string.auto_shutdown_field_title),
                 style = MaterialTheme.typography.titleLarge,
             )
             Text(
-                text = "When no devices are connected.",
+                text = stringResource(R.string.auto_shutdown_field_desc),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -346,11 +363,11 @@ private fun SpeedTypeField(
     ) {
         Icon(
             imageVector = Icons.Rounded.NetworkWifi,
-            contentDescription = "Frequency band icon",
+            contentDescription = stringResource(R.string.freq_band_field_icon),
         )
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Text(
-                "Frequency band",
+                text = stringResource(R.string.freq_band_field_label),
                 modifier = Modifier.padding(start = 8.dp),
                 style = MaterialTheme.typography.titleMedium,
             )
@@ -366,8 +383,10 @@ private fun SpeedTypeField(
                         label = {
                             Text(
                                 text =
-                                    getNameOfSpeedType(
-                                        supportedSpeedTypes[it],
+                                    stringResource(
+                                        getResOfSpeedType(
+                                            supportedSpeedTypes[it],
+                                        ),
                                     ),
                             )
                         },

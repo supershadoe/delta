@@ -2,6 +2,7 @@ package dev.shadoe.hotspotapi.helper
 
 import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.IntDef
+import dev.shadoe.hotspotapi.R
 
 object SoftApSecurityType {
     const val SECURITY_TYPE_OPEN = SoftApConfigurationHidden.SECURITY_TYPE_OPEN
@@ -34,14 +35,15 @@ object SoftApSecurityType {
     )
     annotation class SecurityType
 
-    fun getNameOfSecurityType(
+    fun getResOfSecurityType(
         @SecurityType securityType: Int,
-    ): String = when (securityType) {
-        SECURITY_TYPE_OPEN -> "None"
-        SECURITY_TYPE_WPA2_PSK -> "WPA2-Personal"
-        SECURITY_TYPE_WPA3_SAE -> "WPA3-Personal"
-        SECURITY_TYPE_WPA3_SAE_TRANSITION -> "WPA2/WPA3-Personal"
-        else -> "Not supported"
+    ) = when (securityType) {
+        SECURITY_TYPE_OPEN -> R.string.security_proto_open
+        SECURITY_TYPE_WPA2_PSK -> R.string.security_proto_wpa2_psk
+        SECURITY_TYPE_WPA3_SAE -> R.string.security_proto_wpa3_sae
+        SECURITY_TYPE_WPA3_SAE_TRANSITION ->
+            R.string.security_proto_wpa3_sae_transition
+        else -> R.string.security_proto_not_supported
     }
 
     val supportedSecurityTypes =

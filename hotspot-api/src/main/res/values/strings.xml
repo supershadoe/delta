@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Security protocols -->
+    <string name="security_proto_open">None</string>
+    <string name="security_proto_wpa2_psk" translatable="false">
+        WPA2-Personal
+    </string>
+    <string name="security_proto_wpa3_sae_transition" translatable="false">
+        WPA2/WPA3-Personal
+    </string>
+    <string name="security_proto_wpa3_sae" translatable="false">
+        WPA3-Personal
+    </string>
+    <string name="security_proto_not_supported">Not supported</string>
+
+    <!-- Frequency bands -->
+    <string name="freq_band_2_4_GHz" translatable="false">2.4 GHz</string>
+    <string name="freq_band_5_GHz" translatable="false">5 GHz</string>
+    <string name="freq_band_6_GHz" translatable="false">6 GHz</string>
+    <string name="freq_band_60_GHz" translatable="false">60 GHz</string>
+    <string name="freq_band_unknown">Unknown</string>
+</resources>
