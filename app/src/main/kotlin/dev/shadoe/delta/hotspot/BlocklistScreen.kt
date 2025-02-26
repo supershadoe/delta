@@ -24,7 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import kotlinx.coroutines.launch
 
@@ -37,16 +39,22 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
     val hotspotApi = LocalHotspotApiInstance.current!!
     val config by hotspotApi.config.collectAsState()
 
+    val blocklistUnblockedText =
+        stringResource(R.string.blocklist_unblocked)
+
     Scaffold(
         topBar = {
             @OptIn(ExperimentalMaterial3Api::class)
             LargeTopAppBar(
-                title = { Text(text = "Blocklist") },
+                title = { Text(text = stringResource(R.string.blocklist)) },
                 navigationIcon = {
                     IconButton(onClick = { navController?.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription =
+                                stringResource(
+                                    R.string.back_button,
+                                ),
                         )
                     }
                 },
@@ -60,7 +68,7 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "No devices are blocked.",
+                    text = stringResource(R.string.blocklist_none_blocked),
                     modifier = Modifier.padding(16.dp),
                 )
             }
@@ -91,13 +99,13 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
                                     ),
                             )
                             snackbarHostState.showSnackbar(
-                                message = "Device unblocked",
+                                message = blocklistUnblockedText,
                                 duration = SnackbarDuration.Short,
                                 withDismissAction = true,
                             )
                         }
                     }) {
-                        Text(text = "UNBLOCK")
+                        Text(text = stringResource(R.string.unblock_button))
                     }
                 }
             }

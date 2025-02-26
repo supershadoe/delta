@@ -34,4 +34,9 @@
     <string name="save_button">Save</string>
     <string name="passphrase_empty_warning">Enter a password.</string>
 
+    <!-- dev.shadoe.delta.hotspot.BlocklistScreen -->
+    <string name="blocklist_none_blocked">No devices are blocked.</string>
+    <string name="unblock_button">UNBLOCK</string>
+    <string name="blocklist_unblocked">Device removed from blocklist.</string>
+
 </resources>
