@@ -40,7 +40,7 @@
 
     <!-- dev.shadoe.delta.hotspot.HotspotScreen -->
     <string name="no_ssid">no ssid</string>
-    <string name="connected_devices">Connected Devices (%d)</string>
+    <string name="connected_devices_button">Connected Devices (%d)</string>
     <string name="no_connected_devices">There are no connected devices.</string>
     <string name="hotspot_not_enabled">Hotspot is not yet enabled.</string>
     <string name="hotspot_enable_action">ENABLE</string>

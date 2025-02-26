@@ -181,7 +181,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                                 )
                             Text(
                                 stringResource(
-                                    id = R.string.connected_devices,
+                                    id = R.string.connected_devices_button,
                                     tetheredClients.value.size,
                                 ),
                                 style = style,
