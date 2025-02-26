@@ -3,6 +3,13 @@
     <string name="app_name">Delta</string>
     <string name="back_button">Go back</string>
     <string name="blocklist">Blocklist</string>
+    <string name="no_connected_devices">There are no connected devices.</string>
+
+    <!-- dev.shadoe.delta.components.ConnectedDevicesList -->
+    <string name="connected_devices">Connected devices</string>
+    <string name="no_client_hostname">(unidentified device: no name)</string>
+    <string name="ip_not_allocated">(IP address not yet allocated)</string>
+    <string name="block_button">BLOCK</string>
 
     <!-- dev.shadoe.delta.components.PassphraseDisplay -->
     <string name="no_passphrase">(no passphrase)</string>
@@ -41,7 +48,6 @@
     <!-- dev.shadoe.delta.hotspot.HotspotScreen -->
     <string name="no_ssid">no ssid</string>
     <string name="connected_devices_button">Connected Devices (%d)</string>
-    <string name="no_connected_devices">There are no connected devices.</string>
     <string name="hotspot_not_enabled">Hotspot is not yet enabled.</string>
     <string name="hotspot_enable_action">ENABLE</string>
     <string name="edit_button">Edit</string>

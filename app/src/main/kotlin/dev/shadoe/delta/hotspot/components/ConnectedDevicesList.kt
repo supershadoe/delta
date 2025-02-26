@@ -17,7 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
 import dev.shadoe.delta.hotspot.setSoftApConfiguration
 import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
@@ -38,7 +40,7 @@ internal fun ConnectedDevicesList(
                 .fillMaxWidth(),
     ) {
         Text(
-            text = "Connected Devices",
+            text = stringResource(R.string.connected_devices),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.titleLarge,
         )
@@ -47,7 +49,7 @@ internal fun ConnectedDevicesList(
                 modifier = Modifier.weight(1f),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(text = "No devices connected")
+                Text(text = stringResource(R.string.no_connected_devices))
             }
         }
         LazyColumn(
@@ -68,7 +70,11 @@ internal fun ConnectedDevicesList(
                                 ),
                         ) {
                             Text(
-                                text = hostnames.firstOrNull() ?: "No name",
+                                text =
+                                    hostnames.firstOrNull()
+                                        ?: stringResource(
+                                            R.string.no_client_hostname,
+                                        ),
                             )
                             Text(
                                 text =
@@ -76,7 +82,9 @@ internal fun ConnectedDevicesList(
                                         .firstOrNull()
                                         ?.address
                                         ?.hostAddress
-                                        ?: "Link address not allocated",
+                                        ?: stringResource(
+                                            R.string.ip_not_allocated,
+                                        ),
                             )
                         }
                         Button(onClick = {
@@ -91,7 +99,7 @@ internal fun ConnectedDevicesList(
                                 )
                             }
                         }) {
-                            Text(text = "BLOCK")
+                            Text(text = stringResource(R.string.block_button))
                         }
                     }
                 }
