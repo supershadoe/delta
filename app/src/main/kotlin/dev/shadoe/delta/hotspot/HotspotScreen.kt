@@ -160,8 +160,9 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.Bottom,
                 ) {
                     Text(
-                        text = config.value.ssid
-                            ?: stringResource(id = R.string.no_ssid),
+                        text =
+                            config.value.ssid
+                                ?: stringResource(id = R.string.no_ssid),
                     )
                     Box(modifier = Modifier.padding(bottom = 16.dp)) {
                         if (config.value.securityType !=

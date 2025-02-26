@@ -1,13 +1,13 @@
 <resources>
+    <string name="app_name">Delta</string>
 
     <!-- dev.shadoe.delta.hotspot.HotspotScreen -->
-    <string name="app_name">Delta</string>
     <string name="blocklist">Blocklist</string>
+    <string name="no_ssid">no ssid</string>
     <string name="connected_devices">Connected Devices (%d)</string>
     <string name="no_connected_devices">There are no connected devices.</string>
     <string name="hotspot_not_enabled">Hotspot is not yet enabled.</string>
     <string name="hotspot_enable_action">ENABLE</string>
     <string name="edit_button">Edit</string>
-    <string name="no_ssid">no ssid</string>
 
 </resources>
