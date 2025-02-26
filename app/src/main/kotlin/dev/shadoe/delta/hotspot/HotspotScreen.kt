@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.buttons.HotspotButton
 import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
-import dev.shadoe.delta.hotspot.components.PasswordDisplay
+import dev.shadoe.delta.hotspot.components.PassphraseDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
 import dev.shadoe.hotspotapi.helper.SoftApEnabledState
@@ -168,7 +168,9 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                         if (config.value.securityType !=
                             SoftApSecurityType.SECURITY_TYPE_OPEN
                         ) {
-                            PasswordDisplay(password = config.value.passphrase)
+                            PassphraseDisplay(
+                                passphrase = config.value.passphrase,
+                            )
                         }
                     }
                     if (!isBigScreen) {

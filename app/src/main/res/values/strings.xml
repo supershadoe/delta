@@ -4,6 +4,12 @@
     <string name="back_button">Go back</string>
     <string name="blocklist">Blocklist</string>
 
+    <!-- dev.shadoe.delta.components.PassphraseDisplay -->
+    <string name="no_passphrase">(no passphrase)</string>
+    <string name="passphrase_hidden">(passphrase hidden)</string>
+    <string name="passphrase_show">Show passphrase</string>
+    <string name="passphrase_hide">Hide passphrase</string>
+
     <!-- dev.shadoe.delta.hotspot.BlocklistScreen -->
     <string name="blocklist_none_blocked">No devices are blocked.</string>
     <string name="unblock_button">UNBLOCK</string>
