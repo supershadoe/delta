@@ -34,8 +34,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.buttons.HotspotButton
 import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
 import dev.shadoe.delta.hotspot.components.PasswordDisplay
@@ -64,13 +66,20 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
     val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
     val enabledState = hotspotApi.enabledState.collectAsState()
 
+    val noConnectedDevicesText =
+        stringResource(id = R.string.no_connected_devices)
+    val hotspotNotEnabledText =
+        stringResource(id = R.string.hotspot_not_enabled)
+    val hotspotEnableActionText =
+        stringResource(id = R.string.hotspot_enable_action)
+
     val onConnectedDevicesClicked = {
         if (enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
             if (tetheredClients.value.isEmpty()) {
                 if (snackbarHostState.currentSnackbarData == null) {
                     scope.launch {
                         snackbarHostState.showSnackbar(
-                            message = "There are no connected devices.",
+                            message = noConnectedDevicesText,
                             withDismissAction = true,
                             duration = SnackbarDuration.Short,
                         )
@@ -83,8 +92,8 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
             scope.launch {
                 val result =
                     snackbarHostState.showSnackbar(
-                        message = "Hotspot is not yet enabled.",
-                        actionLabel = "ENABLE",
+                        message = hotspotNotEnabledText,
+                        actionLabel = hotspotEnableActionText,
                         withDismissAction = true,
                         duration = SnackbarDuration.Short,
                     )
@@ -100,14 +109,17 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f),
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { Text(text = "Delta") },
+                    title = {
+                        Text(text = stringResource(id = R.string.app_name))
+                    },
                     actions = {
                         IconButton(onClick = {
                             navController?.navigate(Routes.BlocklistScreen)
                         }) {
                             Icon(
                                 imageVector = Icons.Rounded.Block,
-                                contentDescription = "Blocklist",
+                                contentDescription =
+                                    stringResource(id = R.string.blocklist),
                             )
                         }
                     },
@@ -119,7 +131,8 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.Edit,
-                        contentDescription = "Edit",
+                        contentDescription =
+                            stringResource(id = R.string.edit_button),
                     )
                 }
             },
@@ -146,7 +159,10 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom,
                 ) {
-                    Text(text = config.value.ssid ?: "no ssid")
+                    Text(
+                        text = config.value.ssid
+                            ?: stringResource(id = R.string.no_ssid),
+                    )
                     Box(modifier = Modifier.padding(bottom = 16.dp)) {
                         if (config.value.securityType !=
                             SoftApSecurityType.SECURITY_TYPE_OPEN
@@ -156,13 +172,15 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                     }
                     if (!isBigScreen) {
                         TextButton(onClick = onConnectedDevicesClicked) {
-                            val size = "(${tetheredClients.value.size})"
                             val style =
                                 MaterialTheme.typography.bodyMedium.copy(
                                     textDecoration = TextDecoration.Underline,
                                 )
                             Text(
-                                "Connected Devices $size",
+                                stringResource(
+                                    id = R.string.connected_devices,
+                                    tetheredClients.value.size,
+                                ),
                                 style = style,
                             )
                         }
