@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -98,9 +100,19 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
         Scaffold(
             modifier = Modifier.weight(1f),
             topBar = {
-                CenterAlignedTopAppBar(title = {
-                    Text(text = "Delta")
-                })
+                CenterAlignedTopAppBar(
+                    title = { Text(text = "Delta") },
+                    actions = {
+                        IconButton(onClick = {
+                            navController?.navigate(Routes.BlocklistScreen)
+                        }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Block,
+                                contentDescription = "Blocklist",
+                            )
+                        }
+                    },
+                )
             },
             floatingActionButton = {
                 FloatingActionButton(onClick = {

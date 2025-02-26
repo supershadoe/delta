@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.shadoe.delta.hotspot.BlocklistScreen
 import dev.shadoe.delta.hotspot.HotspotApiScope
 import dev.shadoe.delta.hotspot.HotspotEditScreen
 import dev.shadoe.delta.hotspot.HotspotScreen
@@ -34,6 +35,7 @@ fun HotspotNavGraph() {
             ) {
                 composable<Routes.HotspotScreen> { HotspotScreen() }
                 composable<Routes.HotspotEditScreen> { HotspotEditScreen() }
+                composable<Routes.BlocklistScreen> { BlocklistScreen() }
             }
         }
     }

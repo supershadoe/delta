@@ -8,4 +8,7 @@ class Routes {
 
     @Serializable
     object HotspotEditScreen
+
+    @Serializable
+    object BlocklistScreen
 }

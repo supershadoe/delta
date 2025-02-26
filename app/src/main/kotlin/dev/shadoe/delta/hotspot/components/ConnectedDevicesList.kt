@@ -81,26 +81,16 @@ internal fun ConnectedDevicesList(
                         }
                         Button(onClick = {
                             scope.launch {
-                                val devices =
-                                    if (macAddress in config.blockedDevices) {
-                                        config.blockedDevices - macAddress
-                                    } else {
-                                        config.blockedDevices + macAddress
-                                    }
                                 setSoftApConfiguration(
-                                    hotspotApi,
-                                    config.copy(blockedDevices = devices),
+                                    hotspotApi = hotspotApi,
+                                    config = config.copy(
+                                        blockedDevices =
+                                            config.blockedDevices + macAddress,
+                                    ),
                                 )
                             }
                         }) {
-                            Text(
-                                text =
-                                    if (macAddress in config.blockedDevices) {
-                                        "BLOCK"
-                                    } else {
-                                        "UNBLOCK"
-                                    },
-                            )
+                            Text(text = "BLOCK")
                         }
                     }
                 }
