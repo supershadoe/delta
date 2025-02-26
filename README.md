@@ -30,7 +30,7 @@ for better representation of the current status of the project.
 - [X] Connected devices info
 - [X] Edit hotspot settings from app
 - [X] Turn off automatically
-- [ ] Blocklist
+- [X] Blocklist
 - [ ] Timed connections/Usage limits
 - [ ] Tidied up UI
 
