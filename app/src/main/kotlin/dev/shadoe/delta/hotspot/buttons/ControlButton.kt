@@ -14,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
+import dev.shadoe.delta.R
 
 @Composable
 internal fun ControlButton(
@@ -38,11 +40,11 @@ internal fun ControlButton(
         }
     val description =
         if (isLoading) {
-            "Loading"
+            stringResource(R.string.control_button_loading)
         } else if (isEnabled) {
-            "Stop hotspot"
+            stringResource(R.string.control_button_stop)
         } else {
-            "Start hotspot"
+            stringResource(R.string.control_button_start)
         }
     // TODO: remove this comment
 //    val btnSize = min(

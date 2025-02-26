@@ -5,6 +5,14 @@
     <string name="blocklist">Blocklist</string>
     <string name="no_connected_devices">There are no connected devices.</string>
 
+    <!-- dev.shadoe.delta.buttons.ControlButton -->
+    <string name="control_button_loading">Loading</string>
+    <string name="control_button_stop">Stop hotspot</string>
+    <string name="control_button_start">Start hotspot</string>
+
+    <!-- dev.shadoe.delta.buttons.FailedButton -->
+    <string name="failed_button">Hotspot failed: Cannot start</string>
+
     <!-- dev.shadoe.delta.components.ConnectedDevicesList -->
     <string name="connected_devices">Connected devices</string>
     <string name="no_client_hostname">(unidentified device: no name)</string>
