@@ -34,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.hotspot.buttons.HotspotButton
@@ -159,7 +158,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                         TextButton(onClick = onConnectedDevicesClicked) {
                             val size = "(${tetheredClients.value.size})"
                             val style =
-                                TextStyle(
+                                MaterialTheme.typography.bodyMedium.copy(
                                     textDecoration = TextDecoration.Underline,
                                 )
                             Text(

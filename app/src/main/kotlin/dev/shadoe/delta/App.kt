@@ -11,6 +11,7 @@ import dev.shadoe.delta.shizuku.CONNECTED
 import dev.shadoe.delta.shizuku.LocalShizukuState
 import dev.shadoe.delta.shizuku.ShizukuScope
 import dev.shadoe.delta.shizuku.ShizukuSetupScreen
+import dev.shadoe.delta.typography.Typography
 
 @Composable
 fun App() {
@@ -21,7 +22,10 @@ fun App() {
             darkColorScheme()
         }
 
-    MaterialTheme(colorScheme = colorScheme) {
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography.value,
+    ) {
         ShizukuScope {
             if (LocalShizukuState.current == CONNECTED) {
                 HotspotNavGraph()
