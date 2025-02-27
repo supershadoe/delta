@@ -20,8 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
-import dev.shadoe.hotspotapi.helper.ACLDevice
-import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
+import dev.shadoe.hotspotapi.wrappers.ACLDevice
+import dev.shadoe.hotspotapi.wrappers.TetheredClientWrapper
 import kotlinx.coroutines.flow.update
 
 @Composable

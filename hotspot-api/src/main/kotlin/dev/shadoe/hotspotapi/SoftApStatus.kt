@@ -1,8 +1,8 @@
 package dev.shadoe.hotspotapi
 
-import dev.shadoe.hotspotapi.helper.SoftApEnabledState.EnabledStateType
-import dev.shadoe.hotspotapi.helper.SoftApSpeedType.BandType
-import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
+import dev.shadoe.hotspotapi.wrappers.SoftApEnabledState.EnabledStateType
+import dev.shadoe.hotspotapi.wrappers.SoftApSpeedType.BandType
+import dev.shadoe.hotspotapi.wrappers.TetheredClientWrapper
 
 data class SoftApStatus(
     @EnabledStateType val enabledState: Int,

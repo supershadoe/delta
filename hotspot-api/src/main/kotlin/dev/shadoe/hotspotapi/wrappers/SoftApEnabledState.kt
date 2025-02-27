@@ -17,7 +17,7 @@
  *
  */
 
-package dev.shadoe.hotspotapi.helper
+package dev.shadoe.hotspotapi.wrappers
 
 import androidx.annotation.IntDef
 

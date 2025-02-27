@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
-import dev.shadoe.hotspotapi.helper.ACLDevice
-import dev.shadoe.hotspotapi.helper.SoftApSecurityType
-import dev.shadoe.hotspotapi.helper.SoftApSpeedType
+import dev.shadoe.hotspotapi.wrappers.ACLDevice
+import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType
+import dev.shadoe.hotspotapi.wrappers.SoftApSpeedType
 import dev.shadoe.hotspotapi.internal.InternalState
 
 internal object Extensions {

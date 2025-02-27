@@ -5,7 +5,7 @@ import android.net.wifi.SoftApCapability
 import android.net.wifi.SoftApInfo
 import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
-import dev.shadoe.hotspotapi.helper.SoftApSpeedType
+import dev.shadoe.hotspotapi.wrappers.SoftApSpeedType
 
 class SoftApCallback(
     private val setSupportedSpeedTypes: (List<Int>) -> Unit,

@@ -1,7 +1,7 @@
 package dev.shadoe.delta.hotspot.buttons
 
 import androidx.compose.runtime.Composable
-import dev.shadoe.hotspotapi.helper.SoftApEnabledState
+import dev.shadoe.hotspotapi.wrappers.SoftApEnabledState
 
 @Composable
 internal fun HotspotButton(
