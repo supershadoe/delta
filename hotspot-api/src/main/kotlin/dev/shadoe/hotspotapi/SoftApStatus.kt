@@ -8,5 +8,5 @@ data class SoftApStatus(
     @EnabledStateType val enabledState: Int,
     val tetheredClients: List<TetheredClientWrapper>,
     @BandType val supportedSpeedTypes: List<Int>,
-    val maxClientLimit: Int,
+    val maxSupportedClients: Int,
 )

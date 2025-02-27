@@ -5,7 +5,7 @@ import android.net.MacAddress
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
-import dev.shadoe.hotspotapi.helper.BlockedDevice
+import dev.shadoe.hotspotapi.helper.ACLDevice
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType
 import dev.shadoe.hotspotapi.helper.SoftApSpeedType
 
@@ -49,12 +49,19 @@ internal object Extensions {
             },
         blockedDevices =
             blockedClientList.map {
-                BlockedDevice(
+                ACLDevice(
                     hostname = macAddressCache[it],
                     macAddress = it,
                 )
             },
+        allowedClients = allowedClientList.map {
+            ACLDevice(
+                hostname = macAddressCache[it],
+                macAddress = it,
+            )
+        },
         isAutoShutdownEnabled = isAutoShutdownEnabled,
+        maxClientLimit = maxNumberOfClients,
     )
 
     fun SoftApConfiguration.toOriginalClass() = SoftApConfigurationHidden
@@ -115,11 +122,16 @@ internal object Extensions {
             setBlockedClientList(
                 blockedDevices.map { it.macAddress },
             )
+            setAllowedClientList(
+                allowedClients.map { it.macAddress },
+            )
+            setClientControlByUserEnabled(false)
             setAutoShutdownEnabled(isAutoShutdownEnabled)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 setBridgedModeOpportunisticShutdownEnabled(
                     isAutoShutdownEnabled,
                 )
             }
+            setMaxNumberOfClients(maxClientLimit)
         }.build()
 }

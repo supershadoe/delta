@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
-import dev.shadoe.hotspotapi.helper.BlockedDevice
+import dev.shadoe.hotspotapi.helper.ACLDevice
 import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
 import kotlinx.coroutines.flow.update
 
@@ -86,11 +86,12 @@ internal fun ConnectedDevicesList(
                             )
                         }
                         Button(onClick = {
-                            val d = config.blockedDevices +
-                                BlockedDevice(
-                                    hostname = hostnames.firstOrNull(),
-                                    macAddress = macAddress,
-                                )
+                            val d =
+                                config.blockedDevices +
+                                    ACLDevice(
+                                        hostname = hostnames.firstOrNull(),
+                                        macAddress = macAddress,
+                                    )
                             hotspotApi.config.update {
                                 it.copy(blockedDevices = d)
                             }

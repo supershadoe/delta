@@ -93,10 +93,6 @@ open class HotspotApi(
                 )
             }
 
-        val softApConfiguration =
-            Refine.unsafeCast<SoftApConfigurationHidden>(
-                wifiManager.softApConfiguration,
-            )
         macAddressCache = runBlocking {
             persistedMacAddressCache.data
                 .map {
@@ -112,7 +108,9 @@ open class HotspotApi(
         }
         _config =
             MutableStateFlow(
-                softApConfiguration.toBridgeClass(
+                Refine.unsafeCast<SoftApConfigurationHidden>(
+                    wifiManager.softApConfiguration,
+                ).toBridgeClass(
                     fallbackPassphrase = fallbackPassphrase,
                     macAddressCache = macAddressCache.value,
                 ),
@@ -132,7 +130,7 @@ open class HotspotApi(
                     enabledState = wifiManager.wifiApEnabledState,
                     tetheredClients = emptyList(),
                     supportedSpeedTypes = emptyList(),
-                    maxClientLimit = softApConfiguration.maxNumberOfClients,
+                    maxSupportedClients = 0,
                 ),
             )
         status = _status.asStateFlow()
@@ -164,26 +162,26 @@ open class HotspotApi(
         softApCallback =
             SoftApCallback(
                 setSupportedSpeedTypes = {
-                    _status.value =
-                        _status.value.copy(
-                            supportedSpeedTypes = it,
-                        )
+                    _status.update { st ->
+                        st.copy(supportedSpeedTypes = it)
+                    }
                 },
                 setMaxClientLimit = {
-                    _status.value =
-                        _status.value.copy(
-                            maxClientLimit = it,
-                        )
+                    _status.update { st ->
+                        st.copy(maxSupportedClients = it)
+                    }
                 },
             )
 
         // It is enough to call this function only once per session as
         // our config data class remembers previous passphrase.
         wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
-            object :
-                IStringListener.Stub() {
+            object : IStringListener.Stub() {
                 override fun onResult(value: String?) {
-                    fallbackPassphrase = value ?: generateRandomPassword()
+                    _config.update {
+                        fallbackPassphrase = value ?: generateRandomPassword()
+                        it.copy(passphrase = value ?: generateRandomPassword())
+                    }
                 }
             },
         )
