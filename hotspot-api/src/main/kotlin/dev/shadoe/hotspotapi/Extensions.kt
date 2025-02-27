@@ -8,6 +8,7 @@ import dev.shadoe.hotspotapi.wrappers.ACLDevice
 import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType
 import dev.shadoe.hotspotapi.wrappers.SoftApSpeedType
 import dev.shadoe.hotspotapi.internal.InternalState
+import dev.shadoe.hotspotapi.wrappers.SoftApConfiguration
 
 internal object Extensions {
     infix fun Int.hasBit(other: Int): Boolean = (this and other) == other

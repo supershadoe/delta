@@ -27,6 +27,8 @@ import dev.shadoe.hotspotapi.callbacks.TetheringEventCallback
 import dev.shadoe.hotspotapi.callbacks.TetheringResultListener
 import dev.shadoe.hotspotapi.wrappers.SoftApEnabledState
 import dev.shadoe.hotspotapi.internal.InternalState
+import dev.shadoe.hotspotapi.wrappers.SoftApConfiguration
+import dev.shadoe.hotspotapi.wrappers.SoftApStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
