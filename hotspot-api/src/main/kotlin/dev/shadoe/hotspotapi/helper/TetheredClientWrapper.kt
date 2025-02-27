@@ -24,7 +24,6 @@ class TetheredClientWrapper(
         this.tetheringType = c.tetheringType
 
         for (address in c.addresses) {
-            println(address)
             addresses.add(address.address)
             hostnames.add(address.hostname)
         }

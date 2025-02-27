@@ -4,26 +4,18 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dev.shadoe.hotspotapi.HotspotApi
-import kotlinx.coroutines.launch
 
 class HotspotApiViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
     val hotspotApi =
         HotspotApi(
-            application.packageName,
-            application.attributionTag,
+            applicationContext = application.applicationContext,
+            scope = viewModelScope,
         )
 
-    init {
-        hotspotApi.registerCallback()
-        viewModelScope.launch {
-            hotspotApi.launchBackgroundTasks()
-        }
-    }
-
     override fun onCleared() {
-        hotspotApi.unregisterCallback()
+        hotspotApi.cleanUp()
         super.onCleared()
     }
 }

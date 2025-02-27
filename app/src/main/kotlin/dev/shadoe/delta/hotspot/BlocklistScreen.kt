@@ -1,6 +1,7 @@
 package dev.shadoe.delta.hotspot
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -41,6 +42,8 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
 
     val blocklistUnblockedText =
         stringResource(R.string.blocklist_unblocked)
+    val noClientHostnameText =
+        stringResource(R.string.no_client_hostname)
 
     Scaffold(
         topBar = {
@@ -80,14 +83,15 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
                     .then(modifier),
         ) {
             items(config.blockedDevices.size) {
+                val d = config.blockedDevices[it]
                 Row(
                     modifier = Modifier.padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(
-                        text = config.blockedDevices[it].toString(),
-                        modifier = Modifier.weight(1f),
-                    )
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = d.hostname ?: noClientHostnameText)
+                        Text(text = d.macAddress.toString())
+                    }
                     Button(onClick = {
                         val d = config.blockedDevices
                         scope.launch {

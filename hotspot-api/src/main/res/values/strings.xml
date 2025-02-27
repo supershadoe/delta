@@ -19,4 +19,7 @@
     <string name="freq_band_6_GHz" translatable="false">6 GHz</string>
     <string name="freq_band_60_GHz" translatable="false">60 GHz</string>
     <string name="freq_band_unknown">Unknown</string>
+
+    <!-- Client doesn't identify its hostname -->
+    <string name="no_hostname">(No name)</string>
 </resources>

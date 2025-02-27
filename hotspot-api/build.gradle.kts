@@ -37,6 +37,7 @@ android {
 
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
+    implementation(libs.datastore.preferences.core)
     implementation(libs.hiddenapibypass)
     implementation(libs.refine.runtime)
     implementation(libs.core.ktx)

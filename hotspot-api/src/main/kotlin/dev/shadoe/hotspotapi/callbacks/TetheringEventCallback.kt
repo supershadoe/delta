@@ -14,7 +14,9 @@ import kotlinx.coroutines.runBlocking
 
 internal class TetheringEventCallback(
     private val updateEnabledState: () -> Unit,
-    private val setTetheredClients: (List<TetheredClientWrapper>) -> Unit,
+    private val setTetheredClients: suspend (
+        List<TetheredClientWrapper>,
+    ) -> Unit,
 ) : ITetheringEventCallback.Stub() {
     override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
         parcel ?: return

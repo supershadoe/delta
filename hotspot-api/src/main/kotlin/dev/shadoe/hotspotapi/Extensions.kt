@@ -1,53 +1,61 @@
 package dev.shadoe.hotspotapi
 
 import android.annotation.SuppressLint
+import android.net.MacAddress
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
+import dev.shadoe.hotspotapi.helper.BlockedDevice
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType
 import dev.shadoe.hotspotapi.helper.SoftApSpeedType
 
-object Extensions {
+internal object Extensions {
     infix fun Int.hasBit(other: Int): Boolean = (this and other) == other
 
-    infix fun Long.hasBit(other: Long): Boolean = (this and other) == other
-
-    fun SoftApConfigurationHidden.toBridgeClass(fallbackPassphrase: String) =
-        SoftApConfiguration(
-            ssid =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    wifiSsid?.bytes?.decodeToString()
-                } else {
-                    @Suppress("DEPRECATION")
-                    ssid
-                },
-            passphrase = passphrase ?: fallbackPassphrase,
-            securityType = @SuppressLint("WrongConstant") securityType,
-            bssid = bssid,
-            isHidden = isHiddenSsid,
-            speedType =
-                bands.max().run {
-                    when {
-                        this hasBit SoftApSpeedType.BAND_6GHZ -> {
-                            SoftApSpeedType.BAND_6GHZ
-                        }
-
-                        this hasBit SoftApSpeedType.BAND_5GHZ -> {
-                            SoftApSpeedType.BAND_5GHZ
-                        }
-
-                        this hasBit SoftApSpeedType.BAND_2GHZ -> {
-                            SoftApSpeedType.BAND_2GHZ
-                        }
-
-                        else -> {
-                            SoftApSpeedType.BAND_UNKNOWN
-                        }
+    fun SoftApConfigurationHidden.toBridgeClass(
+        fallbackPassphrase: String,
+        macAddressCache: Map<MacAddress, String>,
+    ) = SoftApConfiguration(
+        ssid =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                wifiSsid?.bytes?.decodeToString()
+            } else {
+                @Suppress("DEPRECATION")
+                ssid
+            },
+        passphrase = passphrase ?: fallbackPassphrase,
+        securityType = @SuppressLint("WrongConstant") securityType,
+        bssid = bssid,
+        isHidden = isHiddenSsid,
+        speedType =
+            bands.max().run {
+                when {
+                    this hasBit SoftApSpeedType.BAND_6GHZ -> {
+                        SoftApSpeedType.BAND_6GHZ
                     }
-                },
-            blockedDevices = blockedClientList,
-            isAutoShutdownEnabled = isAutoShutdownEnabled,
-        )
+
+                    this hasBit SoftApSpeedType.BAND_5GHZ -> {
+                        SoftApSpeedType.BAND_5GHZ
+                    }
+
+                    this hasBit SoftApSpeedType.BAND_2GHZ -> {
+                        SoftApSpeedType.BAND_2GHZ
+                    }
+
+                    else -> {
+                        SoftApSpeedType.BAND_UNKNOWN
+                    }
+                }
+            },
+        blockedDevices =
+            blockedClientList.map {
+                BlockedDevice(
+                    hostname = macAddressCache[it],
+                    macAddress = it,
+                )
+            },
+        isAutoShutdownEnabled = isAutoShutdownEnabled,
+    )
 
     fun SoftApConfiguration.toOriginalClass() = SoftApConfigurationHidden
         .Builder()
@@ -104,7 +112,9 @@ object Extensions {
                 else -> {}
             }
 
-            setBlockedClientList(blockedDevices)
+            setBlockedClientList(
+                blockedDevices.map { it.macAddress },
+            )
             setAutoShutdownEnabled(isAutoShutdownEnabled)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 setBridgedModeOpportunisticShutdownEnabled(

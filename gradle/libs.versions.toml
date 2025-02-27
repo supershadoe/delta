@@ -4,6 +4,7 @@ activityCompose = "1.10.1"
 androidx-annotation = "1.9.1"
 composeBom = "2025.02.00"
 coreKtx = "1.15.0"
+datastore = "1.1.3"
 espressoCore = "3.6.1"
 graphics-shapes = "1.0.1"
 hiddenapibypass = "4.3"
@@ -21,6 +22,8 @@ viewmodel-compose = "2.8.7"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+
+datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
