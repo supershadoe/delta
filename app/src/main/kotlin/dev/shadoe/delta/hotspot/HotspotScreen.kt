@@ -151,7 +151,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                 ) {
                     HotspotButton(
                         enabledState = status.enabledState,
-                        startHotspot = { hotspotApi.startHotspot() },
+                        startHotspot = { hotspotApi.startHotspot(it) },
                         stopHotspot = { hotspotApi.stopHotspot() },
                     )
                 }

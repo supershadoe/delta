@@ -6,7 +6,7 @@ import dev.shadoe.hotspotapi.helper.SoftApEnabledState
 @Composable
 internal fun HotspotButton(
     enabledState: Int,
-    startHotspot: () -> Unit,
+    startHotspot: (Boolean) -> Unit,
     stopHotspot: () -> Unit,
 ) {
     when (enabledState) {
@@ -14,7 +14,7 @@ internal fun HotspotButton(
             LoadedButton(
                 isEnabled = false,
             ) {
-                startHotspot()
+                startHotspot(false)
             }
 
         SoftApEnabledState.WIFI_AP_STATE_ENABLING -> LoadingButton()
@@ -26,6 +26,8 @@ internal fun HotspotButton(
             }
 
         SoftApEnabledState.WIFI_AP_STATE_DISABLING -> LoadingButton()
-        SoftApEnabledState.WIFI_AP_STATE_FAILED -> FailedButton()
+        SoftApEnabledState.WIFI_AP_STATE_FAILED -> FailedButton {
+            startHotspot(true)
+        }
     }
 }
