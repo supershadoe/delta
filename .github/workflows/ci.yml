@@ -40,21 +40,6 @@ jobs:
           name: app
           path: app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk
           retention-days: 7
-  dependency-submission:
-    name: Dependency graph submission
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-      - name: Setup gradle
-        uses: gradle/actions/setup-gradle@v4
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
   create-release:
