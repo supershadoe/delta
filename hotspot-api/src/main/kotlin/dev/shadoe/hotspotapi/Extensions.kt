@@ -1,68 +1,67 @@
 package dev.shadoe.hotspotapi
 
 import android.annotation.SuppressLint
-import android.net.MacAddress
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
 import dev.shadoe.hotspotapi.helper.ACLDevice
 import dev.shadoe.hotspotapi.helper.SoftApSecurityType
 import dev.shadoe.hotspotapi.helper.SoftApSpeedType
+import dev.shadoe.hotspotapi.internal.InternalState
 
 internal object Extensions {
     infix fun Int.hasBit(other: Int): Boolean = (this and other) == other
 
-    fun SoftApConfigurationHidden.toBridgeClass(
-        fallbackPassphrase: String,
-        macAddressCache: Map<MacAddress, String>,
-    ) = SoftApConfiguration(
-        ssid =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                wifiSsid?.bytes?.decodeToString()
-            } else {
-                @Suppress("DEPRECATION")
-                ssid
-            },
-        passphrase = passphrase ?: fallbackPassphrase,
-        securityType = @SuppressLint("WrongConstant") securityType,
-        bssid = bssid,
-        isHidden = isHiddenSsid,
-        speedType =
-            bands.max().run {
-                when {
-                    this hasBit SoftApSpeedType.BAND_6GHZ -> {
-                        SoftApSpeedType.BAND_6GHZ
-                    }
+    fun SoftApConfigurationHidden.toBridgeClass(state: InternalState) =
+        SoftApConfiguration(
+            ssid =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    wifiSsid?.bytes?.decodeToString()
+                } else {
+                    @Suppress("DEPRECATION")
+                    ssid
+                },
+            passphrase = passphrase ?: state.fallbackPassphrase,
+            securityType = @SuppressLint("WrongConstant") securityType,
+            bssid = bssid,
+            isHidden = isHiddenSsid,
+            speedType =
+                bands.max().run {
+                    when {
+                        this hasBit SoftApSpeedType.BAND_6GHZ -> {
+                            SoftApSpeedType.BAND_6GHZ
+                        }
 
-                    this hasBit SoftApSpeedType.BAND_5GHZ -> {
-                        SoftApSpeedType.BAND_5GHZ
-                    }
+                        this hasBit SoftApSpeedType.BAND_5GHZ -> {
+                            SoftApSpeedType.BAND_5GHZ
+                        }
 
-                    this hasBit SoftApSpeedType.BAND_2GHZ -> {
-                        SoftApSpeedType.BAND_2GHZ
-                    }
+                        this hasBit SoftApSpeedType.BAND_2GHZ -> {
+                            SoftApSpeedType.BAND_2GHZ
+                        }
 
-                    else -> {
-                        SoftApSpeedType.BAND_UNKNOWN
+                        else -> {
+                            SoftApSpeedType.BAND_UNKNOWN
+                        }
                     }
-                }
-            },
-        blockedDevices =
-            blockedClientList.map {
-                ACLDevice(
-                    hostname = macAddressCache[it],
-                    macAddress = it,
-                )
-            },
-        allowedClients = allowedClientList.map {
-            ACLDevice(
-                hostname = macAddressCache[it],
-                macAddress = it,
-            )
-        },
-        isAutoShutdownEnabled = isAutoShutdownEnabled,
-        maxClientLimit = maxNumberOfClients,
-    )
+                },
+            blockedDevices =
+                blockedClientList.map {
+                    ACLDevice(
+                        hostname = state.macAddressCache[it],
+                        macAddress = it,
+                    )
+                },
+            allowedClients =
+                allowedClientList.map {
+                    ACLDevice(
+                        hostname = state.macAddressCache[it],
+                        macAddress = it,
+                    )
+                },
+            isAutoShutdownEnabled = isAutoShutdownEnabled,
+            maxClientLimit = maxNumberOfClients,
+        )
 
     fun SoftApConfiguration.toOriginalClass() = SoftApConfigurationHidden
         .Builder()
