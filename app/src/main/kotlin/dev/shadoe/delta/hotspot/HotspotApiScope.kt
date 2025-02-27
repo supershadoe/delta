@@ -6,9 +6,10 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.hotspotapi.IHotspotApi
 
-val LocalHotspotApiInstance = compositionLocalOf<IHotspotApi> {
-    throw IllegalStateException("HotspotApi not initialized!")
-}
+val LocalHotspotApiInstance =
+    compositionLocalOf<IHotspotApi> {
+        throw IllegalStateException("HotspotApi not initialized!")
+    }
 
 @Composable
 fun HotspotApiScope(
