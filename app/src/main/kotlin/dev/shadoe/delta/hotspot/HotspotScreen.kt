@@ -58,9 +58,9 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
     val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
     // TODO: remove this comment
-    println(
-        "isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}",
-    )
+//    println(
+//        "isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}",
+//    )
 
     val hotspotApi = LocalHotspotApiInstance.current!!
     val config = hotspotApi.config.collectAsState()
