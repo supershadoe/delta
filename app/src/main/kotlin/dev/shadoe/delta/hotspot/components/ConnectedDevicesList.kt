@@ -14,17 +14,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
-import dev.shadoe.delta.hotspot.setSoftApConfiguration
 import dev.shadoe.hotspotapi.helper.BlockedDevice
 import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
 
 @Composable
 internal fun ConnectedDevicesList(
@@ -32,7 +30,6 @@ internal fun ConnectedDevicesList(
 ) {
     val hotspotApi = LocalHotspotApiInstance.current!!
     val config by hotspotApi.config.collectAsState()
-    val scope = rememberCoroutineScope()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
@@ -89,20 +86,13 @@ internal fun ConnectedDevicesList(
                             )
                         }
                         Button(onClick = {
-                            scope.launch {
-                                val d =
-                                    config.blockedDevices +
-                                        BlockedDevice(
-                                            hostname = hostnames.firstOrNull(),
-                                            macAddress = macAddress,
-                                        )
-                                setSoftApConfiguration(
-                                    hotspotApi = hotspotApi,
-                                    config =
-                                        config.copy(
-                                            blockedDevices = d,
-                                        ),
+                            val d = config.blockedDevices +
+                                BlockedDevice(
+                                    hostname = hostnames.firstOrNull(),
+                                    macAddress = macAddress,
                                 )
+                            hotspotApi.config.update {
+                                it.copy(blockedDevices = d)
                             }
                         }) {
                             Text(text = stringResource(R.string.block_button))

@@ -172,17 +172,8 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
                             }
                             return@onClick
                         }
-                        scope
-                            .launch {
-                                setSoftApConfiguration(
-                                    hotspotApi,
-                                    mutableConfig,
-                                )
-                            }.invokeOnCompletion {
-                                if (it == null) {
-                                    navController?.navigateUp()
-                                }
-                            }
+                        hotspotApi.config.value = mutableConfig
+                        navController?.navigateUp()
                     },
                 ) {
                     Text(text = stringResource(R.string.save_button))
