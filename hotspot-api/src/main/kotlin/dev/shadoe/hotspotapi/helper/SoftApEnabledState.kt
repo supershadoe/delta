@@ -19,6 +19,8 @@
 
 package dev.shadoe.hotspotapi.helper
 
+import androidx.annotation.IntDef
+
 object SoftApEnabledState {
     /**
      * Wi-Fi AP is currently being disabled. The state will change to
@@ -47,4 +49,16 @@ object SoftApEnabledState {
      * enabling or disabling
      */
     const val WIFI_AP_STATE_FAILED = 14
+
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(
+        value = [
+            WIFI_AP_STATE_DISABLING,
+            WIFI_AP_STATE_DISABLED,
+            WIFI_AP_STATE_ENABLING,
+            WIFI_AP_STATE_ENABLED,
+            WIFI_AP_STATE_FAILED,
+        ],
+    )
+    annotation class EnabledStateType
 }

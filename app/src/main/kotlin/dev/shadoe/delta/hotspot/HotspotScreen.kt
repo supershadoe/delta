@@ -28,6 +28,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -63,8 +64,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
 
     val hotspotApi = LocalHotspotApiInstance.current!!
     val config = hotspotApi.config.collectAsState()
-    val tetheredClients = hotspotApi.tetheredClients.collectAsState(emptyList())
-    val enabledState = hotspotApi.enabledState.collectAsState()
+    val status by hotspotApi.status.collectAsState()
 
     val noConnectedDevicesText =
         stringResource(id = R.string.no_connected_devices)
@@ -74,8 +74,8 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
         stringResource(id = R.string.hotspot_enable_action)
 
     val onConnectedDevicesClicked = {
-        if (enabledState.value == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-            if (tetheredClients.value.isEmpty()) {
+        if (status.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+            if (status.tetheredClients.isEmpty()) {
                 if (snackbarHostState.currentSnackbarData == null) {
                     scope.launch {
                         snackbarHostState.showSnackbar(
@@ -150,7 +150,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                     contentAlignment = Alignment.Center,
                 ) {
                     HotspotButton(
-                        enabledState = enabledState.value,
+                        enabledState = status.enabledState,
                         startHotspot = { hotspotApi.startHotspot() },
                         stopHotspot = { hotspotApi.stopHotspot() },
                     )
@@ -182,7 +182,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                             Text(
                                 stringResource(
                                     id = R.string.connected_devices_button,
-                                    tetheredClients.value.size,
+                                    status.tetheredClients.size,
                                 ),
                                 style = style,
                             )
@@ -197,7 +197,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                     },
                     sheetState = sheetState,
                 ) {
-                    ConnectedDevicesList(tetheredClients.value)
+                    ConnectedDevicesList(status.tetheredClients)
                 }
             }
         }
@@ -212,7 +212,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                             .padding(it)
                             .fillMaxHeight(),
                 ) {
-                    ConnectedDevicesList(tetheredClients.value)
+                    ConnectedDevicesList(status.tetheredClients)
                 }
             }
         }

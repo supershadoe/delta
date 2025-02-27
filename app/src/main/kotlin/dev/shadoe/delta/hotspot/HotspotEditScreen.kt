@@ -62,8 +62,8 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     val hotspotApi = LocalHotspotApiInstance.current!!
-    val supportedSpeedTypes = hotspotApi.supportedSpeedTypes.collectAsState()
     val config = hotspotApi.config.collectAsState()
+    val status by hotspotApi.status.collectAsState()
 
     var mutableConfig by remember(config.value) {
         mutableStateOf(config.value)
@@ -153,7 +153,7 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
             item {
                 SpeedTypeField(
                     speedType = mutableConfig.speedType,
-                    supportedSpeedTypes = supportedSpeedTypes.value,
+                    supportedSpeedTypes = status.supportedSpeedTypes,
                     onSpeedTypeChange = {
                         mutableConfig = mutableConfig.copy(speedType = it)
                     },

@@ -26,12 +26,12 @@ import dev.shadoe.hotspotapi.callbacks.StopTetheringCallback
 import dev.shadoe.hotspotapi.callbacks.TetheringEventCallback
 import dev.shadoe.hotspotapi.callbacks.TetheringResultListener
 import dev.shadoe.hotspotapi.helper.SoftApEnabledState
-import dev.shadoe.hotspotapi.helper.TetheredClientWrapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -52,12 +52,11 @@ open class HotspotApi(
     private val wifiManager: IWifiManager
     private val persistedMacAddressCache: DataStore<Preferences>
 
-    private val _config: MutableStateFlow<SoftApConfiguration>
-    private val _enabledState: MutableStateFlow<Int>
-    private val _tetheredClients: MutableStateFlow<List<TetheredClientWrapper>>
+    val config: MutableStateFlow<SoftApConfiguration>
+    private val _status: MutableStateFlow<SoftApStatus>
+    val status: StateFlow<SoftApStatus>
+
     private val fallbackPassphrase: MutableStateFlow<String>
-    private val _supportedSpeedTypes: MutableStateFlow<List<Int>>
-    private val maxClientLimit: MutableStateFlow<Int>
     private val macAddressCache: MutableStateFlow<Map<MacAddress, String>>
 
     private val tetheringEventCallback: ITetheringEventCallback
@@ -94,28 +93,51 @@ open class HotspotApi(
             Refine.unsafeCast<SoftApConfigurationHidden>(
                 wifiManager.softApConfiguration,
             )
-        _enabledState = MutableStateFlow(wifiManager.wifiApEnabledState)
-        _tetheredClients = MutableStateFlow(emptyList())
         fallbackPassphrase = MutableStateFlow(generateRandomPassword())
-        _supportedSpeedTypes = MutableStateFlow(emptyList())
-        maxClientLimit =
-            MutableStateFlow(softApConfiguration.maxNumberOfClients)
         macAddressCache = MutableStateFlow(emptyMap())
-        _config =
+        config =
+            run {
+                val state =
+                    MutableStateFlow(
+                        softApConfiguration.toBridgeClass(
+                            fallbackPassphrase = fallbackPassphrase.value,
+                            macAddressCache = macAddressCache.value,
+                        ),
+                    )
+                object : MutableStateFlow<SoftApConfiguration> by state {
+                    override var value: SoftApConfiguration
+                        get() = state.value
+                        set(value) {
+                            if (setSoftApConfiguration(value)) {
+                                state.value = value
+                            }
+                        }
+                }
+            }
+        _status =
             MutableStateFlow(
-                softApConfiguration.toBridgeClass(
-                    fallbackPassphrase = fallbackPassphrase.value,
-                    macAddressCache = macAddressCache.value,
+                SoftApStatus(
+                    enabledState = wifiManager.wifiApEnabledState,
+                    tetheredClients = emptyList(),
+                    supportedSpeedTypes = emptyList(),
+                    maxClientLimit = softApConfiguration.maxNumberOfClients,
                 ),
             )
+        status = _status.asStateFlow()
 
         tetheringEventCallback =
             TetheringEventCallback(
                 updateEnabledState = {
-                    _enabledState.value = wifiManager.wifiApEnabledState
+                    _status.value =
+                        _status.value.copy(
+                            enabledState = wifiManager.wifiApEnabledState,
+                        )
                 },
                 setTetheredClients = { clients ->
-                    _tetheredClients.value = clients
+                    _status.value =
+                        _status.value.copy(
+                            tetheredClients = clients,
+                        )
                     persistedMacAddressCache.edit { prefs ->
                         clients
                             .filter { it.hostnames.firstOrNull() != null }
@@ -132,9 +154,17 @@ open class HotspotApi(
         softApCallback =
             SoftApCallback(
                 setSupportedSpeedTypes = {
-                    _supportedSpeedTypes.value = it
+                    _status.value =
+                        _status.value.copy(
+                            supportedSpeedTypes = it,
+                        )
                 },
-                setMaxClientLimit = { maxClientLimit.value },
+                setMaxClientLimit = {
+                    _status.value =
+                        _status.value.copy(
+                            maxClientLimit = it,
+                        )
+                },
             )
 
         // It is enough to call this function only once per session as
@@ -156,26 +186,6 @@ open class HotspotApi(
         startBackgroundJobs()
     }
 
-    val config: StateFlow<SoftApConfiguration> = _config
-    val enabledState: StateFlow<Int> = _enabledState
-    val tetheredClients: StateFlow<List<TetheredClientWrapper>> =
-        _tetheredClients
-    val supportedSpeedTypes: StateFlow<List<Int>> = _supportedSpeedTypes
-
-    fun setSoftApConfiguration(c: SoftApConfiguration): Boolean = runCatching {
-        Refine
-            .unsafeCast<android.net.wifi.SoftApConfiguration>(
-                c.toOriginalClass(),
-            ).let {
-                if (!wifiManager.validateSoftApConfiguration(it)) {
-                    return false
-                }
-                _config.value = c
-                wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-                return true
-            }
-    }.getOrDefault(false)
-
     fun cleanUp() {
         tetheringConnector.unregisterTetheringEventCallback(
             tetheringEventCallback,
@@ -187,10 +197,10 @@ open class HotspotApi(
 
     fun startHotspot(forceRestart: Boolean = false) {
         var shouldStart =
-            _enabledState.value ==
+            _status.value.enabledState ==
                 SoftApEnabledState.WIFI_AP_STATE_DISABLED
         if (forceRestart) {
-            shouldStart = _enabledState.value ==
+            shouldStart = _status.value.enabledState ==
                 SoftApEnabledState.WIFI_AP_STATE_FAILED
         }
         if (!shouldStart) return
@@ -205,7 +215,9 @@ open class HotspotApi(
     }
 
     fun stopHotspot() {
-        if (_enabledState.value != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+        if (_status.value.enabledState !=
+            SoftApEnabledState.WIFI_AP_STATE_ENABLED
+        ) {
             return
         }
         tetheringConnector.stopTethering(
@@ -215,6 +227,20 @@ open class HotspotApi(
             TetheringResultListener(StopTetheringCallback()),
         )
     }
+
+    private fun setSoftApConfiguration(c: SoftApConfiguration): Boolean =
+        runCatching {
+            Refine
+                .unsafeCast<android.net.wifi.SoftApConfiguration>(
+                    c.toOriginalClass(),
+                ).let {
+                    if (!wifiManager.validateSoftApConfiguration(it)) {
+                        return false
+                    }
+                    wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+                    return true
+                }
+        }.getOrDefault(false)
 
     private fun startBackgroundJobs() {
         flow {
@@ -227,7 +253,7 @@ open class HotspotApi(
                 delay(1.seconds)
             }
         }.onEach {
-            _config.value =
+            config.value =
                 it.toBridgeClass(
                     fallbackPassphrase = fallbackPassphrase.value,
                     macAddressCache = macAddressCache.value,
