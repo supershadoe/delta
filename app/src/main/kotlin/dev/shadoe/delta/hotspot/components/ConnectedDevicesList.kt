@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.update
 internal fun ConnectedDevicesList(
     tetheredClients: List<TetheredClientWrapper>,
 ) {
-    val hotspotApi = LocalHotspotApiInstance.current!!
+    val hotspotApi = LocalHotspotApiInstance.current
     val config by hotspotApi.config.collectAsState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

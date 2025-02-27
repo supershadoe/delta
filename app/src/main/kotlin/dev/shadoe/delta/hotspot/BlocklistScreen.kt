@@ -37,7 +37,7 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val hotspotApi = LocalHotspotApiInstance.current!!
+    val hotspotApi = LocalHotspotApiInstance.current
     val config by hotspotApi.config.collectAsState()
 
     val blocklistUnblockedText =

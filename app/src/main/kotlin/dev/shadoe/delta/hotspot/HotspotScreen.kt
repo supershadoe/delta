@@ -62,7 +62,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
 //        "isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}",
 //    )
 
-    val hotspotApi = LocalHotspotApiInstance.current!!
+    val hotspotApi = LocalHotspotApiInstance.current
     val config = hotspotApi.config.collectAsState()
     val status by hotspotApi.status.collectAsState()
 

@@ -61,7 +61,7 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val hotspotApi = LocalHotspotApiInstance.current!!
+    val hotspotApi = LocalHotspotApiInstance.current
     val config = hotspotApi.config.collectAsState()
     val status by hotspotApi.status.collectAsState()
 
