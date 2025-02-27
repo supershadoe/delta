@@ -116,18 +116,17 @@ open class HotspotApi(
                 },
                 setTetheredClients = { clients ->
                     _tetheredClients.value = clients
-                    val a =
-                        persistedMacAddressCache.edit { prefs ->
-                            clients
-                                .filter { it.hostnames.firstOrNull() != null }
-                                .map {
-                                    stringPreferencesKey(
-                                        name = it.macAddress.toString(),
-                                    ) to it.hostnames.first()!!
-                                }.let {
-                                    prefs.putAll(*it.toTypedArray())
-                                }
-                        }
+                    persistedMacAddressCache.edit { prefs ->
+                        clients
+                            .filter { it.hostnames.firstOrNull() != null }
+                            .map {
+                                stringPreferencesKey(
+                                    name = it.macAddress.toString(),
+                                ) to it.hostnames.first()!!
+                            }.let {
+                                prefs.putAll(*it.toTypedArray())
+                            }
+                    }
                 },
             )
         softApCallback =
