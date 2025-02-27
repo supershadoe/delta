@@ -94,14 +94,11 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
                     }
                     Button(onClick = {
                         val d = config.blockedDevices
-                        scope.launch {
-                            setSoftApConfiguration(
-                                hotspotApi = hotspotApi,
-                                config =
-                                    config.copy(
-                                        blockedDevices = d - d[it],
-                                    ),
+                        hotspotApi.config.value =
+                            config.copy(
+                                blockedDevices = d - d[it],
                             )
+                        scope.launch {
                             snackbarHostState.showSnackbar(
                                 message = blocklistUnblockedText,
                                 duration = SnackbarDuration.Short,
