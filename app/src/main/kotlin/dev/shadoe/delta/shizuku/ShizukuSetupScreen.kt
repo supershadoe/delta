@@ -10,14 +10,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.shadoe.delta.R
+import dev.shadoe.delta.shizuku.ShizukuStates.CONNECTED
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_AVAILABLE
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_CONNECTED
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_READY
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_RUNNING
+import dev.shadoe.delta.shizuku.ShizukuStates.ShizukuStateType
 import dev.shadoe.delta.shizuku.components.ShizukuNotConnected
 import dev.shadoe.delta.shizuku.components.ShizukuNotInstalled
 import dev.shadoe.delta.shizuku.components.ShizukuNotRunning
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShizukuSetupScreen(modifier: Modifier = Modifier) {
-    val shizukuState = LocalShizukuState.current
+fun ShizukuSetupScreen(
+    @ShizukuStateType shizukuState: Int,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         topBar = {
             if (shizukuState != NOT_READY && shizukuState != CONNECTED) {
@@ -28,7 +36,7 @@ fun ShizukuSetupScreen(modifier: Modifier = Modifier) {
         },
     ) {
         Column(modifier = Modifier.padding(it).then(modifier)) {
-            when (LocalShizukuState.current) {
+            when (shizukuState) {
                 NOT_AVAILABLE -> ShizukuNotInstalled()
                 NOT_RUNNING -> ShizukuNotRunning()
                 NOT_CONNECTED -> ShizukuNotConnected()

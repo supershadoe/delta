@@ -7,10 +7,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import dev.shadoe.delta.hotspot.navigation.HotspotNavGraph
-import dev.shadoe.delta.shizuku.CONNECTED
-import dev.shadoe.delta.shizuku.LocalShizukuState
 import dev.shadoe.delta.shizuku.ShizukuScope
 import dev.shadoe.delta.shizuku.ShizukuSetupScreen
+import dev.shadoe.delta.shizuku.ShizukuStates
 import dev.shadoe.delta.typography.Typography
 
 @Composable
@@ -27,10 +26,10 @@ fun App() {
         typography = Typography.value,
     ) {
         ShizukuScope {
-            if (LocalShizukuState.current == CONNECTED) {
+            if (it == ShizukuStates.CONNECTED) {
                 HotspotNavGraph()
             } else {
-                ShizukuSetupScreen()
+                ShizukuSetupScreen(it)
             }
         }
     }

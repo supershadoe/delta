@@ -3,6 +3,12 @@ package dev.shadoe.delta.shizuku
 import android.app.Application
 import android.content.pm.PackageManager
 import androidx.lifecycle.AndroidViewModel
+import dev.shadoe.delta.shizuku.ShizukuStates.CONNECTED
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_AVAILABLE
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_CONNECTED
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_READY
+import dev.shadoe.delta.shizuku.ShizukuStates.NOT_RUNNING
+import dev.shadoe.delta.shizuku.ShizukuStates.ShizukuStateType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import rikka.shizuku.Shizuku
@@ -12,10 +18,10 @@ import rikka.sui.Sui
 class ShizukuViewModel(
     private val application: Application,
 ) : AndroidViewModel(application) {
-    @ShizukuStates
+    @ShizukuStateType
     private val _shizukuState = MutableStateFlow(NOT_READY)
 
-    @ShizukuStates
+    @ShizukuStateType
     val shizukuState: StateFlow<Int> = _shizukuState
 
     private val permListener =
