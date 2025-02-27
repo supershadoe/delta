@@ -1,10 +1,9 @@
-package dev.shadoe.hotspotapi
+package dev.shadoe.hotspotapi.internal
 
 import android.annotation.SuppressLint
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
-import dev.shadoe.hotspotapi.internal.InternalState
 import dev.shadoe.hotspotapi.wrappers.ACLDevice
 import dev.shadoe.hotspotapi.wrappers.SoftApConfiguration
 import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType
