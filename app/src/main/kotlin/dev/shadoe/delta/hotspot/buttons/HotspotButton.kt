@@ -26,8 +26,9 @@ internal fun HotspotButton(
             }
 
         SoftApEnabledState.WIFI_AP_STATE_DISABLING -> LoadingButton()
-        SoftApEnabledState.WIFI_AP_STATE_FAILED -> FailedButton {
-            startHotspot(true)
-        }
+        SoftApEnabledState.WIFI_AP_STATE_FAILED ->
+            FailedButton {
+                startHotspot(true)
+            }
     }
 }
