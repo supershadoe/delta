@@ -2,7 +2,8 @@ import com.android.build.gradle.tasks.AidlCompile
 
 plugins {
     alias(libs.plugins.android.library)
-    id("delta.lint")
+    id("delta.lint.java")
+    id("delta.lint.kts")
 }
 
 android {

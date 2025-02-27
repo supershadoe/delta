@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
-    id("delta.lint")
+    id("delta.lint.kotlin")
+    id("delta.lint.kts")
 }
 
 android {
