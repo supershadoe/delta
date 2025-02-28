@@ -68,9 +68,6 @@ android {
 
     buildFeatures {
         compose = true
-        aidl = false
-        renderScript = false
-        shaders = false
     }
 
     compileOptions {
@@ -84,29 +81,28 @@ android {
 }
 
 dependencies {
-    val composeBom = platform(libs.androidx.compose.bom)
-
-    compileOnly(project(path = ":system-api-stubs"))
     implementation(project(path = ":api"))
     implementation(project(path = ":presentation"))
 
-    implementation(composeBom)
-    implementation(libs.bundles.androidx)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.ktx.core)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.graphics.shapes)
+
+    platform(libs.compose.bom).let {
+        implementation(it)
+        androidTestImplementation(it)
+    }
     implementation(libs.bundles.compose)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.hilt.android)
-    implementation(libs.material)
+
     implementation(libs.hiddenapibypass)
+    implementation(libs.hilt.android)
+
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
 
     ksp(libs.hilt.compiler)
-
     testImplementation(libs.junit)
-
-    androidTestImplementation(composeBom)
     androidTestImplementation(libs.bundles.instTest)
-    androidTestImplementation(libs.compose.ui.test.junit4)
-
-    debugImplementation(libs.compose.ui.test.manifest)
-    debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.bundles.studioPreview)
 }

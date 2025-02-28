@@ -4,6 +4,7 @@ activityCompose = "1.10.1"
 androidx-annotation = "1.9.1"
 composeBom = "2025.02.00"
 coreKtx = "1.15.0"
+coroutines = "1.10.1"
 datastore = "1.1.3"
 espressoCore = "3.6.1"
 graphics-shapes = "1.0.1"
@@ -14,7 +15,6 @@ junit = "4.13.2"
 junitx = "1.2.1"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.26"
-material = "1.12.0"
 navigation-compose = "2.8.8"
 refine = "4.4.0"
 serialization-json = "1.7.3"
@@ -24,57 +24,56 @@ splashscreen = "1.0.1"
 lifecycle = "2.8.7"
 
 [libraries]
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
+androidx-ktx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+# TODO: This is not yet used in the app
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+androidx-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphics-shapes" }
+
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+# TODO: This is not yet used in the app
+compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+compose-nav = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+compose-nav-hilt = { group = "androidx.hilt" , name = "hilt-navigation-compose", version.ref = "hilt-nav-compose" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization-json" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-spotless = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
 
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-
-# Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
-hilt-nav-compose = { group = "androidx.hilt" , name = "hilt-navigation-compose", version.ref = "hilt-nav-compose" }
 
-# Viewmodel
-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization-json" }
 
-# Refine plugin
 refine-processor = { group = "dev.rikka.tools.refine", name = "annotation-processor", version.ref = "refine" }
 refine-annotation = { group = "dev.rikka.tools.refine", name = "annotation", version.ref = "refine" }
 refine-runtime = { group = "dev.rikka.tools.refine", name = "runtime", version.ref = "refine" }
 
-# For UI tests
+shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
+shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
+
+spotless = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
+viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
+# Unit tests
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+# Instrumented tests
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-
-# For preview in Android studio
-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-
-# Bundles
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphics-shapes" }
-
-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
-
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 junitx = { group = "androidx.test.ext", name = "junit", version.ref = "junitx" }
 
-shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
-shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
+# For preview in Android studio (debugImplementation)
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -87,7 +86,23 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
 
 [bundles]
-androidx = ["core-ktx", "core-splashscreen", "graphics-shapes"]
-compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "hilt-nav-compose", "navigation-compose", "viewmodel-compose"]
-instTest = ["espresso-core", "junitx"]
-shizuku = ["shizuku-api", "shizuku-provider"]
+compose = [
+    "compose-activity",
+    "compose-foundation",
+    "compose-material3",
+    "compose-material3-adaptive",
+    "compose-material-icons-extended",
+    "compose-nav",
+    "compose-nav-hilt",
+    "compose-ui-tooling-preview",
+    "compose-viewmodel",
+]
+instTest = [
+    "compose-ui-test-junit4",
+    "espresso-core",
+    "junitx",
+]
+studioPreview = [
+    "compose-ui-test-manifest",
+    "compose-ui-tooling",
+]

@@ -13,8 +13,6 @@ android {
 
     defaultConfig {
         minSdk = 30
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -27,25 +25,26 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+
     kotlinOptions {
         jvmTarget = "21"
     }
 }
 
 dependencies {
-    compileOnly(project(path = ":system-api-stubs"))
+    implementation(project(path = ":api"))
     implementation(project(path = ":data"))
     implementation(project(path = ":domain"))
-    implementation(project(path = ":api"))
-    implementation(libs.hiddenapibypass)
-    implementation(libs.refine.runtime)
-    implementation(libs.bundles.androidx)
-    implementation(libs.viewmodel.ktx)
-    implementation(libs.bundles.shizuku)
+    implementation(libs.androidx.annotation)
     implementation(libs.hilt.android)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
+    implementation(libs.viewmodel.ktx)
     ksp(libs.hilt.compiler)
 }
