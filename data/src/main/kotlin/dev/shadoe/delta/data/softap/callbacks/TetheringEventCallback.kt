@@ -8,7 +8,6 @@ import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 import android.net.TetheringManager
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
-import dev.shadoe.delta.api.TetheredClientWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -55,6 +54,17 @@ internal class TetheringEventCallback(
                 .filter {
                     it.tetheringType ==
                         TetheringManager.TETHERING_WIFI
-                }.map { TetheredClientWrapper(it) }
+                }.map {
+                    val addresses = it.addresses.filterNotNull()
+                    val address = addresses.firstOrNull()?.address
+                    val hostname = addresses.firstNotNullOfOrNull { it.hostname }
+
+                    dev.shadoe.delta.api.TetheredClient(
+                        macAddress = it.macAddress,
+                        address = address,
+                        hostname = hostname,
+                        tetheringType = it.tetheringType,
+                    )
+                }
         }
 }

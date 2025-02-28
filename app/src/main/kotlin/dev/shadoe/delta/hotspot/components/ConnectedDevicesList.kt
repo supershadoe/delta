@@ -66,15 +66,14 @@ internal fun ConnectedDevicesList(vm: ConnectedDevicesViewModel = viewModel()) {
                         ) {
                             Text(
                                 text =
-                                    hostnames.firstOrNull()
+                                    hostname
                                         ?: stringResource(
                                             R.string.no_client_hostname,
                                         ),
                             )
                             Text(
                                 text =
-                                    addresses
-                                        .firstOrNull()
+                                    address
                                         ?.address
                                         ?.hostAddress
                                         ?: stringResource(
@@ -86,7 +85,7 @@ internal fun ConnectedDevicesList(vm: ConnectedDevicesViewModel = viewModel()) {
                             vm.blockDevice(
                                 device =
                                     ACLDevice(
-                                        hostname = hostnames.firstOrNull(),
+                                        hostname = hostname,
                                         macAddress = macAddress,
                                     ),
                             )

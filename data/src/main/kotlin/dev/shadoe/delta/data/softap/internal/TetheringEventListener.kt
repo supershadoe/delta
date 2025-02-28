@@ -1,7 +1,7 @@
 package dev.shadoe.delta.data.softap.internal
 
 import dev.shadoe.delta.api.SoftApSpeedType.BandType
-import dev.shadoe.delta.api.TetheredClientWrapper
+import dev.shadoe.delta.api.TetheredClient
 
 internal interface TetheringEventListener {
     /**
@@ -15,7 +15,7 @@ internal interface TetheringEventListener {
     /**
      * Callback to update the list of tethered clients.
      */
-    fun onTetheredClientsChanged(clients: List<TetheredClientWrapper>)
+    fun onTetheredClientsChanged(clients: List<TetheredClient>)
 
     /**
      * Callback to update the frequency bands supported by the

@@ -27,7 +27,7 @@ import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApStatus
-import dev.shadoe.delta.api.TetheredClientWrapper
+import dev.shadoe.delta.api.TetheredClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -93,7 +93,7 @@ class SoftApRepository
                 }
 
                 override fun onTetheredClientsChanged(
-                    clients: List<TetheredClientWrapper>,
+                    clients: List<TetheredClient>,
                 ) {
                     _status.update {
                         it.copy(tetheredClients = clients)
@@ -102,11 +102,11 @@ class SoftApRepository
                         launch {
                             persistedMacAddressCache.edit { prefs ->
                                 clients
-                                    .filter { it.hostnames.firstOrNull() != null }
+                                    .filter { it.hostname != null }
                                     .map {
                                         stringPreferencesKey(
                                             name = it.macAddress.toString(),
-                                        ) to it.hostnames.first()!!
+                                        ) to it.hostname!!
                                     }.let {
                                         prefs.putAll(*it.toTypedArray())
                                     }
