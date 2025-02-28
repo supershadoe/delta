@@ -50,10 +50,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.presentation.hotspot.EditScreenViewModel
-import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType
-import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType.getResOfSecurityType
-import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType.supportedSecurityTypes
-import dev.shadoe.hotspotapi.wrappers.SoftApSpeedType.getResOfSpeedType
+import dev.shadoe.delta.api.SoftApSecurityType
+import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
+import dev.shadoe.delta.api.SoftApSecurityType.supportedSecurityTypes
+import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
 import kotlinx.coroutines.launch
 
 @Composable

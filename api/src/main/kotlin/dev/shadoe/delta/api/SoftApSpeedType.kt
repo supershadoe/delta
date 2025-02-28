@@ -1,8 +1,7 @@
-package dev.shadoe.hotspotapi.wrappers
+package dev.shadoe.delta.api
 
 import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.IntDef
-import dev.shadoe.hotspotapi.R
 
 object SoftApSpeedType {
     /** Wi-Fi hotspot band unknown. */

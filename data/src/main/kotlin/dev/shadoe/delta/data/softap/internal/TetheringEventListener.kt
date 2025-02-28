@@ -1,7 +1,7 @@
 package dev.shadoe.delta.data.softap.internal
 
-import dev.shadoe.hotspotapi.wrappers.SoftApSpeedType.BandType
-import dev.shadoe.hotspotapi.wrappers.TetheredClientWrapper
+import dev.shadoe.delta.api.SoftApSpeedType.BandType
+import dev.shadoe.delta.api.TetheredClientWrapper
 
 internal interface TetheringEventListener {
     /**

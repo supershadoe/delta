@@ -39,7 +39,7 @@ android {
 
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
-    implementation(project(path = ":hotspot-api"))
+    implementation(project(path = ":api"))
     implementation(libs.hiddenapibypass)
     implementation(libs.refine.runtime)
     implementation(libs.bundles.androidx)

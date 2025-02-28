@@ -1,4 +1,4 @@
-package dev.shadoe.hotspotapi.wrappers
+package dev.shadoe.delta.api
 
 import android.net.LinkAddress
 import android.net.MacAddress

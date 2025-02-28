@@ -24,10 +24,10 @@ import dev.shadoe.delta.data.softap.internal.Extensions.toOriginalClass
 import dev.shadoe.delta.data.softap.internal.InternalState
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
-import dev.shadoe.hotspotapi.wrappers.SoftApConfiguration
-import dev.shadoe.hotspotapi.wrappers.SoftApEnabledState
-import dev.shadoe.hotspotapi.wrappers.SoftApStatus
-import dev.shadoe.hotspotapi.wrappers.TetheredClientWrapper
+import dev.shadoe.delta.api.SoftApConfiguration
+import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.api.SoftApStatus
+import dev.shadoe.delta.api.TetheredClientWrapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

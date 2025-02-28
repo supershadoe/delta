@@ -8,7 +8,7 @@ import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 import android.net.TetheringManager
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
-import dev.shadoe.hotspotapi.wrappers.TetheredClientWrapper
+import dev.shadoe.delta.api.TetheredClientWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

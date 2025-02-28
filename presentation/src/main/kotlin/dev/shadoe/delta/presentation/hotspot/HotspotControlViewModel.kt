@@ -6,7 +6,7 @@ import dev.shadoe.delta.domain.ControlHotspot
 import dev.shadoe.delta.domain.GetHotspotConfig
 import dev.shadoe.delta.domain.GetHotspotStatus
 import dev.shadoe.delta.domain.ViewConnectedClients
-import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType
+import dev.shadoe.delta.api.SoftApSecurityType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject

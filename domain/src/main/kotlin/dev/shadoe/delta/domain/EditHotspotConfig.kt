@@ -1,7 +1,7 @@
 package dev.shadoe.delta.domain
 
 import dev.shadoe.delta.data.softap.SoftApRepository
-import dev.shadoe.hotspotapi.wrappers.SoftApConfiguration
+import dev.shadoe.delta.api.SoftApConfiguration
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 

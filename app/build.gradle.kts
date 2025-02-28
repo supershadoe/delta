@@ -87,7 +87,7 @@ dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
 
     compileOnly(project(path = ":system-api-stubs"))
-    implementation(project(path = ":hotspot-api"))
+    implementation(project(path = ":api"))
     implementation(project(path = ":presentation"))
 
     implementation(composeBom)

@@ -46,7 +46,7 @@ import dev.shadoe.delta.hotspot.components.PassphraseDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
 import dev.shadoe.delta.presentation.hotspot.HotspotControlViewModel
-import dev.shadoe.hotspotapi.wrappers.SoftApEnabledState
+import dev.shadoe.delta.api.SoftApEnabledState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,8 +1,7 @@
-package dev.shadoe.hotspotapi.wrappers
+package dev.shadoe.delta.api
 
 import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.IntDef
-import dev.shadoe.hotspotapi.R
 
 object SoftApSecurityType {
     const val SECURITY_TYPE_OPEN = SoftApConfigurationHidden.SECURITY_TYPE_OPEN

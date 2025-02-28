@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.shadoe.hotspotapi"
+    namespace = "dev.shadoe.delta.api"
     compileSdk = 35
 
     defaultConfig {

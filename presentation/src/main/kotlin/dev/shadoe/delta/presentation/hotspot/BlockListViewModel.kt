@@ -3,7 +3,7 @@ package dev.shadoe.delta.presentation.hotspot
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.domain.UseBlockList
-import dev.shadoe.hotspotapi.wrappers.ACLDevice
+import dev.shadoe.delta.api.ACLDevice
 import javax.inject.Inject
 
 @HiltViewModel

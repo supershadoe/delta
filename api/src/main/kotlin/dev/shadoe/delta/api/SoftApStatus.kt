@@ -1,4 +1,4 @@
-package dev.shadoe.hotspotapi.wrappers
+package dev.shadoe.delta.api
 
 data class SoftApStatus(
     @SoftApEnabledState.EnabledStateType val enabledState: Int,

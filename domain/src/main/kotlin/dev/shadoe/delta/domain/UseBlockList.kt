@@ -1,7 +1,7 @@
 package dev.shadoe.delta.domain
 
 import dev.shadoe.delta.data.softap.SoftApRepository
-import dev.shadoe.hotspotapi.wrappers.ACLDevice
+import dev.shadoe.delta.api.ACLDevice
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
