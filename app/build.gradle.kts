@@ -86,11 +86,11 @@ dependencies {
 
     compileOnly(project(path = ":system-api-stubs"))
     implementation(project(path = ":hotspot-api"))
+    implementation(project(path = ":presentation"))
 
     implementation(composeBom)
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.compose)
-    implementation(libs.bundles.shizuku)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)

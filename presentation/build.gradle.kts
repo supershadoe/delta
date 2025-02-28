@@ -21,7 +21,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -36,8 +36,10 @@ android {
 
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
+    implementation(project(path = ":hotspot-api"))
     implementation(libs.hiddenapibypass)
     implementation(libs.refine.runtime)
     implementation(libs.bundles.androidx)
+    implementation(libs.viewmodel.ktx)
     implementation(libs.bundles.shizuku)
 }

@@ -1,14 +1,8 @@
-package dev.shadoe.delta.shizuku
+package dev.shadoe.delta.presentation.shizuku
 
 import android.app.Application
 import android.content.pm.PackageManager
 import androidx.lifecycle.AndroidViewModel
-import dev.shadoe.delta.shizuku.ShizukuStates.CONNECTED
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_AVAILABLE
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_CONNECTED
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_READY
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_RUNNING
-import dev.shadoe.delta.shizuku.ShizukuStates.ShizukuStateType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import rikka.shizuku.Shizuku
@@ -18,10 +12,10 @@ import rikka.sui.Sui
 class ShizukuViewModel(
     private val application: Application,
 ) : AndroidViewModel(application) {
-    @ShizukuStateType
-    private val _shizukuState = MutableStateFlow(NOT_READY)
+    @ShizukuStates.ShizukuStateType
+    private val _shizukuState = MutableStateFlow(ShizukuStates.NOT_READY)
 
-    @ShizukuStateType
+    @ShizukuStates.ShizukuStateType
     val shizukuState: StateFlow<Int> = _shizukuState
 
     private val permListener =
@@ -55,21 +49,23 @@ class ShizukuViewModel(
 
     private fun determineShizukuStateWhenAlive(permResult: Int) =
         if (permResult == PackageManager.PERMISSION_GRANTED) {
-            CONNECTED
+            ShizukuStates.CONNECTED
         } else {
-            NOT_CONNECTED
+            ShizukuStates.NOT_CONNECTED
         }
 
     private fun determineShizukuStateWhenDead() = when {
-        isShizukuInstalled(application.packageManager) -> NOT_RUNNING
-        else -> NOT_AVAILABLE
+        isShizukuInstalled(
+            application.packageManager,
+        ) -> ShizukuStates.NOT_RUNNING
+        else -> ShizukuStates.NOT_AVAILABLE
     }
 
     init {
         Sui.init(application.packageName)
         _shizukuState.value =
             when {
-                Shizuku.isPreV11() -> NOT_AVAILABLE
+                Shizuku.isPreV11() -> ShizukuStates.NOT_AVAILABLE
                 Shizuku.pingBinder() ->
                     determineShizukuStateWhenAlive(
                         Shizuku.checkSelfPermission(),
@@ -86,7 +82,12 @@ class ShizukuViewModel(
         super.onCleared()
     }
 
+    fun requestPermission() {
+        Shizuku.requestPermission(PERM_REQ_CODE)
+    }
+
     companion object {
-        internal const val PERM_REQ_CODE = 2345
+        private const val PERM_REQ_CODE = 2345
+        const val SHIZUKU_APP_ID = ShizukuProvider.MANAGER_APPLICATION_ID
     }
 }

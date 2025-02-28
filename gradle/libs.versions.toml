@@ -18,7 +18,7 @@ serialization-json = "1.7.3"
 shizuku = "13.1.5"
 spotless = "7.0.2"
 splashscreen = "1.0.1"
-viewmodel-compose = "2.8.7"
+lifecycle = "2.8.7"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -32,6 +32,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 spotless = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+# Viewmodel
+viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 # Refine plugin
 refine-processor = { group = "dev.rikka.tools.refine", name = "annotation-processor", version.ref = "refine" }
@@ -57,7 +60,7 @@ compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodel-compose" }
+viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 junitx = { group = "androidx.test.ext", name = "junit", version.ref = "junitx" }

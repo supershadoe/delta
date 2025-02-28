@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dev.shadoe.delta.R
-import rikka.shizuku.ShizukuProvider
+import dev.shadoe.delta.presentation.shizuku.ShizukuViewModel
 
 @Composable
 internal fun ShizukuNotRunning() {
@@ -18,7 +18,7 @@ internal fun ShizukuNotRunning() {
             with(context) {
                 startActivity(
                     packageManager.getLaunchIntentForPackage(
-                        ShizukuProvider.MANAGER_APPLICATION_ID,
+                        ShizukuViewModel.SHIZUKU_APP_ID,
                     ),
                 )
             }

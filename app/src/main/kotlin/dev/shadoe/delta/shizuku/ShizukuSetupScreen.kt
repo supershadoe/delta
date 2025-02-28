@@ -10,25 +10,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.shadoe.delta.R
-import dev.shadoe.delta.shizuku.ShizukuStates.CONNECTED
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_AVAILABLE
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_CONNECTED
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_READY
-import dev.shadoe.delta.shizuku.ShizukuStates.NOT_RUNNING
-import dev.shadoe.delta.shizuku.ShizukuStates.ShizukuStateType
+import dev.shadoe.delta.presentation.shizuku.ShizukuStates.CONNECTED
+import dev.shadoe.delta.presentation.shizuku.ShizukuStates.NOT_AVAILABLE
+import dev.shadoe.delta.presentation.shizuku.ShizukuStates.NOT_CONNECTED
+import dev.shadoe.delta.presentation.shizuku.ShizukuStates.NOT_READY
+import dev.shadoe.delta.presentation.shizuku.ShizukuStates.NOT_RUNNING
+import dev.shadoe.delta.presentation.shizuku.ShizukuStates.ShizukuStateType
 import dev.shadoe.delta.shizuku.components.ShizukuNotConnected
 import dev.shadoe.delta.shizuku.components.ShizukuNotInstalled
 import dev.shadoe.delta.shizuku.components.ShizukuNotRunning
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShizukuSetupScreen(
-    @ShizukuStateType shizukuState: Int,
+    @ShizukuStateType state: Int,
+    onRequestPermission: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
-            if (shizukuState != NOT_READY && shizukuState != CONNECTED) {
+            if (state != NOT_READY && state != CONNECTED) {
+                @OptIn(ExperimentalMaterial3Api::class)
                 LargeTopAppBar(
                     title = { Text(stringResource(R.string.shizuku_setup)) },
                 )
@@ -36,10 +37,10 @@ fun ShizukuSetupScreen(
         },
     ) {
         Column(modifier = Modifier.padding(it).then(modifier)) {
-            when (shizukuState) {
+            when (state) {
                 NOT_AVAILABLE -> ShizukuNotInstalled()
                 NOT_RUNNING -> ShizukuNotRunning()
-                NOT_CONNECTED -> ShizukuNotConnected()
+                NOT_CONNECTED -> ShizukuNotConnected(onRequestPermission)
                 else -> {}
             }
         }
