@@ -1,7 +1,7 @@
 package dev.shadoe.delta.domain
 
-import dev.shadoe.delta.data.softap.SoftApRepository
 import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.data.softap.SoftApRepository
 import javax.inject.Inject
 
 class ControlHotspot

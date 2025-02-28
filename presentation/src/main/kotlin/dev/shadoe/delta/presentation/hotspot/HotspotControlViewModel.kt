@@ -2,11 +2,11 @@ package dev.shadoe.delta.presentation.hotspot
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.domain.ControlHotspot
 import dev.shadoe.delta.domain.GetHotspotConfig
 import dev.shadoe.delta.domain.GetHotspotStatus
 import dev.shadoe.delta.domain.ViewConnectedClients
-import dev.shadoe.delta.api.SoftApSecurityType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject

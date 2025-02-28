@@ -15,6 +15,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.rikka.tools.refine.Refine
+import dev.shadoe.delta.api.SoftApConfiguration
+import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.api.SoftApStatus
+import dev.shadoe.delta.api.TetheredClient
 import dev.shadoe.delta.data.services.TetheringSystemService
 import dev.shadoe.delta.data.services.WifiSystemService
 import dev.shadoe.delta.data.softap.callbacks.SoftApCallback
@@ -24,10 +28,6 @@ import dev.shadoe.delta.data.softap.internal.Extensions.toOriginalClass
 import dev.shadoe.delta.data.softap.internal.InternalState
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
-import dev.shadoe.delta.api.SoftApConfiguration
-import dev.shadoe.delta.api.SoftApEnabledState
-import dev.shadoe.delta.api.SoftApStatus
-import dev.shadoe.delta.api.TetheredClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -92,9 +92,7 @@ class SoftApRepository
                     }
                 }
 
-                override fun onTetheredClientsChanged(
-                    clients: List<TetheredClient>,
-                ) {
+                override fun onTetheredClientsChanged(clients: List<TetheredClient>) {
                     _status.update {
                         it.copy(tetheredClients = clients)
                     }

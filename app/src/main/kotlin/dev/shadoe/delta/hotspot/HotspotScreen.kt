@@ -40,13 +40,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
+import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.hotspot.buttons.HotspotButton
 import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
 import dev.shadoe.delta.hotspot.components.PassphraseDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
 import dev.shadoe.delta.presentation.hotspot.HotspotControlViewModel
-import dev.shadoe.delta.api.SoftApEnabledState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

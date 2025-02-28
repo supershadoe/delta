@@ -20,8 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.presentation.hotspot.ConnectedDevicesViewModel
 import dev.shadoe.delta.api.ACLDevice
+import dev.shadoe.delta.presentation.hotspot.ConnectedDevicesViewModel
 
 @Composable
 internal fun ConnectedDevicesList(vm: ConnectedDevicesViewModel = viewModel()) {

@@ -5,8 +5,8 @@ import android.net.wifi.SoftApCapability
 import android.net.wifi.SoftApInfo
 import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
-import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import dev.shadoe.delta.api.SoftApSpeedType
+import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

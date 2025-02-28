@@ -48,12 +48,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.hotspot.navigation.LocalNavController
-import dev.shadoe.delta.presentation.hotspot.EditScreenViewModel
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.supportedSecurityTypes
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
+import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.delta.presentation.hotspot.EditScreenViewModel
 import kotlinx.coroutines.launch
 
 @Composable

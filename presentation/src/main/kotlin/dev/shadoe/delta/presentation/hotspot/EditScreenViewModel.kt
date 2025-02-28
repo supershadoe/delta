@@ -2,10 +2,10 @@ package dev.shadoe.delta.presentation.hotspot
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.domain.EditHotspotConfig
 import dev.shadoe.delta.domain.GetHotspotConfig
 import dev.shadoe.delta.domain.GetHotspotStatus
-import dev.shadoe.delta.api.SoftApConfiguration
 import javax.inject.Inject
 
 @HiltViewModel
