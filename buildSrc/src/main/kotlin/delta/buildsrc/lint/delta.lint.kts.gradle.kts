@@ -6,6 +6,9 @@ spotless {
     kotlinGradle {
         target("**/*.gradle.kts")
         targetExclude("**/build/**/*.gradle.kts")
-        ktlint("1.5.0")
+        ktfmt("0.54").googleStyle().configure {
+            it.setMaxWidth(80)
+            it.setManageTrailingCommas(true)
+        }
     }
 }

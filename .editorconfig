@@ -4,7 +4,7 @@ root = true
 [*]
 indent_style = space
 indent_size = 4
-max_line_length = 90
+max_line_length = 80
 
 end_of_line = lf
 charset = utf-8
@@ -15,23 +15,7 @@ insert_final_newline = true
 indent_size = 2
 
 [*.{kt,kts}]
+indent_size = 2
 ij_kotlin_packages_to_use_import_on_demand = unset
 ij_kotlin_name_count_to_use_star_import = 65535
 ij_kotlin_name_count_to_use_star_import_for_members = 65535
-
-# ktlint config
-# noinspection EditorConfigKeyCorrectness
-ktlint_code_style = ktlint_official
-# noinspection EditorConfigKeyCorrectness
-ktlint_ignore_back_ticked_identifier = true
-# noinspection EditorConfigKeyCorrectness
-ktlint_function_naming_ignore_when_annotated_with = Composable
-# noinspection EditorConfigKeyCorrectness
-ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = 2
-# noinspection EditorConfigKeyCorrectness
-ktlint_function_signature_body_expression_wrapping = default
-
-# compose-rules ruleset config
-# noinspection EditorConfigKeyCorrectness
-compose_allowed_composition_locals = LocalNavController
-

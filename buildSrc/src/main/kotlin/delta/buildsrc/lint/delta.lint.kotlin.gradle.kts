@@ -6,11 +6,9 @@ spotless {
     kotlin {
         target("**/*.kt")
         targetExclude("**/build/**/*.kt")
-        ktlint("1.5.0")
-            .customRuleSets(
-                listOf(
-                    "io.nlopez.compose.rules:ktlint:0.4.22",
-                ),
-            )
+        ktfmt("0.54").googleStyle().configure {
+            it.setMaxWidth(80)
+            it.setManageTrailingCommas(true)
+        }
     }
 }
