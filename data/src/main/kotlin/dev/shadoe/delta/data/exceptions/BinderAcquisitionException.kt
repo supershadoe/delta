@@ -1,4 +1,4 @@
-package dev.shadoe.hotspotapi.exceptions
+package dev.shadoe.delta.data.exceptions
 
 class BinderAcquisitionException(
     message: String,

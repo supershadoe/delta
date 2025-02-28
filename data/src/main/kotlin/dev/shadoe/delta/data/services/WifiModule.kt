@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.shadoe.hotspotapi.exceptions.BinderAcquisitionException
+import dev.shadoe.delta.data.exceptions.BinderAcquisitionException
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 
