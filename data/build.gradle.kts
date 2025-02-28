@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.shadoe.delta.presentation"
+    namespace = "dev.shadoe.delta.data"
     compileSdk = 35
 
     defaultConfig {
@@ -38,7 +38,6 @@ android {
 
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
-    implementation(project(path = ":data"))
     implementation(project(path = ":hotspot-api"))
     implementation(libs.hiddenapibypass)
     implementation(libs.refine.runtime)

@@ -23,6 +23,7 @@ dependencyResolutionManagement {
 rootProject.name = "Delta"
 include(
     ":app",
+    ":data",
     ":hotspot-api",
     ":presentation",
     ":system-api-stubs",
