@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.shadoe.delta.data"
+    namespace = "dev.shadoe.delta.domain"
     compileSdk = 35
 
     defaultConfig {
@@ -39,12 +39,12 @@ android {
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
     implementation(project(path = ":hotspot-api"))
+    implementation(project(path = ":data"))
     implementation(libs.hiddenapibypass)
     implementation(libs.refine.runtime)
     implementation(libs.bundles.androidx)
     implementation(libs.viewmodel.ktx)
     implementation(libs.bundles.shizuku)
-    implementation(libs.datastore.preferences.core)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 }

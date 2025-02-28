@@ -1,4 +1,4 @@
-package dev.shadoe.hotspotapi.callbacks
+package dev.shadoe.delta.data.softap.callbacks
 
 import android.net.ITetheringEventCallback
 import android.net.Network
@@ -7,16 +7,15 @@ import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 import android.net.TetheringManager
+import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import dev.shadoe.hotspotapi.wrappers.TetheredClientWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 internal class TetheringEventCallback(
-    private val updateEnabledState: () -> Unit,
-    private val setTetheredClients: suspend (
-        List<TetheredClientWrapper>,
-    ) -> Unit,
+    private val tetheringEventListener: TetheringEventListener,
 ) : ITetheringEventCallback.Stub() {
     override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
         parcel ?: return
@@ -32,19 +31,15 @@ internal class TetheringEventCallback(
     }
 
     override fun onTetherStatesChanged(states: TetherStatesParcel?) {
-        updateEnabledState()
+        tetheringEventListener.onEnabledStateChanged()
     }
 
     override fun onTetherClientsChanged(clients: List<TetheredClient?>?) {
         runBlocking {
-            launch(Dispatchers.Unconfined) {
-                (clients ?: emptyList())
-                    .filterNotNull()
-                    .filter {
-                        it.tetheringType ==
-                            TetheringManager.TETHERING_WIFI
-                    }.map { TetheredClientWrapper(it) }
-                    .let { setTetheredClients(it) }
+            launch {
+                processTetheredClients(clients).let {
+                    tetheringEventListener.onTetheredClientsChanged(it)
+                }
             }
         }
     }
@@ -52,4 +47,14 @@ internal class TetheringEventCallback(
     override fun onOffloadStatusChanged(status: Int) {}
 
     override fun onSupportedTetheringTypes(supportedBitmap: Long) {}
+
+    private suspend fun processTetheredClients(clients: List<TetheredClient?>?) =
+        withContext(Dispatchers.Unconfined) {
+            (clients ?: emptyList())
+                .filterNotNull()
+                .filter {
+                    it.tetheringType ==
+                        TetheringManager.TETHERING_WIFI
+                }.map { TetheredClientWrapper(it) }
+        }
 }

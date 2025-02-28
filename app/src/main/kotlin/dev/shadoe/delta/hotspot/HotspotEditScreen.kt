@@ -46,8 +46,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.delta.presentation.hotspot.EditScreenViewModel
 import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType
 import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType.supportedSecurityTypes
@@ -55,15 +57,17 @@ import dev.shadoe.hotspotapi.wrappers.SoftApSpeedType.getResOfSpeedType
 import kotlinx.coroutines.launch
 
 @Composable
-fun HotspotEditScreen(modifier: Modifier = Modifier) {
+fun HotspotEditScreen(
+    modifier: Modifier = Modifier,
+    vm: EditScreenViewModel = viewModel(),
+) {
     val navController = LocalNavController.current
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val hotspotApi = LocalHotspotApiInstance.current
-    val config = hotspotApi.config.collectAsState()
-    val status by hotspotApi.status.collectAsState()
+    val config = vm.config.collectAsState()
+    val status by vm.status.collectAsState()
 
     var mutableConfig by remember(config.value) {
         mutableStateOf(config.value)
@@ -172,7 +176,7 @@ fun HotspotEditScreen(modifier: Modifier = Modifier) {
                             }
                             return@onClick
                         }
-                        hotspotApi.config.value = mutableConfig
+                        vm.updateConfig(mutableConfig)
                         navController?.navigateUp()
                     },
                 ) {

@@ -1,4 +1,4 @@
-package dev.shadoe.delta.data
+package dev.shadoe.delta.data.services
 
 import android.net.ITetheringConnector
 import dagger.Module
@@ -14,13 +14,11 @@ import rikka.shizuku.SystemServiceHelper
 object TetheringModule {
     @TetheringSystemService
     @Provides
-    fun provideTetheringManager(): ITetheringConnector {
-        return SystemServiceHelper
-            .getSystemService("tethering")
-            ?.let { ShizukuBinderWrapper(it) }
-            ?.let { ITetheringConnector.Stub.asInterface(it) }
-            ?: throw BinderAcquisitionException(
-                "Unable to get ITetheringConnector",
-            )
-    }
+    fun provideTetheringManager(): ITetheringConnector = SystemServiceHelper
+        .getSystemService("tethering")
+        ?.let { ShizukuBinderWrapper(it) }
+        ?.let { ITetheringConnector.Stub.asInterface(it) }
+        ?: throw BinderAcquisitionException(
+            "Unable to get ITetheringConnector",
+        )
 }

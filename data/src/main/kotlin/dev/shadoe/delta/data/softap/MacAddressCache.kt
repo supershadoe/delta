@@ -1,7 +1,7 @@
-package dev.shadoe.delta.data
+package dev.shadoe.delta.data.softap
 
 import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class WifiSystemService
+internal annotation class MacAddressCache

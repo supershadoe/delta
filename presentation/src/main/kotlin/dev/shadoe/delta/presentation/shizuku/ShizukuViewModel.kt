@@ -38,21 +38,21 @@ class ShizukuViewModel(
             Shizuku.removeRequestPermissionResultListener(permListener)
         }
 
-    private fun isShizukuInstalled(packageManager: PackageManager) =
-        runCatching {
-            packageManager.getApplicationInfo(
-                ShizukuProvider.MANAGER_APPLICATION_ID,
-                0,
-            )
-        }.getOrNull().let { it != null } ||
-            Sui.isSui()
+    private fun isShizukuInstalled(packageManager: PackageManager) = runCatching {
+        packageManager.getApplicationInfo(
+            ShizukuProvider.MANAGER_APPLICATION_ID,
+            0,
+        )
+    }.getOrNull().let { it != null } ||
+        Sui.isSui()
 
-    private fun determineShizukuStateWhenAlive(permResult: Int) =
-        if (permResult == PackageManager.PERMISSION_GRANTED) {
-            ShizukuStates.CONNECTED
-        } else {
-            ShizukuStates.NOT_CONNECTED
-        }
+    private fun determineShizukuStateWhenAlive(permResult: Int) = if (permResult ==
+        PackageManager.PERMISSION_GRANTED
+    ) {
+        ShizukuStates.CONNECTED
+    } else {
+        ShizukuStates.NOT_CONNECTED
+    }
 
     private fun determineShizukuStateWhenDead() = when {
         isShizukuInstalled(

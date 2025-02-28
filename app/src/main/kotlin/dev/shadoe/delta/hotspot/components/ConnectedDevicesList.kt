@@ -18,18 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.hotspot.LocalHotspotApiInstance
+import dev.shadoe.delta.presentation.hotspot.ConnectedDevicesViewModel
 import dev.shadoe.hotspotapi.wrappers.ACLDevice
-import dev.shadoe.hotspotapi.wrappers.TetheredClientWrapper
-import kotlinx.coroutines.flow.update
 
 @Composable
-internal fun ConnectedDevicesList(
-    tetheredClients: List<TetheredClientWrapper>,
-) {
-    val hotspotApi = LocalHotspotApiInstance.current
-    val config by hotspotApi.config.collectAsState()
+internal fun ConnectedDevicesList(vm: ConnectedDevicesViewModel = viewModel()) {
+    val tetheredClients by vm.connectedClients.collectAsState(emptyList())
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
@@ -86,15 +83,13 @@ internal fun ConnectedDevicesList(
                             )
                         }
                         Button(onClick = {
-                            val d =
-                                config.blockedDevices +
+                            vm.blockDevice(
+                                device =
                                     ACLDevice(
                                         hostname = hostnames.firstOrNull(),
                                         macAddress = macAddress,
-                                    )
-                            hotspotApi.config.update {
-                                it.copy(blockedDevices = d)
-                            }
+                                    ),
+                            )
                         }) {
                             Text(text = stringResource(R.string.block_button))
                         }

@@ -43,8 +43,7 @@ import kotlin.math.min
  * size and interpolates from red to green as more recompositions occur before a timeout.
  */
 @Stable
-fun Modifier.recomposeHighlighter(): Modifier =
-    this.then(RecomposeHighlighterElement())
+fun Modifier.recomposeHighlighter(): Modifier = this.then(RecomposeHighlighterElement())
 
 private class RecomposeHighlighterElement :
     ModifierNodeElement<RecomposeHighlighterModifier>() {
@@ -52,8 +51,7 @@ private class RecomposeHighlighterElement :
         debugInspectorInfo { name = "recomposeHighlighter" }
     }
 
-    override fun create(): RecomposeHighlighterModifier =
-        RecomposeHighlighterModifier()
+    override fun create(): RecomposeHighlighterModifier = RecomposeHighlighterModifier()
 
     override fun update(node: RecomposeHighlighterModifier) {
         node.incrementCompositions()

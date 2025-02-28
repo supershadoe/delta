@@ -24,6 +24,7 @@ rootProject.name = "Delta"
 include(
     ":app",
     ":data",
+    ":domain",
     ":hotspot-api",
     ":presentation",
     ":system-api-stubs",

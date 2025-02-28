@@ -4,7 +4,7 @@ root = true
 [*]
 indent_style = space
 indent_size = 4
-max_line_length = 80
+max_line_length = 90
 
 end_of_line = lf
 charset = utf-8

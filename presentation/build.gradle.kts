@@ -39,6 +39,7 @@ android {
 dependencies {
     compileOnly(project(path = ":system-api-stubs"))
     implementation(project(path = ":data"))
+    implementation(project(path = ":domain"))
     implementation(project(path = ":hotspot-api"))
     implementation(libs.hiddenapibypass)
     implementation(libs.refine.runtime)

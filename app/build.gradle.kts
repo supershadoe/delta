@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     id("delta.lint.kotlin")
     id("delta.lint.kts")
 }
@@ -93,7 +95,10 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.hilt.android)
     implementation(libs.material)
+
+    ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
 

@@ -38,19 +38,23 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.buttons.HotspotButton
 import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
 import dev.shadoe.delta.hotspot.components.PassphraseDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
+import dev.shadoe.delta.presentation.hotspot.HotspotControlViewModel
 import dev.shadoe.hotspotapi.wrappers.SoftApEnabledState
-import dev.shadoe.hotspotapi.wrappers.SoftApSecurityType
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotspotScreen(modifier: Modifier = Modifier) {
+fun HotspotScreen(
+    modifier: Modifier = Modifier,
+    vm: HotspotControlViewModel = viewModel(),
+) {
     val sheetState = rememberModalBottomSheetState()
     val showConnectedDevices = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -62,9 +66,13 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
 //        "isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}",
 //    )
 
-    val hotspotApi = LocalHotspotApiInstance.current
-    val config = hotspotApi.config.collectAsState()
-    val status by hotspotApi.status.collectAsState()
+    val ssid by vm.ssid.collectAsState("")
+    val passphrase by vm.passphrase.collectAsState("")
+    val enabledState by vm.enabledState.collectAsState(
+        SoftApEnabledState.WIFI_AP_STATE_DISABLED,
+    )
+    val shouldShowPassphrase by vm.shouldShowPassphrase.collectAsState(true)
+    val tetheredClientCount by vm.tetheredClientCount.collectAsState(0)
 
     val noConnectedDevicesText =
         stringResource(id = R.string.no_connected_devices)
@@ -74,8 +82,8 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
         stringResource(id = R.string.hotspot_enable_action)
 
     val onConnectedDevicesClicked = {
-        if (status.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-            if (status.tetheredClients.isEmpty()) {
+        if (enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+            if (tetheredClientCount == 0) {
                 if (snackbarHostState.currentSnackbarData == null) {
                     scope.launch {
                         snackbarHostState.showSnackbar(
@@ -98,7 +106,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                         duration = SnackbarDuration.Short,
                     )
                 if (result == SnackbarResult.ActionPerformed) {
-                    hotspotApi.startHotspot()
+                    vm.startHotspot()
                 }
             }
         }
@@ -150,9 +158,9 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                     contentAlignment = Alignment.Center,
                 ) {
                     HotspotButton(
-                        enabledState = status.enabledState,
-                        startHotspot = { hotspotApi.startHotspot(it) },
-                        stopHotspot = { hotspotApi.stopHotspot() },
+                        enabledState = enabledState,
+                        startHotspot = { vm.startHotspot(it) },
+                        stopHotspot = { vm.stopHotspot() },
                     )
                 }
                 Column(
@@ -161,15 +169,13 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                 ) {
                     Text(
                         text =
-                            config.value.ssid
+                            ssid
                                 ?: stringResource(id = R.string.no_ssid),
                     )
                     Box(modifier = Modifier.padding(bottom = 16.dp)) {
-                        if (config.value.securityType !=
-                            SoftApSecurityType.SECURITY_TYPE_OPEN
-                        ) {
+                        if (shouldShowPassphrase) {
                             PassphraseDisplay(
-                                passphrase = config.value.passphrase,
+                                passphrase = passphrase,
                             )
                         }
                     }
@@ -182,7 +188,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                             Text(
                                 stringResource(
                                     id = R.string.connected_devices_button,
-                                    status.tetheredClients.size,
+                                    tetheredClientCount,
                                 ),
                                 style = style,
                             )
@@ -197,7 +203,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                     },
                     sheetState = sheetState,
                 ) {
-                    ConnectedDevicesList(status.tetheredClients)
+                    ConnectedDevicesList()
                 }
             }
         }
@@ -212,7 +218,7 @@ fun HotspotScreen(modifier: Modifier = Modifier) {
                             .padding(it)
                             .fillMaxHeight(),
                 ) {
-                    ConnectedDevicesList(status.tetheredClients)
+                    ConnectedDevicesList()
                 }
             }
         }

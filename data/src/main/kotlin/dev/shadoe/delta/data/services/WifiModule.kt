@@ -1,4 +1,4 @@
-package dev.shadoe.delta.data
+package dev.shadoe.delta.data.services
 
 import android.net.wifi.IWifiManager
 import dagger.Module
@@ -14,11 +14,9 @@ import rikka.shizuku.SystemServiceHelper
 object WifiModule {
     @WifiSystemService
     @Provides
-    fun provideWifiManager(): IWifiManager {
-        return SystemServiceHelper
-            .getSystemService("wifi")
-            ?.let { ShizukuBinderWrapper(it) }
-            ?.let { IWifiManager.Stub.asInterface(it) }
-            ?: throw BinderAcquisitionException("Unable to get IWifiManager")
-    }
+    fun provideWifiManager(): IWifiManager = SystemServiceHelper
+        .getSystemService("wifi")
+        ?.let { ShizukuBinderWrapper(it) }
+        ?.let { IWifiManager.Stub.asInterface(it) }
+        ?: throw BinderAcquisitionException("Unable to get IWifiManager")
 }

@@ -27,18 +27,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.delta.presentation.hotspot.BlockListViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun BlocklistScreen(modifier: Modifier = Modifier) {
+fun BlocklistScreen(
+    modifier: Modifier = Modifier,
+    vm: BlockListViewModel = viewModel(),
+) {
     val navController = LocalNavController.current
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val hotspotApi = LocalHotspotApiInstance.current
-    val config by hotspotApi.config.collectAsState()
+    val blockedClients by vm.blockedClients.collectAsState(emptyList())
 
     val blocklistUnblockedText =
         stringResource(R.string.blocklist_unblocked)
@@ -65,7 +69,7 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
-        if (config.blockedDevices.isEmpty()) {
+        if (blockedClients.isEmpty()) {
             Box(
                 modifier = Modifier.padding(it).fillMaxSize(),
                 contentAlignment = Alignment.Center,
@@ -82,8 +86,8 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
                     .padding(it)
                     .then(modifier),
         ) {
-            items(config.blockedDevices.size) {
-                val d = config.blockedDevices[it]
+            items(blockedClients.size) {
+                val d = blockedClients[it]
                 Row(
                     modifier = Modifier.padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -93,11 +97,7 @@ fun BlocklistScreen(modifier: Modifier = Modifier) {
                         Text(text = d.macAddress.toString())
                     }
                     Button(onClick = {
-                        val d = config.blockedDevices
-                        hotspotApi.config.value =
-                            config.copy(
-                                blockedDevices = d - d[it],
-                            )
+                        vm.unblockDevice(blockedClients[it])
                         scope.launch {
                             snackbarHostState.showSnackbar(
                                 message = blocklistUnblockedText,

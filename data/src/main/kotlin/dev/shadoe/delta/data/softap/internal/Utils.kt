@@ -1,4 +1,4 @@
-package dev.shadoe.hotspotapi.internal
+package dev.shadoe.delta.data.softap.internal
 
 import java.util.UUID
 
