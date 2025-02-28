@@ -13,10 +13,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import dagger.Module
-import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.data.services.TetheringSystemService
 import dev.shadoe.delta.data.services.WifiSystemService
@@ -45,13 +42,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 private typealias PrefMapT = Map.Entry<Preferences.Key<String>, String>
 
-@Module
-@InstallIn(SingletonComponent::class)
+@Singleton
 class SoftApRepository
     @Inject
     constructor(

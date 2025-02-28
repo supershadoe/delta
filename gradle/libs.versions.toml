@@ -9,6 +9,7 @@ espressoCore = "3.6.1"
 graphics-shapes = "1.0.1"
 hiddenapibypass = "4.3"
 hilt = "2.51.1"
+hilt-nav-compose = "1.2.0"
 junit = "4.13.2"
 junitx = "1.2.1"
 kotlin = "2.0.21"
@@ -37,7 +38,8 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 # Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-nav-compose = { group = "androidx.hilt" , name = "hilt-navigation-compose", version.ref = "hilt-nav-compose" }
 
 # Viewmodel
 viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -86,6 +88,6 @@ refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
 
 [bundles]
 androidx = ["core-ktx", "core-splashscreen", "graphics-shapes"]
-compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "navigation-compose", "viewmodel-compose"]
+compose = ["activity-compose", "compose-foundation", "compose-material3", "compose-material3-adaptive", "compose-material-icons-extended", "hilt-nav-compose", "navigation-compose", "viewmodel-compose"]
 instTest = ["espresso-core", "junitx"]
 shizuku = ["shizuku-api", "shizuku-provider"]

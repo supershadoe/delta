@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.refine)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("delta.lint.kotlin")

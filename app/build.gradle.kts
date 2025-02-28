@@ -97,6 +97,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.hilt.android)
     implementation(libs.material)
+    implementation(libs.hiddenapibypass)
 
     ksp(libs.hilt.compiler)
 
