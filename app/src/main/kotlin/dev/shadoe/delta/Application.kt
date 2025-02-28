@@ -6,8 +6,8 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 @HiltAndroidApp
 class Application : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        HiddenApiBypass.setHiddenApiExemptions("L")
-    }
+  override fun onCreate() {
+    super.onCreate()
+    HiddenApiBypass.setHiddenApiExemptions("L")
+  }
 }

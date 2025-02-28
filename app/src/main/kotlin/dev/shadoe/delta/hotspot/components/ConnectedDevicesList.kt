@@ -25,76 +25,57 @@ import dev.shadoe.delta.presentation.hotspot.ConnectedDevicesViewModel
 
 @Composable
 internal fun ConnectedDevicesList(vm: ConnectedDevicesViewModel = viewModel()) {
-    val tetheredClients by vm.connectedClients.collectAsState(emptyList())
+  val tetheredClients by vm.connectedClients.collectAsState(emptyList())
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier =
-            Modifier
-                .padding(horizontal = 24.dp, vertical = 16.dp)
-                .fillMaxWidth(),
-    ) {
-        Text(
-            text = stringResource(R.string.connected_devices),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.titleLarge,
-        )
-        if (tetheredClients.isEmpty()) {
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(text = stringResource(R.string.no_connected_devices))
-            }
-        }
-        LazyColumn(
-            contentPadding = PaddingValues(vertical = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            items(tetheredClients.size) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    with(tetheredClients[it]) {
-                        Column(
-                            modifier =
-                                Modifier.padding(
-                                    horizontal = 8.dp,
-                                ),
-                        ) {
-                            Text(
-                                text =
-                                    hostname
-                                        ?: stringResource(
-                                            R.string.no_client_hostname,
-                                        ),
-                            )
-                            Text(
-                                text =
-                                    address
-                                        ?.address
-                                        ?.hostAddress
-                                        ?: stringResource(
-                                            R.string.ip_not_allocated,
-                                        ),
-                            )
-                        }
-                        Button(onClick = {
-                            vm.blockDevice(
-                                device =
-                                    ACLDevice(
-                                        hostname = hostname,
-                                        macAddress = macAddress,
-                                    ),
-                            )
-                        }) {
-                            Text(text = stringResource(R.string.block_button))
-                        }
-                    }
-                }
-            }
-        }
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    modifier =
+      Modifier.padding(horizontal = 24.dp, vertical = 16.dp).fillMaxWidth(),
+  ) {
+    Text(
+      text = stringResource(R.string.connected_devices),
+      color = MaterialTheme.colorScheme.onSurfaceVariant,
+      style = MaterialTheme.typography.titleLarge,
+    )
+    if (tetheredClients.isEmpty()) {
+      Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+        Text(text = stringResource(R.string.no_connected_devices))
+      }
     }
+    LazyColumn(
+      contentPadding = PaddingValues(vertical = 32.dp),
+      verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+      items(tetheredClients.size) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically,
+        ) {
+          with(tetheredClients[it]) {
+            Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+              Text(
+                text = hostname ?: stringResource(R.string.no_client_hostname)
+              )
+              Text(
+                text =
+                  address?.address?.hostAddress
+                    ?: stringResource(R.string.ip_not_allocated)
+              )
+            }
+            Button(
+              onClick = {
+                vm.blockDevice(
+                  device =
+                    ACLDevice(hostname = hostname, macAddress = macAddress)
+                )
+              }
+            ) {
+              Text(text = stringResource(R.string.block_button))
+            }
+          }
+        }
+      }
+    }
+  }
 }

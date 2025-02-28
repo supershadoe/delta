@@ -52,175 +52,157 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HotspotScreen(
-    modifier: Modifier = Modifier,
-    vm: HotspotControlViewModel = viewModel(),
+  modifier: Modifier = Modifier,
+  vm: HotspotControlViewModel = viewModel(),
 ) {
-    val sheetState = rememberModalBottomSheetState()
-    val showConnectedDevices = remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val navController = LocalNavController.current
-    val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
-    // TODO: remove this comment
-//    println(
-//        "isBigScreen: $isBigScreen; screenWidthDp: ${LocalConfiguration.current.screenWidthDp}",
-//    )
+  val sheetState = rememberModalBottomSheetState()
+  val showConnectedDevices = remember { mutableStateOf(false) }
+  val scope = rememberCoroutineScope()
+  val snackbarHostState = remember { SnackbarHostState() }
+  val navController = LocalNavController.current
+  val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
+  // TODO: remove this comment
+  //    println(
+  //        "isBigScreen: $isBigScreen; screenWidthDp:
+  // ${LocalConfiguration.current.screenWidthDp}",
+  //    )
 
-    val ssid by vm.ssid.collectAsState("")
-    val passphrase by vm.passphrase.collectAsState("")
-    val enabledState by vm.enabledState.collectAsState(
-        SoftApEnabledState.WIFI_AP_STATE_DISABLED,
-    )
-    val shouldShowPassphrase by vm.shouldShowPassphrase.collectAsState(true)
-    val tetheredClientCount by vm.tetheredClientCount.collectAsState(0)
+  val ssid by vm.ssid.collectAsState("")
+  val passphrase by vm.passphrase.collectAsState("")
+  val enabledState by
+    vm.enabledState.collectAsState(SoftApEnabledState.WIFI_AP_STATE_DISABLED)
+  val shouldShowPassphrase by vm.shouldShowPassphrase.collectAsState(true)
+  val tetheredClientCount by vm.tetheredClientCount.collectAsState(0)
 
-    val noConnectedDevicesText =
-        stringResource(id = R.string.no_connected_devices)
-    val hotspotNotEnabledText =
-        stringResource(id = R.string.hotspot_not_enabled)
-    val hotspotEnableActionText =
-        stringResource(id = R.string.hotspot_enable_action)
+  val noConnectedDevicesText =
+    stringResource(id = R.string.no_connected_devices)
+  val hotspotNotEnabledText = stringResource(id = R.string.hotspot_not_enabled)
+  val hotspotEnableActionText =
+    stringResource(id = R.string.hotspot_enable_action)
 
-    val onConnectedDevicesClicked = {
-        if (enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
-            if (tetheredClientCount == 0) {
-                if (snackbarHostState.currentSnackbarData == null) {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = noConnectedDevicesText,
-                            withDismissAction = true,
-                            duration = SnackbarDuration.Short,
-                        )
-                    }
-                }
-            } else {
-                showConnectedDevices.value = true
-            }
-        } else if (snackbarHostState.currentSnackbarData == null) {
-            scope.launch {
-                val result =
-                    snackbarHostState.showSnackbar(
-                        message = hotspotNotEnabledText,
-                        actionLabel = hotspotEnableActionText,
-                        withDismissAction = true,
-                        duration = SnackbarDuration.Short,
-                    )
-                if (result == SnackbarResult.ActionPerformed) {
-                    vm.startHotspot()
-                }
-            }
+  val onConnectedDevicesClicked = {
+    if (enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+      if (tetheredClientCount == 0) {
+        if (snackbarHostState.currentSnackbarData == null) {
+          scope.launch {
+            snackbarHostState.showSnackbar(
+              message = noConnectedDevicesText,
+              withDismissAction = true,
+              duration = SnackbarDuration.Short,
+            )
+          }
         }
+      } else {
+        showConnectedDevices.value = true
+      }
+    } else if (snackbarHostState.currentSnackbarData == null) {
+      scope.launch {
+        val result =
+          snackbarHostState.showSnackbar(
+            message = hotspotNotEnabledText,
+            actionLabel = hotspotEnableActionText,
+            withDismissAction = true,
+            duration = SnackbarDuration.Short,
+          )
+        if (result == SnackbarResult.ActionPerformed) {
+          vm.startHotspot()
+        }
+      }
     }
+  }
 
-    Row(modifier = modifier) {
-        Scaffold(
-            modifier = Modifier.weight(1f),
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(text = stringResource(id = R.string.app_name))
-                    },
-                    actions = {
-                        IconButton(onClick = {
-                            navController?.navigate(Routes.BlocklistScreen)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Rounded.Block,
-                                contentDescription =
-                                    stringResource(id = R.string.blocklist),
-                            )
-                        }
-                    },
-                )
-            },
-            floatingActionButton = {
-                FloatingActionButton(onClick = {
-                    navController?.navigate(route = Routes.HotspotEditScreen)
-                }) {
-                    Icon(
-                        imageVector = Icons.Rounded.Edit,
-                        contentDescription =
-                            stringResource(id = R.string.edit_button),
-                    )
-                }
-            },
-            snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState)
-            },
-        ) { scaffoldPadding ->
-            Column(
-                modifier = Modifier.padding(scaffoldPadding).fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+  Row(modifier = modifier) {
+    Scaffold(
+      modifier = Modifier.weight(1f),
+      topBar = {
+        CenterAlignedTopAppBar(
+          title = { Text(text = stringResource(id = R.string.app_name)) },
+          actions = {
+            IconButton(
+              onClick = { navController?.navigate(Routes.BlocklistScreen) }
             ) {
-                Box(
-                    modifier = Modifier.weight(1f),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    HotspotButton(
-                        enabledState = enabledState,
-                        startHotspot = { vm.startHotspot(it) },
-                        stopHotspot = { vm.stopHotspot() },
-                    )
-                }
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Bottom,
-                ) {
-                    Text(
-                        text =
-                            ssid
-                                ?: stringResource(id = R.string.no_ssid),
-                    )
-                    Box(modifier = Modifier.padding(bottom = 16.dp)) {
-                        if (shouldShowPassphrase) {
-                            PassphraseDisplay(
-                                passphrase = passphrase,
-                            )
-                        }
-                    }
-                    if (!isBigScreen) {
-                        TextButton(onClick = onConnectedDevicesClicked) {
-                            val style =
-                                MaterialTheme.typography.bodyMedium.copy(
-                                    textDecoration = TextDecoration.Underline,
-                                )
-                            Text(
-                                stringResource(
-                                    id = R.string.connected_devices_button,
-                                    tetheredClientCount,
-                                ),
-                                style = style,
-                            )
-                        }
-                    }
-                }
+              Icon(
+                imageVector = Icons.Rounded.Block,
+                contentDescription = stringResource(id = R.string.blocklist),
+              )
             }
-            if (showConnectedDevices.value) {
-                ModalBottomSheet(
-                    onDismissRequest = {
-                        showConnectedDevices.value = false
-                    },
-                    sheetState = sheetState,
-                ) {
-                    ConnectedDevicesList()
-                }
-            }
+          },
+        )
+      },
+      floatingActionButton = {
+        FloatingActionButton(
+          onClick = {
+            navController?.navigate(route = Routes.HotspotEditScreen)
+          }
+        ) {
+          Icon(
+            imageVector = Icons.Rounded.Edit,
+            contentDescription = stringResource(id = R.string.edit_button),
+          )
         }
-        if (isBigScreen) {
-            Scaffold(modifier = Modifier.weight(1f)) {
-                val background =
-                    MaterialTheme.colorScheme.surfaceContainerLowest
-                Box(
-                    modifier =
-                        Modifier
-                            .background(background)
-                            .padding(it)
-                            .fillMaxHeight(),
-                ) {
-                    ConnectedDevicesList()
-                }
-            }
+      },
+      snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+    ) { scaffoldPadding ->
+      Column(
+        modifier = Modifier.padding(scaffoldPadding).fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+      ) {
+        Box(
+          modifier = Modifier.weight(1f),
+          contentAlignment = Alignment.Center,
+        ) {
+          HotspotButton(
+            enabledState = enabledState,
+            startHotspot = { vm.startHotspot(it) },
+            stopHotspot = { vm.stopHotspot() },
+          )
         }
+        Column(
+          horizontalAlignment = Alignment.CenterHorizontally,
+          verticalArrangement = Arrangement.Bottom,
+        ) {
+          Text(text = ssid ?: stringResource(id = R.string.no_ssid))
+          Box(modifier = Modifier.padding(bottom = 16.dp)) {
+            if (shouldShowPassphrase) {
+              PassphraseDisplay(passphrase = passphrase)
+            }
+          }
+          if (!isBigScreen) {
+            TextButton(onClick = onConnectedDevicesClicked) {
+              val style =
+                MaterialTheme.typography.bodyMedium.copy(
+                  textDecoration = TextDecoration.Underline
+                )
+              Text(
+                stringResource(
+                  id = R.string.connected_devices_button,
+                  tetheredClientCount,
+                ),
+                style = style,
+              )
+            }
+          }
+        }
+      }
+      if (showConnectedDevices.value) {
+        ModalBottomSheet(
+          onDismissRequest = { showConnectedDevices.value = false },
+          sheetState = sheetState,
+        ) {
+          ConnectedDevicesList()
+        }
+      }
     }
+    if (isBigScreen) {
+      Scaffold(modifier = Modifier.weight(1f)) {
+        val background = MaterialTheme.colorScheme.surfaceContainerLowest
+        Box(
+          modifier = Modifier.background(background).padding(it).fillMaxHeight()
+        ) {
+          ConnectedDevicesList()
+        }
+      }
+    }
+  }
 }

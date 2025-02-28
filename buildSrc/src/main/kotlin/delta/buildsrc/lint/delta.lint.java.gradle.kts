@@ -1,14 +1,12 @@
-plugins {
-    id("com.diffplug.spotless")
-}
+plugins { id("com.diffplug.spotless") }
 
 spotless {
-    java {
-        importOrder()
-        removeUnusedImports()
-        googleJavaFormat().aosp().reflowLongStrings()
-        formatAnnotations()
-        target("**/*.java")
-        targetExclude("build/**")
-    }
+  java {
+    importOrder()
+    removeUnusedImports()
+    googleJavaFormat().aosp().reflowLongStrings()
+    formatAnnotations()
+    target("**/*.java")
+    targetExclude("build/**")
+  }
 }

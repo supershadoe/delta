@@ -10,19 +10,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditScreenViewModel
-    @Inject
-    constructor(
-        private val getHotspotConfig: GetHotspotConfig,
-        private val getHotspotStatus: GetHotspotStatus,
-        private val editHotspotConfig: EditHotspotConfig,
-    ) : ViewModel() {
-        val config
-            get() = getHotspotConfig()
+@Inject
+constructor(
+  private val getHotspotConfig: GetHotspotConfig,
+  private val getHotspotStatus: GetHotspotStatus,
+  private val editHotspotConfig: EditHotspotConfig,
+) : ViewModel() {
+  val config
+    get() = getHotspotConfig()
 
-        val status
-            get() = getHotspotStatus()
+  val status
+    get() = getHotspotStatus()
 
-        fun updateConfig(config: SoftApConfiguration) {
-            editHotspotConfig(config)
-        }
-    }
+  fun updateConfig(config: SoftApConfiguration) {
+    editHotspotConfig(config)
+  }
+}

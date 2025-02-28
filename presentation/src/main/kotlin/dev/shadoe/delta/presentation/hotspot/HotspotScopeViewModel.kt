@@ -8,16 +8,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HotspotScopeViewModel
-    @Inject
-    constructor(
-        private val softApRepository: SoftApRepository,
-    ) : ViewModel() {
-        init {
-            softApRepository.onCreate(viewModelScope)
-        }
+@Inject
+constructor(private val softApRepository: SoftApRepository) : ViewModel() {
+  init {
+    softApRepository.onCreate(viewModelScope)
+  }
 
-        override fun onCleared() {
-            softApRepository.onDestroy()
-            super.onCleared()
-        }
-    }
+  override fun onCleared() {
+    softApRepository.onDestroy()
+    super.onCleared()
+  }
+}

@@ -23,57 +23,56 @@ import dev.shadoe.delta.R
 
 @Composable
 internal fun ControlButton(
-    shape: Shape,
-    interactionSource: MutableInteractionSource,
-    isEnabled: Boolean,
-    isLoading: Boolean,
-    onClick: () -> Unit,
-    content: @Composable BoxScope.() -> Unit,
+  shape: Shape,
+  interactionSource: MutableInteractionSource,
+  isEnabled: Boolean,
+  isLoading: Boolean,
+  onClick: () -> Unit,
+  content: @Composable BoxScope.() -> Unit,
 ) {
-    val color =
-        if (isLoading) {
-            MaterialTheme.colorScheme.secondaryContainer
-        } else if (isEnabled) {
-            MaterialTheme.colorScheme.primaryContainer
-        } else {
-            MaterialTheme.colorScheme.surfaceBright
-        }
-    val description =
-        if (isLoading) {
-            stringResource(R.string.control_button_loading)
-        } else if (isEnabled) {
-            stringResource(R.string.control_button_stop)
-        } else {
-            stringResource(R.string.control_button_start)
-        }
-    // TODO: remove this comment
-//    val btnSize = min(
-//        LocalConfiguration.current.screenWidthDp.dp,
-//        LocalConfiguration.current.screenHeightDp.dp
-//    ) / 2
-//    println("btnSize: $btnSize")
-    Box(
-        modifier =
-            Modifier
-                .size(
-                    min(
-                        LocalConfiguration.current.screenWidthDp.dp,
-                        LocalConfiguration.current.screenHeightDp.dp,
-                    ) / 2,
-                ).padding(16.dp)
-                .clip(shape = shape)
-                .background(color)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClick = onClick,
-                ).semantics(
-                    mergeDescendants = true,
-                    properties = {
-                        contentDescription = description
-                    },
-                ),
-        contentAlignment = Alignment.Center,
-        content = content,
-    )
+  val color =
+    if (isLoading) {
+      MaterialTheme.colorScheme.secondaryContainer
+    } else if (isEnabled) {
+      MaterialTheme.colorScheme.primaryContainer
+    } else {
+      MaterialTheme.colorScheme.surfaceBright
+    }
+  val description =
+    if (isLoading) {
+      stringResource(R.string.control_button_loading)
+    } else if (isEnabled) {
+      stringResource(R.string.control_button_stop)
+    } else {
+      stringResource(R.string.control_button_start)
+    }
+  // TODO: remove this comment
+  //    val btnSize = min(
+  //        LocalConfiguration.current.screenWidthDp.dp,
+  //        LocalConfiguration.current.screenHeightDp.dp
+  //    ) / 2
+  //    println("btnSize: $btnSize")
+  Box(
+    modifier =
+      Modifier.size(
+          min(
+            LocalConfiguration.current.screenWidthDp.dp,
+            LocalConfiguration.current.screenHeightDp.dp,
+          ) / 2
+        )
+        .padding(16.dp)
+        .clip(shape = shape)
+        .background(color)
+        .clickable(
+          interactionSource = interactionSource,
+          indication = null,
+          onClick = onClick,
+        )
+        .semantics(
+          mergeDescendants = true,
+          properties = { contentDescription = description },
+        ),
+    contentAlignment = Alignment.Center,
+    content = content,
+  )
 }

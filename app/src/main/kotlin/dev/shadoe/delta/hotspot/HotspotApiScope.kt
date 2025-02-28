@@ -6,8 +6,8 @@ import dev.shadoe.delta.presentation.hotspot.HotspotScopeViewModel
 
 @Composable
 fun HotspotApiScope(
-    vm: HotspotScopeViewModel = viewModel(),
-    content: @Composable () -> Unit,
+  vm: HotspotScopeViewModel = viewModel(),
+  content: @Composable () -> Unit,
 ) {
-    content()
+  content()
 }

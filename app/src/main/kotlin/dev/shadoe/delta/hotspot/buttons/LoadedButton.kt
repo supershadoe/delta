@@ -24,86 +24,75 @@ import androidx.graphics.shapes.star
 import dev.shadoe.delta.shapes.MorphingShape
 
 @Composable
-internal fun LoadedButton(
-    isEnabled: Boolean,
-    onClick: () -> Unit,
-) {
-    val roundedPillStar =
-        remember {
-            RoundedPolygon.pillStar(
-                width = 1f,
-                height = 1f,
-                innerRadiusRatio = 0.9f,
-                numVerticesPerRadius = 12,
-                rounding = CornerRounding(0.1f),
-            )
-        }
-    val circle = remember { RoundedPolygon.circle(numVertices = 6) }
-    val roundedStar =
-        remember {
-            RoundedPolygon.star(
-                numVerticesPerRadius = 6,
-                rounding = CornerRounding(0.1f),
-            )
-        }
+internal fun LoadedButton(isEnabled: Boolean, onClick: () -> Unit) {
+  val roundedPillStar = remember {
+    RoundedPolygon.pillStar(
+      width = 1f,
+      height = 1f,
+      innerRadiusRatio = 0.9f,
+      numVerticesPerRadius = 12,
+      rounding = CornerRounding(0.1f),
+    )
+  }
+  val circle = remember { RoundedPolygon.circle(numVertices = 6) }
+  val roundedStar = remember {
+    RoundedPolygon.star(
+      numVerticesPerRadius = 6,
+      rounding = CornerRounding(0.1f),
+    )
+  }
 
-    val morphPillStarToCircle =
-        remember { Morph(start = roundedPillStar, end = circle) }
-    val morphCircleToStar =
-        remember { Morph(start = circle, end = roundedStar) }
+  val morphPillStarToCircle = remember {
+    Morph(start = roundedPillStar, end = circle)
+  }
+  val morphCircleToStar = remember { Morph(start = circle, end = roundedStar) }
 
-    val startAnimState =
-        animateFloatAsState(
-            targetValue = 1f,
-            label = "HotspotButtonLoadedAnim",
-        )
+  val startAnimState =
+    animateFloatAsState(targetValue = 1f, label = "HotspotButtonLoadedAnim")
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()::value
-    val loadAnimFlag = remember { mutableStateOf(false) }
-    val loadAnimState =
-        animateFloatAsState(
-            targetValue = if (isPressed || loadAnimFlag.value) 1f else 0f,
-            animationSpec =
-                spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessHigh,
-                ),
-            label = "HotspotButtonClickedAnim",
-        )
+  val interactionSource = remember { MutableInteractionSource() }
+  val isPressed by interactionSource.collectIsPressedAsState()::value
+  val loadAnimFlag = remember { mutableStateOf(false) }
+  val loadAnimState =
+    animateFloatAsState(
+      targetValue = if (isPressed || loadAnimFlag.value) 1f else 0f,
+      animationSpec =
+        spring(
+          dampingRatio = Spring.DampingRatioMediumBouncy,
+          stiffness = Spring.StiffnessHigh,
+        ),
+      label = "HotspotButtonClickedAnim",
+    )
 
-    val shape =
-        if (startAnimState.value == 1f) {
-            MorphingShape(
-                morph = morphCircleToStar,
-                percentage = loadAnimState.value,
-            )
-        } else {
-            MorphingShape(
-                morph = morphPillStarToCircle,
-                percentage = startAnimState.value,
-            )
-        }
-
-    ControlButton(
-        shape = shape,
-        interactionSource = interactionSource,
-        isEnabled = isEnabled,
-        isLoading = false,
-        onClick = {
-            loadAnimFlag.value = true
-            onClick()
-        },
-    ) {
-        Icon(
-            imageVector =
-                if (isEnabled) {
-                    Icons.Rounded.WifiTethering
-                } else {
-                    Icons.Rounded.WifiTetheringOff
-                },
-            contentDescription = "Tethering",
-            modifier = Modifier.size(64.dp),
-        )
+  val shape =
+    if (startAnimState.value == 1f) {
+      MorphingShape(morph = morphCircleToStar, percentage = loadAnimState.value)
+    } else {
+      MorphingShape(
+        morph = morphPillStarToCircle,
+        percentage = startAnimState.value,
+      )
     }
+
+  ControlButton(
+    shape = shape,
+    interactionSource = interactionSource,
+    isEnabled = isEnabled,
+    isLoading = false,
+    onClick = {
+      loadAnimFlag.value = true
+      onClick()
+    },
+  ) {
+    Icon(
+      imageVector =
+        if (isEnabled) {
+          Icons.Rounded.WifiTethering
+        } else {
+          Icons.Rounded.WifiTetheringOff
+        },
+      contentDescription = "Tethering",
+      modifier = Modifier.size(64.dp),
+    )
+  }
 }

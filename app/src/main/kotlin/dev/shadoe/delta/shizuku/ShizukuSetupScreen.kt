@@ -22,27 +22,25 @@ import dev.shadoe.delta.shizuku.components.ShizukuNotRunning
 
 @Composable
 fun ShizukuSetupScreen(
-    @ShizukuStateType state: Int,
-    onRequestPermission: () -> Unit,
-    modifier: Modifier = Modifier,
+  @ShizukuStateType state: Int,
+  onRequestPermission: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Scaffold(
-        topBar = {
-            if (state != NOT_READY && state != CONNECTED) {
-                @OptIn(ExperimentalMaterial3Api::class)
-                LargeTopAppBar(
-                    title = { Text(stringResource(R.string.shizuku_setup)) },
-                )
-            }
-        },
-    ) {
-        Column(modifier = Modifier.padding(it).then(modifier)) {
-            when (state) {
-                NOT_AVAILABLE -> ShizukuNotInstalled()
-                NOT_RUNNING -> ShizukuNotRunning()
-                NOT_CONNECTED -> ShizukuNotConnected(onRequestPermission)
-                else -> {}
-            }
-        }
+  Scaffold(
+    topBar = {
+      if (state != NOT_READY && state != CONNECTED) {
+        @OptIn(ExperimentalMaterial3Api::class)
+        LargeTopAppBar(title = { Text(stringResource(R.string.shizuku_setup)) })
+      }
     }
+  ) {
+    Column(modifier = Modifier.padding(it).then(modifier)) {
+      when (state) {
+        NOT_AVAILABLE -> ShizukuNotInstalled()
+        NOT_RUNNING -> ShizukuNotRunning()
+        NOT_CONNECTED -> ShizukuNotConnected(onRequestPermission)
+        else -> {}
+      }
+    }
+  }
 }

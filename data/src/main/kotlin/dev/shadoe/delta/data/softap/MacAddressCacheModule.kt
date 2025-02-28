@@ -12,14 +12,13 @@ import java.io.File
 @Module
 @InstallIn(SingletonComponent::class)
 class MacAddressCacheModule {
-    @MacAddressCache
-    @Provides
-    fun provideMacAddressCache(
-        @ApplicationContext applicationContext: Context,
-    ) = PreferenceDataStoreFactory.create {
-        File(
-            applicationContext.filesDir,
-            "datastore/mac_address_cache.preferences_pb",
-        )
+  @MacAddressCache
+  @Provides
+  fun provideMacAddressCache(@ApplicationContext applicationContext: Context) =
+    PreferenceDataStoreFactory.create {
+      File(
+        applicationContext.filesDir,
+        "datastore/mac_address_cache.preferences_pb",
+      )
     }
 }

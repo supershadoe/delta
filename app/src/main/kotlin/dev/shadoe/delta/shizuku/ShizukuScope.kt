@@ -6,8 +6,8 @@ import dev.shadoe.delta.presentation.shizuku.ShizukuViewModel
 
 @Composable
 fun ShizukuScope(
-    vm: ShizukuViewModel = viewModel(),
-    content: @Composable (vm: ShizukuViewModel) -> Unit,
+  vm: ShizukuViewModel = viewModel(),
+  content: @Composable (vm: ShizukuViewModel) -> Unit,
 ) {
-    content(vm)
+  content(vm)
 }

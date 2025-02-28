@@ -12,13 +12,11 @@ import rikka.shizuku.SystemServiceHelper
 @Module
 @InstallIn(SingletonComponent::class)
 object TetheringModule {
-    @TetheringSystemService
-    @Provides
-    fun provideTetheringManager(): ITetheringConnector = SystemServiceHelper
-        .getSystemService("tethering")
-        ?.let { ShizukuBinderWrapper(it) }
-        ?.let { ITetheringConnector.Stub.asInterface(it) }
-        ?: throw BinderAcquisitionException(
-            "Unable to get ITetheringConnector",
-        )
+  @TetheringSystemService
+  @Provides
+  fun provideTetheringManager(): ITetheringConnector =
+    SystemServiceHelper.getSystemService("tethering")
+      ?.let { ShizukuBinderWrapper(it) }
+      ?.let { ITetheringConnector.Stub.asInterface(it) }
+      ?: throw BinderAcquisitionException("Unable to get ITetheringConnector")
 }

@@ -16,27 +16,24 @@ import dev.shadoe.delta.typography.Typography
 
 @Composable
 fun App() {
-    val colorScheme =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            dynamicDarkColorScheme(LocalContext.current)
-        } else {
-            darkColorScheme()
-        }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography.value,
-    ) {
-        ShizukuScope { vm ->
-            val state by vm.shizukuState.collectAsState()
-            if (state == ShizukuStates.CONNECTED) {
-                HotspotNavGraph()
-            } else {
-                ShizukuSetupScreen(
-                    state = state,
-                    onRequestPermission = { vm.requestPermission() },
-                )
-            }
-        }
+  val colorScheme =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+      dynamicDarkColorScheme(LocalContext.current)
+    } else {
+      darkColorScheme()
     }
+
+  MaterialTheme(colorScheme = colorScheme, typography = Typography.value) {
+    ShizukuScope { vm ->
+      val state by vm.shizukuState.collectAsState()
+      if (state == ShizukuStates.CONNECTED) {
+        HotspotNavGraph()
+      } else {
+        ShizukuSetupScreen(
+          state = state,
+          onRequestPermission = { vm.requestPermission() },
+        )
+      }
+    }
+  }
 }

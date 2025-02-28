@@ -12,11 +12,11 @@ import rikka.shizuku.SystemServiceHelper
 @Module
 @InstallIn(SingletonComponent::class)
 object WifiModule {
-    @WifiSystemService
-    @Provides
-    fun provideWifiManager(): IWifiManager = SystemServiceHelper
-        .getSystemService("wifi")
-        ?.let { ShizukuBinderWrapper(it) }
-        ?.let { IWifiManager.Stub.asInterface(it) }
-        ?: throw BinderAcquisitionException("Unable to get IWifiManager")
+  @WifiSystemService
+  @Provides
+  fun provideWifiManager(): IWifiManager =
+    SystemServiceHelper.getSystemService("wifi")
+      ?.let { ShizukuBinderWrapper(it) }
+      ?.let { IWifiManager.Stub.asInterface(it) }
+      ?: throw BinderAcquisitionException("Unable to get IWifiManager")
 }

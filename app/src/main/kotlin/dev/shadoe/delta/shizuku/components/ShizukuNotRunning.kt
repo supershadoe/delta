@@ -11,19 +11,21 @@ import dev.shadoe.delta.presentation.shizuku.ShizukuViewModel
 
 @Composable
 internal fun ShizukuNotRunning() {
-    val context = LocalContext.current
-    Column {
-        Text(stringResource(R.string.shizuku_not_running))
-        Button(onClick = {
-            with(context) {
-                startActivity(
-                    packageManager.getLaunchIntentForPackage(
-                        ShizukuViewModel.SHIZUKU_APP_ID,
-                    ),
-                )
-            }
-        }) {
-            Text(text = stringResource(R.string.shizuku_start))
+  val context = LocalContext.current
+  Column {
+    Text(stringResource(R.string.shizuku_not_running))
+    Button(
+      onClick = {
+        with(context) {
+          startActivity(
+            packageManager.getLaunchIntentForPackage(
+              ShizukuViewModel.SHIZUKU_APP_ID
+            )
+          )
         }
+      }
+    ) {
+      Text(text = stringResource(R.string.shizuku_start))
     }
+  }
 }

@@ -24,57 +24,55 @@ import dev.shadoe.delta.R
 @Preview
 @Composable
 internal fun PassphraseDisplay(
-    @PreviewParameter(provider = PassphraseProvider::class) passphrase: String?,
+  @PreviewParameter(provider = PassphraseProvider::class) passphrase: String?
 ) {
-    val isPassphraseShown = remember { mutableStateOf(false) }
+  val isPassphraseShown = remember { mutableStateOf(false) }
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(modifier = Modifier.weight(1f)) {}
-        Text(
-            modifier = Modifier.weight(2f),
-            text =
-                if (passphrase == null) {
-                    stringResource(R.string.no_passphrase)
-                } else if (isPassphraseShown.value) {
-                    passphrase
-                } else {
-                    stringResource(R.string.passphrase_hidden)
-                },
-            style =
-                MaterialTheme.typography.bodyMedium.copy(
-                    fontStyle =
-                        if (isPassphraseShown.value && passphrase != null) {
-                            FontStyle.Normal
-                        } else {
-                            FontStyle.Italic
-                        },
-                ),
-        )
-        IconButton(
-            onClick = {
-                isPassphraseShown.value = !isPassphraseShown.value
-            },
-        ) {
-            Icon(
-                imageVector =
-                    if (isPassphraseShown.value) {
-                        Icons.Rounded.VisibilityOff
-                    } else {
-                        Icons.Rounded.Visibility
-                    },
-                contentDescription =
-                    if (isPassphraseShown.value) {
-                        stringResource(R.string.passphrase_hide)
-                    } else {
-                        stringResource(R.string.passphrase_show)
-                    },
-            )
-        }
-        Box(modifier = Modifier.weight(1f)) {}
+  Row(verticalAlignment = Alignment.CenterVertically) {
+    Box(modifier = Modifier.weight(1f)) {}
+    Text(
+      modifier = Modifier.weight(2f),
+      text =
+        if (passphrase == null) {
+          stringResource(R.string.no_passphrase)
+        } else if (isPassphraseShown.value) {
+          passphrase
+        } else {
+          stringResource(R.string.passphrase_hidden)
+        },
+      style =
+        MaterialTheme.typography.bodyMedium.copy(
+          fontStyle =
+            if (isPassphraseShown.value && passphrase != null) {
+              FontStyle.Normal
+            } else {
+              FontStyle.Italic
+            }
+        ),
+    )
+    IconButton(
+      onClick = { isPassphraseShown.value = !isPassphraseShown.value }
+    ) {
+      Icon(
+        imageVector =
+          if (isPassphraseShown.value) {
+            Icons.Rounded.VisibilityOff
+          } else {
+            Icons.Rounded.Visibility
+          },
+        contentDescription =
+          if (isPassphraseShown.value) {
+            stringResource(R.string.passphrase_hide)
+          } else {
+            stringResource(R.string.passphrase_show)
+          },
+      )
     }
+    Box(modifier = Modifier.weight(1f)) {}
+  }
 }
 
 private class PassphraseProvider : PreviewParameterProvider<String?> {
-    override val values: Sequence<String?>
-        get() = sequenceOf("somepass123", null)
+  override val values: Sequence<String?>
+    get() = sequenceOf("somepass123", null)
 }

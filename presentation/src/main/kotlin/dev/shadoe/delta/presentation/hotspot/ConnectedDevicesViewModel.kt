@@ -9,13 +9,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConnectedDevicesViewModel
-    @Inject
-    constructor(
-        private val viewConnectedClients: ViewConnectedClients,
-        private val useBlockList: UseBlockList,
-    ) : ViewModel() {
-        val connectedClients
-            get() = viewConnectedClients()
+@Inject
+constructor(
+  private val viewConnectedClients: ViewConnectedClients,
+  private val useBlockList: UseBlockList,
+) : ViewModel() {
+  val connectedClients
+    get() = viewConnectedClients()
 
-        fun blockDevice(device: ACLDevice) = useBlockList.blockClient(device)
-    }
+  fun blockDevice(device: ACLDevice) = useBlockList.blockClient(device)
+}

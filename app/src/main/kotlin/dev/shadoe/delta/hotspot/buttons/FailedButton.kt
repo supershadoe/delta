@@ -17,17 +17,17 @@ import dev.shadoe.delta.shapes.PolygonShape
 
 @Composable
 internal fun FailedButton(forceRestart: () -> Unit) {
-    ControlButton(
-        shape = PolygonShape(RoundedPolygon.circle(numVertices = 6)),
-        interactionSource = remember { MutableInteractionSource() },
-        isEnabled = false,
-        isLoading = true,
-        onClick = forceRestart,
-    ) {
-        Icon(
-            imageVector = Icons.Rounded.WifiTetheringError,
-            contentDescription = stringResource(R.string.failed_button),
-            modifier = Modifier.size(64.dp),
-        )
-    }
+  ControlButton(
+    shape = PolygonShape(RoundedPolygon.circle(numVertices = 6)),
+    interactionSource = remember { MutableInteractionSource() },
+    isEnabled = false,
+    isLoading = true,
+    onClick = forceRestart,
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.WifiTetheringError,
+      contentDescription = stringResource(R.string.failed_button),
+      modifier = Modifier.size(64.dp),
+    )
+  }
 }

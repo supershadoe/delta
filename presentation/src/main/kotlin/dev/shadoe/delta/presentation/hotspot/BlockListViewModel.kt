@@ -8,11 +8,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BlockListViewModel
-    @Inject
-    constructor(
-        private val useBlockList: UseBlockList,
-    ) : ViewModel() {
-        val blockedClients = useBlockList.getBlockedClientsFlow()
+@Inject
+constructor(private val useBlockList: UseBlockList) : ViewModel() {
+  val blockedClients = useBlockList.getBlockedClientsFlow()
 
-        fun unblockDevice(device: ACLDevice) = useBlockList.unblockClient(device)
-    }
+  fun unblockDevice(device: ACLDevice) = useBlockList.unblockClient(device)
+}

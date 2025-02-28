@@ -9,12 +9,10 @@ import dev.shadoe.delta.R
 
 @Composable
 internal fun ShizukuNotConnected(onRequestPermission: () -> Unit) {
-    Column {
-        Text(
-            stringResource(R.string.shizuku_not_connected_desc),
-        )
-        Button(onClick = { onRequestPermission() }) {
-            Text(text = stringResource(R.string.shizuku_grant_access))
-        }
+  Column {
+    Text(stringResource(R.string.shizuku_not_connected_desc))
+    Button(onClick = { onRequestPermission() }) {
+      Text(text = stringResource(R.string.shizuku_grant_access))
     }
+  }
 }

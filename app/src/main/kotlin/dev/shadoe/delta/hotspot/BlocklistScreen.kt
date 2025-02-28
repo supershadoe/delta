@@ -35,81 +35,73 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun BlocklistScreen(
-    modifier: Modifier = Modifier,
-    vm: BlockListViewModel = viewModel(),
+  modifier: Modifier = Modifier,
+  vm: BlockListViewModel = viewModel(),
 ) {
-    val navController = LocalNavController.current
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
+  val navController = LocalNavController.current
+  val scope = rememberCoroutineScope()
+  val snackbarHostState = remember { SnackbarHostState() }
 
-    val blockedClients by vm.blockedClients.collectAsState(emptyList())
+  val blockedClients by vm.blockedClients.collectAsState(emptyList())
 
-    val blocklistUnblockedText =
-        stringResource(R.string.blocklist_unblocked)
-    val noClientHostnameText =
-        stringResource(R.string.no_client_hostname)
+  val blocklistUnblockedText = stringResource(R.string.blocklist_unblocked)
+  val noClientHostnameText = stringResource(R.string.no_client_hostname)
 
-    Scaffold(
-        topBar = {
-            @OptIn(ExperimentalMaterial3Api::class)
-            LargeTopAppBar(
-                title = { Text(text = stringResource(R.string.blocklist)) },
-                navigationIcon = {
-                    IconButton(onClick = { navController?.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription =
-                                stringResource(
-                                    R.string.back_button,
-                                ),
-                        )
-                    }
-                },
+  Scaffold(
+    topBar = {
+      @OptIn(ExperimentalMaterial3Api::class)
+      LargeTopAppBar(
+        title = { Text(text = stringResource(R.string.blocklist)) },
+        navigationIcon = {
+          IconButton(onClick = { navController?.navigateUp() }) {
+            Icon(
+              imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+              contentDescription = stringResource(R.string.back_button),
             )
+          }
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-    ) {
-        if (blockedClients.isEmpty()) {
-            Box(
-                modifier = Modifier.padding(it).fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.blocklist_none_blocked),
-                    modifier = Modifier.padding(16.dp),
-                )
-            }
-        }
-        LazyColumn(
-            modifier =
-                Modifier
-                    .padding(it)
-                    .then(modifier),
-        ) {
-            items(blockedClients.size) {
-                val d = blockedClients[it]
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(text = d.hostname ?: noClientHostnameText)
-                        Text(text = d.macAddress.toString())
-                    }
-                    Button(onClick = {
-                        vm.unblockDevice(blockedClients[it])
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = blocklistUnblockedText,
-                                duration = SnackbarDuration.Short,
-                                withDismissAction = true,
-                            )
-                        }
-                    }) {
-                        Text(text = stringResource(R.string.unblock_button))
-                    }
-                }
-            }
-        }
+      )
+    },
+    snackbarHost = { SnackbarHost(snackbarHostState) },
+  ) {
+    if (blockedClients.isEmpty()) {
+      Box(
+        modifier = Modifier.padding(it).fillMaxSize(),
+        contentAlignment = Alignment.Center,
+      ) {
+        Text(
+          text = stringResource(R.string.blocklist_none_blocked),
+          modifier = Modifier.padding(16.dp),
+        )
+      }
     }
+    LazyColumn(modifier = Modifier.padding(it).then(modifier)) {
+      items(blockedClients.size) {
+        val d = blockedClients[it]
+        Row(
+          modifier = Modifier.padding(16.dp),
+          verticalAlignment = Alignment.CenterVertically,
+        ) {
+          Column(modifier = Modifier.weight(1f)) {
+            Text(text = d.hostname ?: noClientHostnameText)
+            Text(text = d.macAddress.toString())
+          }
+          Button(
+            onClick = {
+              vm.unblockDevice(blockedClients[it])
+              scope.launch {
+                snackbarHostState.showSnackbar(
+                  message = blocklistUnblockedText,
+                  duration = SnackbarDuration.Short,
+                  withDismissAction = true,
+                )
+              }
+            }
+          ) {
+            Text(text = stringResource(R.string.unblock_button))
+          }
+        }
+      }
+    }
+  }
 }

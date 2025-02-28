@@ -22,54 +22,52 @@ import dev.shadoe.delta.R
 
 @Composable
 internal fun ShizukuNotInstalled() {
-    val context = LocalContext.current
-    Column {
-        Text(stringResource(R.string.shizuku_not_installed))
-        Button(onClick = {
-            context.startActivity(
-                Intent(
-                    ACTION_VIEW,
-                    "https://github.com/RikkaApps/Shizuku/releases".toUri(),
-                ),
-            )
-        }) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-                    contentDescription =
-                        stringResource(
-                            R.string.open_link_icon,
-                        ),
-                )
-                Text(
-                    text = stringResource(R.string.github),
-                    modifier = Modifier.padding(start = 8.dp),
-                )
-            }
-        }
-        Button(onClick = {
-            context.startActivity(
-                Intent(ACTION_VIEW).apply {
-                    data =
-                        "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api"
-                            .toUri()
-                    `package` = "com.android.vending"
-                },
-            )
-        }) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = Icons.Rounded.InstallMobile,
-                    contentDescription =
-                        stringResource(
-                            R.string.install_from_icon,
-                        ),
-                )
-                Text(
-                    text = stringResource(R.string.play_store),
-                    modifier = Modifier.padding(start = 8.dp),
-                )
-            }
-        }
+  val context = LocalContext.current
+  Column {
+    Text(stringResource(R.string.shizuku_not_installed))
+    Button(
+      onClick = {
+        context.startActivity(
+          Intent(
+            ACTION_VIEW,
+            "https://github.com/RikkaApps/Shizuku/releases".toUri(),
+          )
+        )
+      }
+    ) {
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+          imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
+          contentDescription = stringResource(R.string.open_link_icon),
+        )
+        Text(
+          text = stringResource(R.string.github),
+          modifier = Modifier.padding(start = 8.dp),
+        )
+      }
     }
+    Button(
+      onClick = {
+        context.startActivity(
+          Intent(ACTION_VIEW).apply {
+            data =
+              "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api"
+                .toUri()
+            `package` = "com.android.vending"
+          }
+        )
+      }
+    ) {
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+          imageVector = Icons.Rounded.InstallMobile,
+          contentDescription = stringResource(R.string.install_from_icon),
+        )
+        Text(
+          text = stringResource(R.string.play_store),
+          modifier = Modifier.padding(start = 8.dp),
+        )
+      }
+    }
+  }
 }

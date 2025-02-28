@@ -24,32 +24,28 @@ val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
 
 @Composable
 fun HotspotNavGraph() {
-    val navController = rememberNavController()
-    HotspotApiScope {
-        CompositionLocalProvider(LocalNavController provides navController) {
-            NavHost(
-                navController = LocalNavController.current!!,
-                startDestination = Routes.HotspotScreen,
-                enterTransition = {
-                    scaleIn() + fadeIn()
-                },
-                exitTransition = {
-                    scaleOut() + fadeOut()
-                },
-            ) {
-                composable<Routes.HotspotScreen> {
-                    val vm = hiltViewModel<HotspotControlViewModel>()
-                    HotspotScreen(vm = vm)
-                }
-                composable<Routes.HotspotEditScreen> {
-                    val vm = hiltViewModel<EditScreenViewModel>()
-                    HotspotEditScreen(vm = vm)
-                }
-                composable<Routes.BlocklistScreen> {
-                    val vm = hiltViewModel<BlockListViewModel>()
-                    BlocklistScreen(vm = vm)
-                }
-            }
+  val navController = rememberNavController()
+  HotspotApiScope {
+    CompositionLocalProvider(LocalNavController provides navController) {
+      NavHost(
+        navController = LocalNavController.current!!,
+        startDestination = Routes.HotspotScreen,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { scaleOut() + fadeOut() },
+      ) {
+        composable<Routes.HotspotScreen> {
+          val vm = hiltViewModel<HotspotControlViewModel>()
+          HotspotScreen(vm = vm)
         }
+        composable<Routes.HotspotEditScreen> {
+          val vm = hiltViewModel<EditScreenViewModel>()
+          HotspotEditScreen(vm = vm)
+        }
+        composable<Routes.BlocklistScreen> {
+          val vm = hiltViewModel<BlockListViewModel>()
+          BlocklistScreen(vm = vm)
+        }
+      }
     }
+  }
 }
