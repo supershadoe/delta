@@ -33,5 +33,5 @@ ktlint_function_signature_body_expression_wrapping = default
 
 # compose-rules ruleset config
 # noinspection EditorConfigKeyCorrectness
-compose_allowed_composition_locals = LocalNavController,LocalHotspotApiInstance
+compose_allowed_composition_locals = LocalNavController
 
