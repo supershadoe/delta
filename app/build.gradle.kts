@@ -1,4 +1,5 @@
 import delta.buildsrc.readSigningConfig
+import delta.buildsrc.versionConfig
 
 plugins {
   alias(libs.plugins.android.application)
@@ -7,6 +8,7 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.ksp)
   alias(libs.plugins.hilt)
+  id("delta.app.version")
   id("delta.lint.kotlin")
   id("delta.lint.kts")
 }
@@ -19,8 +21,8 @@ android {
     applicationId = "dev.shadoe.delta"
     minSdk = 30
     targetSdk = 35
-    versionCode = 8
-    versionName = "0.2.3"
+    versionCode = versionConfig.versionCode
+    versionName = versionConfig.versionName
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
