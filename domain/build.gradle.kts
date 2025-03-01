@@ -55,5 +55,6 @@ dependencies {
   testImplementation(libs.kotlin.test.junit)
   testImplementation(libs.mockito.core)
   testImplementation(libs.mockito.kotlin)
+  testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(project(path = ":system-api-stubs"))
 }
