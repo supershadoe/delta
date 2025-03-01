@@ -53,10 +53,23 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app
-      - name: Calculate checksum
+      - name: Calculate checksum and generate release notes
         run: |
-          sha256sum app-release.apk | xargs -I "{}" echo "SHA_OUT='{}'" |\
-            tee $GITHUB_ENV
+          cat <<EOF >> release_notes.txt
+          ### Message
+
+          To be filled.
+
+          ### Checksum
+
+          ```sh
+          $ sha256sum app-release.apk
+          $(sha256sum app-release.apk)
+          ```
+
+          Check the checksum after downloading the APK using `sha256sum` to
+          ensure integrity of the file.
+          EOF
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
@@ -67,16 +80,7 @@ jobs:
           files: |
             app-release.apk
           discussion_category_name: Announcements
-          body: |
-            ### Message
-            To be filled.
-
-            ### Checksum
-            ```sh
-            ${{ env.SHA_OUT }}
-            ```
-            Check the checksum after downloading the APK using `sha256sum` to
-            ensure integrity of the file.
+          body_path: release_notes.txt
   post-release-job:
     name: Post-release job
     runs-on: ubuntu-latest
