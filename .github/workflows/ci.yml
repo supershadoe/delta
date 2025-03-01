@@ -35,6 +35,8 @@ jobs:
           echo $SIGN_BASE64 | base64 -d > app/sign.json
       - name: Lint check
         run: ./gradlew spotlessCheck
+      - name: Run unit tests
+        run: ./gradlew testReleaseUnitTest
       - name: Build app
         run: ./gradlew assembleDefaultKeySignedRelease
       - name: Upload APK
