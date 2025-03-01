@@ -34,9 +34,11 @@ jobs:
           git tag $version
           git push --tags
   build:
-    name: Prepare for release
+    name: Build app
     uses: ./.github/workflows/ci.yml
     needs: [pre-release-job]
+    permissions:
+      contents: write
   create-release:
     name: Create release
     runs-on: ubuntu-latest
