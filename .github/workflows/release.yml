@@ -32,6 +32,7 @@ jobs:
         run: |
           git commit -am "Set versionName and prepare for release"
           git tag $version
+          git push
           git push --tags
   build:
     name: Build app
