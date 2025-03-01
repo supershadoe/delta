@@ -40,4 +40,7 @@ dependencies {
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.hilt.android)
   ksp(libs.hilt.compiler)
+  testImplementation(libs.kotlin.test.junit)
+  testImplementation(libs.mockito.core)
+  testImplementation(libs.mockito.kotlin)
 }

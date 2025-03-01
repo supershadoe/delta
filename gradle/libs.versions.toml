@@ -11,10 +11,11 @@ graphics-shapes = "1.0.1"
 hiddenapibypass = "4.3"
 hilt = "2.51.1"
 hilt-nav-compose = "1.2.0"
-junit = "4.13.2"
 junitx = "1.2.1"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.26"
+mockito-core = "5.15.2"
+mockito-kotlin = "5.4.0"
 navigation-compose = "2.8.8"
 refine = "4.4.0"
 serialization-json = "1.7.3"
@@ -64,7 +65,9 @@ spotless = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", v
 viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 # Unit tests
-junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-core" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
 
 # Instrumented tests
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
