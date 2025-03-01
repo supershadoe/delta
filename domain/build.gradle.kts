@@ -7,6 +7,8 @@ plugins {
   id("delta.lint.kts")
 }
 
+val mockitoAgent = configurations.create("mockitoAgent")
+
 android {
   namespace = "dev.shadoe.delta.domain"
   compileSdk = 35
@@ -32,6 +34,15 @@ android {
   }
 
   kotlinOptions { jvmTarget = "21" }
+
+  @Suppress("UnstableApiUsage")
+  testOptions {
+    unitTests {
+      all {
+        it.jvmArgs("-javaagent:${mockitoAgent.asPath}")
+      }
+    }
+  }
 }
 
 dependencies {
@@ -40,7 +51,9 @@ dependencies {
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.hilt.android)
   ksp(libs.hilt.compiler)
+  mockitoAgent(libs.mockito.core) { isTransitive = false }
   testImplementation(libs.kotlin.test.junit)
   testImplementation(libs.mockito.core)
   testImplementation(libs.mockito.kotlin)
+  testImplementation(project(path = ":system-api-stubs"))
 }
