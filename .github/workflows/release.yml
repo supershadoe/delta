@@ -39,6 +39,7 @@ jobs:
     needs: [pre-release-job]
     permissions:
       contents: write
+    secrets: inherit
   create-release:
     name: Create release
     runs-on: ubuntu-latest
