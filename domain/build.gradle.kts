@@ -37,11 +37,7 @@ android {
 
   @Suppress("UnstableApiUsage")
   testOptions {
-    unitTests {
-      all {
-        it.jvmArgs("-javaagent:${mockitoAgent.asPath}")
-      }
-    }
+    unitTests { all { it.jvmArgs("-javaagent:${mockitoAgent.asPath}") } }
   }
 }
 
