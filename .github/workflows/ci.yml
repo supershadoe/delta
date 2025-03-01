@@ -1,10 +1,9 @@
 name: delta-ci
 on:
+  workflow_call:
   push:
     branches:
       - main
-    tags:
-      - v*
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -36,7 +35,7 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testReleaseUnitTest
       - name: Generate diff and push to main
-        uses: |
+        run: |
           if ! git diff --exit-code; then
             git commit -am "Auto-formatted changes"
             git push
@@ -80,39 +79,3 @@ jobs:
           path: app-release.apk
           retention-days: 7
           if-no-files-found: error
-  create-release:
-    name: Create release
-    runs-on: ubuntu-latest
-    needs: [build-apk]
-    permissions:
-      contents: write
-      discussions: write
-    if: startsWith(github.ref, 'refs/tags/') && github.repository == 'supershadoe/delta'
-    steps:
-      - name: Download APK
-        uses: actions/download-artifact@v4
-        with:
-          name: app
-      - name: Calculate checksum
-        run: |
-          sha256sum app-release.apk | xargs -I "{}" echo "SHA_OUT='{}'" |\
-            tee $GITHUB_ENV
-      - name: Create release
-        uses: softprops/action-gh-release@v2
-        with:
-          generate_release_notes: true
-          draft: true
-          prerelease: false
-          files: |
-            app-release.apk
-          discussion_category_name: Announcements
-          body: |
-            ### Message
-            To be filled.
-
-            ### Checksum
-            ```sh
-            ${{ env.SHA_OUT }}
-            ```
-            Check the checksum after downloading the APK using `sha256sum` to
-            ensure integrity of the file.

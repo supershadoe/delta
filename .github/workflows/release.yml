@@ -1,0 +1,114 @@
+name: delta-ci-release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Current version in semver format (ex: v1.2.1)'
+        required: true
+concurrency:
+  group: release
+  cancel-in-progress: true
+jobs:
+  pre-release-job:
+    name: Pre-release job
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup git
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Modify versionName
+        env:
+          version: ${{ inputs.version }}
+        run: |
+          sed -i "s/versionName = \"\S\+\"/versionName = \"$version\"/" \
+            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
+      - name: Generate diff and push to main
+        run: |
+          git commit -am "Set versionName and prepare for release"
+          git tag $version
+          git push --tags
+  build:
+    name: Prepare for release
+    uses: ./.github/workflows/ci.yml
+    needs: [pre-release-job]
+  create-release:
+    name: Create release
+    runs-on: ubuntu-latest
+    needs: [build]
+    permissions:
+      contents: write
+      discussions: write
+    steps:
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: app
+      - name: Calculate checksum
+        run: |
+          sha256sum app-release.apk | xargs -I "{}" echo "SHA_OUT='{}'" |\
+            tee $GITHUB_ENV
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          draft: true
+          prerelease: false
+          tag_name: ${{ inputs.version }}
+          files: |
+            app-release.apk
+          discussion_category_name: Announcements
+          body: |
+            ### Message
+            To be filled.
+
+            ### Checksum
+            ```sh
+            ${{ env.SHA_OUT }}
+            ```
+            Check the checksum after downloading the APK using `sha256sum` to
+            ensure integrity of the file.
+  post-release-job:
+    name: Post-release job
+    runs-on: ubuntu-latest
+    needs: [create-release]
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+      - name: Setup git
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Get current app versionCode
+        run: |
+          echo "VERSION=$((1 + $(./gradlew :app:getAppVersionCode --quiet)))" \
+            >> $GITHUB_ENV
+      - name: Modify versionCode and versionName
+        run: |
+          export versionCode=${{ env.VERSION }}
+          export versionName=dev-${{ env.VERSION }}
+          sed -i "s/versionCode = [0-9]\+/versionCode = $versionCode/" \
+            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
+          sed -i "s/versionName = \"\S\+\"/versionName = \"$versionName\"/" \
+            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
+      - name: Push to main
+        run: |
+          git commit -am "Switch to a dev version name"
+          git push
