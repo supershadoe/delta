@@ -1,7 +1,7 @@
 package dev.shadoe.delta.domain
 
-import android.net.MacAddress
 import dev.shadoe.delta.api.ACLDevice
+import dev.shadoe.delta.api.MacAddress
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
@@ -9,7 +9,7 @@ import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.api.SoftApStatus
 
 object Stubs {
-  val softApConfiguration =
+  fun getSoftApConfiguration() =
     SoftApConfiguration(
       ssid = "wifi",
       passphrase = "passphrase123",
@@ -21,15 +21,15 @@ object Stubs {
         listOf(
           ACLDevice(
             hostname = "device 1",
-            macAddress = MacAddress.fromString("ff:aa:ff:bb:ff:cc"),
+            macAddress = MacAddress("ff:aa:ff:bb:ff:cc"),
           ),
           ACLDevice(
             hostname = null,
-            macAddress = MacAddress.fromString("ff:aa:ff:bb:ff:dd"),
+            macAddress = MacAddress("ff:aa:ff:bb:ff:dd"),
           ),
           ACLDevice(
             hostname = "device 3",
-            macAddress = MacAddress.fromString("ff:aa:ff:bb:ff:ee"),
+            macAddress = MacAddress("ff:aa:ff:bb:ff:ee"),
           ),
         ),
       allowedClients = emptyList(),
@@ -37,7 +37,7 @@ object Stubs {
       maxClientLimit = 32,
     )
 
-  val softApStatus =
+  fun getSoftApStatus() =
     SoftApStatus(
       enabledState = SoftApEnabledState.WIFI_AP_STATE_DISABLED,
       tetheredClients = emptyList(),
