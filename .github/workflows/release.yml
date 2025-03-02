@@ -27,7 +27,6 @@ jobs:
         run: bash scripts/update_ver.sh | tee "$GITHUB_ENV" "$GITHUB_OUTPUT"
       - name: Push to main
         run: |
-          git commit -am "Tag latest commit and prepare for release"
           git tag ${{ env.versionName }}
           git push --tags
   build:
