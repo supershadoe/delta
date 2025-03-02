@@ -24,7 +24,7 @@ jobs:
             "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Determine app version
         id: determine-version
-        run: bash scripts/update_ver.sh | tee "$GITHUB_ENV" "$GITHUB_OUTPUT"
+        run: bash scripts/update_ver.sh pre | tee "$GITHUB_ENV" "$GITHUB_OUTPUT"
       - name: Push to main
         run: |
           git tag ${{ env.versionName }}
@@ -50,7 +50,7 @@ jobs:
           name: app
       - name: Calculate checksum and generate release notes
         run: |
-          cat <<EOF >> release_notes.txt
+          cat << "EOF" >> release_notes.txt
           ### Message
 
           To be filled.
@@ -59,7 +59,11 @@ jobs:
 
           ```sh
           $ sha256sum app-release.apk
-          $(sha256sum app-release.apk)
+          EOF
+
+          sha256sum app-release.apk >> release_notes.txt
+
+          cat << "EOF" >> release_notes.txt
           ```
 
           Check the checksum after downloading the APK using `sha256sum` to
@@ -91,7 +95,7 @@ jobs:
           git config --local user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Modify versionCode and versionName
-        run: bash scripts/update_ver.sh
+        run: bash scripts/update_ver.sh post
       - name: Push to main
         run: |
           git commit -am "Switch to a dev version name"
