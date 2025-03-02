@@ -1,7 +1,6 @@
 package dev.shadoe.delta.api
 
 import android.net.LinkAddress
-import android.net.MacAddress
 
 data class TetheredClient(
   val macAddress: MacAddress,

@@ -5,12 +5,18 @@ import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
 import dev.shadoe.delta.api.ACLDevice
+import dev.shadoe.delta.api.MacAddress
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
 
 internal object Extensions {
   infix fun Int.hasBit(other: Int): Boolean = (this and other) == other
+
+  fun MacAddress.toOriginalClass() =
+    android.net.MacAddress.fromString(macAddress)
+
+  fun android.net.MacAddress.toBridgeClass() = MacAddress(toString())
 
   fun SoftApConfigurationHidden.toBridgeClass(state: InternalState) =
     SoftApConfiguration(
@@ -22,7 +28,7 @@ internal object Extensions {
         },
       passphrase = passphrase ?: state.fallbackPassphrase,
       securityType = @SuppressLint("WrongConstant") securityType,
-      bssid = bssid,
+      bssid = bssid?.toBridgeClass(),
       isHidden = isHiddenSsid,
       speedType =
         bands.max().run {
@@ -46,11 +52,17 @@ internal object Extensions {
         },
       blockedDevices =
         blockedClientList.map {
-          ACLDevice(hostname = state.macAddressCache[it], macAddress = it)
+          ACLDevice(
+            hostname = state.macAddressCache[it],
+            macAddress = it.toBridgeClass(),
+          )
         },
       allowedClients =
         allowedClientList.map {
-          ACLDevice(hostname = state.macAddressCache[it], macAddress = it)
+          ACLDevice(
+            hostname = state.macAddressCache[it],
+            macAddress = it.toBridgeClass(),
+          )
         },
       isAutoShutdownEnabled = isAutoShutdownEnabled,
       maxClientLimit = maxNumberOfClients,
@@ -74,7 +86,7 @@ internal object Extensions {
 
         setPassphrase(passphrase, @SuppressLint("WrongConstant") securityType)
 
-        setBssid(bssid)
+        setBssid(bssid?.toOriginalClass())
         setHiddenSsid(isHidden)
 
         val band2To5 = SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ
@@ -98,8 +110,12 @@ internal object Extensions {
           else -> {}
         }
 
-        setBlockedClientList(blockedDevices.map { it.macAddress })
-        setAllowedClientList(allowedClients.map { it.macAddress })
+        setBlockedClientList(
+          blockedDevices.map { it.macAddress.toOriginalClass() }
+        )
+        setAllowedClientList(
+          allowedClients.map { it.macAddress.toOriginalClass() }
+        )
         setClientControlByUserEnabled(false)
         setAutoShutdownEnabled(isAutoShutdownEnabled)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

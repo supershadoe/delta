@@ -1,7 +1,5 @@
 package dev.shadoe.delta.api
 
-import android.net.MacAddress
-
 data class SoftApConfiguration(
   val ssid: String?,
   val passphrase: String,
