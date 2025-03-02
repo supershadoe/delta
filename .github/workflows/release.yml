@@ -1,10 +1,8 @@
 name: delta-ci-release
 on:
+  schedule:
+    - cron: '0 11 * * 5'
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Current version in semver format (ex: v1.2.1)'
-        required: true
 concurrency:
   group: release
   cancel-in-progress: true
@@ -14,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      version: ${{ steps.determine-version.outputs.versionName }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -22,17 +22,20 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
-      - name: Modify versionName
-        env:
-          version: ${{ inputs.version }}
+      - name: Determine app version
+        id: determine-version
         run: |
-          sed -i "s/versionName = \"\S\+\"/versionName = \"$version\"/" \
-            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
-      - name: Generate diff and push to main
+          versionName=$(grep "versionName =" \
+            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt |\
+            cut -d= -f2 |\
+            cut -d\" -f2 |\
+            xargs
+          )
+          echo "versionName=$versionName" >> "$GITHUB_OUTPUT"
+      - name: Push to main
         run: |
-          git commit -am "Set versionName and prepare for release"
-          git tag $version
-          git push
+          git commit -am "Tag latest commit and prepare for release"
+          git tag ${{ env.versionName }}
           git push --tags
   build:
     name: Build app
@@ -76,7 +79,7 @@ jobs:
           generate_release_notes: true
           draft: true
           prerelease: false
-          tag_name: ${{ inputs.version }}
+          tag_name: ${{ needs.pre-release-job.outputs.version }}
           files: |
             app-release.apk
           discussion_category_name: Announcements
@@ -90,32 +93,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-      - name: Setup gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Setup git
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
-      - name: Get current app versionCode
-        run: |
-          echo "VERSION=$((1 + $(./gradlew :app:getAppVersionCode --quiet)))" \
-            >> $GITHUB_ENV
       - name: Modify versionCode and versionName
-        run: |
-          export versionCode=${{ env.VERSION }}
-          export versionName=dev-${{ env.VERSION }}
-          sed -i "s/versionCode = [0-9]\+/versionCode = $versionCode/" \
-            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
-          sed -i "s/versionName = \"\S\+\"/versionName = \"$versionName\"/" \
-            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
+        run: bash scripts/update_ver.sh
       - name: Push to main
         run: |
           git commit -am "Switch to a dev version name"
