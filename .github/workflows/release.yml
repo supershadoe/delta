@@ -31,7 +31,7 @@ jobs:
             cut -d\" -f2 |\
             xargs
           )
-          echo "versionName=$versionName" >> "$GITHUB_OUTPUT"
+          echo "versionName=$versionName" | tee "$GITHUB_ENV" "$GITHUB_OUTPUT"
       - name: Push to main
         run: |
           git commit -am "Tag latest commit and prepare for release"
