@@ -24,14 +24,7 @@ jobs:
             "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Determine app version
         id: determine-version
-        run: |
-          versionName=$(grep "versionName =" \
-            buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt |\
-            cut -d= -f2 |\
-            cut -d\" -f2 |\
-            xargs
-          )
-          echo "versionName=$versionName" | tee "$GITHUB_ENV" "$GITHUB_OUTPUT"
+        run: bash scripts/update_ver.sh | tee "$GITHUB_ENV" "$GITHUB_OUTPUT"
       - name: Push to main
         run: |
           git commit -am "Tag latest commit and prepare for release"
