@@ -63,6 +63,8 @@ constructor(
 
   private val internalState = MutableStateFlow(InternalState())
 
+  private val shouldRestartHotspot = MutableStateFlow(false)
+
   private val _status =
     MutableStateFlow(
       SoftApStatus(
@@ -150,7 +152,9 @@ constructor(
       .onEach { config.value = it.toBridgeClass(state = internalState.value) }
 
   private val restartHotspotOnConfigChange =
-    config.onEach {
+    shouldRestartHotspot.onEach {
+      if (!it) return@onEach
+
       val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
       val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
       if (status.value.enabledState == enabled) {
@@ -163,6 +167,8 @@ constructor(
           delay(500.milliseconds)
         }
       }
+
+      shouldRestartHotspot.value = false
     }
 
   private val updateMacAddressCacheInMem =
@@ -238,11 +244,12 @@ constructor(
           )
           .let {
             if (!wifiManager.validateSoftApConfiguration(it)) {
-              return false
+              return@let false
             }
             wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-            return true
+            return@let true
           }
       }
       .getOrDefault(false)
+      .also { shouldRestartHotspot.value = true }
 }

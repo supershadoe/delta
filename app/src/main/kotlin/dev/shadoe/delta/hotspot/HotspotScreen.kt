@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApEnabledState
@@ -46,6 +47,7 @@ import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
 import dev.shadoe.delta.hotspot.components.PassphraseDisplay
 import dev.shadoe.delta.hotspot.navigation.LocalNavController
 import dev.shadoe.delta.hotspot.navigation.Routes
+import dev.shadoe.delta.presentation.hotspot.ConnectedDevicesViewModel
 import dev.shadoe.delta.presentation.hotspot.HotspotControlViewModel
 import kotlinx.coroutines.launch
 
@@ -190,7 +192,8 @@ fun HotspotScreen(
           onDismissRequest = { showConnectedDevices.value = false },
           sheetState = sheetState,
         ) {
-          ConnectedDevicesList()
+          val vm = hiltViewModel<ConnectedDevicesViewModel>()
+          ConnectedDevicesList(vm)
         }
       }
     }
@@ -200,7 +203,8 @@ fun HotspotScreen(
         Box(
           modifier = Modifier.background(background).padding(it).fillMaxHeight()
         ) {
-          ConnectedDevicesList()
+          val vm = hiltViewModel<ConnectedDevicesViewModel>()
+          ConnectedDevicesList(vm)
         }
       }
     }
