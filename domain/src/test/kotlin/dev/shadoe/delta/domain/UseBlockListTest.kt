@@ -3,6 +3,7 @@ package dev.shadoe.delta.domain
 import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.MacAddress
 import dev.shadoe.delta.data.softap.SoftApRepository
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,6 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
-import kotlin.test.Ignore
 
 @RunWith(MockitoJUnitRunner::class)
 class UseBlockListTest {
