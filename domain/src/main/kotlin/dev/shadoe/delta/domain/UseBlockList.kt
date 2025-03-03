@@ -1,27 +1,28 @@
 package dev.shadoe.delta.domain
 
 import dev.shadoe.delta.api.ACLDevice
-import dev.shadoe.delta.data.softap.SoftApRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.update
 
 class UseBlockList
 @Inject
-constructor(private val softApRepository: SoftApRepository) {
+constructor(
+  private val getHotspotConfig: GetHotspotConfig,
+  private val editHotspotConfig: EditHotspotConfig,
+) {
   @OptIn(ExperimentalCoroutinesApi::class)
   fun getBlockedClientsFlow(): Flow<List<ACLDevice>> =
-    softApRepository.config.mapLatest { it.blockedDevices }
+    getHotspotConfig().mapLatest { it.blockedDevices }
 
   fun blockClient(device: ACLDevice) =
-    softApRepository.config.update {
-      it.copy(blockedDevices = it.blockedDevices + device)
+    getHotspotConfig().value.let {
+      editHotspotConfig(it.copy(blockedDevices = it.blockedDevices + device))
     }
 
   fun unblockClient(device: ACLDevice) =
-    softApRepository.config.update {
-      it.copy(blockedDevices = it.blockedDevices - device)
+    getHotspotConfig().value.let {
+      editHotspotConfig(it.copy(blockedDevices = it.blockedDevices - device))
     }
 }

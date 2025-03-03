@@ -20,7 +20,8 @@ class ViewConnectedClientsTest {
       mock<SoftApRepository> {
         on { status } doReturn MutableStateFlow(statusStub)
       }
-    val viewConnectedClients = ViewConnectedClients(softApRepository)
+    val getHotspotStatus = GetHotspotStatus(softApRepository)
+    val viewConnectedClients = ViewConnectedClients(getHotspotStatus)
     val result = viewConnectedClients().first()
     assertEquals(statusStub.tetheredClients, result)
   }
