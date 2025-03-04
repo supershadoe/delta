@@ -1,4 +1,4 @@
-package dev.shadoe.delta.presentation.hotspot
+package dev.shadoe.delta.settings
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,7 +7,7 @@ import dev.shadoe.delta.data.softap.SoftApRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class EditScreenViewModel
+class SettingsViewModel
 @Inject
 constructor(private val softApRepository: SoftApRepository) : ViewModel() {
   val config = softApRepository.config

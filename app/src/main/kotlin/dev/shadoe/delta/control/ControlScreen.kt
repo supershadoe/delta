@@ -47,15 +47,14 @@ import dev.shadoe.delta.control.components.ConnectedDevicesList
 import dev.shadoe.delta.control.components.PassphraseDisplay
 import dev.shadoe.delta.navigation.LocalNavController
 import dev.shadoe.delta.navigation.Routes
-import dev.shadoe.delta.presentation.hotspot.ConnectedDevicesViewModel
-import dev.shadoe.delta.presentation.hotspot.HotspotControlViewModel
+import dev.shadoe.delta.control.ControlViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ControlScreen(
   modifier: Modifier = Modifier,
-  vm: HotspotControlViewModel = viewModel(),
+  vm: ControlViewModel = viewModel(),
 ) {
   val sheetState = rememberModalBottomSheetState()
   val showConnectedDevices = remember { mutableStateOf(false) }

@@ -81,7 +81,7 @@ android {
 dependencies {
   compileOnly(project(path = ":system-api-stubs"))
   implementation(project(path = ":api"))
-  implementation(project(path = ":presentation"))
+  implementation(project(path = ":data"))
 
   implementation(libs.androidx.annotation)
   implementation(libs.androidx.ktx.core)
@@ -99,6 +99,9 @@ dependencies {
 
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.serialization.json)
+
+  implementation(libs.shizuku.api)
+  implementation(libs.shizuku.provider)
 
   ksp(libs.hilt.compiler)
   testImplementation(libs.kotlin.test.junit)

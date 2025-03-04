@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dev.shadoe.delta.R
-import dev.shadoe.delta.presentation.shizuku.ShizukuViewModel
+import dev.shadoe.delta.shizuku.ShizukuViewModel
 
 @Composable
 internal fun ShizukuNotRunning() {

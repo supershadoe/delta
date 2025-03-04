@@ -2,10 +2,9 @@ package dev.shadoe.delta.common
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.shadoe.delta.presentation.hotspot.HotspotScopeViewModel
 
 @Composable
-fun HotspotApiScope(
+fun HotspotScope(
   vm: HotspotScopeViewModel = viewModel(),
   content: @Composable () -> Unit,
 ) {

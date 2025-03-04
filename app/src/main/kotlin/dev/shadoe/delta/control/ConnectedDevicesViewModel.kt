@@ -1,12 +1,12 @@
-package dev.shadoe.delta.presentation.hotspot
+package dev.shadoe.delta.control
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.data.softap.SoftApRepository
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
+import javax.inject.Inject
 
 @HiltViewModel
 class ConnectedDevicesViewModel

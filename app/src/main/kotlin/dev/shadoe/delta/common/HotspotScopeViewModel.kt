@@ -1,4 +1,4 @@
-package dev.shadoe.delta.presentation.hotspot
+package dev.shadoe.delta.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,15 +1,15 @@
-package dev.shadoe.delta.presentation.hotspot
+package dev.shadoe.delta.control
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.data.softap.SoftApRepository
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
+import javax.inject.Inject
 
 @HiltViewModel
-class HotspotControlViewModel
+class ControlViewModel
 @Inject
 constructor(private val softApRepository: SoftApRepository) : ViewModel() {
   fun startHotspot(forceRestart: Boolean = false) =

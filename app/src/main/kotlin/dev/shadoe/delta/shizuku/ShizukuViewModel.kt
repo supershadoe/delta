@@ -1,4 +1,4 @@
-package dev.shadoe.delta.presentation.shizuku
+package dev.shadoe.delta.shizuku
 
 import android.app.Application
 import android.content.pm.PackageManager

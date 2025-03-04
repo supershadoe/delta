@@ -23,4 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Delta"
 
-include(":api", ":app", ":data", ":presentation", ":system-api-stubs")
+include(":api", ":app", ":data", ":system-api-stubs")
