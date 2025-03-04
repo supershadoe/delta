@@ -53,7 +53,6 @@ import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.supportedSecurityTypes
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
 import dev.shadoe.delta.navigation.LocalNavController
-import dev.shadoe.delta.settings.SettingsViewModel
 import kotlinx.coroutines.launch
 
 @Composable

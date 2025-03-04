@@ -12,13 +12,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.shadoe.delta.blocklist.BlockListViewModel
 import dev.shadoe.delta.blocklist.BlocklistScreen
 import dev.shadoe.delta.common.HotspotScope
 import dev.shadoe.delta.control.ControlScreen
-import dev.shadoe.delta.blocklist.BlockListViewModel
-import dev.shadoe.delta.settings.SettingsViewModel
 import dev.shadoe.delta.control.ControlViewModel
 import dev.shadoe.delta.settings.SettingsScreen
+import dev.shadoe.delta.settings.SettingsViewModel
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
 
