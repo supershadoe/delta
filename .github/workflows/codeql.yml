@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          build-mode: manual
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
@@ -23,10 +27,6 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Build app
         run: ./gradlew assembleDebugKeySignedRelease
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          build-mode: manual
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
