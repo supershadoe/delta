@@ -3,8 +3,10 @@ package dev.shadoe.delta.shizuku
 import android.app.Application
 import android.content.pm.PackageManager
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
 import rikka.sui.Sui
@@ -27,13 +29,19 @@ class ShizukuViewModel(private val application: Application) :
 
   private val binderReceivedListener =
     Shizuku.OnBinderReceivedListener {
-      Shizuku.addRequestPermissionResultListener(permListener)
+      viewModelScope.launch {
+        _shizukuState.value =
+          determineShizukuStateWhenAlive(Shizuku.checkSelfPermission())
+        Shizuku.addRequestPermissionResultListener(permListener)
+      }
     }
 
   private val binderDeadListener =
     Shizuku.OnBinderDeadListener {
-      _shizukuState.value = determineShizukuStateWhenDead()
-      Shizuku.removeRequestPermissionResultListener(permListener)
+      viewModelScope.launch {
+        _shizukuState.value = determineShizukuStateWhenDead()
+        Shizuku.removeRequestPermissionResultListener(permListener)
+      }
     }
 
   private fun isShizukuInstalled(packageManager: PackageManager) =
