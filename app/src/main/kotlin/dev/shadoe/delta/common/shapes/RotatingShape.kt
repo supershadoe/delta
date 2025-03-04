@@ -1,4 +1,4 @@
-package dev.shadoe.delta.shapes
+package dev.shadoe.delta.common.shapes
 
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
@@ -12,7 +12,10 @@ import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.toPath
 import kotlin.math.max
 
-class PolygonShape(private val polygon: RoundedPolygon) : Shape {
+class RotatingShape(
+  private val polygon: RoundedPolygon,
+  private val degrees: Float,
+) : Shape {
   // 4x4 xyzw matrix for transformations on the polygon.
   private val matrix = Matrix()
 
@@ -56,6 +59,9 @@ class PolygonShape(private val polygon: RoundedPolygon) : Shape {
     // So, translating by (-bounds.left, -bounds.top) would move the polygon
     // to the center of the viewport
     matrix.translate(-bounds.left, -bounds.top)
+
+    // Rotate the polygon by some degrees.
+    matrix.rotateZ(degrees)
 
     // Transform the generated path using this matrix.
     path.transform(matrix)

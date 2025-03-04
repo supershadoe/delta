@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.buttons
+package dev.shadoe.delta.control.buttons
 
 import androidx.compose.runtime.Composable
 import dev.shadoe.delta.api.SoftApEnabledState

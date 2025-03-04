@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.components
+package dev.shadoe.delta.control.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

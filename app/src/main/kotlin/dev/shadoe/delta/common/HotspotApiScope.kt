@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot
+package dev.shadoe.delta.common
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel

@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.buttons
+package dev.shadoe.delta.control.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

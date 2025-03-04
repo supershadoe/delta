@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.navigation
+package dev.shadoe.delta.navigation
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,13 +12,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.shadoe.delta.hotspot.BlocklistScreen
-import dev.shadoe.delta.hotspot.HotspotApiScope
-import dev.shadoe.delta.hotspot.HotspotEditScreen
-import dev.shadoe.delta.hotspot.HotspotScreen
+import dev.shadoe.delta.blocklist.BlocklistScreen
+import dev.shadoe.delta.common.HotspotApiScope
+import dev.shadoe.delta.control.ControlScreen
 import dev.shadoe.delta.presentation.hotspot.BlockListViewModel
 import dev.shadoe.delta.presentation.hotspot.EditScreenViewModel
 import dev.shadoe.delta.presentation.hotspot.HotspotControlViewModel
+import dev.shadoe.delta.settings.SettingsScreen
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
 
@@ -35,11 +35,11 @@ fun HotspotNavGraph() {
       ) {
         composable<Routes.HotspotScreen> {
           val vm = hiltViewModel<HotspotControlViewModel>()
-          HotspotScreen(vm = vm)
+          ControlScreen(vm = vm)
         }
         composable<Routes.HotspotEditScreen> {
           val vm = hiltViewModel<EditScreenViewModel>()
-          HotspotEditScreen(vm = vm)
+          SettingsScreen(vm = vm)
         }
         composable<Routes.BlocklistScreen> {
           val vm = hiltViewModel<BlockListViewModel>()

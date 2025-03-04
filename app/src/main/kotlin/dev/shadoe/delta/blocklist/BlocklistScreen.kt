@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot
+package dev.shadoe.delta.blocklist
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.hotspot.navigation.LocalNavController
+import dev.shadoe.delta.navigation.LocalNavController
 import dev.shadoe.delta.presentation.hotspot.BlockListViewModel
 import kotlinx.coroutines.launch
 

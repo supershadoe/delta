@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.navigation
+package dev.shadoe.delta.navigation
 
 import kotlinx.serialization.Serializable
 

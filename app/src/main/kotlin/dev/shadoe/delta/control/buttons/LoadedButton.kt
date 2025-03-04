@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.buttons
+package dev.shadoe.delta.control.buttons
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -21,7 +21,7 @@ import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.circle
 import androidx.graphics.shapes.pillStar
 import androidx.graphics.shapes.star
-import dev.shadoe.delta.shapes.MorphingShape
+import dev.shadoe.delta.common.shapes.MorphingShape
 
 @Composable
 internal fun LoadedButton(isEnabled: Boolean, onClick: () -> Unit) {

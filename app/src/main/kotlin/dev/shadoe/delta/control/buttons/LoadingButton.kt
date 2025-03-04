@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.buttons
+package dev.shadoe.delta.control.buttons
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat
@@ -20,8 +20,8 @@ import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import androidx.graphics.shapes.star
-import dev.shadoe.delta.shapes.MorphingShape
-import dev.shadoe.delta.shapes.RotatingShape
+import dev.shadoe.delta.common.shapes.MorphingShape
+import dev.shadoe.delta.common.shapes.RotatingShape
 
 @Composable
 internal fun LoadingButton() {

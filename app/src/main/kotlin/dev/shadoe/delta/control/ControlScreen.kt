@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot
+package dev.shadoe.delta.control
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -42,18 +42,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApEnabledState
-import dev.shadoe.delta.hotspot.buttons.HotspotButton
-import dev.shadoe.delta.hotspot.components.ConnectedDevicesList
-import dev.shadoe.delta.hotspot.components.PassphraseDisplay
-import dev.shadoe.delta.hotspot.navigation.LocalNavController
-import dev.shadoe.delta.hotspot.navigation.Routes
+import dev.shadoe.delta.control.buttons.HotspotButton
+import dev.shadoe.delta.control.components.ConnectedDevicesList
+import dev.shadoe.delta.control.components.PassphraseDisplay
+import dev.shadoe.delta.navigation.LocalNavController
+import dev.shadoe.delta.navigation.Routes
 import dev.shadoe.delta.presentation.hotspot.ConnectedDevicesViewModel
 import dev.shadoe.delta.presentation.hotspot.HotspotControlViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotspotScreen(
+fun ControlScreen(
   modifier: Modifier = Modifier,
   vm: HotspotControlViewModel = viewModel(),
 ) {

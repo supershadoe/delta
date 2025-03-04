@@ -1,4 +1,4 @@
-package dev.shadoe.delta.hotspot.buttons
+package dev.shadoe.delta.control.buttons
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.size
@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.circle
 import dev.shadoe.delta.R
-import dev.shadoe.delta.shapes.PolygonShape
+import dev.shadoe.delta.common.shapes.PolygonShape
 
 @Composable
 internal fun FailedButton(forceRestart: () -> Unit) {
