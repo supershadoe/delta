@@ -72,6 +72,7 @@ constructor(
         enabledState = wifiManager.wifiApEnabledState,
         tetheredClients = emptyList(),
         supportedSpeedTypes = emptyList(),
+        supportedSecurityTypes = emptyList(),
         maxSupportedClients = 0,
       )
     )
@@ -125,6 +126,20 @@ constructor(
 
       override fun onMaxClientLimitChanged(maxClients: Int) {
         _status.update { it.copy(maxSupportedClients = maxClients) }
+      }
+
+      override fun onSupportedSecurityTypesChanged(securityTypes: List<Int>) {
+        _status.update { it.copy(supportedSecurityTypes = securityTypes) }
+      }
+
+      override fun onClientForceDisconnectChanged(isSupported: Boolean) {
+        _status.update { it.copy(clientForceDisconnectSupported = isSupported) }
+      }
+
+      override fun onMacAddressCustomizationChanged(isSupported: Boolean) {
+        _status.update {
+          it.copy(macAddressCustomizationSupported = isSupported)
+        }
       }
     }
 

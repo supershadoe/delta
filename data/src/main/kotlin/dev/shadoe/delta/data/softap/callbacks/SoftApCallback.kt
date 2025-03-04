@@ -5,6 +5,10 @@ import android.net.wifi.SoftApCapability
 import android.net.wifi.SoftApInfo
 import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
+import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_OPEN
+import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA2_PSK
+import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
+import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA3_SAE_TRANSITION
 import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import kotlinx.coroutines.Dispatchers
@@ -38,12 +42,30 @@ internal class SoftApCallback(
     capability ?: return
     runBlocking {
       launch {
-        val s = updateSupportedSpeedTypes(capability)
-        tetheringEventListener.onSupportedFrequencyBandsChanged(s)
+        tetheringEventListener.onSupportedFrequencyBandsChanged(
+          querySupportedFrequencyBands(capability)
+        )
       }
       launch {
         tetheringEventListener.onMaxClientLimitChanged(
           capability.maxSupportedClients
+        )
+      }
+      launch {
+        tetheringEventListener.onSupportedSecurityTypesChanged(
+          querySupportedSecurityTypes(capability)
+        )
+      }
+      launch {
+        tetheringEventListener.onClientForceDisconnectChanged(
+          capability.areFeaturesSupported(
+            SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT
+          )
+        )
+        tetheringEventListener.onMacAddressCustomizationChanged(
+          capability.areFeaturesSupported(
+            SoftApCapability.SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION
+          )
         )
       }
     }
@@ -68,10 +90,30 @@ internal class SoftApCallback(
     println("blocked client ${client?.macAddress} $blockedReason")
   }
 
-  private suspend fun updateSupportedSpeedTypes(capability: SoftApCapability) =
+  private suspend fun querySupportedSecurityTypes(
+    capability: SoftApCapability
+  ) =
     withContext(Dispatchers.Unconfined) {
-      val bandToSoftApFeatureMap =
-        mapOf(
+      val saeSupport =
+        capability.areFeaturesSupported(
+          SoftApCapability.SOFTAP_FEATURE_WPA3_SAE
+        )
+      val types = mutableListOf(SECURITY_TYPE_WPA2_PSK, SECURITY_TYPE_OPEN)
+      if (saeSupport) {
+        types.addAll(
+          index = 0,
+          elements =
+            listOf(SECURITY_TYPE_WPA3_SAE, SECURITY_TYPE_WPA3_SAE_TRANSITION),
+        )
+      }
+      types.toList()
+    }
+
+  private suspend fun querySupportedFrequencyBands(
+    capability: SoftApCapability
+  ) =
+    withContext(Dispatchers.Unconfined) {
+      mapOf(
           SoftApSpeedType.BAND_2GHZ to
             SoftApCapability.SOFTAP_FEATURE_BAND_24G_SUPPORTED,
           SoftApSpeedType.BAND_5GHZ to
@@ -79,12 +121,13 @@ internal class SoftApCallback(
           SoftApSpeedType.BAND_6GHZ to
             SoftApCapability.SOFTAP_FEATURE_BAND_6G_SUPPORTED,
         )
-
-      bandToSoftApFeatureMap.keys.filter { band: Int ->
-        val isSupported =
-          capability.areFeaturesSupported(bandToSoftApFeatureMap.getValue(band))
-        val isAvailable = capability.getSupportedChannelList(band).isNotEmpty()
-        isSupported && isAvailable
-      }
+        .filter {
+          capability.run {
+            areFeaturesSupported(it.value) and
+              getSupportedChannelList(it.key).isNotEmpty()
+          }
+        }
+        .keys
+        .toList()
     }
 }
