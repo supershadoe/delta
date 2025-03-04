@@ -37,6 +37,8 @@ jobs:
       - name: Generate diff and push to main
         run: |
           if ! git diff --exit-code; then
+            git pull
+            git rebase origin/HEAD
             git commit -am "Auto-formatted changes"
             git push
           fi
