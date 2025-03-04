@@ -36,9 +36,14 @@ jobs:
         run: ./gradlew testReleaseUnitTest
       - name: Generate diff and push to main
         run: |
-          if ! git diff --exit-code; then
-            git pull
+          git fetch
+          if ! git diff "@" "@{upstream}" --exit-code; then
+            git add .
+            git stash
             git rebase origin/HEAD
+            git stash pop
+          fi
+          if ! git diff --exit-code; then
             git commit -am "Auto-formatted changes"
             git push
           fi
