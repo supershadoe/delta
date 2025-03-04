@@ -34,6 +34,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalForInheritanceCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -76,13 +77,22 @@ constructor(
     )
   val status = _status.asStateFlow()
 
-  val config =
+  private val _config =
     MutableStateFlow(
       Refine.unsafeCast<SoftApConfigurationHidden>(
           wifiManager.softApConfiguration
         )
         .toBridgeClass(state = internalState.value)
     )
+  @OptIn(ExperimentalForInheritanceCoroutinesApi::class)
+  val config =
+    object : MutableStateFlow<SoftApConfiguration> by _config {
+      override var value: SoftApConfiguration
+        get() = _config.value
+        set(value) {
+          updateSoftApConfiguration(value)
+        }
+    }
 
   private val tetheringEventListener =
     object : TetheringEventListener {
@@ -149,7 +159,7 @@ constructor(
           delay(1.seconds)
         }
       }
-      .onEach { config.value = it.toBridgeClass(state = internalState.value) }
+      .onEach { _config.value = it.toBridgeClass(state = internalState.value) }
 
   private val restartHotspotOnConfigChange =
     shouldRestartHotspot.onEach {
@@ -198,7 +208,7 @@ constructor(
           internalState.update {
             it.copy(fallbackPassphrase = value ?: generateRandomPassword())
           }
-          config.update {
+          _config.update {
             it.copy(passphrase = internalState.value.fallbackPassphrase)
           }
         }
@@ -217,7 +227,13 @@ constructor(
     wifiManager.unregisterSoftApCallback(softApCallback)
   }
 
-  fun startHotspot() {
+  fun startHotspot(forceRestart: Boolean = false): Boolean {
+    val enabledState = status.value.enabledState
+    var shouldStart = enabledState == SoftApEnabledState.WIFI_AP_STATE_DISABLED
+    if (forceRestart) {
+      shouldStart = enabledState == SoftApEnabledState.WIFI_AP_STATE_FAILED
+    }
+    if (!shouldStart) return false
     val request =
       TetheringManager.TetheringRequest.Builder(TETHERING_WIFI).build()
     tetheringConnector.startTethering(
@@ -226,18 +242,24 @@ constructor(
       applicationContext.attributionTag,
       startOrStopResultReceiver,
     )
+    return true
   }
 
-  fun stopHotspot() {
+  fun stopHotspot(): Boolean {
+    val state = status.value.enabledState
+    if (state != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+      return false
+    }
     tetheringConnector.stopTethering(
       TETHERING_WIFI,
       applicationContext.packageName,
       applicationContext.attributionTag,
       startOrStopResultReceiver,
     )
+    return true
   }
 
-  fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
+  private fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
     runCatching {
         Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(
             c.toOriginalClass()
@@ -251,5 +273,8 @@ constructor(
           }
       }
       .getOrDefault(false)
-      .also { shouldRestartHotspot.value = true }
+      .also {
+        _config.update { c }
+        shouldRestartHotspot.value = true
+      }
 }

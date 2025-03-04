@@ -3,26 +3,18 @@ package dev.shadoe.delta.presentation.hotspot
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApConfiguration
-import dev.shadoe.delta.domain.EditHotspotConfig
-import dev.shadoe.delta.domain.GetHotspotConfig
-import dev.shadoe.delta.domain.GetHotspotStatus
+import dev.shadoe.delta.data.softap.SoftApRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class EditScreenViewModel
 @Inject
-constructor(
-  private val getHotspotConfig: GetHotspotConfig,
-  private val getHotspotStatus: GetHotspotStatus,
-  private val editHotspotConfig: EditHotspotConfig,
-) : ViewModel() {
-  val config
-    get() = getHotspotConfig()
+constructor(private val softApRepository: SoftApRepository) : ViewModel() {
+  val config = softApRepository.config
 
-  val status
-    get() = getHotspotStatus()
+  val status = softApRepository.status
 
   fun updateConfig(config: SoftApConfiguration) {
-    editHotspotConfig(config)
+    softApRepository.config.value = config
   }
 }

@@ -37,7 +37,6 @@ android {
 dependencies {
   implementation(project(path = ":api"))
   implementation(project(path = ":data"))
-  implementation(project(path = ":domain"))
   implementation(libs.androidx.annotation)
   implementation(libs.hilt.android)
   implementation(libs.kotlinx.coroutines.android)
