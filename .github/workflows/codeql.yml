@@ -1,5 +1,6 @@
 name: delta-ci-codeql
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * 1'
 jobs:
@@ -9,13 +10,23 @@ jobs:
     permissions:
       security-events: write
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+      - name: Build app
+        run: ./gradlew assembleDebugKeySignedRelease
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: java-kotlin
-          build-mode: autobuild
+          build-mode: manual
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
