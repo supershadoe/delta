@@ -15,6 +15,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.rikka.tools.refine.Refine
+import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApStatus
@@ -71,9 +72,14 @@ constructor(
       SoftApStatus(
         enabledState = wifiManager.wifiApEnabledState,
         tetheredClients = emptyList(),
-        supportedSpeedTypes = emptyList(),
-        supportedSecurityTypes = emptyList(),
-        maxSupportedClients = 0,
+        capabilities =
+          SoftApCapabilities(
+            maxSupportedClients = 0,
+            clientForceDisconnectSupported = false,
+            isMacAddressCustomizationSupported = false,
+            supportedFrequencyBands = emptyList(),
+            supportedSecurityTypes = emptyList(),
+          ),
       )
     )
   val status = _status.asStateFlow()
@@ -120,26 +126,10 @@ constructor(
         }
       }
 
-      override fun onSupportedFrequencyBandsChanged(frequencyBands: List<Int>) {
-        _status.update { it.copy(supportedSpeedTypes = frequencyBands) }
-      }
-
-      override fun onMaxClientLimitChanged(maxClients: Int) {
-        _status.update { it.copy(maxSupportedClients = maxClients) }
-      }
-
-      override fun onSupportedSecurityTypesChanged(securityTypes: List<Int>) {
-        _status.update { it.copy(supportedSecurityTypes = securityTypes) }
-      }
-
-      override fun onClientForceDisconnectChanged(isSupported: Boolean) {
-        _status.update { it.copy(clientForceDisconnectSupported = isSupported) }
-      }
-
-      override fun onMacAddressCustomizationChanged(isSupported: Boolean) {
-        _status.update {
-          it.copy(macAddressCustomizationSupported = isSupported)
-        }
+      override fun onSoftApCapabilitiesChanged(
+        capabilities: SoftApCapabilities
+      ) {
+        _status.update { it.copy(capabilities = capabilities) }
       }
     }
 

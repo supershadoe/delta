@@ -141,7 +141,7 @@ fun SettingsScreen(
       item {
         SpeedTypeField(
           speedType = mutableConfig.speedType,
-          supportedSpeedTypes = status.supportedSpeedTypes,
+          supportedSpeedTypes = status.capabilities.supportedFrequencyBands,
           onSpeedTypeChange = {
             mutableConfig = mutableConfig.copy(speedType = it)
           },

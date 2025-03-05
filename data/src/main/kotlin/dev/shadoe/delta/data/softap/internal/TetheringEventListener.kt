@@ -1,7 +1,6 @@
 package dev.shadoe.delta.data.softap.internal
 
-import dev.shadoe.delta.api.SoftApSecurityType.SecurityType
-import dev.shadoe.delta.api.SoftApSpeedType.BandType
+import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.TetheredClient
 
 internal interface TetheringEventListener {
@@ -17,41 +16,10 @@ internal interface TetheringEventListener {
   fun onTetheredClientsChanged(clients: List<TetheredClient>)
 
   /**
-   * Callback to update the frequency bands supported by the device networking
-   * driver.
-   *
-   * Single-use callback, this value should almost never change after start.
-   */
-  fun onSupportedFrequencyBandsChanged(@BandType frequencyBands: List<Int>)
-
-  /**
-   * Callback to update the maximum number of clients supported by the device
+   * Callback to update the soft AP capabilities obtained from the device
    * networking driver.
    *
-   * Single-use callback, this value should almost never change after start.
+   * This value should almost never change after start.
    */
-  fun onMaxClientLimitChanged(maxClients: Int)
-
-  /**
-   * Callback to update the security types supported by the device networking
-   * driver.
-   *
-   * Single-use callback, this value should almost never change after start.
-   */
-  fun onSupportedSecurityTypesChanged(@SecurityType securityTypes: List<Int>)
-
-  /**
-   * Callback to update the flag for force-disconnect support (for
-   * blocklist/allowlist)
-   *
-   * Single-use callback, this value should almost never change after start.
-   */
-  fun onClientForceDisconnectChanged(isSupported: Boolean)
-
-  /**
-   * Callback to update the flag for MAC address randomization support.
-   *
-   * Single-use callback, this value should almost never change after start.
-   */
-  fun onMacAddressCustomizationChanged(isSupported: Boolean)
+  fun onSoftApCapabilitiesChanged(capabilities: SoftApCapabilities)
 }

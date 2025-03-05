@@ -5,6 +5,7 @@ import android.net.wifi.SoftApCapability
 import android.net.wifi.SoftApInfo
 import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
+import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_OPEN
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA2_PSK
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
@@ -41,30 +42,20 @@ internal class SoftApCallback(
   override fun onCapabilityChanged(capability: SoftApCapability?) {
     capability ?: return
     runBlocking {
-      launch {
-        tetheringEventListener.onSupportedFrequencyBandsChanged(
-          querySupportedFrequencyBands(capability)
-        )
-      }
-      launch {
-        tetheringEventListener.onMaxClientLimitChanged(
-          capability.maxSupportedClients
-        )
-      }
-      launch {
-        tetheringEventListener.onSupportedSecurityTypesChanged(
-          querySupportedSecurityTypes(capability)
-        )
-      }
-      launch {
-        tetheringEventListener.onClientForceDisconnectChanged(
-          capability.areFeaturesSupported(
-            SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT
-          )
-        )
-        tetheringEventListener.onMacAddressCustomizationChanged(
-          capability.areFeaturesSupported(
-            SoftApCapability.SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION
+      launch(Dispatchers.Unconfined) {
+        tetheringEventListener.onSoftApCapabilitiesChanged(
+          SoftApCapabilities(
+            maxSupportedClients = capability.maxSupportedClients,
+            clientForceDisconnectSupported =
+              capability.areFeaturesSupported(
+                SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT
+              ),
+            isMacAddressCustomizationSupported =
+              capability.areFeaturesSupported(
+                SoftApCapability.SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION
+              ),
+            supportedFrequencyBands = querySupportedFrequencyBands(capability),
+            supportedSecurityTypes = querySupportedSecurityTypes(capability),
           )
         )
       }
