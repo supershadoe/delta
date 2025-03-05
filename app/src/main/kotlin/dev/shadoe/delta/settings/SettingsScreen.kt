@@ -115,6 +115,7 @@ fun SettingsScreen(
       item {
         SecurityTypeField(
           securityType = mutableConfig.securityType,
+          supportedSecurityTypes = status.capabilities.supportedSecurityTypes,
           onSecurityTypeChange = {
             mutableConfig = mutableConfig.copy(securityType = it)
           },
@@ -201,6 +202,7 @@ private fun SSIDField(ssid: String, onSSIDChange: (String) -> Unit) {
 @Composable
 private fun SecurityTypeField(
   securityType: Int,
+  supportedSecurityTypes: List<Int>,
   onSecurityTypeChange: (Int) -> Unit,
 ) {
   Row(
