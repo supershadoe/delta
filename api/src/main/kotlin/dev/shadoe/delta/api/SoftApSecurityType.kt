@@ -44,12 +44,4 @@ object SoftApSecurityType {
         R.string.security_proto_wpa3_sae_transition
       else -> R.string.security_proto_not_supported
     }
-
-  val supportedSecurityTypes =
-    listOf(
-      SECURITY_TYPE_WPA3_SAE,
-      SECURITY_TYPE_WPA3_SAE_TRANSITION,
-      SECURITY_TYPE_WPA2_PSK,
-      SECURITY_TYPE_OPEN,
-    )
 }

@@ -15,8 +15,6 @@ object SoftApSpeedType {
 
   const val BAND_60GHZ = SoftApConfigurationHidden.BAND_60GHZ
 
-  const val BAND_ANY = SoftApConfigurationHidden.BAND_ANY
-
   @Retention(AnnotationRetention.SOURCE)
   @IntDef(value = [BAND_2GHZ, BAND_5GHZ, BAND_6GHZ, BAND_60GHZ])
   annotation class BandType
