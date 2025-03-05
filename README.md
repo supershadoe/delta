@@ -3,14 +3,14 @@
 This is an in-development app to create hotspots on stock Android with
 more functionalities like a blocklist, usage limits, etc.
 
-This app can trigger hotspot on devices like Samsung Tabs where tethering is
-hidden from Settings app and SystemUI for Wi-Fi only devices.
+This app can also trigger hotspot on devices like Samsung Tabs where tethering
+is hidden from Settings app and SystemUI for Wi-Fi only devices.
 
 App was tested on a Pixel 6A with Android 15, compatibility with other devices
 is questionable at best as Android's internals change without a stable API.
 
 The app is supposed to work on devices with Android >= 11 (R), feel free to file
-an issue if it doesn't work as expected. (time to respond to issues may be high)
+an issue if it doesn't work as expected.
 
 ### How to use
 
@@ -32,6 +32,8 @@ for better representation of the current status of the project.
 - [X] Turn off automatically
 - [X] Blocklist
 - [ ] Timed connections/Usage limits
-- [ ] Tidied up UI
+- [ ] Localization
 
-Uses Compose for UI rendering and Android's Hotspot API.
+### Want to contribute?
+Check out this [page](https://github.com/supershadoe/delta/contribute) on how
+to start! :hugs:
