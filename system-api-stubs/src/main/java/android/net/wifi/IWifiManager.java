@@ -17,11 +17,13 @@
 package android.net.wifi;
 
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 public interface IWifiManager extends IInterface {
     /** Local-side IPC implementation stub class. */
@@ -58,6 +60,7 @@ public interface IWifiManager extends IInterface {
 
     SoftApConfiguration getSoftApConfiguration();
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     void queryLastConfiguredTetheredApPassphraseSinceBoot(IStringListener listener);
 
     boolean setSoftApConfiguration(SoftApConfiguration softApConfig, String packageName);

@@ -9,6 +9,7 @@ import android.net.TetheringManager.TETHERING_WIFI
 import android.net.wifi.IStringListener
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfigurationHidden
+import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -207,18 +208,20 @@ constructor(
       ADB_PACKAGE_NAME,
     )
     wifiManager.registerSoftApCallback(softApCallback)
-    wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
-      object : IStringListener.Stub() {
-        override fun onResult(value: String?) {
-          internalState.update {
-            it.copy(fallbackPassphrase = value ?: generateRandomPassword())
-          }
-          _config.update {
-            it.copy(passphrase = internalState.value.fallbackPassphrase)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+      wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
+        object : IStringListener.Stub() {
+          override fun onResult(value: String?) {
+            internalState.update {
+              it.copy(fallbackPassphrase = value ?: generateRandomPassword())
+            }
+            _config.update {
+              it.copy(passphrase = internalState.value.fallbackPassphrase)
+            }
           }
         }
-      }
-    )
+      )
+    }
     scope.launch {
       withContext(Dispatchers.Unconfined) { startBackgroundJobs(this) }
     }
