@@ -35,5 +35,6 @@ for better representation of the current status of the project.
 - [ ] Localization
 
 ### Want to contribute?
+
 Check out this [page](https://github.com/supershadoe/delta/contribute) on how
 to start! :hugs:

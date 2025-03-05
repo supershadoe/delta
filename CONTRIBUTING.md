@@ -53,10 +53,8 @@ and your device.
 ### Steps to send in a patch for an issue
 
 > [!WARNING]
-> Do NOT create a pull request without creating an issue first.
->
-> [!NOTE]
-> Do NOT make a cosmetic change alone as the formatter setup in the repo will
+> - Do NOT create a pull request without creating an issue first.
+> - Do NOT make a cosmetic change alone as the formatter setup in the repo will
 > take of enforcing formatting and other standards.
 
 - Create a pull request after pushing your patch to GitHub.
