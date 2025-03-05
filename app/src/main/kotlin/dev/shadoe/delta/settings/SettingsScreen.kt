@@ -50,7 +50,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
-import dev.shadoe.delta.api.SoftApSecurityType.supportedSecurityTypes
+import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
 import dev.shadoe.delta.navigation.LocalNavController
 import kotlinx.coroutines.launch
@@ -117,7 +117,19 @@ fun SettingsScreen(
           securityType = mutableConfig.securityType,
           supportedSecurityTypes = status.capabilities.supportedSecurityTypes,
           onSecurityTypeChange = {
-            mutableConfig = mutableConfig.copy(securityType = it)
+            val shouldSwitchBackTo5G =
+              it != SoftApSecurityType.SECURITY_TYPE_WPA3_SAE &&
+                mutableConfig.speedType == SoftApSpeedType.BAND_6GHZ
+            mutableConfig =
+              mutableConfig.copy(
+                speedType =
+                  if (shouldSwitchBackTo5G) {
+                    SoftApSpeedType.BAND_5GHZ
+                  } else {
+                    mutableConfig.speedType
+                  },
+                securityType = it,
+              )
           },
         )
       }
@@ -144,7 +156,20 @@ fun SettingsScreen(
           speedType = mutableConfig.speedType,
           supportedSpeedTypes = status.capabilities.supportedFrequencyBands,
           onSpeedTypeChange = {
-            mutableConfig = mutableConfig.copy(speedType = it)
+            val shouldSwitchToSAE =
+              it == SoftApSpeedType.BAND_6GHZ &&
+                mutableConfig.securityType !=
+                  SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
+            mutableConfig =
+              mutableConfig.copy(
+                speedType = it,
+                securityType =
+                  if (shouldSwitchToSAE) {
+                    SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
+                  } else {
+                    mutableConfig.securityType
+                  },
+              )
           },
         )
       }
