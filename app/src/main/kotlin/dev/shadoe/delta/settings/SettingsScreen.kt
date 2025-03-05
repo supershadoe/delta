@@ -1,6 +1,9 @@
 package dev.shadoe.delta.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +14,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.NetworkWifi
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.SettingsPower
@@ -25,6 +30,7 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -48,10 +54,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
+import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
+import dev.shadoe.delta.blocklist.BlockListViewModel
 import dev.shadoe.delta.navigation.LocalNavController
 import kotlinx.coroutines.launch
 
@@ -59,6 +67,7 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(
   modifier: Modifier = Modifier,
   vm: SettingsViewModel = viewModel(),
+
 ) {
   val navController = LocalNavController.current
   val focusManager = LocalFocusManager.current
@@ -68,10 +77,16 @@ fun SettingsScreen(
   val config = vm.config.collectAsState()
   val status by vm.status.collectAsState()
 
+  val blockedClients by vm.blockedClients.collectAsState(emptyList())
+
+
+
   var mutableConfig by remember(config.value) { mutableStateOf(config.value) }
 
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
+
+
 
   Scaffold(
     topBar = {
@@ -173,6 +188,7 @@ fun SettingsScreen(
           },
         )
       }
+      item { AdvancedSettingsField(blockedClients) }
       item {
         Button(
           onClick = onClick@{
@@ -193,9 +209,138 @@ fun SettingsScreen(
           Text(text = stringResource(R.string.save_button))
         }
       }
+
     }
   }
 }
+
+
+
+@Composable
+private fun BlockListField(blockedClients: List<ACLDevice>,) {
+  var expanded by remember { mutableStateOf (false) }
+ Column(modifier = Modifier.fillMaxWidth()
+    .clickable {
+      expanded = !expanded
+    }){
+   Row (modifier =  Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween){
+     Text(text = "Block List" , modifier = Modifier.padding(8.dp))
+     Icon(
+       modifier = Modifier.align(Alignment.CenterVertically),
+       imageVector = if(expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
+       contentDescription = "Expand or collapse",
+     )
+   }
+    if (expanded) {
+      if (blockedClients.isEmpty()) {
+        Box(
+          contentAlignment = Alignment.Center,
+        ) {
+          Text(
+            text = stringResource(R.string.blocklist_none_blocked),
+            modifier = Modifier.padding(16.dp),
+          )
+        }
+      }
+      Text(text = "yet to implement")
+//      LazyColumn() {
+//        items(blockedClients.size) {
+//          val d = blockedClients[it]
+//          Row(
+//            modifier = Modifier.padding(16.dp),
+//            verticalAlignment = Alignment.CenterVertically,
+//          ) {
+//            Column(modifier = Modifier.weight(1f)) {
+//              Text(text = d.hostname ?: "noClientHostnameText")
+//              Text(text = d.macAddress.toString())
+//            }
+//            Button(
+//              onClick = {
+////                vm.unblockDevice(blockedClients[it])
+////                scope.launch {
+////                  snackbarHostState.showSnackbar(
+////                    message = "Device removed from blocklist.",
+////                    duration = SnackbarDuration.Short,
+////                    withDismissAction = true,
+////                  )
+////                }
+//              }
+//            ) {
+//              Text(text = stringResource(R.string.unblock_button))
+//            }
+//          }
+//        }
+//      }
+    }
+  }
+}
+
+@Composable
+private fun AllowListField(){
+  var expanded by remember { mutableStateOf (false) }
+  Column (modifier = Modifier.fillMaxWidth().padding(8.dp)
+    .clickable {
+      expanded = !expanded
+    }){
+    Row (modifier =  Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween){
+      Text(text = "Allow List" , modifier = Modifier.padding(8.dp))
+      Icon(
+        modifier = Modifier.align(Alignment.CenterVertically),
+        imageVector = if(expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
+        contentDescription = "Expand or collapse",
+      )
+    }
+    if (expanded) {
+      Text(text = "SSIDaaaa")
+      Text(text = "SSID")
+      Text(text = "SSID")
+    }
+  }
+}
+
+@Composable
+private fun HiddenHotspotField(){
+  Row (modifier =  Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
+    Text(text = "Hidden Hotspot")
+    Switch(checked = false, onCheckedChange = {})
+  }
+}
+
+@Composable
+private fun SliderField()
+{
+  Column (){
+    Text(text = "Max Client Limit")
+    Slider(value = 4f, onValueChange = {}, valueRange = 0f..10f)
+  }
+}
+
+@Composable
+private fun AdvancedSettingsField(blockedClients: List<ACLDevice>) {
+
+  var expanded by remember { mutableStateOf (false) }
+  Column (modifier = Modifier.fillMaxWidth()
+    .clickable {
+      expanded = !expanded
+    }){
+    Row (modifier =  Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween){
+      Text(text = "Advanced Settings" , modifier = Modifier.padding(8.dp))
+      Icon(
+        modifier = Modifier.align(Alignment.CenterVertically),
+        imageVector = if(expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
+        contentDescription = "Expand or collapse",
+      )
+    }
+    if (expanded) {
+        BlockListField(blockedClients)
+        AllowListField()
+        HiddenHotspotField()
+        SliderField()
+      }
+    }
+
+}
+
 
 @Composable
 private fun SSIDField(ssid: String, onSSIDChange: (String) -> Unit) {
