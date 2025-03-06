@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.MinorCrash
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -118,6 +119,12 @@ fun ControlScreen(
         CenterAlignedTopAppBar(
           title = { Text(text = stringResource(id = R.string.app_name)) },
           actions = {
+            IconButton(onClick = { throw RuntimeException("thrown by app") }) {
+              Icon(
+                imageVector = Icons.Rounded.MinorCrash,
+                contentDescription = stringResource(id = R.string.blocklist),
+              )
+            }
             IconButton(
               onClick = { navController?.navigate(Routes.BlocklistScreen) }
             ) {
