@@ -44,6 +44,29 @@ class CrashHandlerActivity : ComponentActivity() {
     const val EXTRA_CRASH_INFO = "dev.shadoe.delta.crashInfo"
   }
 
+  val logHeader =
+    """
+    === beginning of metadata
+    Manufacturer: ${Build.MANUFACTURER} (${Build.BRAND})
+    Model: ${Build.MODEL} (${Build.DEVICE})
+    OS: Android ${Build.VERSION.RELEASE_OR_CODENAME} (${Build.VERSION.SDK_INT})
+    === end of metadata
+
+    === beginning of crash log
+
+    """
+      .trimIndent()
+
+  val logTrailer =
+    """
+
+    === end of crash log
+  """
+      .trimIndent()
+
+  private fun generateSendableLog(crashLog: String) =
+    "$logHeader$crashLog$logTrailer"
+
   override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()
     super.onCreate(savedInstanceState)
@@ -55,7 +78,9 @@ class CrashHandlerActivity : ComponentActivity() {
         } else {
           darkColorScheme()
         }
-      val crashLog = remember { intent.getStringExtra(EXTRA_CRASH_INFO) }
+      val crashLog = remember {
+        intent.getStringExtra(EXTRA_CRASH_INFO)?.let { generateSendableLog(it) }
+      }
 
       MaterialTheme(colorScheme = colorScheme, typography = Typography.value) {
         Scaffold(
