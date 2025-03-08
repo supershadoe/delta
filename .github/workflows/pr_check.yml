@@ -4,12 +4,11 @@ on:
     types:
       - ready_for_review
       - review_requested
-    paths:
-      - '**'
-      - '!*.yml'
-      - '!*.yaml'
-      - '!*.md'
-      - '!*.txt'
+    paths-ignore:
+      - '*.yml'
+      - '*.yaml'
+      - '*.md'
+      - '*.txt'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
