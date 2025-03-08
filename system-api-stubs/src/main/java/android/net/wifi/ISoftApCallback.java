@@ -63,7 +63,7 @@ public interface ISoftApCallback extends IInterface {
      *
      * @param state SoftApState
      */
-    @RequiresApi(Build.VERSION_CODES.S)
+    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     void onStateChanged(SoftApState state) throws RemoteException;
 
     /**
@@ -75,7 +75,7 @@ public interface ISoftApCallback extends IInterface {
      * @param failureReason reason when in failed state. One of SAP_START_FAILURE_GENERAL,
      *     SAP_START_FAILURE_NO_CHANNEL
      */
-    @Deprecated(since = "S")
+    @Deprecated(since = "VANILLA_ICE_CREAM")
     void onStateChanged(int state, int failureReason);
 
     /**
