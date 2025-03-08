@@ -155,6 +155,7 @@ public final class SoftApConfigurationHidden implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     public @NonNull int[] getBands() {
         throw new RuntimeException("stub!");
     }

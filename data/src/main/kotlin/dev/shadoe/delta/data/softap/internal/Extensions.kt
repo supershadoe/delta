@@ -31,24 +31,28 @@ internal object Extensions {
       bssid = bssid?.toBridgeClass(),
       isHidden = isHiddenSsid,
       speedType =
-        bands.max().run {
-          when {
-            this hasBit SoftApSpeedType.BAND_6GHZ -> {
-              SoftApSpeedType.BAND_6GHZ
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+          bands.max().run {
+            when {
+              this hasBit SoftApSpeedType.BAND_6GHZ -> {
+                SoftApSpeedType.BAND_6GHZ
+              }
 
-            this hasBit SoftApSpeedType.BAND_5GHZ -> {
-              SoftApSpeedType.BAND_5GHZ
-            }
+              this hasBit SoftApSpeedType.BAND_5GHZ -> {
+                SoftApSpeedType.BAND_5GHZ
+              }
 
-            this hasBit SoftApSpeedType.BAND_2GHZ -> {
-              SoftApSpeedType.BAND_2GHZ
-            }
+              this hasBit SoftApSpeedType.BAND_2GHZ -> {
+                SoftApSpeedType.BAND_2GHZ
+              }
 
-            else -> {
-              SoftApSpeedType.BAND_UNKNOWN
+              else -> {
+                SoftApSpeedType.BAND_UNKNOWN
+              }
             }
           }
+        } else {
+          @Suppress("DEPRECATION") band
         },
       blockedDevices =
         blockedClientList.map {

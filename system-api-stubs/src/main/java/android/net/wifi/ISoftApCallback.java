@@ -86,12 +86,37 @@ public interface ISoftApCallback extends IInterface {
      * @param isBridged whether or not the current AP enabled on bridged mode.
      * @param isRegistration whether or not the callbackk was triggered when register.
      */
+    @RequiresApi(Build.VERSION_CODES.S)
     void onConnectedClientsOrInfoChanged(
             Map<String, SoftApInfo> infos,
             Map<String, List<WifiClient>> clients,
             boolean isBridged,
             boolean isRegistration)
             throws RemoteException;
+
+    /**
+     * Service to manager callback providing connected client's information.
+     *
+     * @param clients the currently connected clients
+     */
+    @Deprecated(since = "S")
+    void onConnectedClientsChanged(List<WifiClient> clients);
+
+    /**
+     * Service to manager callback providing information of softap.
+     *
+     * @param softApInfo is the softap information. {@link SoftApInfo}
+     */
+    @Deprecated(since = "S")
+    void onInfoChanged(SoftApInfo softApInfo);
+
+    /**
+     * Service to manager callback providing informations of softap.
+     *
+     * @param softApInfoList is the list of the softap informations. {@link SoftApInfo}
+     */
+    @Deprecated(since = "S")
+    void onInfoListChanged(List<SoftApInfo> softApInfoList);
 
     /**
      * Service to manager callback providing capability of softap.

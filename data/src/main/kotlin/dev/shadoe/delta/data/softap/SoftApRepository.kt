@@ -9,6 +9,7 @@ import android.net.TetheringManager.TETHERING_WIFI
 import android.net.wifi.IStringListener
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfigurationHidden
+import android.os.Binder
 import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -207,7 +208,16 @@ constructor(
       tetheringEventCallback,
       ADB_PACKAGE_NAME,
     )
-    wifiManager.registerSoftApCallback(softApCallback)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+      wifiManager.registerSoftApCallback(softApCallback)
+    } else {
+      @Suppress("DEPRECATION")
+      wifiManager.registerSoftApCallback(
+        Binder(),
+        softApCallback,
+        softApCallback.hashCode(),
+      )
+    }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
       wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
         object : IStringListener.Stub() {
@@ -232,7 +242,12 @@ constructor(
       tetheringEventCallback,
       ADB_PACKAGE_NAME,
     )
-    wifiManager.unregisterSoftApCallback(softApCallback)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+      wifiManager.unregisterSoftApCallback(softApCallback)
+    } else {
+      @Suppress("DEPRECATION")
+      wifiManager.unregisterSoftApCallback(softApCallback.hashCode())
+    }
   }
 
   fun startHotspot(forceRestart: Boolean = false): Boolean {
@@ -244,12 +259,22 @@ constructor(
     if (!shouldStart) return false
     val request =
       TetheringManager.TetheringRequest.Builder(TETHERING_WIFI).build()
-    tetheringConnector.startTethering(
-      request.parcel,
-      applicationContext.packageName,
-      applicationContext.attributionTag,
-      startOrStopResultReceiver,
-    )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+
+      tetheringConnector.startTethering(
+        request.parcel,
+        applicationContext.packageName,
+        applicationContext.attributionTag,
+        startOrStopResultReceiver,
+      )
+    } else {
+      @Suppress("DEPRECATION")
+      tetheringConnector.startTethering(
+        request.parcel,
+        applicationContext.packageName,
+        startOrStopResultReceiver,
+      )
+    }
     return true
   }
 
@@ -258,12 +283,21 @@ constructor(
     if (state != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
       return false
     }
-    tetheringConnector.stopTethering(
-      TETHERING_WIFI,
-      applicationContext.packageName,
-      applicationContext.attributionTag,
-      startOrStopResultReceiver,
-    )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+      tetheringConnector.stopTethering(
+        TETHERING_WIFI,
+        applicationContext.packageName,
+        applicationContext.attributionTag,
+        startOrStopResultReceiver,
+      )
+    } else {
+      @Suppress("DEPRECATION")
+      tetheringConnector.stopTethering(
+        TETHERING_WIFI,
+        applicationContext.packageName,
+        startOrStopResultReceiver,
+      )
+    }
     return true
   }
 

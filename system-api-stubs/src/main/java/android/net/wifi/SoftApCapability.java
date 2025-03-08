@@ -17,11 +17,13 @@
 package android.net.wifi;
 
 import android.net.wifi.SoftApConfigurationHidden.BandType;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -99,6 +101,7 @@ public final class SoftApCapability implements Parcelable {
         throw new RuntimeException("stub!");
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     @NonNull public int[] getSupportedChannelList(@BandType int band) {
         throw new RuntimeException("stub!");
     }

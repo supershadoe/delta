@@ -65,7 +65,15 @@ public interface IWifiManager extends IInterface {
 
     boolean setSoftApConfiguration(SoftApConfiguration softApConfig, String packageName);
 
+    @RequiresApi(Build.VERSION_CODES.S)
     void registerSoftApCallback(ISoftApCallback callback);
 
+    @RequiresApi(Build.VERSION_CODES.S)
     void unregisterSoftApCallback(ISoftApCallback callback);
+
+    @Deprecated(since = "S")
+    void registerSoftApCallback(IBinder binder, ISoftApCallback callback, int callbackIdentifier);
+
+    @Deprecated(since = "S")
+    void unregisterSoftApCallback(int callbackIdentifier);
 }

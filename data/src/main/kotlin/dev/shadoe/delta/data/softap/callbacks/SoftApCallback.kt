@@ -5,6 +5,7 @@ import android.net.wifi.SoftApCapability
 import android.net.wifi.SoftApInfo
 import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
+import android.os.Build
 import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_OPEN
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA2_PSK
@@ -34,6 +35,18 @@ internal class SoftApCallback(
     isBridged: Boolean,
     isRegistration: Boolean,
   ) {}
+
+  /** Results in a no-op because already [TetheringEventCallback] handles it */
+  @Deprecated("Removed in API 31")
+  override fun onConnectedClientsChanged(clients: List<WifiClient?>?) {}
+
+  /** Results in a no-op because already [TetheringEventCallback] handles it */
+  @Deprecated("Removed in API 31")
+  override fun onInfoChanged(softApInfo: SoftApInfo?) {}
+
+  /** Results in a no-op because already [TetheringEventCallback] handles it */
+  @Deprecated("Removed in API 31")
+  override fun onInfoListChanged(softApInfoList: List<SoftApInfo?>?) {}
 
   /**
    * Gets supported bands, max client limit and other capabilities and update
@@ -114,8 +127,11 @@ internal class SoftApCallback(
         )
         .filter {
           capability.run {
-            areFeaturesSupported(it.value) and
-              getSupportedChannelList(it.key).isNotEmpty()
+            var res = areFeaturesSupported(it.value)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+              res = res and getSupportedChannelList(it.key).isNotEmpty()
+            }
+            res
           }
         }
         .keys
