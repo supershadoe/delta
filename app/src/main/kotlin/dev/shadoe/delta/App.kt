@@ -8,8 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import dev.shadoe.delta.crash.CrashHandlerUtils
 import dev.shadoe.delta.crash.CrashHandlerSetup
+import dev.shadoe.delta.crash.CrashHandlerUtils
 import dev.shadoe.delta.design.AppTheme
 import dev.shadoe.delta.navigation.HotspotNavGraph
 import dev.shadoe.delta.shizuku.ShizukuScope
