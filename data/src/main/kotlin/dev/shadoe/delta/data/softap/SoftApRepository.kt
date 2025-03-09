@@ -312,8 +312,10 @@ constructor(
             c.toOriginalClass()
           )
           .let {
-            if (!wifiManager.validateSoftApConfiguration(it)) {
-              return@let false
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+              if (!wifiManager.validateSoftApConfiguration(it)) {
+                return@let false
+              }
             }
             wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
             return@let true

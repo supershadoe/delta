@@ -61,6 +61,7 @@ public interface IWifiManager extends IInterface {
 
     boolean is6GHzBandSupported();
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     boolean validateSoftApConfiguration(SoftApConfiguration config);
 
     int getWifiApEnabledState();
