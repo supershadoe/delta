@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build-apk:
-    name: Build app
+    name: Run CI checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
