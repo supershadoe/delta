@@ -156,15 +156,19 @@ constructor(
           )
         emit(prev)
         while (true) {
-          val curr =
-            Refine.unsafeCast<SoftApConfigurationHidden>(
-              wifiManager.softApConfiguration
-            )
-          if (prev != curr) {
-            emit(curr)
-            prev = curr
-          }
-          delay(1.seconds)
+          runCatching {
+              Refine.unsafeCast<SoftApConfigurationHidden>(
+                wifiManager.softApConfiguration
+              )
+            }
+            .getOrNull()
+            ?.let { curr ->
+              if (prev != curr) {
+                emit(curr)
+                prev = curr
+              }
+              delay(1.seconds)
+            }
         }
       }
       .onEach { _config.value = it.toBridgeClass(state = internalState.value) }
