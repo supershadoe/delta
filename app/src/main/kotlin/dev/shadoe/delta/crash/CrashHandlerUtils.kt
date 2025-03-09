@@ -13,7 +13,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.PendingIntentCompat
 import dev.shadoe.delta.R
 
-object CrashHandler {
+object CrashHandlerUtils {
   private const val CRASH_CHANNEL_ID = "dev.shadoe.delta.crashChannel"
   const val CRASH_NOTIF_ID = 1
 

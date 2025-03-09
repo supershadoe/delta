@@ -3,7 +3,7 @@ package dev.shadoe.delta
 import android.app.Application
 import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
-import dev.shadoe.delta.crash.CrashHandler
+import dev.shadoe.delta.crash.CrashHandlerUtils
 import kotlin.system.exitProcess
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
@@ -14,7 +14,7 @@ class Application : Application() {
 
     Thread.setDefaultUncaughtExceptionHandler { _, throwable ->
       Log.e(packageName, "Uncaught exception", throwable)
-      CrashHandler.sendCrashNotification(applicationContext, throwable)
+      CrashHandlerUtils.sendCrashNotification(applicationContext, throwable)
       exitProcess(1)
     }
 

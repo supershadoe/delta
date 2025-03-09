@@ -66,7 +66,7 @@ class CrashHandlerActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()
     super.onCreate(savedInstanceState)
-    NotificationManagerCompat.from(this).cancel(CrashHandler.CRASH_NOTIF_ID)
+    NotificationManagerCompat.from(this).cancel(CrashHandlerUtils.CRASH_NOTIF_ID)
     setContent {
       val crashLog = remember {
         intent.getStringExtra(EXTRA_CRASH_INFO)?.let { formatLog(it) }
