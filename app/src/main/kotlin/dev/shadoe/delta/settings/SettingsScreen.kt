@@ -177,14 +177,22 @@ fun SettingsScreen(
         Button(
           onClick = onClick@{
               if (mutableConfig.passphrase.isEmpty()) {
-                scope.launch {
-                  snackbarHostState.showSnackbar(
-                    message = passphraseEmptyWarningText,
-                    withDismissAction = true,
-                    duration = SnackbarDuration.Short,
-                  )
+                if (
+                  mutableConfig.securityType ==
+                    SoftApSecurityType.SECURITY_TYPE_OPEN
+                ) {
+                  mutableConfig =
+                    mutableConfig.copy(passphrase = config.value.passphrase)
+                } else {
+                  scope.launch {
+                    snackbarHostState.showSnackbar(
+                      message = passphraseEmptyWarningText,
+                      withDismissAction = true,
+                      duration = SnackbarDuration.Short,
+                    )
+                  }
+                  return@onClick
                 }
-                return@onClick
               }
               vm.updateConfig(mutableConfig)
               navController?.navigateUp()
