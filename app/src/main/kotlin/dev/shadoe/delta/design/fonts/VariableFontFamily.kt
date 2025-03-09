@@ -1,4 +1,4 @@
-package dev.shadoe.delta.typography
+package dev.shadoe.delta.design.fonts
 
 import android.annotation.SuppressLint
 import android.os.Build

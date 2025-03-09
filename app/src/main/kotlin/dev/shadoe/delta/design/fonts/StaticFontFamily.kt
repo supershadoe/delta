@@ -1,4 +1,4 @@
-package dev.shadoe.delta.typography
+package dev.shadoe.delta.design.fonts
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

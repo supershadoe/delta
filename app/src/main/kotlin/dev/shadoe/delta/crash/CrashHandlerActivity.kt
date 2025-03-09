@@ -26,18 +26,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationManagerCompat
 import dev.shadoe.delta.R
-import dev.shadoe.delta.typography.Typography
+import dev.shadoe.delta.design.AppTheme
 
 class CrashHandlerActivity : ComponentActivity() {
   companion object {
@@ -71,17 +68,11 @@ class CrashHandlerActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     NotificationManagerCompat.from(this).cancel(CrashHandler.CRASH_NOTIF_ID)
     setContent {
-      val colorScheme =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-          dynamicDarkColorScheme(LocalContext.current)
-        } else {
-          darkColorScheme()
-        }
       val crashLog = remember {
         intent.getStringExtra(EXTRA_CRASH_INFO)?.let { formatLog(it) }
       }
 
-      MaterialTheme(colorScheme = colorScheme, typography = Typography.value) {
+      AppTheme {
         Scaffold(
           topBar = {
             @OptIn(ExperimentalMaterial3Api::class)

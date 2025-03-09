@@ -1,8 +1,10 @@
-package dev.shadoe.delta.typography
+package dev.shadoe.delta.design
 
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.material3.Typography
+import dev.shadoe.delta.design.fonts.StaticFontFamily
+import dev.shadoe.delta.design.fonts.VariableFontFamily
 
 object Typography {
   private val defaultTypography = Typography()
