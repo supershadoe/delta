@@ -65,7 +65,10 @@ constructor(
     private const val ADB_PACKAGE_NAME = "com.android.shell"
   }
 
-  private val internalState = MutableStateFlow(InternalState())
+  private val internalState =
+    MutableStateFlow(
+      InternalState(fallbackPassphrase = generateRandomPassword())
+    )
 
   private val shouldRestartHotspot = MutableStateFlow(false)
 
