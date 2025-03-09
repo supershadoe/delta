@@ -3,7 +3,11 @@
     <string name="app_name">Delta</string>
     <string name="back_button">Go back</string>
     <string name="blocklist">Blocklist</string>
-    <string name="no_connected_devices">There are no connected devices.</string>
+    <string name="no_connected_devices">
+        There are no connected devices.
+    </string>
+    <string name="setup_title">Setup the app</string>
+    <string name="open_icon">Open</string>
 
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">No devices are blocked.</string>
@@ -60,9 +64,6 @@
     <string name="hotspot_enable_action">ENABLE</string>
     <string name="edit_button">Edit</string>
 
-    <!-- dev.shadoe.delta.shizuku.ShizukuSetupScreen -->
-    <string name="shizuku_setup">Setup the app</string>
-
     <!-- dev.shadoe.delta.shizuku.ShizukuNotConnected -->
     <string name="shizuku_not_connected_desc">
         This app uses system APIs that are not generally accessible from the
@@ -72,7 +73,6 @@
 
     <!-- dev.shadoe.delta.shizuku.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku is not installed.</string>
-    <string name="open_link_icon">Open link</string>
     <string name="github">GitHub</string>
     <string name="install_from_icon">Install from</string>
     <string name="play_store">Play Store</string>

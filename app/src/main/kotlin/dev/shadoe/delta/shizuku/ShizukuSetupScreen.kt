@@ -30,7 +30,7 @@ fun ShizukuSetupScreen(
     topBar = {
       if (state != NOT_READY && state != CONNECTED) {
         @OptIn(ExperimentalMaterial3Api::class)
-        LargeTopAppBar(title = { Text(stringResource(R.string.shizuku_setup)) })
+        LargeTopAppBar(title = { Text(stringResource(R.string.setup_title)) })
       }
     }
   ) {

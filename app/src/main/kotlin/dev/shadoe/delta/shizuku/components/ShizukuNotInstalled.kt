@@ -38,7 +38,7 @@ internal fun ShizukuNotInstalled() {
       Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
           imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-          contentDescription = stringResource(R.string.open_link_icon),
+          contentDescription = stringResource(R.string.open_icon),
         )
         Text(
           text = stringResource(R.string.github),
