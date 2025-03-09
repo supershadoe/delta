@@ -36,7 +36,7 @@ internal fun ControlButton(
     } else if (isEnabled) {
       MaterialTheme.colorScheme.primaryContainer
     } else {
-      MaterialTheme.colorScheme.surfaceBright
+      MaterialTheme.colorScheme.surfaceVariant
     }
   val description =
     if (isLoading) {
