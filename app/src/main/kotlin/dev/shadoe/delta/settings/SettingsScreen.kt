@@ -181,21 +181,37 @@ fun SettingsScreen(
       }
 
       item {
-        AdvancedSettingsField(
-          isAdvancedSettingsEnabled = isAdvancedSettingsEnabled,
-          onClicked = { isAdvancedSettingsEnabled = it },
-        )
+        Row(
+          modifier =
+            Modifier.fillMaxWidth().clickable {
+              isAdvancedSettingsEnabled = !isAdvancedSettingsEnabled
+            },
+          horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+          Text(
+            text = stringResource(R.string.advanced_settings_field_label),
+            modifier = Modifier.padding(8.dp),
+          )
+          Icon(
+            modifier = Modifier.align(Alignment.CenterVertically),
+            imageVector =
+              if (isAdvancedSettingsEnabled) Icons.Rounded.KeyboardArrowUp
+              else Icons.Rounded.KeyboardArrowDown,
+            contentDescription =
+              stringResource(R.string.advanced_settings_field_icon),
+          )
+        }
       }
 
-      item {
-        HiddenHotspotField(
-          isAdvancedSettingsEnabled = isAdvancedSettingsEnabled,
-          isHiddenHotspotEnabled = mutableConfig.isHidden,
-          onHiddenHotspotChange = {
-            mutableConfig = mutableConfig.copy(isHidden = it)
-          },
-        )
-      }
+      if (isAdvancedSettingsEnabled)
+        item {
+          HiddenHotspotField(
+            isHiddenHotspotEnabled = mutableConfig.isHidden,
+            onHiddenHotspotChange = {
+              mutableConfig = mutableConfig.copy(isHidden = it)
+            },
+          )
+        }
 
       item {
         Button(
@@ -223,51 +239,28 @@ fun SettingsScreen(
 
 @Composable
 private fun HiddenHotspotField(
-  isAdvancedSettingsEnabled: Boolean,
   isHiddenHotspotEnabled: Boolean,
   onHiddenHotspotChange: (Boolean) -> Unit,
 ) {
 
-  if (isAdvancedSettingsEnabled)
-    Row(
-      modifier = Modifier.fillMaxWidth().padding(8.dp),
-      horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically,
-    ) {
-      Text(text = stringResource(R.string.hidden_hotspot_field_label))
-      Switch(
-        checked = isHiddenHotspotEnabled,
-        onCheckedChange = { onHiddenHotspotChange(it) },
-      )
-    }
+  Row(
+    modifier = Modifier.fillMaxWidth().padding(8.dp),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Text(text = stringResource(R.string.hidden_hotspot_field_label))
+    Switch(
+      checked = isHiddenHotspotEnabled,
+      onCheckedChange = { onHiddenHotspotChange(it) },
+    )
+  }
 }
 
 @Composable
 private fun AdvancedSettingsField(
   onClicked: (Boolean) -> Unit,
   isAdvancedSettingsEnabled: Boolean,
-) {
-
-  Row(
-    modifier =
-      Modifier.fillMaxWidth().clickable {
-        onClicked(!isAdvancedSettingsEnabled)
-      },
-    horizontalArrangement = Arrangement.SpaceBetween,
-  ) {
-    Text(
-      text = stringResource(R.string.advanced_settings_field_label),
-      modifier = Modifier.padding(8.dp),
-    )
-    Icon(
-      modifier = Modifier.align(Alignment.CenterVertically),
-      imageVector =
-        if (isAdvancedSettingsEnabled) Icons.Rounded.KeyboardArrowUp
-        else Icons.Rounded.KeyboardArrowDown,
-      contentDescription = stringResource(R.string.advanced_settings_field_icon),
-    )
-  }
-}
+) {}
 
 @Composable
 private fun SSIDField(ssid: String, onSSIDChange: (String) -> Unit) {
