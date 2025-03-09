@@ -3,12 +3,10 @@ package dev.shadoe.delta.settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -31,7 +29,6 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -55,21 +52,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
 import dev.shadoe.delta.navigation.LocalNavController
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(
   modifier: Modifier = Modifier,
   vm: SettingsViewModel = viewModel(),
-
-  ) {
+) {
   val navController = LocalNavController.current
   val focusManager = LocalFocusManager.current
   val scope = rememberCoroutineScope()
@@ -78,15 +72,12 @@ fun SettingsScreen(
   val config = vm.config.collectAsState()
   val status by vm.status.collectAsState()
 
-  val blockedClients by vm.blockedClients.collectAsState(emptyList())
-
-
   var mutableConfig by remember(config.value) { mutableStateOf(config.value) }
 
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
 
-
+  var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
 
   Scaffold(
     topBar = {
@@ -107,14 +98,13 @@ fun SettingsScreen(
   ) { scaffoldPadding ->
     LazyColumn(
       modifier =
-      Modifier
-        .fillMaxSize()
-        .padding(scaffoldPadding)
-        .padding(horizontal = 16.dp)
-        .pointerInput(Unit) {
-          detectTapGestures(onTap = { focusManager.clearFocus() })
-        }
-        .then(modifier)
+        Modifier.fillMaxSize()
+          .padding(scaffoldPadding)
+          .padding(horizontal = 16.dp)
+          .pointerInput(Unit) {
+            detectTapGestures(onTap = { focusManager.clearFocus() })
+          }
+          .then(modifier)
     ) {
       item {
         Text(
@@ -139,11 +129,11 @@ fun SettingsScreen(
             mutableConfig =
               mutableConfig.copy(
                 speedType =
-                if (shouldSwitchBackTo5G) {
-                  SoftApSpeedType.BAND_5GHZ
-                } else {
-                  mutableConfig.speedType
-                },
+                  if (shouldSwitchBackTo5G) {
+                    SoftApSpeedType.BAND_5GHZ
+                  } else {
+                    mutableConfig.speedType
+                  },
                 securityType = it,
               )
           },
@@ -175,16 +165,16 @@ fun SettingsScreen(
             val shouldSwitchToSAE =
               it == SoftApSpeedType.BAND_6GHZ &&
                 mutableConfig.securityType !=
-                SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
+                  SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
             mutableConfig =
               mutableConfig.copy(
                 speedType = it,
                 securityType =
-                if (shouldSwitchToSAE) {
-                  SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
-                } else {
-                  mutableConfig.securityType
-                },
+                  if (shouldSwitchToSAE) {
+                    SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
+                  } else {
+                    mutableConfig.securityType
+                  },
               )
           },
         )
@@ -192,227 +182,92 @@ fun SettingsScreen(
 
       item {
         AdvancedSettingsField(
-          blockedClients = blockedClients,
-          scope = scope,
-          snackbarHostState = snackbarHostState,
-          vm = vm
+          isAdvancedSettingsEnabled = isAdvancedSettingsEnabled,
+          onClicked = { isAdvancedSettingsEnabled = it },
         )
       }
+
+      item {
+        HiddenHotspotField(
+          isAdvancedSettingsEnabled = isAdvancedSettingsEnabled,
+          isHiddenHotspotEnabled = mutableConfig.isHidden,
+          onHiddenHotspotChange = {
+            mutableConfig = mutableConfig.copy(isHidden = it)
+          },
+        )
+      }
+
       item {
         Button(
           onClick = onClick@{
-            if (mutableConfig.passphrase.isEmpty()) {
-              scope.launch {
-                snackbarHostState.showSnackbar(
-                  message = passphraseEmptyWarningText,
-                  withDismissAction = true,
-                  duration = SnackbarDuration.Short,
-                )
+              if (mutableConfig.passphrase.isEmpty()) {
+                scope.launch {
+                  snackbarHostState.showSnackbar(
+                    message = passphraseEmptyWarningText,
+                    withDismissAction = true,
+                    duration = SnackbarDuration.Short,
+                  )
+                }
+                return@onClick
               }
-              return@onClick
+              vm.updateConfig(mutableConfig)
+              navController?.navigateUp()
             }
-            vm.updateConfig(mutableConfig)
-            navController?.navigateUp()
-          }
         ) {
           Text(text = stringResource(R.string.save_button))
         }
       }
-
     }
   }
 }
 
-
 @Composable
-private fun BlockListField(
-  blockedClients: List<ACLDevice>,
-  scope: CoroutineScope,
-  snackbarHostState: SnackbarHostState,
-  vm: SettingsViewModel,
+private fun HiddenHotspotField(
+  isAdvancedSettingsEnabled: Boolean,
+  isHiddenHotspotEnabled: Boolean,
+  onHiddenHotspotChange: (Boolean) -> Unit,
 ) {
-  var expanded by remember { mutableStateOf(false) }
-  Column(
-    modifier = Modifier
-      .fillMaxWidth()
-      .clickable { expanded = !expanded }
-  ) {
+
+  if (isAdvancedSettingsEnabled)
     Row(
-      modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.SpaceBetween
+      modifier = Modifier.fillMaxWidth().padding(8.dp),
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically,
     ) {
-      Text(text = "Block List", modifier = Modifier.padding(8.dp))
-      Icon(
-        modifier = Modifier.align(Alignment.CenterVertically),
-        imageVector = if (expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
-        contentDescription = "Expand or collapse",
+      Text(text = stringResource(R.string.hidden_hotspot_field_label))
+      Switch(
+        checked = isHiddenHotspotEnabled,
+        onCheckedChange = { onHiddenHotspotChange(it) },
       )
     }
-    if (expanded) {
-
-      Box(
-        modifier = Modifier
-          .fillMaxWidth()
-          .heightIn(max = 200.dp)
-      ) {
-        LazyColumn(
-          modifier = Modifier
-        ) {
-          if (blockedClients.isEmpty()) {
-            item {
-              Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
-              ) {
-                Text(
-                  text = stringResource(R.string.blocklist_none_blocked),
-                  modifier = Modifier.padding(16.dp),
-                )
-              }
-            }
-          } else {
-            items(blockedClients.size) { index ->
-              val d = blockedClients[index]
-              Row(
-                modifier = Modifier.padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-              ) {
-                Column(modifier = Modifier.weight(1f)) {
-                  Text(text = d.hostname ?: "noClientHostnameText")
-                  Text(text = d.macAddress.toString())
-                }
-                Button(
-                  onClick = {
-                    vm.unblockDevice(d)
-                    scope.launch {
-                      snackbarHostState.showSnackbar(
-                        message = "Device removed from blocklist.",
-                        duration = SnackbarDuration.Short,
-                        withDismissAction = true,
-                      )
-                    }
-                  }
-                ) {
-                  Text(text = stringResource(R.string.unblock_button))
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@Composable
-private fun AllowListField() {
-  var expanded by remember { mutableStateOf(false) }
-  Column(modifier = Modifier
-    .fillMaxWidth()
-    .clickable {
-      expanded = !expanded
-    }) {
-    Row(
-      modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-      Text(text = "Allow List", modifier = Modifier.padding(8.dp))
-      Icon(
-        modifier = Modifier.align(Alignment.CenterVertically),
-        imageVector = if (expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
-        contentDescription = "Expand or collapse",
-      )
-    }
-    if (expanded) {
-      Text(text = "SSIDaaaa")
-      Text(text = "SSID")
-      Text(text = "SSID")
-    }
-  }
-}
-
-@Composable
-private fun HiddenHotspotField() {
-  var toggle by remember { mutableStateOf(false) }
-  Row(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(8.dp),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    Alignment.CenterVertically
-  ) {
-    Text(text = "Hidden Hotspot")
-    Switch(checked = toggle, onCheckedChange = {
-      toggle = it
-    })
-  }
-}
-
-@Composable
-private fun MaxClientField() {
-  var sliderValue by remember { mutableStateOf(0f) }
-  Column(modifier = Modifier.padding(8.dp)) {
-    Text(text = "Max Client Limit")
-    Slider(value = sliderValue, onValueChange = {
-      sliderValue = it
-      println(it.toInt())
-    }, valueRange = 0f..10f)
-  }
-}
-
-@Composable
-private fun MACRandomizationField() {
-  var toggle by remember { mutableStateOf(false) }
-  Row(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(8.dp),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    Alignment.CenterVertically
-  ) {
-    Text(text = "MAC Randomization")
-    Switch(checked = toggle, onCheckedChange = {
-      toggle = it
-    })
-  }
 }
 
 @Composable
 private fun AdvancedSettingsField(
-  blockedClients: List<ACLDevice>,
-  scope: CoroutineScope,
-  snackbarHostState: SnackbarHostState,
-  vm: SettingsViewModel,
+  onClicked: (Boolean) -> Unit,
+  isAdvancedSettingsEnabled: Boolean,
 ) {
 
-  var expanded by remember { mutableStateOf(false) }
-  Column(modifier = Modifier
-    .fillMaxWidth()
-    .clickable {
-      expanded = !expanded
-    }) {
-    Row(
-      modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-      Text(text = "Advanced Settings", modifier = Modifier.padding(8.dp))
-      Icon(
-        modifier = Modifier.align(Alignment.CenterVertically),
-        imageVector = if (expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
-        contentDescription = "Expand or collapse",
-      )
-    }
-    if (expanded) {
-      BlockListField(blockedClients, scope, snackbarHostState, vm)
-      AllowListField()
-      HiddenHotspotField()
-      MaxClientField()
-      MACRandomizationField()
-    }
+  Row(
+    modifier =
+      Modifier.fillMaxWidth().clickable {
+        onClicked(!isAdvancedSettingsEnabled)
+      },
+    horizontalArrangement = Arrangement.SpaceBetween,
+  ) {
+    Text(
+      text = stringResource(R.string.advanced_settings_field_label),
+      modifier = Modifier.padding(8.dp),
+    )
+    Icon(
+      modifier = Modifier.align(Alignment.CenterVertically),
+      imageVector =
+        if (isAdvancedSettingsEnabled) Icons.Rounded.KeyboardArrowUp
+        else Icons.Rounded.KeyboardArrowDown,
+      contentDescription = stringResource(R.string.advanced_settings_field_icon),
+    )
   }
-
 }
-
 
 @Composable
 private fun SSIDField(ssid: String, onSSIDChange: (String) -> Unit) {
@@ -429,15 +284,13 @@ private fun SSIDField(ssid: String, onSSIDChange: (String) -> Unit) {
       onValueChange = { onSSIDChange(it) },
       singleLine = true,
       keyboardOptions =
-      KeyboardOptions(
-        capitalization = KeyboardCapitalization.None,
-        autoCorrectEnabled = false,
-        keyboardType = KeyboardType.Text,
-        imeAction = ImeAction.Next,
-      ),
-      modifier = Modifier
-        .padding(horizontal = 16.dp)
-        .fillMaxWidth(),
+        KeyboardOptions(
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Text,
+          imeAction = ImeAction.Next,
+        ),
+      modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
       label = { Text(text = stringResource(R.string.ssid_field_label)) },
     )
   }
@@ -471,9 +324,9 @@ private fun SecurityTypeField(
             label = {
               Text(
                 text =
-                stringResource(
-                  getResOfSecurityType(supportedSecurityTypes[it])
-                )
+                  stringResource(
+                    getResOfSecurityType(supportedSecurityTypes[it])
+                  )
               )
             },
             modifier = Modifier.padding(horizontal = 2.dp),
@@ -502,15 +355,13 @@ private fun PassphraseField(
       onValueChange = { onPassphraseChange(it) },
       singleLine = true,
       keyboardOptions =
-      KeyboardOptions(
-        capitalization = KeyboardCapitalization.None,
-        autoCorrectEnabled = false,
-        keyboardType = KeyboardType.Password,
-        imeAction = ImeAction.Done,
-      ),
-      modifier = Modifier
-        .padding(horizontal = 16.dp)
-        .fillMaxWidth(),
+        KeyboardOptions(
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          keyboardType = KeyboardType.Password,
+          imeAction = ImeAction.Done,
+        ),
+      modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
       label = { Text(text = stringResource(R.string.passphrase_field_label)) },
     )
   }
@@ -522,9 +373,7 @@ private fun AutoShutdownField(
   onAutoShutdownChange: (Boolean) -> Unit,
 ) {
   Row(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(vertical = 16.dp),
+    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
     Icon(
@@ -532,9 +381,7 @@ private fun AutoShutdownField(
       contentDescription = stringResource(R.string.auto_shutdown_field_icon),
     )
     Column(
-      modifier = Modifier
-        .weight(1f)
-        .padding(horizontal = 16.dp),
+      modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
       horizontalAlignment = Alignment.Start,
     ) {
       Text(
@@ -581,7 +428,7 @@ private fun SpeedTypeField(
             label = {
               Text(
                 text =
-                stringResource(getResOfSpeedType(supportedSpeedTypes[it]))
+                  stringResource(getResOfSpeedType(supportedSpeedTypes[it]))
               )
             },
             modifier = Modifier.padding(horizontal = 2.dp),

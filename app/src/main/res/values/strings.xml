@@ -108,4 +108,7 @@
     <!-- dev.shadoe.delta.shizuku.ShizukuNotRunning -->
     <string name="shizuku_not_running">Shizuku is not running.</string>
     <string name="shizuku_start">Start Shizuku</string>
+    <string name="advanced_settings_field_label">Advanced Settings</string>
+    <string name="advanced_settings_field_icon">if expanded \'collapse\' else \'expand\'</string>
+    <string name="hidden_hotspot_field_label">Hidden Hotspot</string>
 </resources>
