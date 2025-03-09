@@ -47,6 +47,7 @@ class CrashHandlerActivity : ComponentActivity() {
     Manufacturer: ${Build.MANUFACTURER} (${Build.BRAND})
     Model: ${Build.MODEL} (${Build.DEVICE})
     OS: Android ${Build.VERSION.RELEASE_OR_CODENAME} (${Build.VERSION.SDK_INT})
+    Fingerprint: ${Build.FINGERPRINT}
     === end of metadata
 
     === beginning of crash log
@@ -66,7 +67,8 @@ class CrashHandlerActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()
     super.onCreate(savedInstanceState)
-    NotificationManagerCompat.from(this).cancel(CrashHandlerUtils.CRASH_NOTIF_ID)
+    NotificationManagerCompat.from(this)
+      .cancel(CrashHandlerUtils.CRASH_NOTIF_ID)
     setContent {
       val crashLog = remember {
         intent.getStringExtra(EXTRA_CRASH_INFO)?.let { formatLog(it) }
