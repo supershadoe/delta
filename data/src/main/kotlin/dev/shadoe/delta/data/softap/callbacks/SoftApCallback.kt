@@ -1,17 +1,20 @@
 package dev.shadoe.delta.data.softap.callbacks
 
 import android.net.wifi.ISoftApCallback
+import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApCapability
 import android.net.wifi.SoftApInfo
 import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
 import android.os.Build
+import androidx.annotation.RequiresApi
 import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_OPEN
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA2_PSK
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA3_SAE_TRANSITION
 import dev.shadoe.delta.api.SoftApSpeedType
+import dev.shadoe.delta.api.SoftApSpeedType.BandType
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +22,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 internal class SoftApCallback(
-  private val tetheringEventListener: TetheringEventListener
+  private val tetheringEventListener: TetheringEventListener,
+  private val wifiManager: IWifiManager,
 ) : ISoftApCallback.Stub() {
   /** Results in a no-op because already [TetheringEventCallback] handles it */
   override fun onStateChanged(state: SoftApState?) {}
@@ -64,10 +68,19 @@ internal class SoftApCallback(
                 SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT
               ),
             isMacAddressCustomizationSupported =
-              capability.areFeaturesSupported(
-                SoftApCapability.SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION
-              ),
-            supportedFrequencyBands = querySupportedFrequencyBands(capability),
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                capability.areFeaturesSupported(
+                  SoftApCapability.SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION
+                )
+              } else {
+                false
+              },
+            supportedFrequencyBands =
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                querySupportedFrequencyBands(capability)
+              } else {
+                querySupportedFrequencyBands(wifiManager)
+              },
             supportedSecurityTypes = querySupportedSecurityTypes(capability),
           )
         )
@@ -113,6 +126,19 @@ internal class SoftApCallback(
       types.toList()
     }
 
+  private suspend fun querySupportedFrequencyBands(wifiManager: IWifiManager) =
+    withContext(Dispatchers.Unconfined) {
+      @BandType val bands = mutableListOf(SoftApSpeedType.BAND_2GHZ)
+      if (wifiManager.is5GHzBandSupported) {
+        bands += SoftApSpeedType.BAND_5GHZ
+      }
+      if (wifiManager.is6GHzBandSupported) {
+        bands += SoftApSpeedType.BAND_6GHZ
+      }
+      bands.toList()
+    }
+
+  @RequiresApi(Build.VERSION_CODES.S)
   private suspend fun querySupportedFrequencyBands(
     capability: SoftApCapability
   ) =
@@ -127,11 +153,8 @@ internal class SoftApCallback(
         )
         .filter {
           capability.run {
-            var res = areFeaturesSupported(it.value)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-              res = res and getSupportedChannelList(it.key).isNotEmpty()
-            }
-            res
+            areFeaturesSupported(it.value) and
+              getSupportedChannelList(it.key).isNotEmpty()
           }
         }
         .keys

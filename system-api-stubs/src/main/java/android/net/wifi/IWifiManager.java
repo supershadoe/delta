@@ -54,6 +54,13 @@ public interface IWifiManager extends IInterface {
         public static final java.lang.String DESCRIPTOR = "android.net.wifi.IWifiManager";
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
+    boolean is24GHzBandSupported();
+
+    boolean is5GHzBandSupported();
+
+    boolean is6GHzBandSupported();
+
     boolean validateSoftApConfiguration(SoftApConfiguration config);
 
     int getWifiApEnabledState();

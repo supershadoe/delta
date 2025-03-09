@@ -35,22 +35,31 @@ public final class SoftApCapability implements Parcelable {
 
     public static final long SOFTAP_FEATURE_WPA3_SAE = 1 << 2;
 
+    @RequiresApi(Build.VERSION_CODES.S)
     public static final long SOFTAP_FEATURE_MAC_ADDRESS_CUSTOMIZATION = 1 << 3;
 
+    @RequiresApi(Build.VERSION_CODES.S)
     public static final long SOFTAP_FEATURE_IEEE80211_AX = 1 << 4;
 
+    @RequiresApi(Build.VERSION_CODES.S)
     public static final long SOFTAP_FEATURE_BAND_24G_SUPPORTED = 1 << 5;
 
+    @RequiresApi(Build.VERSION_CODES.S)
     public static final long SOFTAP_FEATURE_BAND_5G_SUPPORTED = 1 << 6;
 
+    @RequiresApi(Build.VERSION_CODES.S)
     public static final long SOFTAP_FEATURE_BAND_6G_SUPPORTED = 1 << 7;
 
+    @RequiresApi(Build.VERSION_CODES.S)
     public static final long SOFTAP_FEATURE_BAND_60G_SUPPORTED = 1 << 8;
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     public static final long SOFTAP_FEATURE_IEEE80211_BE = 1 << 9;
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     public static final long SOFTAP_FEATURE_WPA3_OWE_TRANSITION = 1 << 10;
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     public static final long SOFTAP_FEATURE_WPA3_OWE = 1 << 11;
 
     @Retention(RetentionPolicy.SOURCE)

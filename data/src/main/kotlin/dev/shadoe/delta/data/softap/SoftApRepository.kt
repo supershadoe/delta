@@ -138,7 +138,8 @@ constructor(
   private val tetheringEventCallback =
     TetheringEventCallback(tetheringEventListener)
 
-  private val softApCallback = SoftApCallback(tetheringEventListener)
+  private val softApCallback =
+    SoftApCallback(tetheringEventListener, wifiManager)
 
   private val startOrStopResultReceiver =
     object : IIntResultListener.Stub() {
