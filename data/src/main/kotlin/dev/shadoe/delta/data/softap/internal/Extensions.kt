@@ -75,6 +75,7 @@ internal object Extensions {
           )
         },
       isAutoShutdownEnabled = isAutoShutdownEnabled,
+      autoShutdownTimeout = shutdownTimeoutMillis,
       maxClientLimit = maxNumberOfClients,
     )
 
@@ -132,6 +133,7 @@ internal object Extensions {
         )
         setClientControlByUserEnabled(false)
         setAutoShutdownEnabled(isAutoShutdownEnabled)
+        setShutdownTimeoutMillis(autoShutdownTimeout)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
           setBridgedModeOpportunisticShutdownEnabled(isAutoShutdownEnabled)
         }

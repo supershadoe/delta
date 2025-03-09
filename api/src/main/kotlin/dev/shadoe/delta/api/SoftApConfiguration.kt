@@ -11,5 +11,7 @@ data class SoftApConfiguration(
   val blockedDevices: List<ACLDevice>,
   val allowedClients: List<ACLDevice>,
   val isAutoShutdownEnabled: Boolean,
+  /** Timeout in milliseconds for auto shutdown. */
+  val autoShutdownTimeout: Long,
   val maxClientLimit: Int,
 )
