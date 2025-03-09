@@ -5,6 +5,11 @@
     <string name="blocklist">Blocklist</string>
     <string name="no_connected_devices">There are no connected devices.</string>
 
+    <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">No devices are blocked.</string>
+    <string name="unblock_button">UNBLOCK</string>
+    <string name="blocklist_unblocked">Device removed from blocklist.</string>
+
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Loading</string>
     <string name="control_button_stop">Stop hotspot</string>
@@ -24,11 +29,6 @@
     <string name="passphrase_hidden">(passphrase hidden)</string>
     <string name="passphrase_show">Show passphrase</string>
     <string name="passphrase_hide">Hide passphrase</string>
-
-    <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
-    <string name="blocklist_none_blocked">No devices are blocked.</string>
-    <string name="unblock_button">UNBLOCK</string>
-    <string name="blocklist_unblocked">Device removed from blocklist.</string>
 
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
     <string name="settings">Settings</string>
