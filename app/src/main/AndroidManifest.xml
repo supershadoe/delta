@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".crash.CrashHandlerActivity"
             android:exported="false" />
+        <activity android:name=".debug.DebugActivity"
+            android:exported="false" />
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
             android:authorities="${applicationId}.shizuku"

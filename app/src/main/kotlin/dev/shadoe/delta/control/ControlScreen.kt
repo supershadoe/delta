@@ -1,6 +1,9 @@
 package dev.shadoe.delta.control
 
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.MinorCrash
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -28,14 +30,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -46,6 +53,7 @@ import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.control.buttons.HotspotButton
 import dev.shadoe.delta.control.components.ConnectedDevicesList
 import dev.shadoe.delta.control.components.PassphraseDisplay
+import dev.shadoe.delta.debug.DebugActivity
 import dev.shadoe.delta.navigation.LocalNavController
 import dev.shadoe.delta.navigation.Routes
 import kotlinx.coroutines.launch
@@ -67,6 +75,13 @@ fun ControlScreen(
   //        "isBigScreen: $isBigScreen; screenWidthDp:
   // ${LocalConfiguration.current.screenWidthDp}",
   //    )
+
+  // Debug screen trigger
+  val context = LocalContext.current
+  var appNameTaps by remember { mutableIntStateOf(0) }
+  val shouldTriggerDebugScreen by remember {
+    derivedStateOf { (appNameTaps + 1) % 5 == 0 }
+  }
 
   val ssid by vm.ssid.collectAsState("")
   val passphrase by vm.passphrase.collectAsState("")
@@ -112,19 +127,24 @@ fun ControlScreen(
     }
   }
 
+  LaunchedEffect(shouldTriggerDebugScreen) {
+    if (!shouldTriggerDebugScreen) return@LaunchedEffect
+    context.startActivity(Intent(context, DebugActivity::class.java))
+    Toast.makeText(context, "Triggered debug screen", Toast.LENGTH_SHORT).show()
+  }
+
   Row(modifier = modifier) {
     Scaffold(
       modifier = Modifier.weight(1f),
       topBar = {
         CenterAlignedTopAppBar(
-          title = { Text(text = stringResource(id = R.string.app_name)) },
+          title = {
+            Text(
+              text = stringResource(id = R.string.app_name),
+              modifier = Modifier.clickable { appNameTaps += 1 },
+            )
+          },
           actions = {
-            IconButton(onClick = { throw RuntimeException("thrown by app") }) {
-              Icon(
-                imageVector = Icons.Rounded.MinorCrash,
-                contentDescription = stringResource(id = R.string.blocklist),
-              )
-            }
             IconButton(
               onClick = { navController?.navigate(Routes.BlocklistScreen) }
             ) {
