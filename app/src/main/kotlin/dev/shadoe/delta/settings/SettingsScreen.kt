@@ -33,10 +33,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -50,7 +48,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
-import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
 import dev.shadoe.delta.navigation.LocalNavController
 import kotlinx.coroutines.launch
@@ -65,10 +62,8 @@ fun SettingsScreen(
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
 
-  val config = vm.config.collectAsState()
+  val config by vm.config.collectAsState()
   val status by vm.status.collectAsState()
-
-  var mutableConfig by remember(config.value) { mutableStateOf(config.value) }
 
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
@@ -108,93 +103,55 @@ fun SettingsScreen(
       }
       item {
         SSIDField(
-          ssid = mutableConfig.ssid ?: "",
-          onSSIDChange = { mutableConfig = mutableConfig.copy(ssid = it) },
+          ssid = config.ssid ?: "",
+          onSSIDChange = { vm.updateSsid(it) },
         )
       }
       item {
         SecurityTypeField(
-          securityType = mutableConfig.securityType,
+          securityType = config.securityType,
           supportedSecurityTypes = status.capabilities.supportedSecurityTypes,
-          onSecurityTypeChange = {
-            val shouldSwitchBackTo5G =
-              it != SoftApSecurityType.SECURITY_TYPE_WPA3_SAE &&
-                mutableConfig.speedType == SoftApSpeedType.BAND_6GHZ
-            mutableConfig =
-              mutableConfig.copy(
-                speedType =
-                  if (shouldSwitchBackTo5G) {
-                    SoftApSpeedType.BAND_5GHZ
-                  } else {
-                    mutableConfig.speedType
-                  },
-                securityType = it,
-              )
-          },
+          onSecurityTypeChange = { vm.updateSecurityType(it) },
         )
       }
-      if (mutableConfig.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+      if (config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
         item {
           PassphraseField(
-            passphrase = mutableConfig.passphrase,
-            onPassphraseChange = {
-              mutableConfig = mutableConfig.copy(passphrase = it)
-            },
+            passphrase = config.passphrase,
+            onPassphraseChange = { vm.updatePassphrase(it) },
           )
         }
       }
       item {
         AutoShutdownField(
-          isAutoShutdownEnabled = mutableConfig.isAutoShutdownEnabled,
-          onAutoShutdownChange = {
-            mutableConfig = mutableConfig.copy(isAutoShutdownEnabled = it)
-          },
+          isAutoShutdownEnabled = config.isAutoShutdownEnabled,
+          onAutoShutdownChange = { vm.updateAutoShutdown(it) },
         )
       }
       item {
         SpeedTypeField(
-          speedType = mutableConfig.speedType,
+          speedType = config.speedType,
           supportedSpeedTypes = status.capabilities.supportedFrequencyBands,
-          onSpeedTypeChange = {
-            val shouldSwitchToSAE =
-              it == SoftApSpeedType.BAND_6GHZ &&
-                mutableConfig.securityType !=
-                  SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
-            mutableConfig =
-              mutableConfig.copy(
-                speedType = it,
-                securityType =
-                  if (shouldSwitchToSAE) {
-                    SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
-                  } else {
-                    mutableConfig.securityType
-                  },
-              )
-          },
+          onSpeedTypeChange = { vm.updateSpeedType(it) },
         )
       }
       item {
         Button(
           onClick = onClick@{
-              if (mutableConfig.passphrase.isEmpty()) {
-                if (
-                  mutableConfig.securityType ==
-                    SoftApSecurityType.SECURITY_TYPE_OPEN
-                ) {
-                  mutableConfig =
-                    mutableConfig.copy(passphrase = config.value.passphrase)
-                } else {
-                  scope.launch {
-                    snackbarHostState.showSnackbar(
-                      message = passphraseEmptyWarningText,
-                      withDismissAction = true,
-                      duration = SnackbarDuration.Short,
-                    )
-                  }
-                  return@onClick
+              if (
+                config.passphrase.isEmpty() &&
+                  config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN
+              ) {
+                scope.launch {
+                  snackbarHostState.showSnackbar(
+                    message = passphraseEmptyWarningText,
+                    withDismissAction = true,
+                    duration = SnackbarDuration.Short,
+                  )
                 }
+                return@onClick
               }
-              vm.updateConfig(mutableConfig)
+              vm.commit()
               navController?.navigateUp()
             }
         ) {
