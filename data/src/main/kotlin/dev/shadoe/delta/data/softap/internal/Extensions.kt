@@ -7,6 +7,7 @@ import android.os.Build
 import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.MacAddress
 import dev.shadoe.delta.api.SoftApConfiguration
+import dev.shadoe.delta.api.SoftApRandomizationSetting
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
 
@@ -28,7 +29,12 @@ internal object Extensions {
         },
       passphrase = passphrase ?: state.fallbackPassphrase,
       securityType = @SuppressLint("WrongConstant") securityType,
-      bssid = bssid?.toBridgeClass(),
+      macRandomizationSetting =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+          macRandomizationSetting
+        } else {
+          SoftApRandomizationSetting.RANDOMIZATION_NONE
+        },
       isHidden = isHiddenSsid,
       speedType =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -90,7 +96,11 @@ internal object Extensions {
 
         setPassphrase(passphrase, @SuppressLint("WrongConstant") securityType)
 
-        setBssid(bssid?.toOriginalClass())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+          setMacRandomizationSetting(
+            @SuppressLint("WrongConstant") macRandomizationSetting
+          )
+        }
         setHiddenSsid(isHidden)
 
         val band2To5 = SoftApSpeedType.BAND_2GHZ or SoftApSpeedType.BAND_5GHZ

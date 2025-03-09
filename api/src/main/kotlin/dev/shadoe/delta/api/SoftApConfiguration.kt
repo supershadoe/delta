@@ -4,7 +4,8 @@ data class SoftApConfiguration(
   val ssid: String?,
   val passphrase: String,
   @SoftApSecurityType.SecurityType val securityType: Int,
-  val bssid: MacAddress?,
+  @SoftApRandomizationSetting.RandomizationType
+  val macRandomizationSetting: Int,
   val isHidden: Boolean,
   @SoftApSpeedType.BandType val speedType: Int,
   val blockedDevices: List<ACLDevice>,
