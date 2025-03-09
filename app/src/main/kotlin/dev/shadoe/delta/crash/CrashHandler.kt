@@ -50,16 +50,20 @@ object CrashHandler {
     val reportAction =
       NotificationCompat.Action.Builder(
           R.drawable.ic_launcher_foreground,
-          "Report",
+          applicationContext.getString(R.string.crash_notif_action),
           pendingIntent,
         )
         .build()
 
     val notification =
       NotificationCompat.Builder(applicationContext, CRASH_CHANNEL_ID)
-        .setContentTitle("App Crashed")
-        .setSubText("App crash handler")
-        .setContentText("The app has crashed due to an unexpected error.")
+        .setContentTitle(
+          applicationContext.getString(R.string.crash_notif_title)
+        )
+        .setSubText(applicationContext.getString(R.string.crash_notif_sub_text))
+        .setContentText(
+          applicationContext.getString(R.string.crash_notif_content)
+        )
         .setSmallIcon(R.drawable.ic_launcher_foreground)
         .setPriority(NotificationCompat.PRIORITY_MAX)
         .setContentIntent(pendingIntent)
@@ -85,7 +89,9 @@ object CrashHandler {
               CRASH_CHANNEL_ID,
               NotificationManagerCompat.IMPORTANCE_HIGH,
             )
-            .setName("Crash channel")
+            .setName(
+              applicationContext.getString(R.string.crash_notif_channel_name)
+            )
             .build()
         createNotificationChannel(notifChannel)
       }

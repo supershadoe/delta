@@ -14,6 +14,29 @@
     <string name="unblock_button">UNBLOCK</string>
     <string name="blocklist_unblocked">Device removed from blocklist.</string>
 
+    <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">Report</string>
+
+    <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">App Crashed</string>
+    <string name="crash_notif_sub_text">App crash handler</string>
+    <string name="crash_notif_content">
+        The app has crashed due to an unexpected error.
+    </string>
+    <string name="crash_notif_channel_name">Crash channel</string>
+
+    <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_title">Crash Log</string>
+    <string name="crash_report_desc">The app has crashed :(</string>
+    <string name="crash_report_no_log">No crash info available</string>
+
+    <!-- dev.shadoe.delta.crash.CrashHandlerSetup -->
+    <string name="crash_report_setup_desc">
+        We need notification permission to show you crash logs if any crashes
+        occur.
+    </string>
+    <string name="crash_report_setup_grant_perm">Grant permission</string>
+
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Loading</string>
     <string name="control_button_stop">Stop hotspot</string>

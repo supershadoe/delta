@@ -64,8 +64,7 @@ class CrashHandlerActivity : ComponentActivity() {
   """
       .trimIndent()
 
-  private fun generateSendableLog(crashLog: String) =
-    "$logHeader$crashLog$logTrailer"
+  private fun formatLog(crashLog: String) = "$logHeader$crashLog$logTrailer"
 
   override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()
@@ -79,22 +78,26 @@ class CrashHandlerActivity : ComponentActivity() {
           darkColorScheme()
         }
       val crashLog = remember {
-        intent.getStringExtra(EXTRA_CRASH_INFO)?.let { generateSendableLog(it) }
+        intent.getStringExtra(EXTRA_CRASH_INFO)?.let { formatLog(it) }
       }
 
       MaterialTheme(colorScheme = colorScheme, typography = Typography.value) {
         Scaffold(
           topBar = {
             @OptIn(ExperimentalMaterial3Api::class)
-            TopAppBar(title = { Text(text = "Crash Logs") })
+            TopAppBar(
+              title = {
+                Text(text = stringResource(R.string.crash_report_title))
+              }
+            )
           }
         ) {
           Column(
             Modifier.padding(it).padding(vertical = 8.dp, horizontal = 24.dp)
           ) {
-            Text(text = "The app has crashed :(")
+            Text(text = stringResource(R.string.crash_report_desc))
             if (crashLog == null) {
-              Text(text = "No crash info available")
+              Text(text = stringResource(R.string.crash_report_no_log))
             } else {
               Box(
                 modifier =
@@ -116,21 +119,17 @@ class CrashHandlerActivity : ComponentActivity() {
                       putExtra(Intent.EXTRA_TEXT, crashLog)
                       type = "text/plain"
                     }
-                  val shareIntent =
-                    Intent.createChooser(
-                      intent,
-                      "Choose a channel to share the logs.",
-                    )
+                  val shareIntent = Intent.createChooser(intent, null)
                   startActivity(shareIntent)
                 }
               ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                   Icon(
                     imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-                    contentDescription = stringResource(R.string.open_link_icon),
+                    contentDescription = stringResource(R.string.open_icon),
                   )
                   Text(
-                    text = "Report",
+                    text = stringResource(R.string.crash_notif_action),
                     modifier = Modifier.padding(start = 8.dp),
                   )
                 }
