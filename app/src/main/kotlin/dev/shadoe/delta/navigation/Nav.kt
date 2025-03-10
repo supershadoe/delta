@@ -17,6 +17,8 @@ import dev.shadoe.delta.blocklist.BlocklistScreen
 import dev.shadoe.delta.common.HotspotScope
 import dev.shadoe.delta.control.ControlScreen
 import dev.shadoe.delta.control.ControlViewModel
+import dev.shadoe.delta.debug.DebugScreen
+import dev.shadoe.delta.debug.DebugViewModel
 import dev.shadoe.delta.settings.SettingsScreen
 import dev.shadoe.delta.settings.SettingsViewModel
 
@@ -44,6 +46,10 @@ fun HotspotNavGraph() {
         composable<Routes.BlocklistScreen> {
           val vm = hiltViewModel<BlockListViewModel>()
           BlocklistScreen(vm = vm)
+        }
+        composable<Routes.DebugScreen> {
+          val vm = hiltViewModel<DebugViewModel>()
+          DebugScreen(vm = vm)
         }
       }
     }
