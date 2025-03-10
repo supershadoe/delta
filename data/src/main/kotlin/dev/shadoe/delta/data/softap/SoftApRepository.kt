@@ -87,7 +87,6 @@ constructor(
           ),
       )
     )
-  val status = _status.asStateFlow()
 
   private val _config =
     MutableStateFlow(
@@ -96,15 +95,6 @@ constructor(
         )
         .toBridgeClass(state = internalState.value)
     )
-  @OptIn(ExperimentalForInheritanceCoroutinesApi::class)
-  val config =
-    object : MutableStateFlow<SoftApConfiguration> by _config {
-      override var value: SoftApConfiguration
-        get() = _config.value
-        set(value) {
-          updateSoftApConfiguration(value)
-        }
-    }
 
   private val tetheringEventListener =
     object : TetheringEventListener {
@@ -205,61 +195,96 @@ constructor(
       }
       .onEach { internalState.update { st -> st.copy(macAddressCache = it) } }
 
-  fun viewModelHook(scope: CoroutineScope) =
-    object : AutoCloseable {
-      init {
-        tetheringConnector.registerTetheringEventCallback(
-          tetheringEventCallback,
-          ADB_PACKAGE_NAME,
-        )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-          wifiManager.registerSoftApCallback(softApCallback)
-        } else {
-          @Suppress("DEPRECATION")
-          wifiManager.registerSoftApCallback(
-            Binder(),
-            softApCallback,
-            softApCallback.hashCode(),
+  private fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
+    runCatching {
+        Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(
+            c.toOriginalClass()
           )
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-          wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
-            object : IStringListener.Stub() {
-              override fun onResult(value: String?) {
-                internalState.update {
-                  it.copy(
-                    fallbackPassphrase = value ?: generateRandomPassword()
-                  )
-                }
-                _config.update {
-                  it.copy(passphrase = internalState.value.fallbackPassphrase)
-                }
+          .let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+              if (!wifiManager.validateSoftApConfiguration(it)) {
+                return@let false
               }
             }
-          )
-        }
-        scope.launch {
-          withContext(Dispatchers.Unconfined) {
-            updateConfigOnExternalChange.launchIn(this)
-            restartHotspotOnConfigChange.launchIn(this)
-            updateMacAddressCacheInMem.launchIn(this)
+            wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+            return@let true
           }
+      }
+      .getOrDefault(false)
+      .also {
+        if (it) {
+          _config.update { c }
+          shouldRestartHotspot.value = true
         }
       }
 
-      override fun close() {
-        tetheringConnector.unregisterTetheringEventCallback(
-          tetheringEventCallback,
-          ADB_PACKAGE_NAME,
+  @OptIn(ExperimentalForInheritanceCoroutinesApi::class)
+  val config =
+    object : MutableStateFlow<SoftApConfiguration> by _config {
+      override var value: SoftApConfiguration
+        get() = _config.value
+        set(value) {
+          updateSoftApConfiguration(value)
+        }
+    }
+
+  val status = _status.asStateFlow()
+
+  inner class ViewModelHook internal constructor(scope: CoroutineScope) :
+    AutoCloseable {
+    init {
+      tetheringConnector.registerTetheringEventCallback(
+        tetheringEventCallback,
+        ADB_PACKAGE_NAME,
+      )
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        wifiManager.registerSoftApCallback(softApCallback)
+      } else {
+        @Suppress("DEPRECATION")
+        wifiManager.registerSoftApCallback(
+          Binder(),
+          softApCallback,
+          softApCallback.hashCode(),
         )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-          wifiManager.unregisterSoftApCallback(softApCallback)
-        } else {
-          @Suppress("DEPRECATION")
-          wifiManager.unregisterSoftApCallback(softApCallback.hashCode())
+      }
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
+          object : IStringListener.Stub() {
+            override fun onResult(value: String?) {
+              internalState.update {
+                it.copy(fallbackPassphrase = value ?: generateRandomPassword())
+              }
+              _config.update {
+                it.copy(passphrase = internalState.value.fallbackPassphrase)
+              }
+            }
+          }
+        )
+      }
+      scope.launch {
+        withContext(Dispatchers.Unconfined) {
+          updateConfigOnExternalChange.launchIn(this)
+          restartHotspotOnConfigChange.launchIn(this)
+          updateMacAddressCacheInMem.launchIn(this)
         }
       }
     }
+
+    override fun close() {
+      tetheringConnector.unregisterTetheringEventCallback(
+        tetheringEventCallback,
+        ADB_PACKAGE_NAME,
+      )
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        wifiManager.unregisterSoftApCallback(softApCallback)
+      } else {
+        @Suppress("DEPRECATION")
+        wifiManager.unregisterSoftApCallback(softApCallback.hashCode())
+      }
+    }
+  }
+
+  fun viewModelHook(scope: CoroutineScope) = ViewModelHook(scope)
 
   fun startHotspot(forceRestart: Boolean = false): Boolean {
     val enabledState = status.value.enabledState
@@ -311,27 +336,4 @@ constructor(
     }
     return true
   }
-
-  private fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
-    runCatching {
-        Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(
-            c.toOriginalClass()
-          )
-          .let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-              if (!wifiManager.validateSoftApConfiguration(it)) {
-                return@let false
-              }
-            }
-            wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-            return@let true
-          }
-      }
-      .getOrDefault(false)
-      .also {
-        if (it) {
-          _config.update { c }
-          shouldRestartHotspot.value = true
-        }
-      }
 }
