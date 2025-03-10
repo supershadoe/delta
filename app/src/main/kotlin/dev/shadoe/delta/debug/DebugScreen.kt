@@ -22,8 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.design.AppTheme
 import dev.shadoe.delta.common.LocalNavController
+import dev.shadoe.delta.design.AppTheme
 
 @Composable
 fun DebugScreen(vm: DebugViewModel = viewModel()) {

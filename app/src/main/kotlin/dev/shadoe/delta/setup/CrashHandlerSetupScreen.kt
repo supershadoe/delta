@@ -21,9 +21,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
-import dev.shadoe.delta.crash.CrashHandlerUtils
 import dev.shadoe.delta.common.LocalNavController
 import dev.shadoe.delta.common.Routes
+import dev.shadoe.delta.crash.CrashHandlerUtils
 
 @Composable
 fun CrashHandlerSetupScreen() {

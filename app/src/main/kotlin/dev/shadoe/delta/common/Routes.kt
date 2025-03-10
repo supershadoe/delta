@@ -5,25 +5,18 @@ import kotlinx.serialization.Serializable
 object Routes {
   @Serializable
   object Setup {
-    @Serializable
-    object FirstUseScreen
+    @Serializable object FirstUseScreen
 
-    @Serializable
-    object ShizukuSetupScreen
+    @Serializable object ShizukuSetupScreen
 
-    @Serializable
-    object CrashHandlerSetupScreen
+    @Serializable object CrashHandlerSetupScreen
   }
 
-  @Serializable
-  object HotspotScreen
+  @Serializable object HotspotScreen
 
-  @Serializable
-  object HotspotEditScreen
+  @Serializable object HotspotEditScreen
 
-  @Serializable
-  object BlocklistScreen
+  @Serializable object BlocklistScreen
 
-  @Serializable
-  object DebugScreen
+  @Serializable object DebugScreen
 }
