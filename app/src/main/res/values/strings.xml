@@ -95,7 +95,7 @@
 
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
     <string name="shizuku_connected_desc">
-        Connected to Shizuku, continue with the setup! ✅
+        Connected to Shizuku, continue with the setup!
     </string>
     <string name="setup_continue_button">Continue setup</string>
 
@@ -117,6 +117,7 @@
     <string name="shizuku_start">Start Shizuku</string>
 
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">Set up crash reporter.</string>
     <string name="crash_report_setup_desc">
         We need notification permission to show you crash logs if any crashes
         occur.
@@ -124,4 +125,12 @@
     <string name="crash_report_setup_grant_perm">Grant permission</string>
     <string name="crash_report_setup_done">Permission granted ✅</string>
     <string name="setup_finish_button">Finish setup</string>
+
+    <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Shizuku icon</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">Not installed.</string>
+    <string name="shizuku_setup_not_running">Not running.</string>
+    <string name="shizuku_setup_not_connected">Not connected.</string>
+    <string name="shizuku_setup_connected">Connected ✅</string>
 </resources>
