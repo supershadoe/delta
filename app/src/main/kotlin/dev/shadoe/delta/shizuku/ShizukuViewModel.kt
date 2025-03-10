@@ -1,98 +1,24 @@
 package dev.shadoe.delta.shizuku
 
-import android.app.Application
-import android.content.pm.PackageManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import rikka.shizuku.Shizuku
-import rikka.shizuku.ShizukuProvider
-import rikka.sui.Sui
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.shadoe.delta.data.shizuku.ShizukuRepository
+import javax.inject.Inject
 
-class ShizukuViewModel(private val application: Application) :
-  AndroidViewModel(application) {
-  @ShizukuStates.ShizukuStateType
-  private val _shizukuState = MutableStateFlow(ShizukuStates.NOT_READY)
-
-  @ShizukuStates.ShizukuStateType
-  val shizukuState: StateFlow<Int> = _shizukuState
-
-  private val permListener =
-    Shizuku.OnRequestPermissionResultListener permListener@{
-      requestCode,
-      grantResult ->
-      requestCode.takeIf { it == PERM_REQ_CODE } ?: return@permListener
-      _shizukuState.value = determineShizukuStateWhenAlive(grantResult)
-    }
-
-  private val binderReceivedListener =
-    Shizuku.OnBinderReceivedListener {
-      viewModelScope.launch {
-        _shizukuState.value =
-          determineShizukuStateWhenAlive(Shizuku.checkSelfPermission())
-        Shizuku.addRequestPermissionResultListener(permListener)
-      }
-    }
-
-  private val binderDeadListener =
-    Shizuku.OnBinderDeadListener {
-      viewModelScope.launch {
-        _shizukuState.value = determineShizukuStateWhenDead()
-        Shizuku.removeRequestPermissionResultListener(permListener)
-      }
-    }
-
-  private fun isShizukuInstalled(packageManager: PackageManager) =
-    runCatching {
-        packageManager.getApplicationInfo(
-          ShizukuProvider.MANAGER_APPLICATION_ID,
-          0,
-        )
-      }
-      .getOrNull()
-      .let { it != null } || Sui.isSui()
-
-  private fun determineShizukuStateWhenAlive(permResult: Int) =
-    if (permResult == PackageManager.PERMISSION_GRANTED) {
-      ShizukuStates.CONNECTED
-    } else {
-      ShizukuStates.NOT_CONNECTED
-    }
-
-  private fun determineShizukuStateWhenDead() =
-    when {
-      isShizukuInstalled(application.packageManager) ->
-        ShizukuStates.NOT_RUNNING
-      else -> ShizukuStates.NOT_AVAILABLE
-    }
+@HiltViewModel
+class ShizukuViewModel
+@Inject
+constructor(private val shizukuRepository: ShizukuRepository) : ViewModel() {
+  @dev.shadoe.delta.data.shizuku.ShizukuStates.ShizukuStateType
+  val shizukuState = shizukuRepository.shizukuState
 
   init {
-    Sui.init(application.packageName)
-    _shizukuState.value =
-      when {
-        Shizuku.isPreV11() -> ShizukuStates.NOT_AVAILABLE
-        Shizuku.pingBinder() ->
-          determineShizukuStateWhenAlive(Shizuku.checkSelfPermission())
-        else -> determineShizukuStateWhenDead()
-      }
-    Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
-    Shizuku.addBinderDeadListener(binderDeadListener)
+    addCloseable(shizukuRepository.viewModelHook())
   }
 
-  override fun onCleared() {
-    Shizuku.removeBinderReceivedListener(binderReceivedListener)
-    Shizuku.removeBinderDeadListener(binderDeadListener)
-    super.onCleared()
-  }
-
-  fun requestPermission() {
-    Shizuku.requestPermission(PERM_REQ_CODE)
-  }
+  fun requestPermission() = shizukuRepository.requestPermission()
 
   companion object {
-    private const val PERM_REQ_CODE = 2345
-    const val SHIZUKU_APP_ID = ShizukuProvider.MANAGER_APPLICATION_ID
+    const val SHIZUKU_APP_ID = ShizukuRepository.SHIZUKU_APP_ID
   }
 }

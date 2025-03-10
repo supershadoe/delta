@@ -43,5 +43,7 @@ dependencies {
   implementation(libs.hilt.android)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.refine.runtime)
+  implementation(libs.shizuku.api)
+  implementation(libs.shizuku.provider)
   ksp(libs.hilt.compiler)
 }
