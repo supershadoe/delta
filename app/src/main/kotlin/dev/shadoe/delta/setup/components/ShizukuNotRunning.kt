@@ -1,4 +1,4 @@
-package dev.shadoe.delta.shizuku.components
+package dev.shadoe.delta.setup.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dev.shadoe.delta.R
-import dev.shadoe.delta.shizuku.ShizukuViewModel
+import dev.shadoe.delta.setup.ShizukuSetupViewModel
 
 @Composable
 internal fun ShizukuNotRunning() {
@@ -19,7 +19,7 @@ internal fun ShizukuNotRunning() {
         with(context) {
           startActivity(
             packageManager.getLaunchIntentForPackage(
-              ShizukuViewModel.SHIZUKU_APP_ID
+              ShizukuSetupViewModel.SHIZUKU_APP_ID
             )
           )
         }

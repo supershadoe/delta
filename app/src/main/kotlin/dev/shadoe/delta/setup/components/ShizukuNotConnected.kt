@@ -1,4 +1,4 @@
-package dev.shadoe.delta.shizuku.components
+package dev.shadoe.delta.setup.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button

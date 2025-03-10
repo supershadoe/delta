@@ -1,4 +1,4 @@
-package dev.shadoe.delta.shizuku.components
+package dev.shadoe.delta.setup.components
 
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW

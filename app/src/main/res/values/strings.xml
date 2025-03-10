@@ -6,7 +6,6 @@
     <string name="no_connected_devices">
         There are no connected devices.
     </string>
-    <string name="setup_title">Setup the app</string>
     <string name="open_icon">Open</string>
 
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
@@ -29,13 +28,6 @@
     <string name="crash_report_title">Crash Log</string>
     <string name="crash_report_desc">The app has crashed :(</string>
     <string name="crash_report_no_log">No crash info available</string>
-
-    <!-- dev.shadoe.delta.crash.CrashHandlerSetup -->
-    <string name="crash_report_setup_desc">
-        We need notification permission to show you crash logs if any crashes
-        occur.
-    </string>
-    <string name="crash_report_setup_grant_perm">Grant permission</string>
 
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Loading</string>
@@ -92,20 +84,44 @@
     <string name="save_button">Save</string>
     <string name="passphrase_empty_warning">Enter a password.</string>
 
-    <!-- dev.shadoe.delta.shizuku.ShizukuNotConnected -->
+    <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">Setup the app</string>
+
+    <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">App icon</string>
+    <string name="app_tagline">Hotspot settings, unlocked.</string>
+    <string name="setup_start_button">Start setup »</string>
+    <string name="setup_note">Requires Shizuku or root to function.</string>
+
+    <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">
+        Connected to Shizuku, continue with the setup! ✅
+    </string>
+    <string name="setup_continue_button">Continue setup</string>
+
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
     <string name="shizuku_not_connected_desc">
         This app uses system APIs that are not generally accessible from the
         Android SDK and thus, requires Shizuku to get access to Hotspot API.
     </string>
     <string name="shizuku_grant_access">Grant access</string>
 
-    <!-- dev.shadoe.delta.shizuku.ShizukuNotInstalled -->
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku is not installed.</string>
     <string name="github">GitHub</string>
     <string name="install_from_icon">Install from</string>
     <string name="play_store">Play Store</string>
 
-    <!-- dev.shadoe.delta.shizuku.ShizukuNotRunning -->
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
     <string name="shizuku_not_running">Shizuku is not running.</string>
     <string name="shizuku_start">Start Shizuku</string>
+
+    <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_desc">
+        We need notification permission to show you crash logs if any crashes
+        occur.
+    </string>
+    <string name="crash_report_setup_grant_perm">Grant permission</string>
+    <string name="crash_report_setup_done">Permission granted ✅</string>
+    <string name="setup_finish_button">Finish setup</string>
 </resources>

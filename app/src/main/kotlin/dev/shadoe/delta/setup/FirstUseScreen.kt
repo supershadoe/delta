@@ -25,9 +25,12 @@ import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import dev.shadoe.delta.R
 import dev.shadoe.delta.common.shapes.PolygonShape
+import dev.shadoe.delta.navigation.LocalNavController
+import dev.shadoe.delta.navigation.Routes
 
 @Composable
 fun FirstUseScreen() {
+  val navController = LocalNavController.current
   val roundedPillStar = remember {
     RoundedPolygon.pillStar(
       width = 1f,
@@ -56,7 +59,7 @@ fun FirstUseScreen() {
         ) {
           Icon(
             painter = painterResource(R.drawable.ic_launcher_foreground),
-            contentDescription = "App icon",
+            contentDescription = stringResource(R.string.app_icon),
             modifier = Modifier.size(150.dp).align(Alignment.BottomStart),
           )
         }
@@ -67,7 +70,7 @@ fun FirstUseScreen() {
           style = MaterialTheme.typography.displaySmall,
         )
         Text(
-          text = "Hotspot settings, unlocked.",
+          text = stringResource(R.string.app_tagline),
           style = MaterialTheme.typography.titleLarge,
         )
       }
@@ -75,12 +78,19 @@ fun FirstUseScreen() {
         modifier = Modifier.weight(1f).fillMaxWidth(),
         contentAlignment = Alignment.CenterEnd,
       ) {
-        Button(onClick = {}) {
-          Text(text = "Start setup »", fontWeight = FontWeight.SemiBold)
+        Button(
+          onClick = {
+            navController?.navigate(route = Routes.Setup.ShizukuSetupScreen)
+          }
+        ) {
+          Text(
+            text = stringResource(R.string.setup_start_button),
+            fontWeight = FontWeight.SemiBold,
+          )
         }
       }
       Text(
-        text = "Requires Shizuku or root to function.",
+        text = stringResource(R.string.setup_note),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(bottom = 32.dp),

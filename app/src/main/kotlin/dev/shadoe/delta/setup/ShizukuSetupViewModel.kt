@@ -1,22 +1,19 @@
-package dev.shadoe.delta.shizuku
+package dev.shadoe.delta.setup
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.shadoe.delta.api.ShizukuStates.ShizukuStateType
 import dev.shadoe.delta.data.shizuku.ShizukuRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ShizukuViewModel
+class ShizukuSetupViewModel
 @Inject
 constructor(private val shizukuRepository: ShizukuRepository) : ViewModel() {
-  @ShizukuStateType val shizukuState = shizukuRepository.shizukuState
+  val shizukuState = shizukuRepository.shizukuState
 
-  init {
-    addCloseable(shizukuRepository.viewModelHook())
+  fun requestPermission() {
+    shizukuRepository.requestPermission()
   }
-
-  fun requestPermission() = shizukuRepository.requestPermission()
 
   companion object {
     const val SHIZUKU_APP_ID = ShizukuRepository.SHIZUKU_APP_ID

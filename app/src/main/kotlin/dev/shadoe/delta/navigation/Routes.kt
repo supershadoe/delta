@@ -2,8 +2,15 @@ package dev.shadoe.delta.navigation
 
 import kotlinx.serialization.Serializable
 
-class Routes {
-  @Serializable object FirstUseScreen
+object Routes {
+  @Serializable
+  object Setup {
+    @Serializable object FirstUseScreen
+
+    @Serializable object ShizukuSetupScreen
+
+    @Serializable object CrashHandlerSetupScreen
+  }
 
   @Serializable object HotspotScreen
 

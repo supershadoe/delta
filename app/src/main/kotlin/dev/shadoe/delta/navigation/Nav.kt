@@ -11,6 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dev.shadoe.delta.blocklist.BlockListViewModel
 import dev.shadoe.delta.blocklist.BlocklistScreen
@@ -21,22 +22,36 @@ import dev.shadoe.delta.debug.DebugScreen
 import dev.shadoe.delta.debug.DebugViewModel
 import dev.shadoe.delta.settings.SettingsScreen
 import dev.shadoe.delta.settings.SettingsViewModel
+import dev.shadoe.delta.setup.CrashHandlerSetupScreen
 import dev.shadoe.delta.setup.FirstUseScreen
+import dev.shadoe.delta.setup.ShizukuSetupScreen
+import dev.shadoe.delta.setup.ShizukuSetupViewModel
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
 
 @Composable
-fun HotspotNavGraph() {
+fun Nav() {
   val navController = rememberNavController()
   HotspotScope {
     CompositionLocalProvider(LocalNavController provides navController) {
       NavHost(
         navController = LocalNavController.current!!,
-        startDestination = Routes.HotspotScreen,
+        startDestination = Routes.Setup,
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { scaleOut() + fadeOut() },
       ) {
-        composable<Routes.FirstUseScreen> { FirstUseScreen() }
+        navigation<Routes.Setup>(
+          startDestination = Routes.Setup.FirstUseScreen
+        ) {
+          composable<Routes.Setup.FirstUseScreen> { FirstUseScreen() }
+          composable<Routes.Setup.ShizukuSetupScreen> {
+            val vm = hiltViewModel<ShizukuSetupViewModel>()
+            ShizukuSetupScreen(vm = vm)
+          }
+          composable<Routes.Setup.CrashHandlerSetupScreen> {
+            CrashHandlerSetupScreen()
+          }
+        }
         composable<Routes.HotspotScreen> {
           val vm = hiltViewModel<ControlViewModel>()
           ControlScreen(vm = vm)
