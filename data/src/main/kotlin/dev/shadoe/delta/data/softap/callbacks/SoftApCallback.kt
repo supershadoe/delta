@@ -30,7 +30,10 @@ internal class SoftApCallback(
 
   /** Results in a no-op because already [TetheringEventCallback] handles it */
   @Deprecated("Removed in API 35")
-  override fun onStateChanged(state: Int, failureReason: Int) {}
+  override fun onStateChanged(state: Int, failureReason: Int) {
+    println("below is failure reason")
+    println(failureReason)
+  }
 
   /** Results in a no-op because already [TetheringEventCallback] handles it */
   override fun onConnectedClientsOrInfoChanged(

@@ -1,6 +1,8 @@
 package dev.shadoe.delta.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,10 +13,14 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.NetworkWifi
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.SettingsPower
 import androidx.compose.material.icons.rounded.Wifi
+import androidx.compose.material.icons.rounded.WifiFind
 import androidx.compose.material.icons.rounded.WifiPassword
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +31,8 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -33,8 +41,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -68,6 +78,7 @@ fun SettingsScreen(
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
 
+  var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
   Scaffold(
     topBar = {
       @OptIn(ExperimentalMaterial3Api::class)
@@ -135,6 +146,51 @@ fun SettingsScreen(
           onSpeedTypeChange = { vm.updateSpeedType(it) },
         )
       }
+
+      item {
+        Row(
+          modifier =
+            Modifier.fillMaxWidth().clickable {
+              isAdvancedSettingsEnabled = !isAdvancedSettingsEnabled
+            },
+          horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+          Text(
+            text = stringResource(R.string.advanced_settings_field_label),
+            modifier = Modifier.padding(8.dp),
+          )
+          Icon(
+            modifier = Modifier.align(Alignment.CenterVertically),
+            imageVector =
+              if (isAdvancedSettingsEnabled) {
+                Icons.Rounded.KeyboardArrowUp
+              } else {
+                Icons.Rounded.KeyboardArrowDown
+              },
+            contentDescription =
+              if (isAdvancedSettingsEnabled) {
+                stringResource(R.string.advanced_settings_close_action)
+              } else {
+                stringResource(R.string.advanced_settings_open_action)
+              },
+          )
+        }
+      }
+      if (isAdvancedSettingsEnabled) {
+        item {
+          HiddenHotspotField(
+            isHiddenHotspotEnabled = config.isHidden,
+            onHiddenHotspotChange = { vm.updateHiddenHotspot(it) },
+          )
+        }
+        item {
+          MaxClientLimitField(
+            maxClient = status.capabilities.maxSupportedClients,
+            onMaxClientChange = { vm.updateMaxClientLimit(it) },
+          )
+        }
+      }
+
       item {
         Button(
           onClick = onClick@{
@@ -290,6 +346,89 @@ private fun AutoShutdownField(
       checked = isAutoShutdownEnabled,
       onCheckedChange = { onAutoShutdownChange(it) },
     )
+  }
+}
+
+@Composable
+private fun HiddenHotspotField(
+  isHiddenHotspotEnabled: Boolean,
+  onHiddenHotspotChange: (Boolean) -> Unit,
+) {
+  Row(
+    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.WifiFind,
+      contentDescription = stringResource(R.string.hidden_network_field_icon),
+    )
+    Column(
+      modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
+      horizontalAlignment = Alignment.Start,
+    ) {
+      Text(
+        text = stringResource(R.string.hidden_network_field_label),
+        style = MaterialTheme.typography.titleLarge,
+      )
+      Text(
+        text = stringResource(R.string.hidden_network_field_description),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+    }
+    Switch(
+      checked = isHiddenHotspotEnabled,
+      onCheckedChange = { onHiddenHotspotChange(it) },
+    )
+  }
+}
+
+@Composable
+private fun MaxClientLimitField(
+  maxClient: Int,
+  onMaxClientChange: (Int) -> Unit,
+) {
+  var sliderState by remember { mutableStateOf(maxClient.toFloat()) }
+  Row(
+    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.Link,
+      contentDescription =
+        stringResource(R.string.maximum_client_limit_field_icon),
+    )
+    Column(
+      modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
+      horizontalAlignment = Alignment.Start,
+    ) {
+      Text(
+        text = stringResource(R.string.maximum_client_limit_field_label),
+        style = MaterialTheme.typography.titleLarge,
+      )
+      Text(
+        text = stringResource(R.string.maximum_client_limit_field_description),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+      Slider(
+        value = sliderState,
+        onValueChange = {
+          sliderState = it
+          println(it.toInt())
+          println(maxClient)
+          onMaxClientChange(it.toInt())
+        },
+        valueRange = 1f..maxClient.toFloat(),
+        steps = maxClient.toInt() - 1,
+        colors =
+          SliderDefaults.colors(
+            thumbColor = MaterialTheme.colorScheme.secondary,
+            activeTrackColor = MaterialTheme.colorScheme.secondary,
+            inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+          ),
+      )
+    }
   }
 }
 
