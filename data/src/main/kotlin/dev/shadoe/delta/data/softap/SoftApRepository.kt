@@ -326,7 +326,9 @@ constructor(
       }
       .getOrDefault(false)
       .also {
-        _config.update { c }
-        shouldRestartHotspot.value = true
+        if (it) {
+          _config.update { c }
+          shouldRestartHotspot.value = true
+        }
       }
 }
