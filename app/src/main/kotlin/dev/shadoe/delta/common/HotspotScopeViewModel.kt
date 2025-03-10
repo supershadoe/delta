@@ -7,15 +7,9 @@ import dev.shadoe.delta.data.softap.SoftApRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class HotspotScopeViewModel
-@Inject
-constructor(private val softApRepository: SoftApRepository) : ViewModel() {
+class HotspotScopeViewModel @Inject constructor(repo: SoftApRepository) :
+  ViewModel() {
   init {
-    softApRepository.onCreate(viewModelScope)
-  }
-
-  override fun onCleared() {
-    softApRepository.onDestroy()
-    super.onCleared()
+    addCloseable(repo.viewModelHook(viewModelScope))
   }
 }

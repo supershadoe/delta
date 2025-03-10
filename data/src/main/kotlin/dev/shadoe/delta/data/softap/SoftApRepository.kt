@@ -205,58 +205,61 @@ constructor(
       }
       .onEach { internalState.update { st -> st.copy(macAddressCache = it) } }
 
-  fun startBackgroundJobs(scope: CoroutineScope) {
-    updateConfigOnExternalChange.launchIn(scope)
-    restartHotspotOnConfigChange.launchIn(scope)
-    updateMacAddressCacheInMem.launchIn(scope)
-  }
-
-  fun onCreate(scope: CoroutineScope) {
-    tetheringConnector.registerTetheringEventCallback(
-      tetheringEventCallback,
-      ADB_PACKAGE_NAME,
-    )
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-      wifiManager.registerSoftApCallback(softApCallback)
-    } else {
-      @Suppress("DEPRECATION")
-      wifiManager.registerSoftApCallback(
-        Binder(),
-        softApCallback,
-        softApCallback.hashCode(),
-      )
-    }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-      wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
-        object : IStringListener.Stub() {
-          override fun onResult(value: String?) {
-            internalState.update {
-              it.copy(fallbackPassphrase = value ?: generateRandomPassword())
+  fun viewModelHook(scope: CoroutineScope) =
+    object : AutoCloseable {
+      init {
+        tetheringConnector.registerTetheringEventCallback(
+          tetheringEventCallback,
+          ADB_PACKAGE_NAME,
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+          wifiManager.registerSoftApCallback(softApCallback)
+        } else {
+          @Suppress("DEPRECATION")
+          wifiManager.registerSoftApCallback(
+            Binder(),
+            softApCallback,
+            softApCallback.hashCode(),
+          )
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+          wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
+            object : IStringListener.Stub() {
+              override fun onResult(value: String?) {
+                internalState.update {
+                  it.copy(
+                    fallbackPassphrase = value ?: generateRandomPassword()
+                  )
+                }
+                _config.update {
+                  it.copy(passphrase = internalState.value.fallbackPassphrase)
+                }
+              }
             }
-            _config.update {
-              it.copy(passphrase = internalState.value.fallbackPassphrase)
-            }
+          )
+        }
+        scope.launch {
+          withContext(Dispatchers.Unconfined) {
+            updateConfigOnExternalChange.launchIn(this)
+            restartHotspotOnConfigChange.launchIn(this)
+            updateMacAddressCacheInMem.launchIn(this)
           }
         }
-      )
-    }
-    scope.launch {
-      withContext(Dispatchers.Unconfined) { startBackgroundJobs(this) }
-    }
-  }
+      }
 
-  fun onDestroy() {
-    tetheringConnector.unregisterTetheringEventCallback(
-      tetheringEventCallback,
-      ADB_PACKAGE_NAME,
-    )
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-      wifiManager.unregisterSoftApCallback(softApCallback)
-    } else {
-      @Suppress("DEPRECATION")
-      wifiManager.unregisterSoftApCallback(softApCallback.hashCode())
+      override fun close() {
+        tetheringConnector.unregisterTetheringEventCallback(
+          tetheringEventCallback,
+          ADB_PACKAGE_NAME,
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+          wifiManager.unregisterSoftApCallback(softApCallback)
+        } else {
+          @Suppress("DEPRECATION")
+          wifiManager.unregisterSoftApCallback(softApCallback.hashCode())
+        }
+      }
     }
-  }
 
   fun startHotspot(forceRestart: Boolean = false): Boolean {
     val enabledState = status.value.enabledState
