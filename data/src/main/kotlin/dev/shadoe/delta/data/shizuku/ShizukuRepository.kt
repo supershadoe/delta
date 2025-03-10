@@ -3,14 +3,14 @@ package dev.shadoe.delta.data.shizuku
 import android.content.Context
 import android.content.pm.PackageManager
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.shadoe.delta.data.shizuku.ShizukuStates.ShizukuStateType
+import dev.shadoe.delta.api.ShizukuStates
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
 import rikka.sui.Sui
-import javax.inject.Singleton
 
 @Singleton
 class ShizukuRepository
@@ -21,7 +21,7 @@ constructor(@ApplicationContext private val applicationContext: Context) {
     const val SHIZUKU_APP_ID = ShizukuProvider.MANAGER_APPLICATION_ID
   }
 
-  @ShizukuStateType
+  @ShizukuStates.ShizukuStateType
   private val _shizukuState = MutableStateFlow(ShizukuStates.NOT_READY)
 
   private val permListener =
@@ -79,7 +79,7 @@ constructor(@ApplicationContext private val applicationContext: Context) {
       }
   }
 
-  @ShizukuStateType val shizukuState = _shizukuState.asStateFlow()
+  @ShizukuStates.ShizukuStateType val shizukuState = _shizukuState.asStateFlow()
 
   inner class ViewModelHook internal constructor() : AutoCloseable {
     init {

@@ -1,4 +1,4 @@
-package dev.shadoe.delta.shizuku
+package dev.shadoe.delta.api
 
 import androidx.annotation.IntDef
 
