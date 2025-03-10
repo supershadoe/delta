@@ -54,7 +54,7 @@ fun Nav(vm: NavViewModel = viewModel()) {
           ShizukuSetupScreen(vm = vm)
         }
         composable<Routes.Setup.CrashHandlerSetupScreen> {
-          CrashHandlerSetupScreen()
+          CrashHandlerSetupScreen(onSetupFinished = { vm.onSetupFinished() })
         }
       }
       composable<Routes.HotspotScreen> {

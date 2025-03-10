@@ -230,7 +230,7 @@ constructor(
 
   val status = _status.asStateFlow()
 
-  inner class ViewModelHook internal constructor(scope: CoroutineScope) :
+  inner class CallbackSubscriber internal constructor(scope: CoroutineScope) :
     AutoCloseable {
     init {
       tetheringConnector.registerTetheringEventCallback(
@@ -284,7 +284,7 @@ constructor(
     }
   }
 
-  fun viewModelHook(scope: CoroutineScope) = ViewModelHook(scope)
+  fun callbackSubscriber(scope: CoroutineScope) = CallbackSubscriber(scope)
 
   fun startHotspot(forceRestart: Boolean = false): Boolean {
     val enabledState = status.value.enabledState

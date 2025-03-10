@@ -81,7 +81,7 @@ constructor(@ApplicationContext private val applicationContext: Context) {
 
   @ShizukuStates.ShizukuStateType val shizukuState = _shizukuState.asStateFlow()
 
-  inner class ViewModelHook internal constructor() : AutoCloseable {
+  inner class CallbackSubscriber internal constructor() : AutoCloseable {
     init {
       Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
       Shizuku.addBinderDeadListener(binderDeadListener)
@@ -93,7 +93,8 @@ constructor(@ApplicationContext private val applicationContext: Context) {
     }
   }
 
-  fun viewModelHook() = ViewModelHook()
+  val callbackSubscriber
+    get() = CallbackSubscriber()
 
   fun requestPermission() {
     Shizuku.requestPermission(PERM_REQ_CODE)

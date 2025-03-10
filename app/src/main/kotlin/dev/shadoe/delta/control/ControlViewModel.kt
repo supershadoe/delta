@@ -1,6 +1,7 @@
 package dev.shadoe.delta.control
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.data.softap.SoftApRepository
@@ -12,6 +13,14 @@ import kotlinx.coroutines.flow.mapLatest
 class ControlViewModel
 @Inject
 constructor(private val softApRepository: SoftApRepository) : ViewModel() {
+  private val softApClosable =
+    softApRepository.callbackSubscriber(viewModelScope)
+
+  override fun onCleared() {
+    runCatching { softApClosable.close() }
+    super.onCleared()
+  }
+
   fun startHotspot(forceRestart: Boolean = false) =
     softApRepository.startHotspot(forceRestart)
 

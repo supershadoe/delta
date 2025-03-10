@@ -28,7 +28,6 @@ import dev.shadoe.delta.setup.components.ShizukuNotRunning
 fun ShizukuSetupScreen(vm: ShizukuSetupViewModel = viewModel()) {
   val navController = LocalNavController.current
   val state by vm.shizukuState.collectAsState()
-  println(state)
   Scaffold(
     topBar = {
       @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +43,9 @@ fun ShizukuSetupScreen(vm: ShizukuSetupViewModel = viewModel()) {
         CONNECTED ->
           ShizukuConnected(
             continueAction = {
-              navController?.navigate(route = Routes.HotspotScreen)
+              navController?.navigate(
+                route = Routes.Setup.CrashHandlerSetupScreen
+              )
             }
           )
         else -> {}
