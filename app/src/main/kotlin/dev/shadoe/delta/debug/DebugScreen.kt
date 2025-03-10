@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.design.AppTheme
-import dev.shadoe.delta.navigation.LocalNavController
+import dev.shadoe.delta.common.LocalNavController
 
 @Composable
 fun DebugScreen(vm: DebugViewModel = viewModel()) {

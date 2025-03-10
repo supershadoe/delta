@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import dev.shadoe.delta.design.AppTheme
-import dev.shadoe.delta.navigation.Nav
+import dev.shadoe.delta.common.Nav
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.navigation.LocalNavController
+import dev.shadoe.delta.common.LocalNavController
 import kotlinx.coroutines.launch
 
 @Composable

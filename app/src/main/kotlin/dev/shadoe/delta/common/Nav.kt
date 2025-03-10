@@ -1,4 +1,4 @@
-package dev.shadoe.delta.navigation
+package dev.shadoe.delta.common
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -15,7 +15,6 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dev.shadoe.delta.blocklist.BlockListViewModel
 import dev.shadoe.delta.blocklist.BlocklistScreen
-import dev.shadoe.delta.common.HotspotScope
 import dev.shadoe.delta.control.ControlScreen
 import dev.shadoe.delta.control.ControlViewModel
 import dev.shadoe.delta.debug.DebugScreen

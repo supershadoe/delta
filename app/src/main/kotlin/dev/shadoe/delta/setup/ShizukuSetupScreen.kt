@@ -17,8 +17,8 @@ import dev.shadoe.delta.api.ShizukuStates.CONNECTED
 import dev.shadoe.delta.api.ShizukuStates.NOT_AVAILABLE
 import dev.shadoe.delta.api.ShizukuStates.NOT_CONNECTED
 import dev.shadoe.delta.api.ShizukuStates.NOT_RUNNING
-import dev.shadoe.delta.navigation.LocalNavController
-import dev.shadoe.delta.navigation.Routes
+import dev.shadoe.delta.common.LocalNavController
+import dev.shadoe.delta.common.Routes
 import dev.shadoe.delta.setup.components.ShizukuConnected
 import dev.shadoe.delta.setup.components.ShizukuNotConnected
 import dev.shadoe.delta.setup.components.ShizukuNotInstalled

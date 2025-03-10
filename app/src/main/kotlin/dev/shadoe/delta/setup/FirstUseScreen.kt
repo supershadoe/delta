@@ -25,8 +25,8 @@ import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import dev.shadoe.delta.R
 import dev.shadoe.delta.common.shapes.PolygonShape
-import dev.shadoe.delta.navigation.LocalNavController
-import dev.shadoe.delta.navigation.Routes
+import dev.shadoe.delta.common.LocalNavController
+import dev.shadoe.delta.common.Routes
 
 @Composable
 fun FirstUseScreen() {
