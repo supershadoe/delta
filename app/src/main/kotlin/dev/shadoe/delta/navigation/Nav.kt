@@ -21,6 +21,7 @@ import dev.shadoe.delta.debug.DebugScreen
 import dev.shadoe.delta.debug.DebugViewModel
 import dev.shadoe.delta.settings.SettingsScreen
 import dev.shadoe.delta.settings.SettingsViewModel
+import dev.shadoe.delta.setup.FirstUseScreen
 
 val LocalNavController = staticCompositionLocalOf<NavHostController?> { null }
 
@@ -35,6 +36,7 @@ fun HotspotNavGraph() {
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { scaleOut() + fadeOut() },
       ) {
+        composable<Routes.FirstUseScreen> { FirstUseScreen() }
         composable<Routes.HotspotScreen> {
           val vm = hiltViewModel<ControlViewModel>()
           ControlScreen(vm = vm)
