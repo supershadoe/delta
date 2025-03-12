@@ -8,7 +8,6 @@ import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
 import android.os.Build
 import androidx.annotation.RequiresApi
-import dev.shadoe.delta.api.AutoShutdownType
 import dev.shadoe.delta.api.AutoShutdownType.FIVE_MINUTES
 import dev.shadoe.delta.api.AutoShutdownType.NEVER
 import dev.shadoe.delta.api.AutoShutdownType.ONE_HOUR
@@ -92,7 +91,7 @@ internal class SoftApCallback(
                 querySupportedFrequencyBands(wifiManager)
               },
             supportedSecurityTypes = querySupportedSecurityTypes(capability),
-            supportedAutoShutdownTypes = querySupportedAutoShutdownTypes()
+            supportedAutoShutdownTypes = querySupportedAutoShutdownTypes(),
           )
         )
       }
@@ -118,7 +117,15 @@ internal class SoftApCallback(
     println("blocked client ${client?.macAddress} $blockedReason")
   }
 
-  private fun querySupportedAutoShutdownTypes() = listOf(FIVE_MINUTES, TEN_MINUTES, TWENTY_MINUTES, THIRTY_MINUTES, ONE_HOUR, NEVER)
+  private fun querySupportedAutoShutdownTypes() =
+    listOf(
+      FIVE_MINUTES,
+      TEN_MINUTES,
+      TWENTY_MINUTES,
+      THIRTY_MINUTES,
+      ONE_HOUR,
+      NEVER,
+    )
 
   private suspend fun querySupportedSecurityTypes(
     capability: SoftApCapability
@@ -150,8 +157,6 @@ internal class SoftApCallback(
       }
       bands.toList()
     }
-
-
 
   @RequiresApi(Build.VERSION_CODES.S)
   private suspend fun querySupportedFrequencyBands(

@@ -24,13 +24,16 @@ object AutoShutdownType {
   )
   annotation class AvailableAutoShutdownType
 
-  fun getResOfAutoShutdownType(@AvailableAutoShutdownType autoShutdownType: Int) = when (autoShutdownType) {
-
-    FIVE_MINUTES -> R.string.auto_shutdown_5
-    TEN_MINUTES -> R.string.auto_shutdown_10
-    TWENTY_MINUTES -> R.string.auto_shutdown_20
-    THIRTY_MINUTES -> R.string.auto_shutdown_30
-    ONE_HOUR -> R.string.auto_shutdown_60
-    NEVER -> R.string.auto_shutdown_never
-    else -> R.string.auto_shutdown_not_supported
-  }  }
+  fun getResOfAutoShutdownType(
+    @AvailableAutoShutdownType autoShutdownType: Int
+  ) =
+    when (autoShutdownType) {
+      FIVE_MINUTES -> R.string.auto_shutdown_5
+      TEN_MINUTES -> R.string.auto_shutdown_10
+      TWENTY_MINUTES -> R.string.auto_shutdown_20
+      THIRTY_MINUTES -> R.string.auto_shutdown_30
+      ONE_HOUR -> R.string.auto_shutdown_60
+      NEVER -> R.string.auto_shutdown_never
+      else -> R.string.auto_shutdown_not_supported
+    }
+}

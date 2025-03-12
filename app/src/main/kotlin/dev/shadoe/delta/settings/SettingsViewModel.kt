@@ -97,11 +97,13 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
   }
 
   fun updateMACRandomizationType(MACRandomizationType: Int) {
-    _config.value = _config.value.copy(macRandomizationSetting = MACRandomizationType)
+    _config.value =
+      _config.value.copy(macRandomizationSetting = MACRandomizationType)
   }
 
   fun updateAutoShutdownTimeout(autoShutdownTimeOut: Long) {
-    _config.value = _config.value.copy(autoShutdownTimeout = autoShutdownTimeOut)
+    _config.value =
+      _config.value.copy(autoShutdownTimeout = autoShutdownTimeOut)
   }
 
   fun updateSpeedType(speedType: Int) {
