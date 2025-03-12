@@ -84,6 +84,7 @@ constructor(
             isMacAddressCustomizationSupported = false,
             supportedFrequencyBands = emptyList(),
             supportedSecurityTypes = emptyList(),
+            supportedAutoShutdownTypes = emptyList()
           ),
       )
     )

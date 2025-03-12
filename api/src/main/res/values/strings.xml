@@ -22,4 +22,13 @@
 
     <!-- Client doesn't identify its hostname -->
     <string name="no_hostname">(No name)</string>
+
+    <!-- Auto Shutdown options -->
+    <string name="auto_shutdown_5">5 minutes</string>
+    <string name="auto_shutdown_10">10 minutes</string>
+    <string name="auto_shutdown_20">20 minutes</string>
+    <string name="auto_shutdown_30">30 minutes</string>
+    <string name="auto_shutdown_60">1 hour</string>
+    <string name="auto_shutdown_never">Never</string>
+    <string name="auto_shutdown_not_supported">Not Supported</string>
 </resources>
