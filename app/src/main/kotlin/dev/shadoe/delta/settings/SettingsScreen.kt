@@ -67,6 +67,7 @@ fun SettingsScreen(
 
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
+  val failedToSaveText = stringResource(R.string.save_changes_failed_warning)
 
   Scaffold(
     topBar = {
@@ -151,8 +152,17 @@ fun SettingsScreen(
                 }
                 return@onClick
               }
-              vm.commit()
-              navController?.navigateUp()
+              if (!vm.commit()) {
+                scope.launch {
+                  snackbarHostState.showSnackbar(
+                    message = failedToSaveText,
+                    withDismissAction = true,
+                    duration = SnackbarDuration.Short,
+                  )
+                }
+              } else {
+                navController?.navigateUp()
+              }
             }
         ) {
           Text(text = stringResource(R.string.save_button))
