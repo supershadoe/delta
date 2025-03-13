@@ -58,7 +58,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.api.AutoShutdownType.getResOfAutoShutdownType
+import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
+import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.getResOfTimeoutType
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
@@ -197,16 +198,19 @@ fun SettingsScreen(
 
         item {
           MACRandomizationField(
-            MACRandomizationType = config.macRandomizationSetting,
+            macRandomizationType = config.macRandomizationSetting,
             onMACRandomizationTypeChange = { vm.updateMACRandomizationType(it) },
           )
         }
 
         item {
           AutoShutDownTimeOutField(
-            autoShutDownTimeOut = config.autoShutdownTimeout,
+            autoShutDownTimeOut =
+              config.autoShutdownTimeout.takeIf {
+                it in SoftApAutoShutdownTimeout.supportedShutdownTimeouts
+              } ?: SoftApAutoShutdownTimeout.DEFAULT,
             supportedAutoShutdownType =
-              status.capabilities.supportedAutoShutdownTypes,
+              SoftApAutoShutdownTimeout.supportedShutdownTimeouts,
             onAutoShutdownChange = { vm.updateAutoShutdownTimeout(it) },
           )
         }
@@ -459,7 +463,7 @@ private fun MaxClientLimitField(
 
 @Composable
 private fun MACRandomizationField(
-  MACRandomizationType: Int,
+  macRandomizationType: Int,
   onMACRandomizationTypeChange: (Int) -> Unit,
 ) {
   Row(
@@ -489,7 +493,7 @@ private fun MACRandomizationField(
         items(supportedMACRandomizationType.size) {
           FilterChip(
             selected =
-              supportedMACRandomizationType[MACRandomizationType] ==
+              supportedMACRandomizationType[macRandomizationType] ==
                 supportedMACRandomizationType[it],
             onClick = { onMACRandomizationTypeChange(it) },
             label = { Text(text = supportedMACRandomizationType[it]) },
@@ -504,7 +508,7 @@ private fun MACRandomizationField(
 @Composable
 private fun AutoShutDownTimeOutField(
   autoShutDownTimeOut: Long,
-  supportedAutoShutdownType: List<Int>,
+  supportedAutoShutdownType: List<Long>,
   onAutoShutdownChange: (Long) -> Unit,
 ) {
   Row(
@@ -532,16 +536,13 @@ private fun AutoShutDownTimeOutField(
       LazyRow {
         items(supportedAutoShutdownType.size) {
           FilterChip(
-            selected =
-              autoShutDownTimeOut.toInt() == supportedAutoShutdownType[it],
-            onClick = {
-              onAutoShutdownChange(supportedAutoShutdownType[it].toLong())
-            },
+            selected = autoShutDownTimeOut == supportedAutoShutdownType[it],
+            onClick = { onAutoShutdownChange(supportedAutoShutdownType[it]) },
             label = {
               Text(
                 text =
                   stringResource(
-                    getResOfAutoShutdownType(supportedAutoShutdownType[it])
+                    getResOfTimeoutType(supportedAutoShutdownType[it])
                   )
               )
             },

@@ -8,12 +8,6 @@ import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
 import android.os.Build
 import androidx.annotation.RequiresApi
-import dev.shadoe.delta.api.AutoShutdownType.DEFAULT
-import dev.shadoe.delta.api.AutoShutdownType.FIVE_MINUTES
-import dev.shadoe.delta.api.AutoShutdownType.ONE_HOUR
-import dev.shadoe.delta.api.AutoShutdownType.TEN_MINUTES
-import dev.shadoe.delta.api.AutoShutdownType.THIRTY_MINUTES
-import dev.shadoe.delta.api.AutoShutdownType.TWENTY_MINUTES
 import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_OPEN
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA2_PSK
@@ -88,15 +82,6 @@ internal class SoftApCallback(
                 querySupportedFrequencyBands(wifiManager)
               },
             supportedSecurityTypes = querySupportedSecurityTypes(capability),
-            supportedAutoShutdownTypes =
-              listOf(
-                FIVE_MINUTES,
-                TEN_MINUTES,
-                TWENTY_MINUTES,
-                THIRTY_MINUTES,
-                ONE_HOUR,
-                DEFAULT,
-              ),
           )
         )
       }

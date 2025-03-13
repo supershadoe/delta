@@ -9,6 +9,4 @@ data class SoftApCapabilities(
   val isMacAddressCustomizationSupported: Boolean,
   @BandType val supportedFrequencyBands: List<Int>,
   @SecurityType val supportedSecurityTypes: List<Int>,
-  @AutoShutdownType.AvailableAutoShutdownType
-  val supportedAutoShutdownTypes: List<Int>,
 )
