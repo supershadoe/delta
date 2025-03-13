@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Shuffle
 import androidx.compose.material3.FilterChip
@@ -17,10 +18,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
+import dev.shadoe.delta.api.SoftApRandomizationSetting
+import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_NONE
+import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_NON_PERSISTENT
+import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_PERSISTENT
+import dev.shadoe.delta.api.SoftApRandomizationSetting.RandomizationType
+import dev.shadoe.delta.api.SoftApRandomizationSetting.supportedRandomizationSettings
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_2GHZ
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_5GHZ
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_60GHZ
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_6GHZ
 
 @Composable
 internal fun MacRandomizationField(
-  macRandomizationSetting: Int,
+  @RandomizationType macRandomizationSetting: Int,
   onSettingChange: (Int) -> Unit,
 ) {
   Row(
@@ -39,25 +50,39 @@ internal fun MacRandomizationField(
         text = stringResource(R.string.mac_randomization_field_label),
         style = MaterialTheme.typography.titleLarge,
       )
-
-      val supportedMACRandomizationType =
-        listOf(
-          stringResource(R.string.mac_randomization_none),
-          stringResource(R.string.mac_randomization_persistent),
-          stringResource(R.string.mac_randomization_non_persistent),
-        )
       LazyRow {
-        items(supportedMACRandomizationType.size) {
+        items(supportedRandomizationSettings) {
           FilterChip(
-            selected =
-              supportedMACRandomizationType[macRandomizationSetting] ==
-                supportedMACRandomizationType[it],
+            selected = macRandomizationSetting == it,
             onClick = { onSettingChange(it) },
-            label = { Text(text = supportedMACRandomizationType[it]) },
+            label = { Text(
+              stringResource(
+                when (macRandomizationSetting) {
+                  RANDOMIZATION_NONE -> R.string.mac_randomization_none
+                  RANDOMIZATION_PERSISTENT -> R.string.mac_randomization_persistent
+                  RANDOMIZATION_NON_PERSISTENT -> R.string.mac_randomization_non_persistent
+                  else -> R.string.mac_randomization_none
+                }
+              )
+            ) },
             modifier = Modifier.padding(horizontal = 2.dp),
           )
         }
       }
+      Text(
+        text =
+          stringResource(
+            when (macRandomizationSetting) {
+              RANDOMIZATION_NONE -> R.string.mac_randomization_none_desc
+              RANDOMIZATION_PERSISTENT -> R.string.mac_randomization_persistent_desc
+              RANDOMIZATION_NON_PERSISTENT -> R.string.mac_randomization_non_persistent_desc
+              else -> R.string.mac_randomization_none
+            }
+          ),
+        modifier = Modifier.padding(start = 8.dp),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
     }
   }
 }

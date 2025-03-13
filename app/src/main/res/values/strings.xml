@@ -74,14 +74,27 @@
     <string name="security_proto_field_icon">Security type icon</string>
     <string name="security_proto_field_label">Security Type</string>
     <string name="security_proto_open">None</string>
+    <string name="security_proto_open_desc">
+        No security, anyone can connect without a passphrase.
+    </string>
     <string name="security_proto_wpa2_psk" translatable="false">
         WPA2-Personal
+    </string>
+    <string name="security_proto_wpa2_psk_desc">
+        Provides maximum compatibility with most devices.
     </string>
     <string name="security_proto_wpa3_sae_transition" translatable="false">
         WPA2/WPA3-Personal
     </string>
+    <string name="security_proto_wpa3_sae_transition_desc">
+        Uses WPA3 but drops down to WPA2 for older devices.
+    </string>
     <string name="security_proto_wpa3_sae" translatable="false">
         WPA3-Personal
+    </string>
+    <string name="security_proto_wpa3_sae_desc">
+        Latest security protocol, generally supported by devices released after
+        2020.
     </string>
     <string name="security_proto_not_supported">Not supported</string>
 
@@ -101,9 +114,21 @@
     <string name="freq_band_field_icon">Frequency band icon</string>
     <string name="freq_band_field_label">Speed Type</string>
     <string name="freq_band_2_4_GHz" translatable="false">2.4 GHz</string>
+    <string name="freq_band_2_4_GHz_desc">
+        Supported by almost all devices but not very fast.
+    </string>
     <string name="freq_band_5_GHz" translatable="false">5 GHz</string>
+    <string name="freq_band_5_GHz_desc">
+        Dual-band mode: Faster on supported devices + compatible with old.
+    </string>
     <string name="freq_band_6_GHz" translatable="false">6 GHz</string>
+    <string name="freq_band_6_GHz_desc">
+        Tri-band mode: Latest technology, not available in all countries.
+    </string>
     <string name="freq_band_60_GHz" translatable="false">60 GHz</string>
+    <string name="freq_band_60_GHz_desc">
+        Not a popular frequency band, very short range.
+    </string>
     <string name="freq_band_unknown">Unknown</string>
 
     <string name="advanced_settings_label">Advanced settings</string>
@@ -123,8 +148,17 @@
     <string name="mac_randomization_field_icon">MAC Randomization Icon</string>
     <string name="mac_randomization_field_label">MAC Randomization</string>
     <string name="mac_randomization_none">None</string>
+    <string name="mac_randomization_none_desc">
+        Uses device MAC address to identify itself while providing hotspot.
+    </string>
     <string name="mac_randomization_persistent">Persistent</string>
+    <string name="mac_randomization_persistent_desc">
+        MAC address is randomized every time hotspot name changes.
+    </string>
     <string name="mac_randomization_non_persistent">Non-persistent</string>
+    <string name="mac_randomization_non_persistent_desc">
+        MAC address is randomized every time hotspot is started.
+    </string>
 
     <string name="auto_shutdown_timeout_field_icon">Timeout Icon</string>
     <string name="auto_shutdown_timeout_field_label">Auto Shutdown timeout</string>
@@ -134,6 +168,9 @@
     <string name="auto_shutdown_30">30 minutes</string>
     <string name="auto_shutdown_60">1 hour</string>
     <string name="auto_shutdown_default">Default</string>
+    <string name="auto_shutdown_timeout_desc">
+        Turns off hotspot after above set time if no devices are connected.
+    </string>
 
     <string name="save_button">Save</string>
 

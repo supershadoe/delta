@@ -21,10 +21,11 @@ import dev.shadoe.delta.api.SoftApSpeedType.BAND_2GHZ
 import dev.shadoe.delta.api.SoftApSpeedType.BAND_5GHZ
 import dev.shadoe.delta.api.SoftApSpeedType.BAND_60GHZ
 import dev.shadoe.delta.api.SoftApSpeedType.BAND_6GHZ
+import dev.shadoe.delta.api.SoftApSpeedType.BandType
 
 @Composable
 internal fun FrequencyBandField(
-  frequencyBand: Int,
+  @BandType frequencyBand: Int,
   supportedBands: List<Int>,
   onBandChange: (Int) -> Unit,
 ) {
@@ -65,6 +66,21 @@ internal fun FrequencyBandField(
           )
         }
       }
+      Text(
+        text =
+          stringResource(
+            when (frequencyBand) {
+              BAND_2GHZ -> R.string.freq_band_2_4_GHz_desc
+              BAND_5GHZ -> R.string.freq_band_5_GHz_desc
+              BAND_6GHZ -> R.string.freq_band_6_GHz_desc
+              BAND_60GHZ -> R.string.freq_band_60_GHz_desc
+              else -> R.string.freq_band_unknown
+            }
+          ),
+        modifier = Modifier.padding(start = 8.dp),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
     }
   }
 }

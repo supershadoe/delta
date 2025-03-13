@@ -25,6 +25,9 @@ import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.ONE_HOUR
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.TEN_MINUTES
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.THIRTY_MINUTES
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.TWENTY_MINUTES
+import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_NONE
+import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_NON_PERSISTENT
+import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_PERSISTENT
 
 @Composable
 internal fun AutoShutDownTimeOutField(
@@ -74,6 +77,12 @@ internal fun AutoShutDownTimeOutField(
           )
         }
       }
+      Text(
+        text = stringResource(R.string.auto_shutdown_timeout_desc),
+        modifier = Modifier.padding(start = 8.dp),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
     }
   }
 }

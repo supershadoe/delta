@@ -56,6 +56,7 @@ internal fun MaxClientLimitField(
         text =
           stringResource(R.string.max_client_limit_field_count, allowedLimit),
         modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
     }
   }

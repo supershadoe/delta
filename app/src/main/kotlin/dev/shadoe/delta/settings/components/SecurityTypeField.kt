@@ -67,6 +67,22 @@ internal fun SecurityTypeField(
           )
         }
       }
+      Text(
+        text =
+          stringResource(
+            when (securityType) {
+              SECURITY_TYPE_OPEN -> R.string.security_proto_open_desc
+              SECURITY_TYPE_WPA2_PSK -> R.string.security_proto_wpa2_psk_desc
+              SECURITY_TYPE_WPA3_SAE -> R.string.security_proto_wpa3_sae_desc
+              SECURITY_TYPE_WPA3_SAE_TRANSITION ->
+                R.string.security_proto_wpa3_sae_transition_desc
+              else -> R.string.security_proto_not_supported
+            }
+          ),
+        modifier = Modifier.padding(start = 8.dp),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
     }
   }
 }
