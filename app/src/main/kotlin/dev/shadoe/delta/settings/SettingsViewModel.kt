@@ -41,15 +41,16 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
     }
   }
 
-  fun updateSsid(ssid: String) =
+  fun updateSsid(ssid: String) {
     when (SsidValidator.validate(ssid)) {
-      is SsidValidator.Result.Success -> {
-        _config.value = _config.value.copy(ssid = ssid)
+      is SsidValidator.Result.Success ->
         errorFlag = errorFlag and SSID_FIELD.inv()
-      }
+
       is SsidValidator.Result.SsidTooShort,
       is SsidValidator.Result.SsidTooLong -> errorFlag = errorFlag or SSID_FIELD
     }
+    _config.value = _config.value.copy(ssid = ssid)
+  }
 
   fun updateSecurityType(securityType: Int) {
     val shouldSwitchBackTo5G =
@@ -67,7 +68,7 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
       )
   }
 
-  fun updatePassphrase(passphrase: String) =
+  fun updatePassphrase(passphrase: String) {
     when (
       PassphraseValidator.validate(
         passphrase,
@@ -75,13 +76,15 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
       )
     ) {
       is PassphraseValidator.Result.Success -> {
-        _config.value = _config.value.copy(passphrase = passphrase)
         errorFlag = errorFlag and PASSPHRASE_FIELD.inv()
       }
+
       is PassphraseValidator.Result.PskTooShort,
       is PassphraseValidator.Result.PskTooLong ->
         errorFlag = errorFlag or PASSPHRASE_FIELD
     }
+    _config.value = _config.value.copy(passphrase = passphrase)
+  }
 
   fun updateAutoShutdown(isAutoShutdownEnabled: Boolean) {
     _config.value =
