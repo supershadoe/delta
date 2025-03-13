@@ -88,6 +88,24 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
       _config.value.copy(isAutoShutdownEnabled = isAutoShutdownEnabled)
   }
 
+  fun updateHiddenHotspot(isHotspotHidden: Boolean) {
+    _config.value = _config.value.copy(isHidden = isHotspotHidden)
+  }
+
+  fun updateMaxClientLimit(maxClient: Int) {
+    _config.value = _config.value.copy(maxClientLimit = maxClient)
+  }
+
+  fun updateMACRandomizationType(MACRandomizationType: Int) {
+    _config.value =
+      _config.value.copy(macRandomizationSetting = MACRandomizationType)
+  }
+
+  fun updateAutoShutdownTimeout(autoShutdownTimeOut: Long) {
+    _config.value =
+      _config.value.copy(autoShutdownTimeout = autoShutdownTimeOut)
+  }
+
   fun updateSpeedType(speedType: Int) {
     val shouldSwitchToSAE =
       speedType == SoftApSpeedType.BAND_6GHZ &&

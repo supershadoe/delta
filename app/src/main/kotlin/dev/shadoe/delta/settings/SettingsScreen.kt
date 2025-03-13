@@ -1,6 +1,8 @@
 package dev.shadoe.delta.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,10 +13,16 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.NetworkWifi
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.SettingsPower
+import androidx.compose.material.icons.rounded.Shuffle
+import androidx.compose.material.icons.rounded.Timer
 import androidx.compose.material.icons.rounded.Wifi
+import androidx.compose.material.icons.rounded.WifiFind
 import androidx.compose.material.icons.rounded.WifiPassword
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +33,8 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -33,8 +43,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -46,6 +58,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
+import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
+import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.getResOfTimeoutType
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSecurityType.getResOfSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
@@ -69,6 +83,7 @@ fun SettingsScreen(
     stringResource(R.string.passphrase_empty_warning)
   val failedToSaveText = stringResource(R.string.save_changes_failed_warning)
 
+  var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
   Scaffold(
     topBar = {
       @OptIn(ExperimentalMaterial3Api::class)
@@ -136,6 +151,71 @@ fun SettingsScreen(
           onSpeedTypeChange = { vm.updateSpeedType(it) },
         )
       }
+
+      item {
+        Row(
+          modifier =
+            Modifier.fillMaxWidth().clickable {
+              isAdvancedSettingsEnabled = !isAdvancedSettingsEnabled
+            },
+          horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+          Text(
+            text = stringResource(R.string.advanced_settings_field_label),
+            modifier = Modifier.padding(8.dp),
+          )
+          Icon(
+            modifier = Modifier.align(Alignment.CenterVertically),
+            imageVector =
+              if (isAdvancedSettingsEnabled) {
+                Icons.Rounded.KeyboardArrowUp
+              } else {
+                Icons.Rounded.KeyboardArrowDown
+              },
+            contentDescription =
+              if (isAdvancedSettingsEnabled) {
+                stringResource(R.string.collapse_advanced_settings_icon)
+              } else {
+                stringResource(R.string.expand_advanced_settings_icon)
+              },
+          )
+        }
+      }
+      if (isAdvancedSettingsEnabled) {
+        item {
+          HiddenHotspotField(
+            isHiddenHotspotEnabled = config.isHidden,
+            onHiddenHotspotChange = { vm.updateHiddenHotspot(it) },
+          )
+        }
+        item {
+          MaxClientLimitField(
+            maxClient = status.capabilities.maxSupportedClients,
+            onMaxClientChange = { vm.updateMaxClientLimit(it.toInt()) },
+            allowedLimit = config.maxClientLimit,
+          )
+        }
+
+        item {
+          MACRandomizationField(
+            macRandomizationType = config.macRandomizationSetting,
+            onMACRandomizationTypeChange = { vm.updateMACRandomizationType(it) },
+          )
+        }
+
+        item {
+          AutoShutDownTimeOutField(
+            autoShutDownTimeOut =
+              config.autoShutdownTimeout.takeIf {
+                it in SoftApAutoShutdownTimeout.supportedShutdownTimeouts
+              } ?: SoftApAutoShutdownTimeout.DEFAULT,
+            supportedAutoShutdownType =
+              SoftApAutoShutdownTimeout.supportedShutdownTimeouts,
+            onAutoShutdownChange = { vm.updateAutoShutdownTimeout(it) },
+          )
+        }
+      }
+
       item {
         Button(
           onClick = onClick@{
@@ -300,6 +380,177 @@ private fun AutoShutdownField(
       checked = isAutoShutdownEnabled,
       onCheckedChange = { onAutoShutdownChange(it) },
     )
+  }
+}
+
+@Composable
+private fun HiddenHotspotField(
+  isHiddenHotspotEnabled: Boolean,
+  onHiddenHotspotChange: (Boolean) -> Unit,
+) {
+  Row(
+    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.WifiFind,
+      contentDescription = stringResource(R.string.hidden_network_field_icon),
+    )
+    Column(
+      modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
+      horizontalAlignment = Alignment.Start,
+    ) {
+      Text(
+        text = stringResource(R.string.hidden_network_field_label),
+        style = MaterialTheme.typography.titleLarge,
+      )
+      Text(
+        text = stringResource(R.string.hidden_network_field_desc),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+    }
+    Switch(
+      checked = isHiddenHotspotEnabled,
+      onCheckedChange = { onHiddenHotspotChange(it) },
+    )
+  }
+}
+
+@Composable
+private fun MaxClientLimitField(
+  allowedLimit: Int,
+  maxClient: Int,
+  onMaxClientChange: (Float) -> Unit,
+) {
+
+  Row(
+    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.Link,
+      contentDescription =
+        stringResource(R.string.maximum_client_limit_field_icon),
+    )
+    Column(
+      modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
+      horizontalAlignment = Alignment.Start,
+    ) {
+      Text(
+        text = stringResource(R.string.maximum_client_limit_field_label),
+        style = MaterialTheme.typography.titleLarge,
+      )
+      Slider(
+        value = allowedLimit.toFloat(),
+        onValueChange = { onMaxClientChange(it) },
+        valueRange = 1f..maxClient.toFloat(),
+        steps = maxClient - 1,
+        colors =
+          SliderDefaults.colors(
+            thumbColor = MaterialTheme.colorScheme.secondary,
+            activeTrackColor = MaterialTheme.colorScheme.secondary,
+            inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+          ),
+      )
+      Text(
+        text = "$allowedLimit Clients",
+        modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
+      )
+    }
+  }
+}
+
+@Composable
+private fun MACRandomizationField(
+  macRandomizationType: Int,
+  onMACRandomizationTypeChange: (Int) -> Unit,
+) {
+  Row(
+    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.Shuffle,
+      contentDescription = stringResource(R.string.mac_randomization_field_icon),
+    )
+    Column(
+      modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
+      horizontalAlignment = Alignment.Start,
+    ) {
+      Text(
+        text = stringResource(R.string.mac_randomization_field_label),
+        style = MaterialTheme.typography.titleLarge,
+      )
+
+      val supportedMACRandomizationType =
+        listOf(
+          stringResource(R.string.mac_randomization_none),
+          stringResource(R.string.mac_randomization_persistent),
+          stringResource(R.string.mac_randomization_non_persistent),
+        )
+      LazyRow {
+        items(supportedMACRandomizationType.size) {
+          FilterChip(
+            selected =
+              supportedMACRandomizationType[macRandomizationType] ==
+                supportedMACRandomizationType[it],
+            onClick = { onMACRandomizationTypeChange(it) },
+            label = { Text(text = supportedMACRandomizationType[it]) },
+            modifier = Modifier.padding(horizontal = 2.dp),
+          )
+        }
+      }
+    }
+  }
+}
+
+@Composable
+private fun AutoShutDownTimeOutField(
+  autoShutDownTimeOut: Long,
+  supportedAutoShutdownType: List<Long>,
+  onAutoShutdownChange: (Long) -> Unit,
+) {
+  Row(
+    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.Timer,
+      contentDescription =
+        stringResource(R.string.auto_shutdown_timeout_field_icon),
+    )
+    Column(
+      modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
+      horizontalAlignment = Alignment.Start,
+    ) {
+      Text(
+        text = stringResource(R.string.auto_shutdown_timeout_field_label),
+        style = MaterialTheme.typography.titleLarge,
+      )
+      Text(
+        text = stringResource(R.string.auto_shutdown_timeout_field_desc),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+      LazyRow {
+        items(supportedAutoShutdownType.size) {
+          FilterChip(
+            selected = autoShutDownTimeOut == supportedAutoShutdownType[it],
+            onClick = { onAutoShutdownChange(supportedAutoShutdownType[it]) },
+            label = {
+              Text(
+                text =
+                  stringResource(
+                    getResOfTimeoutType(supportedAutoShutdownType[it])
+                  )
+              )
+            },
+            modifier = Modifier.padding(horizontal = 2.dp),
+          )
+        }
+      }
+    }
   }
 }
 

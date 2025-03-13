@@ -95,6 +95,22 @@
     <string name="save_button">Save</string>
 
     <string name="passphrase_empty_warning">Enter a password.</string>
+    <string name="advanced_settings_field_label">Advanced settings</string>
+    <string name="collapse_advanced_settings_icon">Collapse advanced settings</string>
+    <string name="expand_advanced_settings_icon">Expand advanced settings</string>
+    <string name="hidden_network_field_icon">Hidden network field icon</string>
+    <string name="hidden_network_field_label">Hidden Network</string>
+    <string name="hidden_network_field_desc">Your mobile hotspot\'s name won\'t appear in the list of available networks</string>
+    <string name="maximum_client_limit_field_icon">Maximum Client Limit Field Icon</string>
+    <string name="maximum_client_limit_field_label">Maximum Client Limit</string>
+    <string name="mac_randomization_field_icon">MAC Randomization Field Icon</string>
+    <string name="mac_randomization_field_label">MAC Randomization</string>
+    <string name="mac_randomization_none">None</string>
+    <string name="mac_randomization_persistent">Persistent</string>
+    <string name="mac_randomization_non_persistent">Non-persistent</string>
+    <string name="auto_shutdown_timeout_field_icon">Auto Shutdown Timeout Field Icon</string>
+    <string name="auto_shutdown_timeout_field_label">Auto Shutdown</string>
+    <string name="auto_shutdown_timeout_field_desc">Turn off when no clients are connected for</string>
     <string name="save_changes_failed_warning">
         Failed to update hotspot settings.
     </string>
