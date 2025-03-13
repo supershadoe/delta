@@ -34,14 +34,4 @@ object SoftApSecurityType {
       ]
   )
   annotation class SecurityType
-
-  fun getResOfSecurityType(@SecurityType securityType: Int) =
-    when (securityType) {
-      SECURITY_TYPE_OPEN -> R.string.security_proto_open
-      SECURITY_TYPE_WPA2_PSK -> R.string.security_proto_wpa2_psk
-      SECURITY_TYPE_WPA3_SAE -> R.string.security_proto_wpa3_sae
-      SECURITY_TYPE_WPA3_SAE_TRANSITION ->
-        R.string.security_proto_wpa3_sae_transition
-      else -> R.string.security_proto_not_supported
-    }
 }

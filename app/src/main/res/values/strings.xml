@@ -73,8 +73,19 @@
 
     <string name="security_proto_field_icon">Security type icon</string>
     <string name="security_proto_field_label">Security Type</string>
-    <string name="passphrase_field_icon">Passphrase icon</string>
+    <string name="security_proto_open">None</string>
+    <string name="security_proto_wpa2_psk" translatable="false">
+        WPA2-Personal
+    </string>
+    <string name="security_proto_wpa3_sae_transition" translatable="false">
+        WPA2/WPA3-Personal
+    </string>
+    <string name="security_proto_wpa3_sae" translatable="false">
+        WPA3-Personal
+    </string>
+    <string name="security_proto_not_supported">Not supported</string>
 
+    <string name="passphrase_field_icon">Passphrase icon</string>
     <string name="passphrase_field_label">Passphrase</string>
     <string name="passphrase_too_short_warning">
         Passphrase is too short.
@@ -89,6 +100,11 @@
 
     <string name="freq_band_field_icon">Frequency band icon</string>
     <string name="freq_band_field_label">Speed Type</string>
+    <string name="freq_band_2_4_GHz" translatable="false">2.4 GHz</string>
+    <string name="freq_band_5_GHz" translatable="false">5 GHz</string>
+    <string name="freq_band_6_GHz" translatable="false">6 GHz</string>
+    <string name="freq_band_60_GHz" translatable="false">60 GHz</string>
+    <string name="freq_band_unknown">Unknown</string>
 
     <string name="advanced_settings_label">Advanced settings</string>
     <string name="collapse_icon">Collapse</string>
@@ -112,6 +128,12 @@
 
     <string name="auto_shutdown_timeout_field_icon">Timeout Icon</string>
     <string name="auto_shutdown_timeout_field_label">Auto Shutdown timeout</string>
+    <string name="auto_shutdown_5">5 minutes</string>
+    <string name="auto_shutdown_10">10 minutes</string>
+    <string name="auto_shutdown_20">20 minutes</string>
+    <string name="auto_shutdown_30">30 minutes</string>
+    <string name="auto_shutdown_60">1 hour</string>
+    <string name="auto_shutdown_default">Default</string>
 
     <string name="save_button">Save</string>
 

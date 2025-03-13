@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.NetworkWifi
 import androidx.compose.material3.FilterChip
@@ -16,7 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
-import dev.shadoe.delta.api.SoftApSpeedType.getResOfSpeedType
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_2GHZ
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_5GHZ
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_60GHZ
+import dev.shadoe.delta.api.SoftApSpeedType.BAND_6GHZ
 
 @Composable
 internal fun FrequencyBandField(
@@ -39,12 +43,23 @@ internal fun FrequencyBandField(
         style = MaterialTheme.typography.titleMedium,
       )
       LazyRow {
-        items(supportedBands.size) {
+        items(supportedBands) {
           FilterChip(
-            selected = frequencyBand == supportedBands[it],
-            onClick = { onBandChange(supportedBands[it]) },
+            selected = frequencyBand == it,
+            onClick = { onBandChange(it) },
             label = {
-              Text(text = stringResource(getResOfSpeedType(supportedBands[it])))
+              Text(
+                text =
+                  stringResource(
+                    when (it) {
+                      BAND_2GHZ -> R.string.freq_band_2_4_GHz
+                      BAND_5GHZ -> R.string.freq_band_5_GHz
+                      BAND_6GHZ -> R.string.freq_band_6_GHz
+                      BAND_60GHZ -> R.string.freq_band_60_GHz
+                      else -> R.string.freq_band_unknown
+                    }
+                  )
+              )
             },
             modifier = Modifier.padding(horizontal = 2.dp),
           )

@@ -18,13 +18,4 @@ object SoftApSpeedType {
   @Retention(AnnotationRetention.SOURCE)
   @IntDef(value = [BAND_2GHZ, BAND_5GHZ, BAND_6GHZ, BAND_60GHZ])
   annotation class BandType
-
-  fun getResOfSpeedType(@BandType speedType: Int) =
-    when (speedType) {
-      BAND_2GHZ -> R.string.freq_band_2_4_GHz
-      BAND_5GHZ -> R.string.freq_band_5_GHz
-      BAND_6GHZ -> R.string.freq_band_6_GHz
-      BAND_60GHZ -> R.string.freq_band_60_GHz
-      else -> R.string.freq_band_unknown
-    }
 }
