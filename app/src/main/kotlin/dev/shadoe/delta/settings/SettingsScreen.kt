@@ -40,6 +40,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,6 +50,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -84,6 +86,11 @@ fun SettingsScreen(
   val failedToSaveText = stringResource(R.string.save_changes_failed_warning)
 
   var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
+
+  @OptIn(ExperimentalMaterial3Api::class)
+  val appBarScrollBehavior =
+    TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
   Scaffold(
     topBar = {
       @OptIn(ExperimentalMaterial3Api::class)
@@ -97,8 +104,14 @@ fun SettingsScreen(
             )
           }
         },
+        scrollBehavior = appBarScrollBehavior,
       )
     },
+    modifier =
+      Modifier.nestedScroll(
+        @OptIn(ExperimentalMaterial3Api::class)
+        appBarScrollBehavior.nestedScrollConnection
+      ),
     snackbarHost = { SnackbarHost(snackbarHostState) },
   ) { scaffoldPadding ->
     LazyColumn(
@@ -503,9 +516,9 @@ private fun MaxClientLimitField(
 }
 
 @Composable
-private fun MACRandomizationField(
-  macRandomizationType: Int,
-  onMACRandomizationTypeChange: (Int) -> Unit,
+private fun MacRandomizationField(
+  macRandomizationSetting: Int,
+  onSettingChange: (Int) -> Unit,
 ) {
   Row(
     modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
@@ -534,9 +547,9 @@ private fun MACRandomizationField(
         items(supportedMACRandomizationType.size) {
           FilterChip(
             selected =
-              supportedMACRandomizationType[macRandomizationType] ==
+              supportedMACRandomizationType[macRandomizationSetting] ==
                 supportedMACRandomizationType[it],
-            onClick = { onMACRandomizationTypeChange(it) },
+            onClick = { onSettingChange(it) },
             label = { Text(text = supportedMACRandomizationType[it]) },
             modifier = Modifier.padding(horizontal = 2.dp),
           )
