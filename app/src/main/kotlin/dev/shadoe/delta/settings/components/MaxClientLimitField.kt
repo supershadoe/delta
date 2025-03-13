@@ -44,7 +44,7 @@ internal fun MaxClientLimitField(
         value = allowedLimit.toFloat(),
         onValueChange = { onMaxClientChange(it) },
         valueRange = 1f..maxClient.toFloat(),
-        steps = maxClient.floorDiv(5),
+        steps = maxClient.coerceIn(1, 5),
         colors =
           SliderDefaults.colors(
             thumbColor = MaterialTheme.colorScheme.secondary,
