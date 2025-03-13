@@ -8,8 +8,8 @@ import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
 import android.os.Build
 import androidx.annotation.RequiresApi
+import dev.shadoe.delta.api.AutoShutdownType.DEFAULT
 import dev.shadoe.delta.api.AutoShutdownType.FIVE_MINUTES
-import dev.shadoe.delta.api.AutoShutdownType.NEVER
 import dev.shadoe.delta.api.AutoShutdownType.ONE_HOUR
 import dev.shadoe.delta.api.AutoShutdownType.TEN_MINUTES
 import dev.shadoe.delta.api.AutoShutdownType.THIRTY_MINUTES
@@ -36,10 +36,7 @@ internal class SoftApCallback(
 
   /** Results in a no-op because already [TetheringEventCallback] handles it */
   @Deprecated("Removed in API 35")
-  override fun onStateChanged(state: Int, failureReason: Int) {
-    println("below is failure reason")
-    println(failureReason)
-  }
+  override fun onStateChanged(state: Int, failureReason: Int) {}
 
   /** Results in a no-op because already [TetheringEventCallback] handles it */
   override fun onConnectedClientsOrInfoChanged(
@@ -91,7 +88,15 @@ internal class SoftApCallback(
                 querySupportedFrequencyBands(wifiManager)
               },
             supportedSecurityTypes = querySupportedSecurityTypes(capability),
-            supportedAutoShutdownTypes = querySupportedAutoShutdownTypes(),
+            supportedAutoShutdownTypes =
+              listOf(
+                FIVE_MINUTES,
+                TEN_MINUTES,
+                TWENTY_MINUTES,
+                THIRTY_MINUTES,
+                ONE_HOUR,
+                DEFAULT,
+              ),
           )
         )
       }
@@ -116,16 +121,6 @@ internal class SoftApCallback(
   ) {
     println("blocked client ${client?.macAddress} $blockedReason")
   }
-
-  private fun querySupportedAutoShutdownTypes() =
-    listOf(
-      FIVE_MINUTES,
-      TEN_MINUTES,
-      TWENTY_MINUTES,
-      THIRTY_MINUTES,
-      ONE_HOUR,
-      NEVER,
-    )
 
   private suspend fun querySupportedSecurityTypes(
     capability: SoftApCapability

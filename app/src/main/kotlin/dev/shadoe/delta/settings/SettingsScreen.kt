@@ -83,7 +83,6 @@ fun SettingsScreen(
   val failedToSaveText = stringResource(R.string.save_changes_failed_warning)
 
   var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
-  var sliderState by remember { mutableStateOf(config.maxClientLimit) }
   Scaffold(
     topBar = {
       @OptIn(ExperimentalMaterial3Api::class)
@@ -191,8 +190,8 @@ fun SettingsScreen(
         item {
           MaxClientLimitField(
             maxClient = status.capabilities.maxSupportedClients,
-            onMaxClientChange = { vm.updateMaxClientLimit(it) },
-            allowedLimit = sliderState,
+            onMaxClientChange = { vm.updateMaxClientLimit(it.toInt()) },
+            allowedLimit = config.maxClientLimit,
           )
         }
 
@@ -204,7 +203,6 @@ fun SettingsScreen(
         }
 
         item {
-          //
           AutoShutDownTimeOutField(
             autoShutDownTimeOut = config.autoShutdownTimeout,
             supportedAutoShutdownType =
@@ -419,7 +417,7 @@ private fun HiddenHotspotField(
 private fun MaxClientLimitField(
   allowedLimit: Int,
   maxClient: Int,
-  onMaxClientChange: (Int) -> Unit,
+  onMaxClientChange: (Float) -> Unit,
 ) {
 
   Row(
@@ -439,15 +437,11 @@ private fun MaxClientLimitField(
         text = stringResource(R.string.maximum_client_limit_field_label),
         style = MaterialTheme.typography.titleLarge,
       )
-      var sliderState by remember { mutableStateOf(allowedLimit.toFloat()) }
       Slider(
-        value = sliderState,
-        onValueChange = {
-          sliderState = it
-          onMaxClientChange(it.toInt())
-        },
+        value = allowedLimit.toFloat(),
+        onValueChange = { onMaxClientChange(it) },
         valueRange = 1f..maxClient.toFloat(),
-        steps = maxClient.toInt() - 1,
+        steps = maxClient - 1,
         colors =
           SliderDefaults.colors(
             thumbColor = MaterialTheme.colorScheme.secondary,
@@ -456,7 +450,7 @@ private fun MaxClientLimitField(
           ),
       )
       Text(
-        text = "${sliderState.toInt()} Clients",
+        text = "$allowedLimit Clients",
         modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
       )
     }
