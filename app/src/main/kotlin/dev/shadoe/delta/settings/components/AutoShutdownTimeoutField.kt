@@ -25,9 +25,6 @@ import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.ONE_HOUR
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.TEN_MINUTES
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.THIRTY_MINUTES
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.TWENTY_MINUTES
-import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_NONE
-import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_NON_PERSISTENT
-import dev.shadoe.delta.api.SoftApRandomizationSetting.RANDOMIZATION_PERSISTENT
 
 @Composable
 internal fun AutoShutDownTimeOutField(

@@ -2,12 +2,6 @@ package dev.shadoe.delta.api
 
 import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.IntDef
-import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.DEFAULT
-import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.FIVE_MINUTES
-import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.ONE_HOUR
-import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.TEN_MINUTES
-import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.THIRTY_MINUTES
-import dev.shadoe.delta.api.SoftApAutoShutdownTimeout.TWENTY_MINUTES
 
 object SoftApRandomizationSetting {
   const val RANDOMIZATION_NONE = SoftApConfigurationHidden.RANDOMIZATION_NONE
