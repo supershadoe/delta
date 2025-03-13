@@ -53,7 +53,7 @@ internal fun MacRandomizationField(
             label = {
               Text(
                 stringResource(
-                  when (macRandomizationSetting) {
+                  when (it) {
                     RANDOMIZATION_NONE -> R.string.mac_randomization_none
                     RANDOMIZATION_PERSISTENT ->
                       R.string.mac_randomization_persistent
