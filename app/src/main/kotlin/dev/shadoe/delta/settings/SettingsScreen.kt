@@ -185,7 +185,7 @@ fun SettingsScreen(
         item {
           HiddenHotspotField(
             isHiddenHotspotEnabled = config.isHidden,
-            onHiddenHotspotChange = { vm.updateHiddenHotspot(it) },
+            onHiddenHotspotChange = { vm.updateIsHidden(it) },
           )
         }
         item {
@@ -197,9 +197,11 @@ fun SettingsScreen(
         }
 
         item {
-          MACRandomizationField(
-            macRandomizationType = config.macRandomizationSetting,
-            onMACRandomizationTypeChange = { vm.updateMACRandomizationType(it) },
+          MacRandomizationField(
+            macRandomizationSetting = config.macRandomizationSetting,
+            onSettingChange = {
+              vm.updateMacRandomizationSetting(it)
+            },
           )
         }
 
@@ -384,6 +386,45 @@ private fun AutoShutdownField(
 }
 
 @Composable
+private fun SpeedTypeField(
+  speedType: Int,
+  supportedSpeedTypes: List<Int>,
+  onSpeedTypeChange: (Int) -> Unit,
+) {
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = Modifier.padding(vertical = 8.dp),
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.NetworkWifi,
+      contentDescription = stringResource(R.string.freq_band_field_icon),
+    )
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+      Text(
+        text = stringResource(R.string.freq_band_field_label),
+        modifier = Modifier.padding(start = 8.dp),
+        style = MaterialTheme.typography.titleMedium,
+      )
+      LazyRow {
+        items(supportedSpeedTypes.size) {
+          FilterChip(
+            selected = speedType == supportedSpeedTypes[it],
+            onClick = { onSpeedTypeChange(supportedSpeedTypes[it]) },
+            label = {
+              Text(
+                text =
+                  stringResource(getResOfSpeedType(supportedSpeedTypes[it]))
+              )
+            },
+            modifier = Modifier.padding(horizontal = 2.dp),
+          )
+        }
+      }
+    }
+  }
+}
+
+@Composable
 private fun HiddenHotspotField(
   isHiddenHotspotEnabled: Boolean,
   onHiddenHotspotChange: (Boolean) -> Unit,
@@ -544,45 +585,6 @@ private fun AutoShutDownTimeOutField(
                   stringResource(
                     getResOfTimeoutType(supportedAutoShutdownType[it])
                   )
-              )
-            },
-            modifier = Modifier.padding(horizontal = 2.dp),
-          )
-        }
-      }
-    }
-  }
-}
-
-@Composable
-private fun SpeedTypeField(
-  speedType: Int,
-  supportedSpeedTypes: List<Int>,
-  onSpeedTypeChange: (Int) -> Unit,
-) {
-  Row(
-    verticalAlignment = Alignment.CenterVertically,
-    modifier = Modifier.padding(vertical = 8.dp),
-  ) {
-    Icon(
-      imageVector = Icons.Rounded.NetworkWifi,
-      contentDescription = stringResource(R.string.freq_band_field_icon),
-    )
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-      Text(
-        text = stringResource(R.string.freq_band_field_label),
-        modifier = Modifier.padding(start = 8.dp),
-        style = MaterialTheme.typography.titleMedium,
-      )
-      LazyRow {
-        items(supportedSpeedTypes.size) {
-          FilterChip(
-            selected = speedType == supportedSpeedTypes[it],
-            onClick = { onSpeedTypeChange(supportedSpeedTypes[it]) },
-            label = {
-              Text(
-                text =
-                  stringResource(getResOfSpeedType(supportedSpeedTypes[it]))
               )
             },
             modifier = Modifier.padding(horizontal = 2.dp),

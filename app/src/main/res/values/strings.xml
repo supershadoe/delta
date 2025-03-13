@@ -82,11 +82,9 @@
     <string name="passphrase_too_long_warning">Passphrase is too long.</string>
 
     <string name="auto_shutdown_field_icon">Auto shutdown icon</string>
-    <string name="auto_shutdown_field_title">
-        Turn off hotspot automatically?
-    </string>
+    <string name="auto_shutdown_field_title">Auto shutdown</string>
     <string name="auto_shutdown_field_desc">
-        When no devices are connected.
+        Turns off hotspot when no devices are connected for some time.
     </string>
 
     <string name="freq_band_field_icon">Frequency band icon</string>
