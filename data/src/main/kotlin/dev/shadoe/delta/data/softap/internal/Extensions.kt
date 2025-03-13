@@ -110,7 +110,14 @@ internal object Extensions {
             SoftApSpeedType.BAND_5GHZ or
             SoftApSpeedType.BAND_6GHZ
         when (speedType) {
-          SoftApSpeedType.BAND_6GHZ -> setBand(band2To6)
+          SoftApSpeedType.BAND_6GHZ -> {
+            setBand(band2To6)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+              setBands(
+                intArrayOf(SoftApSpeedType.BAND_2GHZ, band2To5, band2To6)
+              )
+            }
+          }
           SoftApSpeedType.BAND_5GHZ -> {
             setBand(band2To5)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
