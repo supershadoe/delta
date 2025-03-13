@@ -42,11 +42,6 @@ internal fun AutoShutDownTimeOutField(
         text = stringResource(R.string.auto_shutdown_timeout_field_label),
         style = MaterialTheme.typography.titleLarge,
       )
-      Text(
-        text = stringResource(R.string.auto_shutdown_timeout_field_desc),
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-      )
       LazyRow {
         items(supportedAutoShutdownType.size) {
           FilterChip(

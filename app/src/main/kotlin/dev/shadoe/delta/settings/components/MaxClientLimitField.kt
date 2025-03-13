@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Link
+import androidx.compose.material.icons.rounded.DesktopAccessDisabled
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -24,29 +24,27 @@ internal fun MaxClientLimitField(
   maxClient: Int,
   onMaxClientChange: (Float) -> Unit,
 ) {
-
   Row(
     modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
     Icon(
-      imageVector = Icons.Rounded.Link,
-      contentDescription =
-        stringResource(R.string.maximum_client_limit_field_icon),
+      imageVector = Icons.Rounded.DesktopAccessDisabled,
+      contentDescription = stringResource(R.string.max_client_limit_field_icon),
     )
     Column(
       modifier = Modifier.weight(1f).padding(horizontal = 16.dp),
       horizontalAlignment = Alignment.Start,
     ) {
       Text(
-        text = stringResource(R.string.maximum_client_limit_field_label),
+        text = stringResource(R.string.max_client_limit_field_label),
         style = MaterialTheme.typography.titleLarge,
       )
       Slider(
         value = allowedLimit.toFloat(),
         onValueChange = { onMaxClientChange(it) },
         valueRange = 1f..maxClient.toFloat(),
-        steps = maxClient - 1,
+        steps = maxClient.floorDiv(5),
         colors =
           SliderDefaults.colors(
             thumbColor = MaterialTheme.colorScheme.secondary,
@@ -55,7 +53,8 @@ internal fun MaxClientLimitField(
           ),
       )
       Text(
-        text = "$allowedLimit Clients",
+        text =
+          stringResource(R.string.max_client_limit_field_count, allowedLimit),
         modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
       )
     }

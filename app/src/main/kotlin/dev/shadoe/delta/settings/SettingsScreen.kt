@@ -159,7 +159,7 @@ fun SettingsScreen(
           horizontalArrangement = Arrangement.SpaceBetween,
         ) {
           Text(
-            text = stringResource(R.string.advanced_settings_field_label),
+            text = stringResource(R.string.advanced_settings_label),
             modifier = Modifier.padding(8.dp),
           )
           Icon(
@@ -172,9 +172,9 @@ fun SettingsScreen(
               },
             contentDescription =
               if (isAdvancedSettingsEnabled) {
-                stringResource(R.string.collapse_advanced_settings_icon)
+                stringResource(R.string.collapse_icon)
               } else {
-                stringResource(R.string.expand_advanced_settings_icon)
+                stringResource(R.string.expand_icon)
               },
           )
         }

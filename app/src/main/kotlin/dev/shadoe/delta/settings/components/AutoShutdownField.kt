@@ -40,6 +40,7 @@ internal fun AutoShutdownField(
       )
       Text(
         text = stringResource(R.string.auto_shutdown_field_desc),
+        style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
     }
