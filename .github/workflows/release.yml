@@ -102,5 +102,5 @@ jobs:
         run: bash scripts/update_ver.sh post
       - name: Push to main
         run: |
-          git commit -am "Switch to a dev version name"
+          git commit -am "Switch to the next version"
           git push
