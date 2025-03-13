@@ -1,15 +1,24 @@
 package dev.shadoe.delta.settings
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -17,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -34,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -52,6 +63,10 @@ import dev.shadoe.delta.settings.components.PassphraseField
 import dev.shadoe.delta.settings.components.SecurityTypeField
 import dev.shadoe.delta.settings.components.SsidField
 import kotlinx.coroutines.launch
+
+private fun openSystemSettings(context: Context) {
+  context.startActivity(Intent("com.android.settings.WIFI_TETHER_SETTINGS"))
+}
 
 @Composable
 fun SettingsScreen(
@@ -89,6 +104,15 @@ fun SettingsScreen(
             )
           }
         },
+        actions = {
+          val context = LocalContext.current
+          IconButton(onClick = { openSystemSettings(context) }) {
+            Icon(
+              imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
+              contentDescription = stringResource(R.string.open_system_settings),
+            )
+          }
+        },
         scrollBehavior = appBarScrollBehavior,
       )
     },
@@ -109,6 +133,47 @@ fun SettingsScreen(
           }
           .then(modifier)
     ) {
+      if (Build.MANUFACTURER == "samsung") {
+        item {
+          Box(
+            modifier =
+              Modifier.background(
+                color = MaterialTheme.colorScheme.tertiaryContainer,
+                shape = RoundedCornerShape(12.dp),
+              )
+          ) {
+            Row(
+              modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+              verticalAlignment = Alignment.CenterVertically,
+            ) {
+              Icon(
+                imageVector = Icons.Outlined.Warning,
+                contentDescription = stringResource(R.string.warning_icon),
+              )
+              Column(modifier = Modifier.padding(start = 16.dp)) {
+                val context = LocalContext.current
+                Text(
+                  text = stringResource(R.string.settings_warn_samsung),
+                  color = MaterialTheme.colorScheme.onTertiaryContainer,
+                )
+                Button(
+                  onClick = { openSystemSettings(context) },
+                  modifier = Modifier.padding(top = 8.dp),
+                ) {
+                  Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
+                    contentDescription = stringResource(R.string.open_icon),
+                  )
+                  Text(
+                    text = stringResource(R.string.open_system_settings),
+                    modifier = Modifier.padding(start = 8.dp),
+                  )
+                }
+              }
+            }
+          }
+        }
+      }
       item {
         Text(
           text = stringResource(R.string.settings_desc),
