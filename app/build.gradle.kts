@@ -100,9 +100,6 @@ dependencies {
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.serialization.json)
 
-  implementation(libs.shizuku.api)
-  implementation(libs.shizuku.provider)
-
   ksp(libs.hilt.compiler)
   testImplementation(libs.kotlin.test.junit)
   androidTestImplementation(libs.bundles.instTest)
