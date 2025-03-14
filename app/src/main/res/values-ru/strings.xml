@@ -18,7 +18,7 @@
     <string name="crash_notif_title">В приложении произошёл сбой</string>
     <string name="crash_notif_sub_text">Обработчик сбоев приложения</string>
     <string name="crash_notif_content">В приложении произошёл сбой из-за неожиданной ошибки</string>
-    <string name="crash_notif_channel_name">Crash channel</string>
+    <string name="crash_notif_channel_name">Канал сбоев</string>
 
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Журнал сбоев</string>
