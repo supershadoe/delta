@@ -80,6 +80,7 @@ fun SettingsScreen(
 
   val config by vm.config.collectAsState()
   val status by vm.status.collectAsState()
+  val results by vm.results.collectAsState()
 
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
@@ -184,6 +185,7 @@ fun SettingsScreen(
         SsidField(
           ssid = config.ssid ?: "",
           onSsidChange = { vm.updateSsid(it) },
+          currentResult = results.ssidResult,
         )
       }
       item {
@@ -198,6 +200,7 @@ fun SettingsScreen(
           PassphraseField(
             passphrase = config.passphrase,
             onPassphraseChange = { vm.updatePassphrase(it) },
+            currentResult = results.passphraseResult,
           )
         }
       }

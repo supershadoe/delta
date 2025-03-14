@@ -11,26 +11,19 @@ import dev.shadoe.delta.data.softap.validators.SsidValidator
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsViewModel
 @Inject
 constructor(private val softApRepository: SoftApRepository) : ViewModel() {
-  companion object {
-    private const val SSID_FIELD = 1 shl 1
-    @Suppress("unused") private const val SECURITY_TYPE_FIELD = 1 shl 2
-    private const val PASSPHRASE_FIELD = 1 shl 3
-    @Suppress("unused") private const val AUTO_SHUTDOWN_FIELD = 1 shl 4
-    @Suppress("unused") private const val SPEED_TYPE_FIELD = 1 shl 5
-  }
-
-  private var errorFlag = 0
+  private val _config = MutableStateFlow(softApRepository.config.value)
+  private val _results = MutableStateFlow(UpdateResults())
 
   val status = softApRepository.status
-
-  private val _config = MutableStateFlow(softApRepository.config.value)
   val config = _config.asStateFlow()
+  val results = _results.asStateFlow()
 
   init {
     viewModelScope.launch {
@@ -41,16 +34,10 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
     }
   }
 
-  fun updateSsid(ssid: String) {
-    when (SsidValidator.validate(ssid)) {
-      is SsidValidator.Result.Success ->
-        errorFlag = errorFlag and SSID_FIELD.inv()
-
-      is SsidValidator.Result.SsidTooShort,
-      is SsidValidator.Result.SsidTooLong -> errorFlag = errorFlag or SSID_FIELD
-    }
-    _config.value = _config.value.copy(ssid = ssid)
-  }
+  fun updateSsid(ssid: String) =
+    SsidValidator.validate(ssid)
+      .let { res -> _results.update { it.copy(ssidResult = res) } }
+      .also { _config.update { it.copy(ssid = ssid) } }
 
   fun updateSecurityType(securityType: Int) {
     val shouldSwitchBackTo5G =
@@ -68,23 +55,13 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
       )
   }
 
-  fun updatePassphrase(passphrase: String) {
-    when (
-      PassphraseValidator.validate(
+  fun updatePassphrase(passphrase: String) =
+    PassphraseValidator.validate(
         passphrase,
         securityType = config.value.securityType,
       )
-    ) {
-      is PassphraseValidator.Result.Success -> {
-        errorFlag = errorFlag and PASSPHRASE_FIELD.inv()
-      }
-
-      is PassphraseValidator.Result.PskTooShort,
-      is PassphraseValidator.Result.PskTooLong ->
-        errorFlag = errorFlag or PASSPHRASE_FIELD
-    }
-    _config.value = _config.value.copy(passphrase = passphrase)
-  }
+      .let { res -> _results.update { it.copy(passphraseResult = res) } }
+      .also { _config.update { it.copy(passphrase = passphrase) } }
 
   fun updateAutoShutdown(isAutoShutdownEnabled: Boolean) {
     _config.value =
@@ -127,7 +104,7 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
 
   // TODO: emit errors in UI
   fun commit(): Boolean {
-    if (errorFlag != 0) return false
+    if (results.value != UpdateResults()) return false
     // Only happens when someone erases the passphrase but also selects
     // open security
     if (_config.value.passphrase.isEmpty()) {
