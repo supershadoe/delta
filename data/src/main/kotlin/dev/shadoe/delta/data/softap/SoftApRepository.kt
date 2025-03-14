@@ -11,6 +11,7 @@ import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfigurationHidden
 import android.os.Binder
 import android.os.Build
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -37,7 +38,6 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalForInheritanceCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -62,6 +62,7 @@ constructor(
   @MacAddressCache private val persistedMacAddressCache: DataStore<Preferences>,
 ) {
   companion object {
+    private const val TAG = "SoftApRepository"
     private const val ADB_PACKAGE_NAME = "com.android.shell"
   }
 
@@ -195,39 +196,7 @@ constructor(
       }
       .onEach { internalState.update { st -> st.copy(macAddressCache = it) } }
 
-  private fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
-    runCatching {
-        Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(
-            c.toOriginalClass()
-          )
-          .let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-              if (!wifiManager.validateSoftApConfiguration(it)) {
-                return@let false
-              }
-            }
-            wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-            return@let true
-          }
-      }
-      .getOrDefault(false)
-      .also {
-        if (it) {
-          _config.update { c }
-          shouldRestartHotspot.value = true
-        }
-      }
-
-  @OptIn(ExperimentalForInheritanceCoroutinesApi::class)
-  val config =
-    object : MutableStateFlow<SoftApConfiguration> by _config {
-      override var value: SoftApConfiguration
-        get() = _config.value
-        set(value) {
-          updateSoftApConfiguration(value)
-        }
-    }
-
+  val config = _config.asStateFlow()
   val status = _status.asStateFlow()
 
   inner class CallbackSubscriber internal constructor(scope: CoroutineScope) :
@@ -336,4 +305,28 @@ constructor(
     }
     return true
   }
+
+  fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
+    runCatching {
+        Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(
+            c.toOriginalClass()
+          )
+          .let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+              if (!wifiManager.validateSoftApConfiguration(it)) {
+                return@let false
+              }
+            }
+            wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+            return@let true
+          }
+      }
+      .onFailure { Log.e(TAG, it.stackTraceToString()) }
+      .getOrDefault(false)
+      .also {
+        if (it) {
+          _config.update { c }
+          shouldRestartHotspot.value = true
+        }
+      }
 }

@@ -113,7 +113,7 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
           passphrase = softApRepository.config.value.passphrase
         )
     }
-    softApRepository.config.value = _config.value
+    softApRepository.updateSoftApConfiguration(_config.value)
     return true
   }
 }

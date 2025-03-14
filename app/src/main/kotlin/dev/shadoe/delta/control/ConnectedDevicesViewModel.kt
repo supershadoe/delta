@@ -19,7 +19,7 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
   fun blockDevice(device: ACLDevice) {
     softApRepository.apply {
       val d = config.value.blockedDevices
-      config.value = config.value.copy(blockedDevices = d + device)
+      updateSoftApConfiguration(config.value.copy(blockedDevices = d + device))
     }
   }
 }
