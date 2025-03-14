@@ -1,0 +1,225 @@
+<resources>
+    <!-- dev.shadoe.delta -->
+    <string name="app_name">Delta</string>
+    <string name="back_button">Назад</string>
+    <string name="blocklist">Blocklist</string>
+    <string name="no_connected_devices">Нет подключённых устройств.</string>
+    <string name="open_icon">Open</string>
+
+    <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">Нет заблокированных устройств.</string>
+    <string name="unblock_button">РАЗБЛОКИРОВАТЬ</string>
+    <string name="blocklist_unblocked">Устройство разблокировано.</string>
+
+    <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">Сообщить</string>
+
+    <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">В приложении произошёл сбой</string>
+    <string name="crash_notif_sub_text">Обработчик сбоев приложения</string>
+    <string name="crash_notif_content">В приложении произошёл сбой из-за неожиданной ошибки</string>
+    <string name="crash_notif_channel_name">Crash channel</string>
+
+    <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_title">Журнал сбоев</string>
+    <string name="crash_report_desc">В приложении произошёл сбой :(</string>
+    <string name="crash_report_no_log">Нет информации о сбое</string>
+
+    <!-- dev.shadoe.delta.control.buttons.ControlButton -->
+    <string name="control_button_loading">Загрузка</string>
+    <string name="control_button_stop">Выключить точку доступа</string>
+    <string name="control_button_start">Включить точку доступа</string>
+
+    <!-- dev.shadoe.delta.control.buttons.FailedButton -->
+    <string name="failed_button">Не удалось включить точку доступа</string>
+
+    <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Подключённые устройства</string>
+    <string name="no_client_hostname">(неизвестное устройство: нет имени)</string>
+    <string name="ip_not_allocated">(IP-адрес ещё не выделен)</string>
+    <string name="block_button">ЗАБЛОКИРОВАТЬ</string>
+
+    <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(нет пароля)</string>
+    <string name="passphrase_hidden">(пароль скрыт)</string>
+    <string name="passphrase_show">Показать пароль</string>
+    <string name="passphrase_hide">Скрыть пароль</string>
+
+    <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="triggered_debug_screen">Меню отладки разблокировано</string>
+    <string name="no_ssid">no ssid</string>
+    <string name="connected_devices_button">Подключённые устройства (%d)</string>
+    <string name="hotspot_not_enabled">Точка доступа выключена</string>
+    <string name="hotspot_enable_action">ВКЛЮЧИТЬ</string>
+    <string name="edit_button">Изменить</string>
+
+    <!-- dev.shadoe.delta.debug.DebugActivity -->
+    <string name="debug_title">Меню отладки</string>
+    <string name="debug_trigger_crash">Триггер сбоев</string>
+
+    <!-- dev.shadoe.delta.settings.SettingsScreen -->
+    <string name="settings">Настройки</string>
+    <string name="warning_icon">Предупреждение</string>
+    <string name="settings_warn_samsung">Расширенные настройки и автоматические выключение точки доступа работают не на всех моделях Samsung. Для изменения этих параметров вы можете использовать встроенное приложение настроек.</string>
+    <string name="open_system_settings">Открыть приложение настроек</string>
+    <string name="settings_desc">Настройте все значения ниже по своему вкусу :)</string>
+
+    <string name="ssid_field_icon">Hotspot name icon</string>
+    <string name="ssid_field_label">Название точки доступа</string>
+    <string name="ssid_too_short_warning">Название точки доступа слишком короткое.</string>
+    <string name="ssid_too_long_warning">Название точки доступа слишком длинное.</string>
+
+    <string name="security_proto_field_icon">Security type icon</string>
+    <string name="security_proto_field_label">Тип безопасности</string>
+    <string name="security_proto_open">Нет</string>
+    <string name="security_proto_open_desc">Нет защиты. Любой сможет подключиться без пароля.</string>
+    <string name="security_proto_wpa2_psk" translatable="false">
+        WPA2-Personal
+    </string>
+    <string name="security_proto_wpa2_psk_desc">
+        Обеспечивает максимальную совместимость с большинством устройств.
+    </string>
+    <string name="security_proto_wpa3_sae_transition" translatable="false">
+        WPA2/WPA3-Personal
+    </string>
+    <string name="security_proto_wpa3_sae_transition_desc">
+        Используется WPA3, но для старых устройств используется WPA2. 
+    </string>
+    <string name="security_proto_wpa3_sae" translatable="false">
+        WPA3-Personal
+    </string>
+    <string name="security_proto_wpa3_sae_desc">
+        Новейший протокол безопасности, обычно поддерживаемый устройствами, выпущенными после
+        2020 года.
+    </string>
+    <string name="security_proto_not_supported">Не поддерживается</string>
+
+    <string name="passphrase_field_icon">Passphrase icon</string>
+    <string name="passphrase_field_label">Пароль</string>
+    <string name="passphrase_too_short_warning">
+        Пароль слишком короткий.</string>
+    <string name="passphrase_too_long_warning">Пароль слишком длинный.</string>
+
+    <string name="auto_shutdown_field_icon">Auto shutdown icon</string>
+    <string name="auto_shutdown_field_title">Автоматическое выключение</string>
+    <string name="auto_shutdown_field_desc">
+        Выключать точку доступа если в течение некоторого времени к ней не будет подключено ни одно устройство
+    </string>
+
+    <string name="freq_band_field_icon">Frequency band icon</string>
+    <string name="freq_band_field_label">Тип скорости</string>
+    <string name="freq_band_2_4_GHz" translatable="false">2.4 GHz</string>
+    <string name="freq_band_2_4_GHz_desc">
+        Поддерживается почти всеми устройствами, но работает не очень быстро.
+    </string>
+    <string name="freq_band_5_GHz" translatable="false">5 GHz</string>
+    <string name="freq_band_5_GHz_desc">
+        Двухдиапазонный режим: Быстро работает на поддерживаемых устройствах + имеет совместимость со старыми устройствами.
+    </string>
+    <string name="freq_band_6_GHz" translatable="false">6 GHz</string>
+    <string name="freq_band_6_GHz_desc">
+        Трехдиапазонный режим: Новейшая технология, доступная не во всех странах.
+    </string>
+    <string name="freq_band_60_GHz" translatable="false">60 GHz</string>
+    <string name="freq_band_60_GHz_desc">
+        Не самая популярная частота, очень маленький радиус действия.
+    </string>
+    <string name="freq_band_unknown">Неизвестно</string>
+
+    <string name="advanced_settings_label">Расширенные настройки</string>
+    <string name="collapse_icon">Collapse</string>
+    <string name="expand_icon">Expand</string>
+
+    <string name="hidden_network_field_icon">Hidden network icon</string>
+    <string name="hidden_network_field_label">Скрытая сеть</string>
+    <string name="hidden_network_field_desc">
+        "Точка доступа не будет отображаться на других устройствах, если ее не добавить вручную."
+    </string>
+
+    <string name="max_client_limit_field_icon">Maximum Client Limit Icon</string>
+    <string name="max_client_limit_field_label">Максимальное количество подключённых устройств</string>
+    <string name="max_client_limit_field_count">%d устройств</string>
+
+    <string name="mac_randomization_field_icon">MAC Randomization Icon</string>
+    <string name="mac_randomization_field_label">Рандомизация MAC-адреса</string>
+    <string name="mac_randomization_none">Нет</string>
+    <string name="mac_randomization_none_desc">
+        Использует MAC-адрес устройства для его идентификации при подключении к точке доступа.
+    </string>
+    <string name="mac_randomization_persistent">Постоянный</string>
+    <string name="mac_randomization_persistent_desc">
+        MAC-адрес меняется каждый раз когда меняется название точки доступа
+    </string>
+    <string name="mac_randomization_non_persistent">Не постоянный</string>
+    <string name="mac_randomization_non_persistent_desc">
+        MAC-адрес меняется каждый раз когда включается точка доступа
+    </string>
+
+    <string name="auto_shutdown_timeout_field_icon">Timeout Icon</string>
+    <string name="auto_shutdown_timeout_field_label">Время автоматического выключения</string>
+    <string name="auto_shutdown_5">5 минут</string>
+    <string name="auto_shutdown_10">10 минут</string>
+    <string name="auto_shutdown_20">20 минут</string>
+    <string name="auto_shutdown_30">30 минут</string>
+    <string name="auto_shutdown_60">1 час</string>
+    <string name="auto_shutdown_default">По умолчанию</string>
+    <string name="auto_shutdown_timeout_desc">
+        Выключать точку доступа через заданное время, если к ней не подключено ни одно устройство.
+    </string>
+
+    <string name="save_button">Сохранить</string>
+
+    <string name="passphrase_empty_warning">Введите пароль.</string>
+    <string name="save_changes_failed_warning">
+        Не удалось изменить настройки точки доступа.
+    </string>
+
+    <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">Настройка приложения</string>
+
+    <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">App icon</string>
+    <string name="app_tagline">Настройки точки доступа разблокированы</string>
+    <string name="setup_start_button">Начать настройку »</string>
+    <string name="setup_note">Требуется Shizuku или Root-права.</string>
+
+    <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">
+        Подключено к Shizuku, продолжите настройку!
+    </string>
+    <string name="setup_continue_button">Продолжить настройку</string>
+
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">
+        Это приложение использует системные API, которые обычно не доступны из Android SDK и поэтому требуется Shizuku чтобы получить доступ к Hotspot API.
+    </string>
+    <string name="shizuku_grant_access">Выдать доступ</string>
+
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">Shizuku не установлен.</string>
+    <string name="github">GitHub</string>
+    <string name="install_from_icon">Установить из</string>
+    <string name="play_store">Play Store</string>
+
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku не запущен.</string>
+    <string name="shizuku_start">Запустить Shizuku</string>
+
+    <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">Настройка сообщений об ошибках</string>
+    <string name="crash_report_setup_desc">
+        Нам нужно разрешение на показ уведомлений, чтобы сообщать вам о сбоях в приложении
+        occur.
+    </string>
+    <string name="crash_report_setup_grant_perm">Выдать разрешение</string>
+    <string name="crash_report_setup_done">Разрешение выдано ✅</string>
+    <string name="setup_finish_button">Завершить настройку</string>
+
+    <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Shizuku icon</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">Не установлен.</string>
+    <string name="shizuku_setup_not_running">Не запущен.</string>
+    <string name="shizuku_setup_not_connected">Не подключено.</string>
+    <string name="shizuku_setup_connected">Подключено ✅</string>
+</resources>
