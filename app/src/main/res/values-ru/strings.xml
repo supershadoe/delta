@@ -4,7 +4,7 @@
     <string name="back_button">Назад</string>
     <string name="blocklist">Список заблокированных устройств</string>
     <string name="no_connected_devices">Нет подключённых устройств.</string>
-    <string name="open_icon">Open</string>
+    <string name="open_icon">Открыть</string>
 
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Нет заблокированных устройств.</string>
@@ -47,7 +47,7 @@
 
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">Меню отладки разблокировано</string>
-    <string name="no_ssid">no ssid</string>
+    <string name="no_ssid">Нет названия точки доступа</string>
     <string name="connected_devices_button">Подключённые устройства (%d)</string>
     <string name="hotspot_not_enabled">Точка доступа выключена</string>
     <string name="hotspot_enable_action">ВКЛЮЧИТЬ</string>
@@ -64,12 +64,12 @@
     <string name="open_system_settings">Открыть приложение настроек</string>
     <string name="settings_desc">Настройте все значения ниже по своему вкусу :)</string>
 
-    <string name="ssid_field_icon">Hotspot name icon</string>
+    <string name="ssid_field_icon">Значок названия точки доступа</string>
     <string name="ssid_field_label">Название точки доступа</string>
     <string name="ssid_too_short_warning">Название точки доступа слишком короткое.</string>
     <string name="ssid_too_long_warning">Название точки доступа слишком длинное.</string>
 
-    <string name="security_proto_field_icon">Security type icon</string>
+    <string name="security_proto_field_icon">Значок типа безопасности</string>
     <string name="security_proto_field_label">Тип безопасности</string>
     <string name="security_proto_open">Нет</string>
     <string name="security_proto_open_desc">Нет защиты. Любой сможет подключиться без пароля.</string>
@@ -94,19 +94,19 @@
     </string>
     <string name="security_proto_not_supported">Не поддерживается</string>
 
-    <string name="passphrase_field_icon">Passphrase icon</string>
+    <string name="passphrase_field_icon">Значок пароля</string>
     <string name="passphrase_field_label">Пароль</string>
     <string name="passphrase_too_short_warning">
         Пароль слишком короткий.</string>
     <string name="passphrase_too_long_warning">Пароль слишком длинный.</string>
 
-    <string name="auto_shutdown_field_icon">Auto shutdown icon</string>
+    <string name="auto_shutdown_field_icon">Значок автоматического выключения</string>
     <string name="auto_shutdown_field_title">Автоматическое выключение</string>
     <string name="auto_shutdown_field_desc">
         Выключать точку доступа если в течение некоторого времени к ней не будет подключено ни одно устройство
     </string>
 
-    <string name="freq_band_field_icon">Frequency band icon</string>
+    <string name="freq_band_field_icon">Значок типа скорости</string>
     <string name="freq_band_field_label">Тип скорости</string>
     <string name="freq_band_2_4_GHz" translatable="false">2.4 GHz</string>
     <string name="freq_band_2_4_GHz_desc">
@@ -127,20 +127,20 @@
     <string name="freq_band_unknown">Неизвестно</string>
 
     <string name="advanced_settings_label">Расширенные настройки</string>
-    <string name="collapse_icon">Collapse</string>
-    <string name="expand_icon">Expand</string>
+    <string name="collapse_icon">Свернуть расширенные настройки</string>
+    <string name="expand_icon">Развернуть расширенные настройки</string>
 
-    <string name="hidden_network_field_icon">Hidden network icon</string>
+    <string name="hidden_network_field_icon">Значок скрытой сети</string>
     <string name="hidden_network_field_label">Скрытая сеть</string>
     <string name="hidden_network_field_desc">
         "Точка доступа не будет отображаться на других устройствах, если ее не добавить вручную."
     </string>
 
-    <string name="max_client_limit_field_icon">Maximum Client Limit Icon</string>
+    <string name="max_client_limit_field_icon">Значок максимального количества подключённых устройств</string>
     <string name="max_client_limit_field_label">Максимальное количество подключённых устройств</string>
     <string name="max_client_limit_field_count">%d устройств</string>
 
-    <string name="mac_randomization_field_icon">MAC Randomization Icon</string>
+    <string name="mac_randomization_field_icon">Значок рандомизации MAC-адреса</string>
     <string name="mac_randomization_field_label">Рандомизация MAC-адреса</string>
     <string name="mac_randomization_none">Нет</string>
     <string name="mac_randomization_none_desc">
@@ -155,7 +155,7 @@
         MAC-адрес меняется каждый раз когда включается точка доступа
     </string>
 
-    <string name="auto_shutdown_timeout_field_icon">Timeout Icon</string>
+    <string name="auto_shutdown_timeout_field_icon">Значок времени автоматического выключения</string>
     <string name="auto_shutdown_timeout_field_label">Время автоматического выключения</string>
     <string name="auto_shutdown_5">5 минут</string>
     <string name="auto_shutdown_10">10 минут</string>
@@ -178,7 +178,7 @@
     <string name="setup_title">Настройка приложения</string>
 
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
-    <string name="app_icon">App icon</string>
+    <string name="app_icon">Значок приложения</string>
     <string name="app_tagline">Настройки точки доступа разблокированы</string>
     <string name="setup_start_button">Начать настройку »</string>
     <string name="setup_note">Требуется Shizuku или Root-права.</string>
