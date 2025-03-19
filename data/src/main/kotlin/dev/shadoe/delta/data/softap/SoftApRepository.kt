@@ -19,6 +19,7 @@ import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.api.SoftApEnabledState.EnabledStateType
 import dev.shadoe.delta.api.SoftApStatus
 import dev.shadoe.delta.api.TetheredClient
 import dev.shadoe.delta.data.services.TetheringSystemService
@@ -96,10 +97,8 @@ constructor(
 
   private val tetheringEventListener =
     object : TetheringEventListener {
-      override fun onEnabledStateChanged() {
-        _status.update {
-          it.copy(enabledState = wifiManager.wifiApEnabledState)
-        }
+      override fun onEnabledStateChanged(@EnabledStateType state: Int) {
+        _status.update { it.copy(enabledState = state) }
       }
 
       override fun onTetheredClientsChanged(clients: List<TetheredClient>) {
@@ -132,11 +131,9 @@ constructor(
   private val softApCallback =
     SoftApCallback(tetheringEventListener, wifiManager)
 
-  private val startOrStopResultReceiver =
+  private val dummyIntResultReceiver =
     object : IIntResultListener.Stub() {
-      override fun onResult(resultCode: Int) {
-        tetheringEventListener.onEnabledStateChanged()
-      }
+      override fun onResult(resultCode: Int) {}
     }
 
   private val updateConfigOnExternalChange =
@@ -266,14 +263,14 @@ constructor(
         request.parcel,
         ADB_PACKAGE_NAME,
         null,
-        startOrStopResultReceiver,
+        dummyIntResultReceiver,
       )
     } else {
       @Suppress("DEPRECATION")
       tetheringConnector.startTethering(
         request.parcel,
         ADB_PACKAGE_NAME,
-        startOrStopResultReceiver,
+        dummyIntResultReceiver,
       )
     }
     return true
@@ -289,14 +286,14 @@ constructor(
         TETHERING_WIFI,
         ADB_PACKAGE_NAME,
         null,
-        startOrStopResultReceiver,
+        dummyIntResultReceiver,
       )
     } else {
       @Suppress("DEPRECATION")
       tetheringConnector.stopTethering(
         TETHERING_WIFI,
         ADB_PACKAGE_NAME,
-        startOrStopResultReceiver,
+        dummyIntResultReceiver,
       )
     }
     return true

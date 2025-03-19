@@ -19,7 +19,6 @@ internal class TetheringEventCallback(
 ) : ITetheringEventCallback.Stub() {
   override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
     parcel ?: return
-    onTetherStatesChanged(parcel.states)
     onTetherClientsChanged(parcel.tetheredClients)
   }
 
@@ -29,9 +28,7 @@ internal class TetheringEventCallback(
 
   override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {}
 
-  override fun onTetherStatesChanged(states: TetherStatesParcel?) {
-    tetheringEventListener.onEnabledStateChanged()
-  }
+  override fun onTetherStatesChanged(states: TetherStatesParcel?) {}
 
   override fun onTetherClientsChanged(clients: List<TetheredClient?>?) {
     runBlocking {

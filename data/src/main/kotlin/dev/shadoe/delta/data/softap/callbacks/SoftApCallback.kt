@@ -1,5 +1,6 @@
 package dev.shadoe.delta.data.softap.callbacks
 
+import android.net.TetheringManager.TETHERING_WIFI
 import android.net.wifi.ISoftApCallback
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApCapability
@@ -25,12 +26,24 @@ internal class SoftApCallback(
   private val tetheringEventListener: TetheringEventListener,
   private val wifiManager: IWifiManager,
 ) : ISoftApCallback.Stub() {
-  /** Results in a no-op because already [TetheringEventCallback] handles it */
-  override fun onStateChanged(state: SoftApState?) {}
+  override fun onStateChanged(state: SoftApState?) {
+    state?.let {
+      val isWifiTethering =
+        it.tetheringRequest
+          ?.parcel
+          ?.tetheringType
+          ?.let { it == TETHERING_WIFI }
+          .let { it != false }
+      if (isWifiTethering) {
+        tetheringEventListener.onEnabledStateChanged(it.state)
+      }
+    }
+  }
 
-  /** Results in a no-op because already [TetheringEventCallback] handles it */
   @Deprecated("Removed in API 35")
-  override fun onStateChanged(state: Int, failureReason: Int) {}
+  override fun onStateChanged(state: Int, failureReason: Int) {
+    tetheringEventListener.onEnabledStateChanged(state)
+  }
 
   /** Results in a no-op because already [TetheringEventCallback] handles it */
   override fun onConnectedClientsOrInfoChanged(
