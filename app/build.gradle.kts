@@ -85,7 +85,6 @@ dependencies {
 
   implementation(libs.androidx.annotation)
   implementation(libs.androidx.ktx.core)
-  implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.graphics.shapes)
 
   platform(libs.compose.bom).let {
