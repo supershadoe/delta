@@ -1,6 +1,5 @@
 package dev.shadoe.delta.data.softap
 
-import android.content.Context
 import android.net.IIntResultListener
 import android.net.ITetheringConnector
 import android.net.MacAddress
@@ -16,7 +15,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApConfiguration
@@ -56,7 +54,6 @@ private typealias PrefMapT = Map.Entry<Preferences.Key<String>, String>
 class SoftApRepository
 @Inject
 constructor(
-  @ApplicationContext private val applicationContext: Context,
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   @WifiSystemService private val wifiManager: IWifiManager,
   @MacAddressCache private val persistedMacAddressCache: DataStore<Preferences>,
@@ -265,18 +262,17 @@ constructor(
     val request =
       TetheringManager.TetheringRequest.Builder(TETHERING_WIFI).build()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-
       tetheringConnector.startTethering(
         request.parcel,
-        applicationContext.packageName,
-        applicationContext.attributionTag,
+        ADB_PACKAGE_NAME,
+        null,
         startOrStopResultReceiver,
       )
     } else {
       @Suppress("DEPRECATION")
       tetheringConnector.startTethering(
         request.parcel,
-        applicationContext.packageName,
+        ADB_PACKAGE_NAME,
         startOrStopResultReceiver,
       )
     }
@@ -291,15 +287,15 @@ constructor(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
       tetheringConnector.stopTethering(
         TETHERING_WIFI,
-        applicationContext.packageName,
-        applicationContext.attributionTag,
+        ADB_PACKAGE_NAME,
+        null,
         startOrStopResultReceiver,
       )
     } else {
       @Suppress("DEPRECATION")
       tetheringConnector.stopTethering(
         TETHERING_WIFI,
-        applicationContext.packageName,
+        ADB_PACKAGE_NAME,
         startOrStopResultReceiver,
       )
     }

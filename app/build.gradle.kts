@@ -20,7 +20,7 @@ android {
   defaultConfig {
     applicationId = "dev.shadoe.delta"
     minSdk = 30
-    targetSdk = 35
+    targetSdk = 36
     versionCode = versionConfig.versionCode
     versionName = versionConfig.versionName
 
