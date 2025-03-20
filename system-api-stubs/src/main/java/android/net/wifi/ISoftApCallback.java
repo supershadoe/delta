@@ -24,6 +24,7 @@ import android.os.Parcel;
 import android.os.RemoteException;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import dev.shadoe.delta.stubs.Utils;
 import java.util.List;
 import java.util.Map;
 
@@ -132,4 +133,13 @@ public interface ISoftApCallback extends IInterface {
      * @param blockedReason one of blocked reason from WifiManager.SapClientBlockedReason
      */
     void onBlockedClientConnecting(WifiClient client, int blockedReason) throws RemoteException;
+
+    /**
+     * Service to manager callback providing clients that disconnected from the softap.
+     *
+     * @param info information about the AP instance
+     * @param clients the disconnected clients of the AP instance
+     */
+    @RequiresApi(Utils.VERSION_CODES.BAKLAVA)
+    void onClientsDisconnected(SoftApInfo info, List<WifiClient> clients);
 }

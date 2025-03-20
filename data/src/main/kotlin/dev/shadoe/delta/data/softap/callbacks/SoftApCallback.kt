@@ -120,6 +120,11 @@ internal class SoftApCallback(
     println("blocked client ${client?.macAddress} $blockedReason")
   }
 
+  override fun onClientsDisconnected(
+    info: SoftApInfo?,
+    clients: List<WifiClient?>?,
+  ) {}
+
   private suspend fun querySupportedSecurityTypes(
     capability: SoftApCapability
   ) =
