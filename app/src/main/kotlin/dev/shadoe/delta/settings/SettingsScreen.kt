@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -64,8 +65,16 @@ import dev.shadoe.delta.settings.components.SecurityTypeField
 import dev.shadoe.delta.settings.components.SsidField
 import kotlinx.coroutines.launch
 
-private fun openSystemSettings(context: Context) {
-  context.startActivity(Intent("com.android.settings.WIFI_TETHER_SETTINGS"))
+private fun openSystemSettings(context: Context, isBigScreen: Boolean = false) {
+  context.startActivity(
+    Intent("com.android.settings.WIFI_TETHER_SETTINGS").apply {
+      if (isBigScreen) {
+        addFlags(
+          Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK
+        )
+      }
+    }
+  )
 }
 
 @Composable
@@ -75,6 +84,7 @@ fun SettingsScreen(
 ) {
   val navController = LocalNavController.current
   val focusManager = LocalFocusManager.current
+  val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
 
@@ -107,7 +117,7 @@ fun SettingsScreen(
         },
         actions = {
           val context = LocalContext.current
-          IconButton(onClick = { openSystemSettings(context) }) {
+          IconButton(onClick = { openSystemSettings(context, isBigScreen) }) {
             Icon(
               imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
               contentDescription = stringResource(R.string.open_system_settings),
@@ -158,7 +168,7 @@ fun SettingsScreen(
                   color = MaterialTheme.colorScheme.onTertiaryContainer,
                 )
                 Button(
-                  onClick = { openSystemSettings(context) },
+                  onClick = { openSystemSettings(context, isBigScreen) },
                   modifier = Modifier.padding(top = 8.dp),
                 ) {
                   Icon(

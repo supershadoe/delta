@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,7 @@ import dev.shadoe.delta.R
 @Composable
 internal fun ShizukuNotInstalled(modifier: Modifier = Modifier) {
   val context = LocalContext.current
+  val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
   Column(modifier = modifier) {
     Column(
       modifier = Modifier.weight(0.5f),
@@ -47,9 +49,17 @@ internal fun ShizukuNotInstalled(modifier: Modifier = Modifier) {
         onClick = {
           context.startActivity(
             Intent(
-              ACTION_VIEW,
-              "https://github.com/RikkaApps/Shizuku/releases".toUri(),
-            )
+                ACTION_VIEW,
+                "https://github.com/RikkaApps/Shizuku/releases".toUri(),
+              )
+              .apply {
+                if (isBigScreen) {
+                  addFlags(
+                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                      Intent.FLAG_ACTIVITY_NEW_TASK
+                  )
+                }
+              }
           )
         }
       ) {
@@ -70,6 +80,12 @@ internal fun ShizukuNotInstalled(modifier: Modifier = Modifier) {
                 "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api"
                   .toUri()
               `package` = "com.android.vending"
+              if (isBigScreen) {
+                addFlags(
+                  Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                    Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+              }
             }
           )
         }
