@@ -1,76 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dev.shadoe.delta -->
     <string name="app_name">デルタ</string>
     <string name="back_button">戻る</string>
     <string name="blocklist">ブロックリスト</string>
-    <string name="no_connected_devices">
-        繋がってるデバイスはありません。
+    <string name="no_connected_devices">        繋がってるデバイスはありません。
     </string>
     <string name="open_icon">開く</string>
-
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
-    <string name="blocklist_none_blocked">
-        ブロックされているデバイスはありません。
+    <string name="blocklist_none_blocked">        ブロックされているデバイスはありません。
     </string>
     <string name="unblock_button">ブロック解除</string>
-    <string name="blocklist_unblocked">
-        ブロックリストからデバイスを外しました。
+    <string name="blocklist_unblocked">        ブロックリストからデバイスを外しました。
     </string>
-
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">報告する</string>
-
     <!-- dev.shadoe.delta.crash.CrashHandler -->
     <string name="crash_notif_title">アプリがクラッシュしました。</string>
     <string name="crash_notif_sub_text">クラッシュハンドラー</string>
-    <string name="crash_notif_content">
-        予想外なバグによりアプリがクラッシュしました。
+    <string name="crash_notif_content">        予想外なバグによりアプリがクラッシュしました。
     </string>
     <string name="crash_notif_channel_name">クラッシュ報告</string>
-
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">クラッシュ報告</string>
     <string name="crash_report_desc">アプリが死んだ o(╥﹏╥)o</string>
-    <string name="crash_report_no_log">
-        クラッシュの事情はわかりません、ログが全くないです。
+    <string name="crash_report_no_log">        クラッシュの事情はわかりません、ログが全くないです。
     </string>
-
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">移行中</string>
     <string name="control_button_stop">アクセスポイントをOFFする</string>
     <string name="control_button_start">アクセスポイントをONする</string>
-
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">テザリングを利用できません</string>
-
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
     <string name="connected_devices">繋がってるデバイス</string>
     <string name="no_client_hostname">(名もなきデバイス)</string>
     <string name="ip_not_allocated">(IPアドレスはまだ与えられていない)</string>
     <string name="block_button">ブロック</string>
-
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
     <string name="no_passphrase">(パスワードなし)</string>
     <string name="passphrase_hidden">(パスワードを隠している)</string>
     <string name="passphrase_show">パスワードを見せる</string>
     <string name="passphrase_hide">パスワードを隠す</string>
-
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">デバッグ画面を作動しました</string>
     <string name="no_ssid">無名</string>
     <string name="connected_devices_button">繋がってるデバイス (%d)</string>
-    <string name="hotspot_not_enabled">
-        アクセスポイントはまだOFF状態でいます。
+    <string name="hotspot_not_enabled">        アクセスポイントはまだOFF状態でいます。
     </string>
     <string name="hotspot_enable_action">ON</string>
     <string name="edit_button">設定</string>
-
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <string name="debug_title">デバッグ画面</string>
     <string name="debug_trigger_crash">クラッシュさせる</string>
-
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
     <string name="settings">設定</string>
     <string name="error_icon">エラー</string>
     <string name="warning_icon">注目</string>
+    <string name="settings_warn_samsung">        Advanced settings and auto shutdown do not work on all Samsung models.
+        These settings can be configured in system settings app.
+    </string>
+    <string name="open_system_settings">        Open settings app
+    </string>
+    <string name="settings_desc">        Configure all the values below as per your liking :)
+    </string>
+    <string name="ssid_field_icon">Hotspot name icon</string>
+    <string name="ssid_field_label">Hotspot Name</string>
+    <string name="ssid_too_short_warning">Hotspot name is too short.</string>
+    <string name="ssid_too_long_warning">Hotspot name is too long.</string>
+    <string name="security_proto_field_icon">Security type icon</string>
+    <string name="security_proto_field_label">Security Type</string>
+    <string name="security_proto_open">None</string>
+    <string name="security_proto_open_desc">        No security, anyone can connect without a passphrase.
+    </string>
+    <string name="security_proto_wpa2_psk_desc">        Provides maximum compatibility with most devices.
+    </string>
+    <string name="security_proto_wpa3_sae_transition_desc">        Uses WPA3 but drops down to WPA2 for older devices.
+    </string>
+    <string name="security_proto_wpa3_sae_desc">        Latest security protocol, generally supported by devices released after
+        2020.
+    </string>
+    <string name="security_proto_not_supported">Not supported</string>
+    <string name="passphrase_field_icon">Passphrase icon</string>
+    <string name="passphrase_field_label">Passphrase</string>
+    <string name="passphrase_too_short_warning">        Passphrase is too short.
+    </string>
+    <string name="passphrase_too_long_warning">Passphrase is too long.</string>
+    <string name="auto_shutdown_field_icon">Auto shutdown icon</string>
+    <string name="auto_shutdown_field_title">Auto shutdown</string>
+    <string name="auto_shutdown_field_desc">        Turns off hotspot when no devices are connected for some time.
+    </string>
+    <string name="freq_band_field_icon">Frequency band icon</string>
+    <string name="freq_band_field_label">Speed Type</string>
+    <string name="freq_band_2_4_GHz_desc">        Supported by almost all devices but not very fast.
+    </string>
+    <string name="freq_band_5_GHz_desc">        Dual-band mode: Faster on supported devices + compatible with old.
+    </string>
+    <string name="freq_band_6_GHz_desc">        Tri-band mode: Latest technology, not available in all countries.
+    </string>
+    <string name="freq_band_60_GHz_desc">        Not a popular frequency band, very short range.
+    </string>
+    <string name="freq_band_unknown">Unknown</string>
+    <string name="advanced_settings_label">Advanced settings</string>
+    <string name="collapse_icon">Collapse</string>
+    <string name="expand_icon">Expand</string>
+    <string name="hidden_network_field_icon">Hidden network icon</string>
+    <string name="hidden_network_field_label">Hidden Network</string>
+    <string name="hidden_network_field_desc">        \"Hotspot won\'t be discoverable by other devices unless added manually.\"
+    </string>
+    <string name="max_client_limit_field_icon">Maximum Client Limit Icon</string>
+    <string name="max_client_limit_field_label">Maximum Client Limit</string>
+    <string name="max_client_limit_field_count">%d clients</string>
+    <string name="mac_randomization_field_icon">MAC Randomization Icon</string>
+    <string name="mac_randomization_field_label">MAC Randomization</string>
+    <string name="mac_randomization_none">None</string>
+    <string name="mac_randomization_none_desc">        Uses device MAC address to identify itself while providing hotspot.
+    </string>
+    <string name="mac_randomization_persistent">Persistent</string>
+    <string name="mac_randomization_persistent_desc">        MAC address is randomized every time hotspot name changes.
+    </string>
+    <string name="mac_randomization_non_persistent">Non-persistent</string>
+    <string name="mac_randomization_non_persistent_desc">        MAC address is randomized every time hotspot is started.
+    </string>
+    <string name="auto_shutdown_timeout_field_icon">Timeout Icon</string>
+    <string name="auto_shutdown_timeout_field_label">Auto Shutdown timeout</string>
+    <string name="auto_shutdown_5">5 minutes</string>
+    <string name="auto_shutdown_10">10 minutes</string>
+    <string name="auto_shutdown_20">20 minutes</string>
+    <string name="auto_shutdown_30">30 minutes</string>
+    <string name="auto_shutdown_60">1 hour</string>
+    <string name="auto_shutdown_default">Default</string>
+    <string name="auto_shutdown_timeout_desc">        Turns off hotspot after above set time if no devices are connected.
+    </string>
+    <string name="save_button">Save</string>
+    <string name="passphrase_empty_warning">Enter a password.</string>
+    <string name="save_changes_failed_warning">        Failed to update hotspot settings.
+    </string>
+    <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">Setup the app</string>
+    <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">App icon</string>
+    <string name="app_tagline">Hotspot settings, unlocked.</string>
+    <string name="setup_start_button">Start setup »</string>
+    <string name="setup_note">Requires Shizuku or root to function.</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">        Connected to Shizuku, continue with the setup!
+    </string>
+    <string name="setup_continue_button">Continue setup</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">        This app uses system APIs that are not generally accessible from the
+        Android SDK and thus, requires Shizuku to get access to Hotspot API.
+    </string>
+    <string name="shizuku_grant_access">Grant access</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">Shizuku is not installed.</string>
+    <string name="github">GitHub</string>
+    <string name="install_from_icon">Install from</string>
+    <string name="play_store">Play Store</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku is not running.</string>
+    <string name="shizuku_start">Start Shizuku</string>
+    <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">Set up crash reporter.</string>
+    <string name="crash_report_setup_desc">        We need notification permission to show you crash logs if any crashes
+        occur.
+    </string>
+    <string name="crash_report_setup_grant_perm">Grant permission</string>
+    <string name="crash_report_setup_done">Permission granted ✅</string>
+    <string name="setup_finish_button">Finish setup</string>
+    <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Shizuku icon</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">Not installed.</string>
+    <string name="shizuku_setup_not_running">Not running.</string>
+    <string name="shizuku_setup_not_connected">Not connected.</string>
+    <string name="shizuku_setup_connected">Connected ✅</string>
 </resources>
