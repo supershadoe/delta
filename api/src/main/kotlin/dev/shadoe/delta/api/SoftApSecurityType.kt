@@ -1,25 +1,14 @@
 package dev.shadoe.delta.api
 
-import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.IntDef
 
 object SoftApSecurityType {
-  const val SECURITY_TYPE_OPEN = SoftApConfigurationHidden.SECURITY_TYPE_OPEN
-
-  const val SECURITY_TYPE_WPA2_PSK =
-    SoftApConfigurationHidden.SECURITY_TYPE_WPA2_PSK
-
-  const val SECURITY_TYPE_WPA3_SAE_TRANSITION =
-    SoftApConfigurationHidden.SECURITY_TYPE_WPA3_SAE_TRANSITION
-
-  const val SECURITY_TYPE_WPA3_SAE =
-    SoftApConfigurationHidden.SECURITY_TYPE_WPA3_SAE
-
-  const val SECURITY_TYPE_WPA3_OWE_TRANSITION =
-    SoftApConfigurationHidden.SECURITY_TYPE_WPA3_OWE_TRANSITION
-
-  const val SECURITY_TYPE_WPA3_OWE =
-    SoftApConfigurationHidden.SECURITY_TYPE_WPA3_OWE
+  const val SECURITY_TYPE_OPEN = 0
+  const val SECURITY_TYPE_WPA2_PSK = 1
+  const val SECURITY_TYPE_WPA3_SAE_TRANSITION = 2
+  const val SECURITY_TYPE_WPA3_SAE = 3
+  const val SECURITY_TYPE_WPA3_OWE_TRANSITION = 4
+  const val SECURITY_TYPE_WPA3_OWE = 5
 
   @Retention(AnnotationRetention.SOURCE)
   @IntDef(

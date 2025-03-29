@@ -1,10 +1,9 @@
 package dev.shadoe.delta.api
 
-import android.net.wifi.SoftApConfigurationHidden
 import androidx.annotation.LongDef
 
 object SoftApAutoShutdownTimeout {
-  const val DEFAULT = SoftApConfigurationHidden.DEFAULT_TIMEOUT
+  const val DEFAULT = -1L
   const val FIVE_MINUTES = 5 * 60 * 1000L
   const val TEN_MINUTES = 10 * 60 * 1000L
   const val TWENTY_MINUTES = 20 * 60 * 1000L
