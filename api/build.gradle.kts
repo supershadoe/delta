@@ -4,8 +4,6 @@ plugins {
   id("delta.lint.kts")
 }
 
-kotlin {
-  jvmToolchain(21)
-}
+kotlin { jvmToolchain(21) }
 
 dependencies { implementation(libs.androidx.annotation) }

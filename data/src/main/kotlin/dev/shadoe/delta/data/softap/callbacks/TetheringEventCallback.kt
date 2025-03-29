@@ -7,6 +7,8 @@ import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 import android.net.TetheringManager
+import dev.shadoe.delta.api.LinkAddress
+import dev.shadoe.delta.api.TetheredClient as TetheredClientWrapper
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import kotlinx.coroutines.Dispatchers
@@ -54,9 +56,9 @@ internal class TetheringEventCallback(
           val address = addresses.firstOrNull()?.address
           val hostname = addresses.firstNotNullOfOrNull { it.hostname }
 
-          dev.shadoe.delta.api.TetheredClient(
+          TetheredClientWrapper(
             macAddress = it.macAddress.toBridgeClass(),
-            address = address,
+            address = address?.address?.let { LinkAddress(it) },
             hostname = hostname,
             tetheringType = it.tetheringType,
           )
