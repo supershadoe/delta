@@ -23,4 +23,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Delta"
 
+includeBuild("build-logic")
+
 include(":api", ":app", ":data", ":system-api-stubs")
