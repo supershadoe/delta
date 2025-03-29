@@ -23,6 +23,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Delta"
 
-includeBuild("build-logic")
+includeBuild("gradle/build-logic")
 
 include(":api", ":app", ":data", ":system-api-stubs")

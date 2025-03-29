@@ -3,7 +3,7 @@
 edit_version_code() {
     echo "Determining version code..." >&2
     versionCode=$(grep "versionCode =" \
-        buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt |\
+        gradle/build-logic/src/main/kotlin/delta/buildsrc/VersionConfig.kt |\
         cut -d= -f2 |\
         cut -d, -f1 |\
         xargs \
@@ -12,14 +12,14 @@ edit_version_code() {
     versionCode=$((versionCode + 1))
     echo "Updating it to $versionCode" >&2
     sed -i "s/versionCode = [0-9]\+/versionCode = $versionCode/" \
-        buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
+        gradle/build-logic/src/main/kotlin/delta/buildsrc/VersionConfig.kt
     echo "versionCode=$versionCode"
 }
 
 edit_version_name() {
     echo "Determining version name..." >&2
     oldVersionName=$(grep "versionName =" \
-    buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt |\
+    gradle/build-logic/src/main/kotlin/delta/buildsrc/VersionConfig.kt |\
         cut -d= -f2 |\
         cut -d\" -f2 |\
         xargs \
@@ -46,7 +46,7 @@ edit_version_name() {
     versionName="$newDate+$buildNum"
     echo "New version name is $versionName" >&2
     sed -i "s/versionName = \"\S\+\"/versionName = \"$versionName\"/" \
-        buildSrc/src/main/kotlin/delta/buildsrc/VersionConfig.kt
+        gradle/build-logic/src/main/kotlin/delta/buildsrc/VersionConfig.kt
     echo "versionName=$versionName"
 }
 
