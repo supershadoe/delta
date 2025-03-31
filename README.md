@@ -43,6 +43,10 @@ which provides a simple web interface.
 Translations made on Crowdin will be automatically synced to this repo, so you
 may use Crowdin if that's simpler for you than using git.
 
+Open up a discussion on [GitHub](https://github.com/supershadoe/delta/discussions/new?category=ideas)
+or [mail me](mailto:shadoe@shadoe.dev) to enable any language on Crowdin other
+than the ones already enabled.
+
 ### Want to contribute?
 
 Check out this [page](https://github.com/supershadoe/delta/contribute) on how
