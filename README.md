@@ -36,12 +36,7 @@ for better representation of the current status of the project.
 ### Localization
 
 If you wish to translate the project to a language that you are fluent in, you
-can either make a pull request with the additions/changes directly to the repo
-or you can contribute using [Crowdin](https://crowdin.com/project/delta-app)
-which provides a simple web interface.
-
-Translations made on Crowdin will be automatically synced to this repo, so you
-may use Crowdin if that's simpler for you than using git.
+can contribute through [Crowdin](https://crowdin.com/project/delta-app)
 
 Open up a discussion on [GitHub](https://github.com/supershadoe/delta/discussions/new?category=ideas)
 or [mail me](mailto:shadoe@shadoe.dev) to enable any language on Crowdin other
