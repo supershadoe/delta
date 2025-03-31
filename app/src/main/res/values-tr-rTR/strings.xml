@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dev.shadoe.delta -->
-    <string name="app_name">Delta</string>
     <string name="back_button">Geri dön</string>
     <string name="blocklist">Engelleme Listesi</string>
     <string name="no_connected_devices">Bağlı cihaz yok.</string>
@@ -124,9 +123,7 @@
     <string name="shizuku_grant_access">Erişim izni ver</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku yüklü değil.</string>
-    <string name="github">GitHub</string>
     <string name="install_from_icon">Şuradan yükle</string>
-    <string name="play_store">Play Store</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
     <string name="shizuku_not_running">Shizuku çalışmıyor.</string>
     <string name="shizuku_start">Shizuku\'yu başlat</string>
@@ -138,7 +135,6 @@
     <string name="setup_finish_button">Kurulumu bitir</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
     <string name="shizuku_icon">Shizuku simgesi</string>
-    <string name="shizuku_setup_title">Shizuku</string>
     <string name="shizuku_setup_not_installed">Yüklü değil.</string>
     <string name="shizuku_setup_not_running">Çalışmıyor.</string>
     <string name="shizuku_setup_not_connected">Bağlı değil.</string>
