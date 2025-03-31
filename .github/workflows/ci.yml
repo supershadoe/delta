@@ -113,6 +113,8 @@ jobs:
           upload_sources: true
           upload_translations: true
           download_translations: true
+          skip_untranslated_strings: true
+          skip_untranslated_files: true
           localization_branch_name: crowdin-sync
           create_pull_request: true
           commit_message: Sync translations
