@@ -115,9 +115,10 @@ jobs:
           download_translations: true
           localization_branch_name: crowdin-sync
           create_pull_request: true
+          commit_message: Sync translations
           pull_request_title: Sync translations
           pull_request_body: '_Synced by GitHub actions from [Crowdin](https://crowdin.com/project/delta-app)_'
-          pull_request_base_branch_name: 'main'
+          pull_request_reviewers: supershadoe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
