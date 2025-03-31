@@ -4,52 +4,39 @@
     <string name="app_name">Delta</string>
     <string name="back_button">Geri dön</string>
     <string name="blocklist">Engelleme Listesi</string>
-    <string name="no_connected_devices">
-        Bağlı cihaz yok.
-    </string>
+    <string name="no_connected_devices">Bağlı cihaz yok.</string>
     <string name="open_icon">Aç</string>
-
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Hiçbir cihaz engellenmemiş.</string>
     <string name="unblock_button">ENGELİ KALDIR</string>
     <string name="blocklist_unblocked">Cihaz engelleme listesinden kaldırıldı.</string>
-
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Rapor Et</string>
-
     <!-- dev.shadoe.delta.crash.CrashHandler -->
     <string name="crash_notif_title">Uygulama Çöktü</string>
     <string name="crash_notif_sub_text">Uygulama çökme yöneticisi</string>
-    <string name="crash_notif_content">
-        Uygulama beklenmedik bir hata nedeniyle çöktü.
-    </string>
+    <string name="crash_notif_content">Uygulama beklenmedik bir hata nedeniyle çöktü.</string>
     <string name="crash_notif_channel_name">Çökme kanalı</string>
-
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Çökme Günlüğü</string>
     <string name="crash_report_desc">Uygulama çöktü :(</string>
     <string name="crash_report_no_log">Çökme bilgisi mevcut değil</string>
-
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Yükleniyor</string>
     <string name="control_button_stop">Hotspot\'u durdur</string>
     <string name="control_button_start">Hotspot\'u başlat</string>
-
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">Hotspot başarısız: Başlatılamıyor</string>
-
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
     <string name="connected_devices">Bağlı cihazlar</string>
     <string name="no_client_hostname">(tanımlanamayan cihaz: isim yok)</string>
     <string name="ip_not_allocated">(IP adresi henüz atanmadı)</string>
     <string name="block_button">ENGELLE</string>
-
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
     <string name="no_passphrase">(parola yok)</string>
     <string name="passphrase_hidden">(parola gizli)</string>
     <string name="passphrase_show">Parolayı göster</string>
     <string name="passphrase_hide">Parolayı gizle</string>
-
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">Hata ayıklama ekranı açıldı</string>
     <string name="no_ssid">ssid yok</string>
@@ -57,119 +44,59 @@
     <string name="hotspot_not_enabled">Hotspot henüz etkinleştirilmedi.</string>
     <string name="hotspot_enable_action">ETKİNLEŞTİR</string>
     <string name="edit_button">Düzenle</string>
-
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <string name="debug_title">Hata ayıklama ekranı</string>
     <string name="debug_trigger_crash">Çökmeyi tetikle</string>
-
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
     <string name="settings">Ayarlar</string>
     <string name="error_icon">Hata</string>
     <string name="warning_icon">Uyarı</string>
-    <string name="settings_warn_samsung">
-        Gelişmiş ayarlar ve otomatik kapatma tüm Samsung modellerinde çalışmaz.
-        Bu ayarlar sistem ayarları uygulamasında yapılandırılabilir.
-    </string>
-    <string name="open_system_settings">
-        Ayarlar uygulamasını aç
-    </string>
-    <string name="settings_desc">
-        Aşağıdaki tüm değerleri isteğinize göre yapılandırın :)
-    </string>
-
+    <string name="settings_warn_samsung">Gelişmiş ayarlar ve otomatik kapatma tüm Samsung modellerinde çalışmaz. Bu ayarlar sistem ayarları uygulamasında yapılandırılabilir.</string>
+    <string name="open_system_settings">Ayarlar uygulamasını aç</string>
+    <string name="settings_desc">Aşağıdaki tüm değerleri isteğinize göre yapılandırın :)</string>
     <string name="ssid_field_icon">Hotspot adı simgesi</string>
     <string name="ssid_field_label">Hotspot Adı</string>
     <string name="ssid_too_short_warning">Hotspot adı çok kısa.</string>
     <string name="ssid_too_long_warning">Hotspot adı çok uzun.</string>
-
     <string name="security_proto_field_icon">Güvenlik türü simgesi</string>
     <string name="security_proto_field_label">Güvenlik Türü</string>
     <string name="security_proto_open">Yok</string>
-    <string name="security_proto_open_desc">
-        Güvenlik yok, herkes parola olmadan bağlanabilir.
-    </string>
-    <string name="security_proto_wpa2_psk" translatable="false">
-        WPA2-Kişisel
-    </string>
-    <string name="security_proto_wpa2_psk_desc">
-        Çoğu cihazla maksimum uyumluluk sağlar.
-    </string>
-    <string name="security_proto_wpa3_sae_transition" translatable="false">
-        WPA2/WPA3-Kişisel
-    </string>
-    <string name="security_proto_wpa3_sae_transition_desc">
-        WPA3 kullanır ancak eski cihazlar için WPA2\'ye düşer.
-    </string>
-    <string name="security_proto_wpa3_sae" translatable="false">
-        WPA3-Kişisel
-    </string>
-    <string name="security_proto_wpa3_sae_desc">
-        En yeni güvenlik protokolü, genellikle 2020 sonrası cihazlar tarafından desteklenir.
-    </string>
+    <string name="security_proto_open_desc">Güvenlik yok, herkes parola olmadan bağlanabilir.</string>
+    <string name="security_proto_wpa2_psk_desc">Çoğu cihazla maksimum uyumluluk sağlar.</string>
+    <string name="security_proto_wpa3_sae_transition_desc">WPA3 kullanır ancak eski cihazlar için WPA2\'ye düşer.</string>
+    <string name="security_proto_wpa3_sae_desc">En yeni güvenlik protokolü, genellikle 2020 sonrası cihazlar tarafından desteklenir.</string>
     <string name="security_proto_not_supported">Desteklenmiyor</string>
-
     <string name="passphrase_field_icon">Parola simgesi</string>
     <string name="passphrase_field_label">Parola</string>
-    <string name="passphrase_too_short_warning">
-        Parola çok kısa.
-    </string>
+    <string name="passphrase_too_short_warning">Parola çok kısa.</string>
     <string name="passphrase_too_long_warning">Parola çok uzun.</string>
-
     <string name="auto_shutdown_field_icon">Otomatik kapatma simgesi</string>
     <string name="auto_shutdown_field_title">Otomatik Kapatma</string>
-    <string name="auto_shutdown_field_desc">
-        Hiçbir cihaz bağlı değilken hotspot\'u bir süre sonra kapatır.
-    </string>
-
+    <string name="auto_shutdown_field_desc">Hiçbir cihaz bağlı değilken hotspot\'u bir süre sonra kapatır.</string>
     <string name="freq_band_field_icon">Frekans bandı simgesi</string>
     <string name="freq_band_field_label">Hız Türü</string>
-    <string name="freq_band_2_4_GHz" translatable="false">2.4 GHz</string>
-    <string name="freq_band_2_4_GHz_desc">
-        Neredeyse tüm cihazlar tarafından desteklenir ancak çok hızlı değildir.
-    </string>
-    <string name="freq_band_5_GHz" translatable="false">5 GHz</string>
-    <string name="freq_band_5_GHz_desc">
-        Çift bant modu: Destekleyen cihazlarda daha hızlı + eski cihazlarla uyumlu.
-    </string>
-    <string name="freq_band_6_GHz" translatable="false">6 GHz</string>
-    <string name="freq_band_6_GHz_desc">
-        Üç bant modu: En yeni teknoloji, tüm ülkelerde mevcut değil.
-    </string>
-    <string name="freq_band_60_GHz" translatable="false">60 GHz</string>
-    <string name="freq_band_60_GHz_desc">
-        Popüler olmayan bir frekans bandı, çok kısa mesafeli.
-    </string>
+    <string name="freq_band_2_4_GHz_desc">Neredeyse tüm cihazlar tarafından desteklenir ancak çok hızlı değildir.</string>
+    <string name="freq_band_5_GHz_desc">Çift bant modu: Destekleyen cihazlarda daha hızlı + eski cihazlarla uyumlu.</string>
+    <string name="freq_band_6_GHz_desc">Üç bant modu: En yeni teknoloji, tüm ülkelerde mevcut değil.</string>
+    <string name="freq_band_60_GHz_desc">Popüler olmayan bir frekans bandı, çok kısa mesafeli.</string>
     <string name="freq_band_unknown">Bilinmeyen</string>
-
     <string name="advanced_settings_label">Gelişmiş ayarlar</string>
     <string name="collapse_icon">Daralt</string>
     <string name="expand_icon">Genişlet</string>
-
     <string name="hidden_network_field_icon">Gizli ağ simgesi</string>
     <string name="hidden_network_field_label">Gizli Ağ</string>
-    <string name="hidden_network_field_desc">
-        "Hotspot, manuel olarak eklenmedikçe diğer cihazlar tarafından keşfedilemez."
-    </string>
-
+    <string name="hidden_network_field_desc">"Hotspot, manuel olarak eklenmedikçe diğer cihazlar tarafından keşfedilemez."</string>
     <string name="max_client_limit_field_icon">Maksimum İstemci Sınırı Simgesi</string>
     <string name="max_client_limit_field_label">Maksimum İstemci Sınırı</string>
     <string name="max_client_limit_field_count">%d istemci</string>
-
     <string name="mac_randomization_field_icon">MAC Rastgeleleştirme Simgesi</string>
     <string name="mac_randomization_field_label">MAC Rastgeleleştirme</string>
     <string name="mac_randomization_none">Yok</string>
-    <string name="mac_randomization_none_desc">
-        Hotspot sağlarken kendini tanımlamak için cihaz MAC adresini kullanır.
-    </string>
+    <string name="mac_randomization_none_desc">Hotspot sağlarken kendini tanımlamak için cihaz MAC adresini kullanır.</string>
     <string name="mac_randomization_persistent">Kalıcı</string>
-    <string name="mac_randomization_persistent_desc">
-        MAC adresi, hotspot adı her değiştiğinde rastgeleleştirilir.
-    </string>
+    <string name="mac_randomization_persistent_desc">MAC adresi, hotspot adı her değiştiğinde rastgeleleştirilir.</string>
     <string name="mac_randomization_non_persistent">Kalıcı Olmayan</string>
-    <string name="mac_randomization_non_persistent_desc">
-        MAC adresi, hotspot her başlatıldığında rastgeleleştirilir.
-    </string>
-
+    <string name="mac_randomization_non_persistent_desc">MAC adresi, hotspot her başlatıldığında rastgeleleştirilir.</string>
     <string name="auto_shutdown_timeout_field_icon">Zaman Aşımı Simgesi</string>
     <string name="auto_shutdown_timeout_field_label">Otomatik Kapatma Zaman Aşımı</string>
     <string name="auto_shutdown_5">5 dakika</string>
@@ -178,57 +105,37 @@
     <string name="auto_shutdown_30">30 dakika</string>
     <string name="auto_shutdown_60">1 saat</string>
     <string name="auto_shutdown_default">Varsayılan</string>
-    <string name="auto_shutdown_timeout_desc">
-        Hiçbir cihaz bağlı değilse yukarıda ayarlanan süre sonunda hotspot\'u kapatır.
-    </string>
-
+    <string name="auto_shutdown_timeout_desc">Hiçbir cihaz bağlı değilse yukarıda ayarlanan süre sonunda hotspot\'u kapatır.</string>
     <string name="save_button">Kaydet</string>
-
     <string name="passphrase_empty_warning">Bir parola girin.</string>
-    <string name="save_changes_failed_warning">
-        Hotspot ayarları güncellenemedi.
-    </string>
-
+    <string name="save_changes_failed_warning">Hotspot ayarları güncellenemedi.</string>
     <!-- dev.shadoe.delta.setup -->
     <string name="setup_title">Uygulamayı kur</string>
-
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
     <string name="app_icon">Uygulama simgesi</string>
     <string name="app_tagline">Hotspot ayarları, kilidi açıldı.</string>
     <string name="setup_start_button">Kurulumu başlat »</string>
     <string name="setup_note">Çalışması için Shizuku veya root gerektirir.</string>
-
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
-    <string name="shizuku_connected_desc">
-        Shizuku\'ya bağlandı, kuruluma devam et!
-    </string>
+    <string name="shizuku_connected_desc">Shizuku\'ya bağlandı, kuruluma devam et!</string>
     <string name="setup_continue_button">Kuruluma devam et</string>
-
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
-    <string name="shizuku_not_connected_desc">
-        Bu uygulama, Android SDK\'dan genel olarak erişilemeyen sistem API\'lerini kullanır ve bu nedenle Hotspot API\'sine erişim için Shizuku gerektirir.
-    </string>
+    <string name="shizuku_not_connected_desc">Bu uygulama, Android SDK\'dan genel olarak erişilemeyen sistem API\'lerini kullanır ve bu nedenle Hotspot API\'sine erişim için Shizuku gerektirir.</string>
     <string name="shizuku_grant_access">Erişim izni ver</string>
-
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku yüklü değil.</string>
     <string name="github">GitHub</string>
     <string name="install_from_icon">Şuradan yükle</string>
     <string name="play_store">Play Store</string>
-
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
     <string name="shizuku_not_running">Shizuku çalışmıyor.</string>
     <string name="shizuku_start">Shizuku\'yu başlat</string>
-
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
     <string name="crash_report_setup_subtitle">Çökme raporlayıcısını kur.</string>
-    <string name="crash_report_setup_desc">
-        Herhangi bir çökme olursa çökme günlüklerini size göstermek için bildirim iznine ihtiyacımız var.
-    </string>
+    <string name="crash_report_setup_desc">Herhangi bir çökme olursa çökme günlüklerini size göstermek için bildirim iznine ihtiyacımız var.</string>
     <string name="crash_report_setup_grant_perm">İzin ver</string>
     <string name="crash_report_setup_done">İzin verildi ✅</string>
     <string name="setup_finish_button">Kurulumu bitir</string>
-
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
     <string name="shizuku_icon">Shizuku simgesi</string>
     <string name="shizuku_setup_title">Shizuku</string>
