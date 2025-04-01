@@ -45,7 +45,10 @@ dependencies {
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.refine.runtime)
+  implementation(libs.room.runtime)
+  implementation(libs.room.ktx)
   implementation(libs.shizuku.api)
   implementation(libs.shizuku.provider)
   ksp(libs.hilt.compiler)
+  ksp(libs.room.compiler)
 }
