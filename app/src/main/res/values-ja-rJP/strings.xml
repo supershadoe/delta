@@ -13,14 +13,14 @@
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">報告する</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
-    <string name="crash_notif_title">アプリがクラッシュしました。</string>
+    <string name="crash_notif_title">アプリがクラッシュしました</string>
     <string name="crash_notif_sub_text">クラッシュハンドラー</string>
     <string name="crash_notif_content">予想外なバグによりアプリがクラッシュしました。</string>
     <string name="crash_notif_channel_name">クラッシュ報告</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">クラッシュ報告</string>
     <string name="crash_report_desc">アプリが死んだ o(╥﹏╥)o</string>
-    <string name="crash_report_no_log">クラッシュの事情はわかりません、ログが全くないです。</string>
+    <string name="crash_report_no_log">クラッシュの事情はわかりません、ログが全くないです</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">移行中</string>
     <string name="control_button_stop">アクセスポイントをOFFする</string>

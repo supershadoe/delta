@@ -14,11 +14,11 @@
     <!-- dev.shadoe.delta.crash.CrashHandler -->
     <string name="crash_notif_title">В приложении произошёл сбой</string>
     <string name="crash_notif_sub_text">Обработчик сбоев приложения</string>
-    <string name="crash_notif_content">В приложении произошёл сбой из-за неожиданной ошибки</string>
+    <string name="crash_notif_content">В приложении произошёл сбой из-за неожиданной ошибки.</string>
     <string name="crash_notif_channel_name">Канал сбоев</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Журнал сбоев</string>
-    <string name="crash_report_desc">В приложении произошёл сбой :(</string>
+    <string name="crash_report_desc">В приложении произошёл сбой (</string>
     <string name="crash_report_no_log">Нет информации о сбое</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Загрузка</string>
@@ -38,9 +38,9 @@
     <string name="passphrase_hide">Скрыть пароль</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">Меню отладки разблокировано</string>
-    <string name="no_ssid">Нет названия точки доступа</string>
+    <string name="no_ssid">нет названия точки доступа</string>
     <string name="connected_devices_button">Подключённые устройства (%d)</string>
-    <string name="hotspot_not_enabled">Точка доступа выключена</string>
+    <string name="hotspot_not_enabled">Точка доступа выключена.</string>
     <string name="hotspot_enable_action">ВКЛЮЧИТЬ</string>
     <string name="edit_button">Изменить</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
@@ -52,7 +52,7 @@
     <string name="warning_icon">Предупреждение</string>
     <string name="settings_warn_samsung">Расширенные настройки и автоматические выключение точки доступа работают не на всех моделях Samsung. Для изменения этих параметров вы можете использовать встроенное приложение настроек.</string>
     <string name="open_system_settings">Открыть приложение настроек</string>
-    <string name="settings_desc">Настройте все значения ниже по своему вкусу :)</string>
+    <string name="settings_desc">Настройте все значения ниже по своему вкусу )</string>
     <string name="ssid_field_icon">Значок названия точки доступа</string>
     <string name="ssid_field_label">Название точки доступа</string>
     <string name="ssid_too_short_warning">Название точки доступа слишком короткое.</string>
@@ -71,7 +71,7 @@
     <string name="passphrase_too_long_warning">Пароль слишком длинный.</string>
     <string name="auto_shutdown_field_icon">Значок автоматического выключения</string>
     <string name="auto_shutdown_field_title">Автоматическое выключение</string>
-    <string name="auto_shutdown_field_desc">Выключать точку доступа если в течение некоторого времени к ней не будет подключено ни одно устройство</string>
+    <string name="auto_shutdown_field_desc">Выключать точку доступа если в течение некоторого времени к ней не будет подключено ни одно устройство.</string>
     <string name="freq_band_field_icon">Значок типа скорости</string>
     <string name="freq_band_field_label">Тип скорости</string>
     <string name="freq_band_2_4_GHz_desc">Поддерживается почти всеми устройствами, но работает не очень быстро.</string>
@@ -93,9 +93,9 @@
     <string name="mac_randomization_none">Нет</string>
     <string name="mac_randomization_none_desc">Использует MAC-адрес устройства для его идентификации при подключении к точке доступа.</string>
     <string name="mac_randomization_persistent">Постоянный</string>
-    <string name="mac_randomization_persistent_desc">MAC-адрес меняется каждый раз когда меняется название точки доступа</string>
+    <string name="mac_randomization_persistent_desc">MAC-адрес меняется каждый раз когда меняется название точки доступа.</string>
     <string name="mac_randomization_non_persistent">Не постоянный</string>
-    <string name="mac_randomization_non_persistent_desc">MAC-адрес меняется каждый раз когда включается точка доступа</string>
+    <string name="mac_randomization_non_persistent_desc">MAC-адрес меняется каждый раз когда включается точка доступа.</string>
     <string name="auto_shutdown_timeout_field_icon">Значок времени автоматического выключения</string>
     <string name="auto_shutdown_timeout_field_label">Время автоматического выключения</string>
     <string name="auto_shutdown_5">5 минут</string>
@@ -112,14 +112,14 @@
     <string name="setup_title">Настройка приложения</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
     <string name="app_icon">Значок приложения</string>
-    <string name="app_tagline">Настройки точки доступа разблокированы</string>
+    <string name="app_tagline">Настройки точки доступа разблокированы.</string>
     <string name="setup_start_button">Начать настройку »</string>
     <string name="setup_note">Требуется Shizuku или Root-права.</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
     <string name="shizuku_connected_desc">Подключено к Shizuku, продолжите настройку!</string>
     <string name="setup_continue_button">Продолжить настройку</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
-    <string name="shizuku_not_connected_desc">Это приложение использует системные API, которые обычно не доступны из Android SDK и поэтому требуется Shizuku чтобы получить доступ к Hotspot API.</string>
+    <string name="shizuku_not_connected_desc">Это приложение использует системные API, которые обычно не доступны из Android SDK и поэтому требуется Shizuku, чтобы получить доступ к Hotspot API.</string>
     <string name="shizuku_grant_access">Выдать доступ</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku не установлен.</string>
@@ -128,7 +128,7 @@
     <string name="shizuku_not_running">Shizuku не запущен.</string>
     <string name="shizuku_start">Запустить Shizuku</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
-    <string name="crash_report_setup_subtitle">Настройка сообщений об ошибках</string>
+    <string name="crash_report_setup_subtitle">Настройка сообщений об ошибках.</string>
     <string name="crash_report_setup_desc">Нам нужно разрешение на показ уведомлений, чтобы сообщать вам о сбоях в приложении occur.</string>
     <string name="crash_report_setup_grant_perm">Выдать разрешение</string>
     <string name="crash_report_setup_done">Разрешение выдано ✅</string>
