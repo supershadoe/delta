@@ -93,6 +93,8 @@ fun ControlScreen(
   val noConnectedDevicesText =
     stringResource(id = R.string.no_connected_devices)
   val hotspotNotEnabledText = stringResource(id = R.string.hotspot_not_enabled)
+  val featureNotSupportedText =
+    stringResource(id = R.string.feature_not_supported)
   val hotspotEnableActionText =
     stringResource(id = R.string.hotspot_enable_action)
 
@@ -146,10 +148,23 @@ fun ControlScreen(
           },
           actions = {
             if (shouldShowQrButton) {
-              IconButton(onClick = { vm.openQrCodeScreen(context) }) {
+              IconButton(
+                onClick = {
+                  if (!vm.openQrCodeScreen(context)) {
+                    scope.launch {
+                      snackbarHostState.showSnackbar(
+                        message = featureNotSupportedText,
+                        withDismissAction = true,
+                        duration = SnackbarDuration.Short,
+                      )
+                    }
+                  }
+                }
+              ) {
                 Icon(
                   imageVector = Icons.Rounded.QrCode2,
-                  contentDescription = stringResource(id = R.string.blocklist),
+                  contentDescription =
+                    stringResource(id = R.string.qr_code_button),
                 )
               }
             }

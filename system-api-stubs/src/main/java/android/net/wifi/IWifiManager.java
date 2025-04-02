@@ -54,8 +54,6 @@ public interface IWifiManager extends IInterface {
         public static final java.lang.String DESCRIPTOR = "android.net.wifi.IWifiManager";
     }
 
-    boolean isFeatureSupported(int feature);
-
     @RequiresApi(Build.VERSION_CODES.S)
     boolean is24GHzBandSupported();
 

@@ -1,5 +1,6 @@
 package dev.shadoe.delta.control
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,8 @@ import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.data.softap.SoftApRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.mapLatest
 
 @HiltViewModel
@@ -28,6 +31,8 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
 
   private val softApClosable =
     softApRepository.callbackSubscriber(viewModelScope)
+
+  private var isDppActivityAvailable = MutableStateFlow(true)
 
   override fun onCleared() {
     runCatching { softApClosable.close() }
@@ -64,23 +69,32 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
   @OptIn(ExperimentalCoroutinesApi::class)
   val shouldShowQrButton
     get() =
-      softApRepository.status.mapLatest {
-        it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED &&
-          it.isDppSupported
+      combine(
+        softApRepository.status.mapLatest {
+          it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED
+        },
+        isDppActivityAvailable,
+      ) { p0, p1 ->
+        p0 && p1
       }
 
-  fun openQrCodeScreen(context: Context) {
-    Intent(ACTION_QR_CODE_SCREEN)
-      .apply {
-        val config = softApRepository.config.value
-        putExtra(QR_CODE_EXTRA_SSID, config.ssid)
-        putExtra(QR_CODE_EXTRA_SECURITY, config.securityType)
-        if (config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
-          putExtra(QR_CODE_EXTRA_PSK, config.passphrase)
+  fun openQrCodeScreen(context: Context): Boolean {
+    try {
+      Intent(ACTION_QR_CODE_SCREEN)
+        .apply {
+          val config = softApRepository.config.value
+          putExtra(QR_CODE_EXTRA_SSID, config.ssid)
+          putExtra(QR_CODE_EXTRA_SECURITY, config.securityType)
+          if (config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+            putExtra(QR_CODE_EXTRA_PSK, config.passphrase)
+          }
+          putExtra(QR_CODE_EXTRA_HIDDEN, config.isHidden)
+          putExtra(QR_CODE_EXTRA_HOTSPOT, true)
         }
-        putExtra(QR_CODE_EXTRA_HIDDEN, config.isHidden)
-        putExtra(QR_CODE_EXTRA_HOTSPOT, true)
-      }
-      .let { context.startActivity(it) }
+        .let { context.startActivity(it) }
+    } catch (_: ActivityNotFoundException) {
+      isDppActivityAvailable.value = false
+    }
+    return isDppActivityAvailable.value
   }
 }

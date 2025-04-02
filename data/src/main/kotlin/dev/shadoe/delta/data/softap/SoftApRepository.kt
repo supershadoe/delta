@@ -76,7 +76,6 @@ constructor(
     MutableStateFlow(
       SoftApStatus(
         enabledState = wifiManager.wifiApEnabledState,
-        isDppSupported = wifiManager.isFeatureSupported(WIFI_FEATURE_DPP),
         tetheredClients = emptyList(),
         capabilities =
           SoftApCapabilities(
