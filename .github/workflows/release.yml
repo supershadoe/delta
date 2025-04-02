@@ -1,7 +1,8 @@
 name: delta-ci-release
 on:
-  schedule:
-    - cron: '0 11 * * 5'
+  push:
+    tags-ignore:
+      - norel-*
   workflow_dispatch:
 concurrency:
   group: release
