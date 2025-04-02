@@ -62,6 +62,7 @@ constructor(
   companion object {
     private const val TAG = "SoftApRepository"
     private const val ADB_PACKAGE_NAME = "com.android.shell"
+    private const val WIFI_FEATURE_DPP = 31
   }
 
   private val internalState =
@@ -75,6 +76,7 @@ constructor(
     MutableStateFlow(
       SoftApStatus(
         enabledState = wifiManager.wifiApEnabledState,
+        isDppSupported = wifiManager.isFeatureSupported(WIFI_FEATURE_DPP),
         tetheredClients = emptyList(),
         capabilities =
           SoftApCapabilities(

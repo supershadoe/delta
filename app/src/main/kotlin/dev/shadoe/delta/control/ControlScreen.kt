@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.QrCode2
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -86,6 +87,7 @@ fun ControlScreen(
   val enabledState by
     vm.enabledState.collectAsState(SoftApEnabledState.WIFI_AP_STATE_DISABLED)
   val shouldShowPassphrase by vm.shouldShowPassphrase.collectAsState(true)
+  val shouldShowQrButton by vm.shouldShowQrButton.collectAsState(false)
   val tetheredClientCount by vm.tetheredClientCount.collectAsState(0)
 
   val noConnectedDevicesText =
@@ -143,6 +145,14 @@ fun ControlScreen(
             )
           },
           actions = {
+            if (shouldShowQrButton) {
+              IconButton(onClick = { vm.openQrCodeScreen(context) }) {
+                Icon(
+                  imageVector = Icons.Rounded.QrCode2,
+                  contentDescription = stringResource(id = R.string.blocklist),
+                )
+              }
+            }
             IconButton(
               onClick = { navController?.navigate(Routes.BlocklistScreen) }
             ) {
