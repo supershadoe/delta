@@ -150,7 +150,7 @@ fun ControlScreen(
             if (shouldShowQrButton) {
               IconButton(
                 onClick = {
-                  if (!vm.openQrCodeScreen(context)) {
+                  if (!vm.openQrCodeScreen(context, isBigScreen)) {
                     scope.launch {
                       snackbarHostState.showSnackbar(
                         message = featureNotSupportedText,

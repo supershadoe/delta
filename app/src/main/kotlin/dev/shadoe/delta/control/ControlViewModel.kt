@@ -78,7 +78,7 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
         p0 && p1
       }
 
-  fun openQrCodeScreen(context: Context): Boolean {
+  fun openQrCodeScreen(context: Context, isBigScreen: Boolean): Boolean {
     try {
       Intent(ACTION_QR_CODE_SCREEN)
         .apply {
@@ -90,6 +90,12 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
           }
           putExtra(QR_CODE_EXTRA_HIDDEN, config.isHidden)
           putExtra(QR_CODE_EXTRA_HOTSPOT, true)
+          if (isBigScreen) {
+            addFlags(
+              Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                Intent.FLAG_ACTIVITY_NEW_TASK
+            )
+          }
         }
         .let { context.startActivity(it) }
     } catch (_: ActivityNotFoundException) {
