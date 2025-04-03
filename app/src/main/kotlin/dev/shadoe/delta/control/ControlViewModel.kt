@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
+import dev.shadoe.delta.data.softap.SoftApControlRepository
 import dev.shadoe.delta.data.softap.SoftApRepository
+import dev.shadoe.delta.data.softap.SoftApStateListener
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +20,11 @@ import kotlinx.coroutines.flow.mapLatest
 @HiltViewModel
 class ControlViewModel
 @Inject
-constructor(private val softApRepository: SoftApRepository) : ViewModel() {
+constructor(
+  private val softApRepository: SoftApRepository,
+  private val softApControlRepository: SoftApControlRepository,
+  private val softApStateListener: SoftApStateListener,
+) : ViewModel() {
   companion object {
     private const val ACTION_QR_CODE_SCREEN =
       "android.settings.WIFI_DPP_CONFIGURATOR_QR_CODE_GENERATOR"
@@ -34,15 +40,20 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
 
   private var isDppActivityAvailable = MutableStateFlow(true)
 
+  init {
+    addCloseable(softApControlRepository)
+    addCloseable(softApStateListener)
+  }
+
   override fun onCleared() {
     runCatching { softApClosable.close() }
     super.onCleared()
   }
 
   fun startHotspot(forceRestart: Boolean = false) =
-    softApRepository.startHotspot(forceRestart)
+    softApControlRepository.startSoftAp(forceRestart)
 
-  fun stopHotspot() = softApRepository.stopHotspot()
+  fun stopHotspot() = softApControlRepository.stopSoftAp()
 
   @OptIn(ExperimentalCoroutinesApi::class)
   val ssid
