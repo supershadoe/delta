@@ -3,8 +3,9 @@ package dev.shadoe.delta.data
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import dev.shadoe.delta.api.ConfigFlag
-import dev.shadoe.delta.data.models.Flag
-import dev.shadoe.delta.data.models.HostInfo
+import dev.shadoe.delta.data.database.ConfigDB
+import dev.shadoe.delta.data.database.models.Flag
+import dev.shadoe.delta.data.database.models.HostInfo
 import dev.shadoe.delta.data.services.ConfigDatabase
 import dev.shadoe.delta.data.services.MacAddressCache
 import javax.inject.Inject

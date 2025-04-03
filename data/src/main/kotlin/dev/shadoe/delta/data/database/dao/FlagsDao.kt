@@ -1,9 +1,9 @@
-package dev.shadoe.delta.data.dao
+package dev.shadoe.delta.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import dev.shadoe.delta.data.models.Flag
+import dev.shadoe.delta.data.database.models.Flag
 
 @Dao
 interface FlagsDao {

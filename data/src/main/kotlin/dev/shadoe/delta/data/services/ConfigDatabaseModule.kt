@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.shadoe.delta.data.ConfigDB
+import dev.shadoe.delta.data.database.ConfigDB
 
 @Module
 @InstallIn(SingletonComponent::class)

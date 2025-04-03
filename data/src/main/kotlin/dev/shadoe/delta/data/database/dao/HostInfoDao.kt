@@ -1,10 +1,10 @@
-package dev.shadoe.delta.data.dao
+package dev.shadoe.delta.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
-import dev.shadoe.delta.data.models.HostInfo
+import dev.shadoe.delta.data.database.models.HostInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
