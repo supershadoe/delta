@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 sealed interface Route {}
 
 object Routes {
+  @Serializable object BlankScreen : Route
+
   @Serializable
   object Setup {
     @Serializable object FirstUseScreen : Route

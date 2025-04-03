@@ -23,8 +23,7 @@ constructor(
   private val shizukuRepository: ShizukuRepository,
   private val flagsRepository: FlagsRepository,
 ) : ViewModel() {
-  private val _startScreen =
-    MutableStateFlow<Route>(Routes.Setup.FirstUseScreen)
+  private val _startScreen = MutableStateFlow<Route>(Routes.BlankScreen)
   val startScreen = _startScreen.asStateFlow()
 
   private suspend fun determineStartScreen(): Route {
@@ -51,6 +50,9 @@ constructor(
       }
     }
   }
+
+  fun onSetupStarted() =
+    viewModelScope.launch { flagsRepository.setNotFirstRun() }
 
   fun onSetupFinished() =
     viewModelScope.launch { _startScreen.update { determineStartScreen() } }
