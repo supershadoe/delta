@@ -24,13 +24,10 @@ import androidx.graphics.shapes.CornerRounding
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.pillStar
 import dev.shadoe.delta.R
-import dev.shadoe.delta.common.LocalNavController
-import dev.shadoe.delta.common.Routes
 import dev.shadoe.delta.common.shapes.PolygonShape
 
 @Composable
-fun FirstUseScreen() {
-  val navController = LocalNavController.current
+fun FirstUseScreen(onStartSetup: () -> Unit) {
   val roundedPillStar = remember {
     RoundedPolygon.pillStar(
       width = 1f,
@@ -78,11 +75,7 @@ fun FirstUseScreen() {
         modifier = Modifier.weight(1f).fillMaxWidth(),
         contentAlignment = Alignment.CenterEnd,
       ) {
-        Button(
-          onClick = {
-            navController?.navigate(route = Routes.Setup.ShizukuSetupScreen)
-          }
-        ) {
+        Button(onClick = onStartSetup) {
           Text(
             text = stringResource(R.string.setup_start_button),
             fontWeight = FontWeight.SemiBold,

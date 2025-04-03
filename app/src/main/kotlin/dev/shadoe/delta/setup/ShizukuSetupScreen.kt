@@ -28,8 +28,6 @@ import dev.shadoe.delta.api.ShizukuStates.CONNECTED
 import dev.shadoe.delta.api.ShizukuStates.NOT_AVAILABLE
 import dev.shadoe.delta.api.ShizukuStates.NOT_CONNECTED
 import dev.shadoe.delta.api.ShizukuStates.NOT_RUNNING
-import dev.shadoe.delta.common.LocalNavController
-import dev.shadoe.delta.common.Routes
 import dev.shadoe.delta.common.shapes.PolygonShape
 import dev.shadoe.delta.setup.components.ShizukuConnected
 import dev.shadoe.delta.setup.components.ShizukuNotConnected
@@ -37,8 +35,10 @@ import dev.shadoe.delta.setup.components.ShizukuNotInstalled
 import dev.shadoe.delta.setup.components.ShizukuNotRunning
 
 @Composable
-fun ShizukuSetupScreen(vm: ShizukuSetupViewModel = viewModel()) {
-  val navController = LocalNavController.current
+fun ShizukuSetupScreen(
+  onSetupFinished: () -> Unit,
+  vm: ShizukuSetupViewModel = viewModel(),
+) {
   val state by vm.shizukuState.collectAsState()
   val roundedPillStar = remember {
     RoundedPolygon.pillStar(
@@ -81,14 +81,7 @@ fun ShizukuSetupScreen(vm: ShizukuSetupViewModel = viewModel()) {
             ShizukuNotConnected(
               onRequestPermission = { vm.requestPermission() }
             )
-          CONNECTED ->
-            ShizukuConnected(
-              continueAction = {
-                navController?.navigate(
-                  route = Routes.Setup.CrashHandlerSetupScreen
-                )
-              }
-            )
+          CONNECTED -> ShizukuConnected(continueAction = onSetupFinished)
           else -> {}
         }
       }

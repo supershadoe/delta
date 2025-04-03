@@ -22,11 +22,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.common.LocalNavController
 import dev.shadoe.delta.design.AppTheme
 
 @Composable
-fun DebugScreen(vm: DebugViewModel = viewModel()) {
+fun DebugScreen(onNavigateUp: (() -> Unit)?, vm: DebugViewModel = viewModel()) {
   val metadata = remember {
     """
         Manufacturer: ${Build.MANUFACTURER} (${Build.BRAND})
@@ -36,7 +35,6 @@ fun DebugScreen(vm: DebugViewModel = viewModel()) {
         """
       .trimIndent()
   }
-  val navController = LocalNavController.current
 
   val config by vm.config.collectAsState()
   val status by vm.status.collectAsState()
@@ -47,11 +45,13 @@ fun DebugScreen(vm: DebugViewModel = viewModel()) {
         TopAppBar(
           title = { Text(text = stringResource(R.string.debug_title)) },
           navigationIcon = {
-            IconButton(onClick = { navController?.navigateUp() }) {
-              Icon(
-                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                contentDescription = stringResource(R.string.back_button),
-              )
+            if (onNavigateUp != null) {
+              IconButton(onClick = onNavigateUp) {
+                Icon(
+                  imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                  contentDescription = stringResource(R.string.back_button),
+                )
+              }
             }
           },
         )

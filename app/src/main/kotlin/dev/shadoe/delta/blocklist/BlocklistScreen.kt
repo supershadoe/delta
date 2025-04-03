@@ -29,15 +29,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
-import dev.shadoe.delta.common.LocalNavController
 import kotlinx.coroutines.launch
 
 @Composable
 fun BlocklistScreen(
   modifier: Modifier = Modifier,
+  onNavigateUp: (() -> Unit)?,
   vm: BlockListViewModel = viewModel(),
 ) {
-  val navController = LocalNavController.current
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
 
@@ -52,11 +51,13 @@ fun BlocklistScreen(
       LargeTopAppBar(
         title = { Text(text = stringResource(R.string.blocklist)) },
         navigationIcon = {
-          IconButton(onClick = { navController?.navigateUp() }) {
-            Icon(
-              imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-              contentDescription = stringResource(R.string.back_button),
-            )
+          if (onNavigateUp != null) {
+            IconButton(onClick = onNavigateUp) {
+              Icon(
+                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                contentDescription = stringResource(R.string.back_button),
+              )
+            }
           }
         },
       )

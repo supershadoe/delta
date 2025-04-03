@@ -53,7 +53,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
 import dev.shadoe.delta.api.SoftApSecurityType
-import dev.shadoe.delta.common.LocalNavController
 import dev.shadoe.delta.settings.components.AutoShutDownTimeOutField
 import dev.shadoe.delta.settings.components.AutoShutdownField
 import dev.shadoe.delta.settings.components.FrequencyBandField
@@ -80,9 +79,9 @@ private fun openSystemSettings(context: Context, isBigScreen: Boolean = false) {
 @Composable
 fun SettingsScreen(
   modifier: Modifier = Modifier,
+  onNavigateUp: (() -> Unit)?,
   vm: SettingsViewModel = viewModel(),
 ) {
-  val navController = LocalNavController.current
   val focusManager = LocalFocusManager.current
   val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
   val scope = rememberCoroutineScope()
@@ -108,11 +107,13 @@ fun SettingsScreen(
       LargeTopAppBar(
         title = { Text(text = stringResource(R.string.settings)) },
         navigationIcon = {
-          IconButton(onClick = { navController?.navigateUp() }) {
-            Icon(
-              imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-              contentDescription = stringResource(R.string.back_button),
-            )
+          if (onNavigateUp != null) {
+            IconButton(onClick = onNavigateUp) {
+              Icon(
+                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                contentDescription = stringResource(R.string.back_button),
+              )
+            }
           }
         },
         actions = {
@@ -317,7 +318,7 @@ fun SettingsScreen(
                   )
                 }
               } else {
-                navController?.navigateUp()
+                onNavigateUp()
               }
             }
         ) {

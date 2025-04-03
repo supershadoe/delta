@@ -50,8 +50,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApEnabledState
-import dev.shadoe.delta.common.LocalNavController
-import dev.shadoe.delta.common.Routes
 import dev.shadoe.delta.control.buttons.HotspotButton
 import dev.shadoe.delta.control.components.ConnectedDevicesList
 import dev.shadoe.delta.control.components.PassphraseDisplay
@@ -61,13 +59,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun ControlScreen(
   modifier: Modifier = Modifier,
+  onNavigateToDebug: () -> Unit,
+  onNavigateToBlocklist: () -> Unit,
+  onNavigateToSettings: () -> Unit,
   vm: ControlViewModel = viewModel(),
 ) {
   val sheetState = rememberModalBottomSheetState()
   val showConnectedDevices = remember { mutableStateOf(false) }
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
-  val navController = LocalNavController.current
   val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
   // TODO: remove this comment
   //    println(
@@ -131,7 +131,7 @@ fun ControlScreen(
 
   LaunchedEffect(shouldTriggerDebugScreen) {
     if (!shouldTriggerDebugScreen) return@LaunchedEffect
-    navController?.navigate(route = Routes.DebugScreen)
+    onNavigateToDebug()
     Toast.makeText(context, "Triggered debug screen", Toast.LENGTH_SHORT).show()
   }
 
@@ -168,9 +168,7 @@ fun ControlScreen(
                 )
               }
             }
-            IconButton(
-              onClick = { navController?.navigate(Routes.BlocklistScreen) }
-            ) {
+            IconButton(onClick = onNavigateToBlocklist) {
               Icon(
                 imageVector = Icons.Rounded.Block,
                 contentDescription = stringResource(id = R.string.blocklist),
@@ -180,11 +178,7 @@ fun ControlScreen(
         )
       },
       floatingActionButton = {
-        FloatingActionButton(
-          onClick = {
-            navController?.navigate(route = Routes.HotspotEditScreen)
-          }
-        ) {
+        FloatingActionButton(onClick = onNavigateToSettings) {
           Icon(
             imageVector = Icons.Rounded.Edit,
             contentDescription = stringResource(id = R.string.edit_button),
