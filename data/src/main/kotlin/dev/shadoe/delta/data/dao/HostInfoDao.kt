@@ -2,20 +2,21 @@ package dev.shadoe.delta.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import dev.shadoe.delta.data.models.HostInfo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HostInfoDao {
-  @Query("SELECT * FROM HostInfo WHERE macAddress = :macAddress LIMIT 1")
-  suspend fun getHostInfo(macAddress: String): HostInfo?
+  @Query("SELECT * FROM HostInfo WHERE macAddress IN (:macAddress)")
+  suspend fun resolveMacAddressesToHostNames(
+    macAddress: List<String>
+  ): List<HostInfo>
 
-  @Query("SELECT * FROM HostInfo") suspend fun getAll(): List<HostInfo>
+  @Query("SELECT * FROM HostInfo") fun observeTable(): Flow<List<HostInfo>>
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertAll(vararg hostInfo: HostInfo)
+  @Upsert suspend fun addHostInfo(vararg hostInfo: HostInfo)
 
   @Delete suspend fun delete(hostInfo: HostInfo)
 }

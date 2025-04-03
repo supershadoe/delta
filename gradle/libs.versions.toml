@@ -87,6 +87,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
+room = { id = "androidx.room", version.ref = "room" }
 
 [bundles]
 compose = [

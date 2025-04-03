@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class HostInfo(
-  @PrimaryKey(autoGenerate = false) val macAddress: String,
-  val hostname: String,
+data class Flag(
+  @PrimaryKey(autoGenerate = false) val flag: Int,
+  val value: Boolean,
 )

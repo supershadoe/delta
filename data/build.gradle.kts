@@ -5,6 +5,7 @@ plugins {
   alias(libs.plugins.refine)
   alias(libs.plugins.ksp)
   alias(libs.plugins.hilt)
+  alias(libs.plugins.room)
   id("delta.lint.kotlin")
   id("delta.lint.kts")
 }
@@ -35,6 +36,8 @@ android {
 
   kotlinOptions { jvmTarget = "21" }
 }
+
+room { schemaDirectory("$projectDir/schema") }
 
 dependencies {
   compileOnly(project(path = ":system-api-stubs"))
