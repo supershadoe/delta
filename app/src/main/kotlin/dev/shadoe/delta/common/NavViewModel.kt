@@ -21,27 +21,34 @@ constructor(
   @ApplicationContext private val applicationContext: Context,
   private val shizukuRepository: ShizukuRepository,
 ) : ViewModel() {
-  private val _isSetupNeeded = MutableStateFlow(false)
-  val isSetupNeeded = _isSetupNeeded.asStateFlow()
+  private val _startScreen =
+    MutableStateFlow<Route>(Routes.Setup.FirstUseScreen)
+  val startScreen = _startScreen.asStateFlow()
 
-  private fun determineIfSetupNeeded(): Boolean {
+  private fun determineIfSetupNeeded(): Route {
     val shizukuConnected =
       shizukuRepository.shizukuState.value != ShizukuStates.CONNECTED
     val crashHandlerSetup =
       CrashHandlerUtils.shouldShowNotificationPermissionRequest(
         applicationContext
       )
-    return shizukuConnected || crashHandlerSetup
+    return if (shizukuConnected) {
+      Routes.Setup.ShizukuSetupScreen
+    } else if (crashHandlerSetup) {
+      Routes.Setup.CrashHandlerSetupScreen
+    } else {
+      Routes.HotspotScreen
+    }
   }
 
   init {
     addCloseable(shizukuRepository.callbackSubscriber)
     viewModelScope.launch {
       shizukuRepository.shizukuState.collect {
-        _isSetupNeeded.update { determineIfSetupNeeded() }
+        _startScreen.update { determineIfSetupNeeded() }
       }
     }
   }
 
-  fun onSetupFinished() = _isSetupNeeded.update { determineIfSetupNeeded() }
+  fun onSetupFinished() = _startScreen.update { determineIfSetupNeeded() }
 }

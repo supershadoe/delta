@@ -318,7 +318,7 @@ fun SettingsScreen(
                   )
                 }
               } else {
-                onNavigateUp()
+                onNavigateUp?.invoke()
               }
             }
         ) {

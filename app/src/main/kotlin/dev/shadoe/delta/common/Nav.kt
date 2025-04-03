@@ -9,7 +9,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dev.shadoe.delta.blocklist.BlockListViewModel
 import dev.shadoe.delta.blocklist.BlocklistScreen
@@ -27,38 +26,31 @@ import dev.shadoe.delta.setup.ShizukuSetupViewModel
 @Composable
 fun Nav(vm: NavViewModel = viewModel()) {
   val navController = rememberNavController()
-  val isSetupNeeded by vm.isSetupNeeded.collectAsState()
+  val startScreen by vm.startScreen.collectAsState()
   NavHost(
     navController = navController,
-    startDestination =
-      if (isSetupNeeded) {
-        Routes.Setup
-      } else {
-        Routes.HotspotScreen
-      },
+    startDestination = startScreen,
     enterTransition = { slideInHorizontally() },
     exitTransition = { slideOutHorizontally() },
   ) {
-    navigation<Routes.Setup>(startDestination = Routes.Setup.FirstUseScreen) {
-      composable<Routes.Setup.FirstUseScreen> {
-        FirstUseScreen(
-          onStartSetup = {
-            navController.navigate(route = Routes.Setup.ShizukuSetupScreen)
-          }
-        )
-      }
-      composable<Routes.Setup.ShizukuSetupScreen> {
-        val vm = hiltViewModel<ShizukuSetupViewModel>()
-        ShizukuSetupScreen(
-          onSetupFinished = {
-            navController.navigate(Routes.Setup.CrashHandlerSetupScreen)
-          },
-          vm = vm,
-        )
-      }
-      composable<Routes.Setup.CrashHandlerSetupScreen> {
-        CrashHandlerSetupScreen(onSetupFinished = { vm.onSetupFinished() })
-      }
+    composable<Routes.Setup.FirstUseScreen> {
+      FirstUseScreen(
+        onStartSetup = {
+          navController.navigate(route = Routes.Setup.ShizukuSetupScreen)
+        }
+      )
+    }
+    composable<Routes.Setup.ShizukuSetupScreen> {
+      val vm = hiltViewModel<ShizukuSetupViewModel>()
+      ShizukuSetupScreen(
+        onSetupFinished = {
+          navController.navigate(Routes.Setup.CrashHandlerSetupScreen)
+        },
+        vm = vm,
+      )
+    }
+    composable<Routes.Setup.CrashHandlerSetupScreen> {
+      CrashHandlerSetupScreen(onSetupFinished = { vm.onSetupFinished() })
     }
     composable<Routes.HotspotScreen> {
       val vm = hiltViewModel<ControlViewModel>()

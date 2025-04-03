@@ -2,21 +2,23 @@ package dev.shadoe.delta.common
 
 import kotlinx.serialization.Serializable
 
+sealed interface Route {}
+
 object Routes {
   @Serializable
   object Setup {
-    @Serializable object FirstUseScreen
+    @Serializable object FirstUseScreen : Route
 
-    @Serializable object ShizukuSetupScreen
+    @Serializable object ShizukuSetupScreen : Route
 
-    @Serializable object CrashHandlerSetupScreen
+    @Serializable object CrashHandlerSetupScreen : Route
   }
 
-  @Serializable object HotspotScreen
+  @Serializable object HotspotScreen : Route
 
-  @Serializable object HotspotEditScreen
+  @Serializable object HotspotEditScreen : Route
 
-  @Serializable object BlocklistScreen
+  @Serializable object BlocklistScreen : Route
 
-  @Serializable object DebugScreen
+  @Serializable object DebugScreen : Route
 }
