@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shadoe.delta.api.ShizukuStates
 import dev.shadoe.delta.crash.CrashHandlerUtils
+import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.shizuku.ShizukuRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,24 +21,25 @@ class NavViewModel
 constructor(
   @ApplicationContext private val applicationContext: Context,
   private val shizukuRepository: ShizukuRepository,
+  private val flagsRepository: FlagsRepository,
 ) : ViewModel() {
   private val _startScreen =
     MutableStateFlow<Route>(Routes.Setup.FirstUseScreen)
   val startScreen = _startScreen.asStateFlow()
 
-  private fun determineIfSetupNeeded(): Route {
+  private suspend fun determineStartScreen(): Route {
+    val isFirstRun = flagsRepository.isFirstRun()
     val shizukuConnected =
       shizukuRepository.shizukuState.value != ShizukuStates.CONNECTED
     val crashHandlerSetup =
       CrashHandlerUtils.shouldShowNotificationPermissionRequest(
         applicationContext
       )
-    return if (shizukuConnected) {
-      Routes.Setup.ShizukuSetupScreen
-    } else if (crashHandlerSetup) {
-      Routes.Setup.CrashHandlerSetupScreen
-    } else {
-      Routes.HotspotScreen
+    return when {
+      isFirstRun -> Routes.Setup.FirstUseScreen
+      shizukuConnected -> Routes.Setup.ShizukuSetupScreen
+      crashHandlerSetup -> Routes.Setup.CrashHandlerSetupScreen
+      else -> Routes.HotspotScreen
     }
   }
 
@@ -45,10 +47,11 @@ constructor(
     addCloseable(shizukuRepository.callbackSubscriber)
     viewModelScope.launch {
       shizukuRepository.shizukuState.collect {
-        _startScreen.update { determineIfSetupNeeded() }
+        _startScreen.update { determineStartScreen() }
       }
     }
   }
 
-  fun onSetupFinished() = _startScreen.update { determineIfSetupNeeded() }
+  fun onSetupFinished() =
+    viewModelScope.launch { _startScreen.update { determineStartScreen() } }
 }
