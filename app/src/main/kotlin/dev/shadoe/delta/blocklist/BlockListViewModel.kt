@@ -3,22 +3,19 @@ package dev.shadoe.delta.blocklist
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.ACLDevice
-import dev.shadoe.delta.data.softap.SoftApRepository
+import dev.shadoe.delta.data.softap.BlocklistRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.mapLatest
 
 @HiltViewModel
 class BlockListViewModel
 @Inject
-constructor(private val softApRepository: SoftApRepository) : ViewModel() {
+constructor(private val blocklistRepository: BlocklistRepository) :
+  ViewModel() {
   @OptIn(ExperimentalCoroutinesApi::class)
-  val blockedClients = softApRepository.config.mapLatest { it.blockedDevices }
+  val blockedClients = blocklistRepository.blockedClients
 
   fun unblockDevice(device: ACLDevice) {
-    softApRepository.apply {
-      val d = config.value.blockedDevices
-      updateSoftApConfiguration(config.value.copy(blockedDevices = d - device))
-    }
+    blocklistRepository.unblockDevice(device)
   }
 }

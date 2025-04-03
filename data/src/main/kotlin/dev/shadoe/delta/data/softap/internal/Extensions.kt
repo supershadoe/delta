@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.net.wifi.SoftApConfigurationHidden
 import android.net.wifi.WifiSsid
 import android.os.Build
-import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.MacAddress
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApRandomizationSetting
@@ -60,20 +59,8 @@ internal object Extensions {
         } else {
           @Suppress("DEPRECATION") band
         },
-      blockedDevices =
-        blockedClientList.map {
-          ACLDevice(
-            hostname = state.macAddressCache[it],
-            macAddress = it.toBridgeClass(),
-          )
-        },
-      allowedClients =
-        allowedClientList.map {
-          ACLDevice(
-            hostname = state.macAddressCache[it],
-            macAddress = it.toBridgeClass(),
-          )
-        },
+      blockedDevices = blockedClientList.map { it.toBridgeClass() },
+      allowedClients = allowedClientList.map { it.toBridgeClass() },
       isAutoShutdownEnabled = isAutoShutdownEnabled,
       autoShutdownTimeout = shutdownTimeoutMillis,
       maxClientLimit = maxNumberOfClients,
@@ -111,7 +98,7 @@ internal object Extensions {
             SoftApSpeedType.BAND_6GHZ
         when (speedType) {
           SoftApSpeedType.BAND_6GHZ -> {
-            setBand(band2To6)
+            setBand(@SuppressLint("WrongConstant") band2To6)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
               setBands(
                 intArrayOf(SoftApSpeedType.BAND_2GHZ, band2To5, band2To6)
@@ -119,25 +106,21 @@ internal object Extensions {
             }
           }
           SoftApSpeedType.BAND_5GHZ -> {
-            setBand(band2To5)
+            setBand(@SuppressLint("WrongConstant") band2To5)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
               setBands(intArrayOf(SoftApSpeedType.BAND_2GHZ, band2To5))
             }
           }
 
           SoftApSpeedType.BAND_2GHZ -> {
-            setBand(SoftApSpeedType.BAND_2GHZ)
+            setBand(@SuppressLint("WrongConstant") SoftApSpeedType.BAND_2GHZ)
           }
 
           else -> {}
         }
 
-        setBlockedClientList(
-          blockedDevices.map { it.macAddress.toOriginalClass() }
-        )
-        setAllowedClientList(
-          allowedClients.map { it.macAddress.toOriginalClass() }
-        )
+        setBlockedClientList(blockedDevices.map { it.toOriginalClass() })
+        setAllowedClientList(allowedClients.map { it.toOriginalClass() })
         setClientControlByUserEnabled(false)
         setAutoShutdownEnabled(isAutoShutdownEnabled)
         setShutdownTimeoutMillis(autoShutdownTimeout)

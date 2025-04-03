@@ -2,7 +2,6 @@ package dev.shadoe.delta.data.softap
 
 import android.net.IIntResultListener
 import android.net.ITetheringConnector
-import android.net.MacAddress
 import android.net.TetheringManager
 import android.net.TetheringManager.TETHERING_WIFI
 import android.net.wifi.IStringListener
@@ -11,10 +10,6 @@ import android.net.wifi.SoftApConfigurationHidden
 import android.os.Binder
 import android.os.Build
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApConfiguration
@@ -22,6 +17,7 @@ import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApEnabledState.EnabledStateType
 import dev.shadoe.delta.api.SoftApStatus
 import dev.shadoe.delta.api.TetheredClient
+import dev.shadoe.delta.data.MacAddressCacheRepository
 import dev.shadoe.delta.data.services.TetheringSystemService
 import dev.shadoe.delta.data.services.WifiSystemService
 import dev.shadoe.delta.data.softap.callbacks.SoftApCallback
@@ -42,14 +38,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-
-private typealias PrefMapT = Map.Entry<Preferences.Key<String>, String>
 
 @Singleton
 class SoftApRepository
@@ -57,12 +50,11 @@ class SoftApRepository
 constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   @WifiSystemService private val wifiManager: IWifiManager,
-  @MacAddressCache private val persistedMacAddressCache: DataStore<Preferences>,
+  private val macAddressCacheRepository: MacAddressCacheRepository,
 ) {
   companion object {
     private const val TAG = "SoftApRepository"
     private const val ADB_PACKAGE_NAME = "com.android.shell"
-    private const val WIFI_FEATURE_DPP = 31
   }
 
   private val internalState =
@@ -106,15 +98,10 @@ constructor(
         _status.update { it.copy(tetheredClients = clients) }
         runBlocking {
           launch {
-            persistedMacAddressCache.edit { prefs ->
-              clients
-                .filter { it.hostname != null }
-                .map {
-                  stringPreferencesKey(name = it.macAddress.toString()) to
-                    it.hostname!!
-                }
-                .let { prefs.putAll(*it.toTypedArray()) }
-            }
+            clients
+              .filter { it.hostname != null }
+              .map { it.macAddress.toString() to it.hostname!! }
+              .let { macAddressCacheRepository.updateHostInfoInCache(it) }
           }
         }
       }
@@ -182,15 +169,6 @@ constructor(
       shouldRestartHotspot.value = false
     }
 
-  private val updateMacAddressCacheInMem =
-    persistedMacAddressCache.data
-      .map {
-        it.asMap().asIterable().filterIsInstance<PrefMapT>().associate {
-          MacAddress.fromString(it.key.name) to it.value
-        }
-      }
-      .onEach { internalState.update { st -> st.copy(macAddressCache = it) } }
-
   val config = _config.asStateFlow()
   val status = _status.asStateFlow()
 
@@ -229,7 +207,6 @@ constructor(
         withContext(Dispatchers.Unconfined) {
           updateConfigOnExternalChange.launchIn(this)
           restartHotspotOnConfigChange.launchIn(this)
-          updateMacAddressCacheInMem.launchIn(this)
         }
       }
     }
