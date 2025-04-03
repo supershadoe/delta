@@ -1,17 +1,17 @@
-package dev.shadoe.delta.data.softap
+package dev.shadoe.delta.data
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shadoe.delta.api.ConfigFlag
-import dev.shadoe.delta.data.ConfigDB
+import dev.shadoe.delta.data.softap.ConfigDatabase
 import java.io.File
 import javax.inject.Inject
 
 class FlagsRepository
 @Inject
 constructor(
-  @ConfigDatabase private val configDB: ConfigDB,
-  @ApplicationContext private val applicationContext: Context,
+    @ConfigDatabase private val configDB: ConfigDB,
+    @ApplicationContext private val applicationContext: Context,
 ) {
   private val flagsDao = configDB.flagsDao()
 
@@ -20,7 +20,7 @@ constructor(
       File(
           applicationContext.filesDir,
           "datastore/mac_address_cache.preferences_pb",
-        )
+      )
         .exists()
 
   suspend fun isFirstRun() =

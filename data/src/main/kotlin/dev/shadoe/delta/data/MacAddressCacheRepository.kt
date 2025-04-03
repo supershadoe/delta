@@ -6,7 +6,7 @@ import dev.shadoe.delta.api.ConfigFlag
 import dev.shadoe.delta.data.models.Flag
 import dev.shadoe.delta.data.models.HostInfo
 import dev.shadoe.delta.data.softap.ConfigDatabase
-import dev.shadoe.delta.data.softap.FlagsRepository
+import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.softap.MacAddressCache
 import javax.inject.Inject
 import kotlin.collections.iterator
