@@ -1,7 +1,7 @@
-package dev.shadoe.delta.data.softap
+package dev.shadoe.delta.data.services
 
 import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-internal annotation class ConfigDatabase
+internal annotation class MacAddressCache

@@ -3,7 +3,7 @@ package dev.shadoe.delta.data
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shadoe.delta.api.ConfigFlag
-import dev.shadoe.delta.data.softap.ConfigDatabase
+import dev.shadoe.delta.data.services.ConfigDatabase
 import java.io.File
 import javax.inject.Inject
 

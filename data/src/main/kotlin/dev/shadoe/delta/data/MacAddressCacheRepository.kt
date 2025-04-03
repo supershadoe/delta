@@ -5,9 +5,8 @@ import androidx.datastore.preferences.core.Preferences
 import dev.shadoe.delta.api.ConfigFlag
 import dev.shadoe.delta.data.models.Flag
 import dev.shadoe.delta.data.models.HostInfo
-import dev.shadoe.delta.data.softap.ConfigDatabase
-import dev.shadoe.delta.data.FlagsRepository
-import dev.shadoe.delta.data.softap.MacAddressCache
+import dev.shadoe.delta.data.services.ConfigDatabase
+import dev.shadoe.delta.data.services.MacAddressCache
 import javax.inject.Inject
 import kotlin.collections.iterator
 import kotlinx.coroutines.CoroutineScope

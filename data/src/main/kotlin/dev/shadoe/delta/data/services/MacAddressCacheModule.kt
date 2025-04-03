@@ -1,4 +1,4 @@
-package dev.shadoe.delta.data.softap
+package dev.shadoe.delta.data.services
 
 import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
