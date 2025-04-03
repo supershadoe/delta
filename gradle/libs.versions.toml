@@ -33,10 +33,7 @@ compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = 
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-# TODO: This is not yet used in the app
-compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
-compose-material3-adaptive-layout = { group = "androidx.compose.material3.adaptive", name = "adaptive-layout" }
-compose-material3-adaptive-navigation = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation" }
+
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 compose-nav = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 compose-nav-hilt = { group = "androidx.hilt" , name = "hilt-navigation-compose", version.ref = "hilt-nav-compose" }
@@ -96,9 +93,6 @@ compose = [
     "compose-activity",
     "compose-foundation",
     "compose-material3",
-    "compose-material3-adaptive",
-    "compose-material3-adaptive-layout",
-    "compose-material3-adaptive-navigation",
     "compose-material-icons-extended",
     "compose-nav",
     "compose-nav-hilt",
