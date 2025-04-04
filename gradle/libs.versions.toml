@@ -14,6 +14,7 @@ hilt-nav-compose = "1.2.0"
 junitx = "1.2.1"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.26"
+leakcanary = "2.14"
 mockito-core = "5.15.2"
 mockito-kotlin = "5.4.0"
 navigation-compose = "2.8.9"
@@ -62,6 +63,9 @@ shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuk
 shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
 
 spotless = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
+# Memory leak checks
+leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
 
 # Unit tests
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }

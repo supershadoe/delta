@@ -103,4 +103,5 @@ dependencies {
   testImplementation(libs.kotlin.test.junit)
   androidTestImplementation(libs.bundles.instTest)
   debugImplementation(libs.bundles.studioPreview)
+  debugImplementation(libs.leakcanary)
 }
