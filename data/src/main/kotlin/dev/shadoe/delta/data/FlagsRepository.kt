@@ -5,7 +5,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shadoe.delta.api.ConfigFlag
 import dev.shadoe.delta.data.database.ConfigDB
 import dev.shadoe.delta.data.database.models.Flag
-import dev.shadoe.delta.data.services.ConfigDatabase
+import dev.shadoe.delta.data.qualifiers.ConfigDatabase
 import java.io.File
 import javax.inject.Inject
 

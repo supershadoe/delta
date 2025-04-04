@@ -6,8 +6,8 @@ import dev.shadoe.delta.api.ConfigFlag
 import dev.shadoe.delta.data.database.ConfigDB
 import dev.shadoe.delta.data.database.models.Flag
 import dev.shadoe.delta.data.database.models.HostInfo
-import dev.shadoe.delta.data.services.ConfigDatabase
-import dev.shadoe.delta.data.services.MacAddressCache
+import dev.shadoe.delta.data.qualifiers.ConfigDatabase
+import dev.shadoe.delta.data.qualifiers.MacAddressCache
 import javax.inject.Inject
 import kotlin.collections.iterator
 import kotlinx.coroutines.CoroutineScope

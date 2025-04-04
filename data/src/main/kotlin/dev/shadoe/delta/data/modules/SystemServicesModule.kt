@@ -1,4 +1,4 @@
-package dev.shadoe.delta.data.services
+package dev.shadoe.delta.data.modules
 
 import android.net.ITetheringConnector
 import android.net.wifi.IWifiManager
@@ -8,6 +8,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.shadoe.delta.data.exceptions.BinderAcquisitionException
+import dev.shadoe.delta.data.qualifiers.TetheringSystemService
+import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 import javax.inject.Singleton

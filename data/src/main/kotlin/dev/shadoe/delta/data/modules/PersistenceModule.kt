@@ -1,4 +1,4 @@
-package dev.shadoe.delta.data.services
+package dev.shadoe.delta.data.modules
 
 import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
@@ -9,6 +9,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.shadoe.delta.data.database.ConfigDB
+import dev.shadoe.delta.data.qualifiers.ConfigDatabase
+import dev.shadoe.delta.data.qualifiers.MacAddressCache
 import java.io.File
 import javax.inject.Singleton
 

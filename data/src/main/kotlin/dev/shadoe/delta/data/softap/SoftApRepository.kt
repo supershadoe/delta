@@ -18,8 +18,8 @@ import dev.shadoe.delta.api.SoftApEnabledState.EnabledStateType
 import dev.shadoe.delta.api.SoftApStatus
 import dev.shadoe.delta.api.TetheredClient
 import dev.shadoe.delta.data.MacAddressCacheRepository
-import dev.shadoe.delta.data.services.TetheringSystemService
-import dev.shadoe.delta.data.services.WifiSystemService
+import dev.shadoe.delta.data.qualifiers.TetheringSystemService
+import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.callbacks.SoftApCallback
 import dev.shadoe.delta.data.softap.callbacks.TetheringEventCallback
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
