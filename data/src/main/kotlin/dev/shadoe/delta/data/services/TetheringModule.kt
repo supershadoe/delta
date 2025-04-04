@@ -8,10 +8,12 @@ import dagger.hilt.components.SingletonComponent
 import dev.shadoe.delta.data.exceptions.BinderAcquisitionException
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object TetheringModule {
+  @Singleton
   @TetheringSystemService
   @Provides
   fun provideTetheringManager(): ITetheringConnector =
