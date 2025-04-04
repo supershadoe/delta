@@ -1,0 +1,35 @@
+package dev.shadoe.delta.data.services
+
+import android.net.ITetheringConnector
+import android.net.wifi.IWifiManager
+import android.os.IBinder
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dev.shadoe.delta.data.exceptions.BinderAcquisitionException
+import rikka.shizuku.ShizukuBinderWrapper
+import rikka.shizuku.SystemServiceHelper
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object SystemServicesModule {
+  private fun getSystemService(name: String): IBinder {
+    return SystemServiceHelper.getSystemService(name)
+      ?.let { ShizukuBinderWrapper(it) }
+      ?: throw BinderAcquisitionException("Unable to get service: $name")
+  }
+
+  @Singleton
+  @TetheringSystemService
+  @Provides
+  fun provideTetheringManager(): ITetheringConnector =
+    ITetheringConnector.Stub.asInterface(getSystemService("tethering"))
+
+  @Singleton
+  @WifiSystemService
+  @Provides
+  fun provideWifiManager(): IWifiManager =
+    IWifiManager.Stub.asInterface(getSystemService("wifi"))
+}
