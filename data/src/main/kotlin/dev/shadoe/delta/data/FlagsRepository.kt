@@ -17,13 +17,23 @@ constructor(
 ) {
   private val flagsDao = configDB.flagsDao()
 
-  suspend fun shouldMigrateToRoom() =
-    flagsDao.getFlag(ConfigFlag.USES_ROOM_DB.ordinal) != true &&
-      File(
-          applicationContext.filesDir,
-          "datastore/mac_address_cache.preferences_pb",
+  suspend fun shouldMigrateToRoom(): Boolean {
+    var isRoomNotUsed =
+      flagsDao.getFlag(ConfigFlag.USES_ROOM_DB.ordinal) != true
+    File(
+        applicationContext.filesDir,
+        "datastore/mac_address_cache.preferences_pb",
+      )
+      .exists()
+      .takeIf { !it && isRoomNotUsed }
+      ?.run {
+        flagsDao.setFlag(
+          Flag(flag = ConfigFlag.USES_ROOM_DB.ordinal, value = true)
         )
-        .exists()
+        isRoomNotUsed = false
+      }
+    return isRoomNotUsed
+  }
 
   suspend fun isFirstRun() =
     flagsDao.getFlag(ConfigFlag.NOT_FIRST_RUN.ordinal) != true
