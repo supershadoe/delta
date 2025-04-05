@@ -4,18 +4,31 @@ import android.net.IIntResultListener
 import android.net.ITetheringConnector
 import android.net.TetheringManager
 import android.net.TetheringManager.TETHERING_WIFI
+import android.net.wifi.IWifiManager
 import android.os.Build
+import android.util.Log
+import dev.rikka.tools.refine.Refine
+import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.data.qualifiers.TetheringSystemService
+import dev.shadoe.delta.data.qualifiers.WifiSystemService
+import dev.shadoe.delta.data.softap.internal.Extensions.toOriginalClass
 import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import javax.inject.Inject
+import kotlinx.coroutines.flow.update
 
 class SoftApControlRepository
 @Inject
 constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
+  @WifiSystemService private val wifiManager: IWifiManager,
+  private val softApStateRepository: SoftApStateRepository,
   private val softApRepository: SoftApRepository,
 ) {
+  companion object {
+    private const val TAG = "SoftApControlRepository"
+  }
+
   private val dummyIntResultReceiver =
     object : IIntResultListener.Stub() {
       override fun onResult(resultCode: Int) {}
@@ -70,4 +83,27 @@ constructor(
     }
     return true
   }
+
+  private fun setSoftApConfiguration(c: SoftApConfiguration) =
+    Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(c.toOriginalClass())
+      .let {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+          if (!wifiManager.validateSoftApConfiguration(it)) {
+            return@let false
+          }
+        }
+        wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+        return@let true
+      }
+
+  fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
+    runCatching { setSoftApConfiguration(c) }
+      .onFailure { Log.e(TAG, it.stackTraceToString()) }
+      .getOrDefault(false)
+      .also {
+        if (it) {
+          softApStateRepository.config.update { c }
+          softApStateRepository.shouldRestart.value = true
+        }
+      }
 }

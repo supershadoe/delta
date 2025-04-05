@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
+import dev.shadoe.delta.data.softap.SoftApControlRepository
 import dev.shadoe.delta.data.softap.SoftApRepository
+import dev.shadoe.delta.data.softap.SoftApStateRepository
 import dev.shadoe.delta.data.softap.validators.PassphraseValidator
 import dev.shadoe.delta.data.softap.validators.SsidValidator
 import javax.inject.Inject
@@ -17,7 +19,11 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SettingsViewModel
 @Inject
-constructor(private val softApRepository: SoftApRepository) : ViewModel() {
+constructor(
+  private val softApRepository: SoftApRepository,
+  private val softApControlRepository: SoftApControlRepository,
+  private val softApStateRepository: SoftApStateRepository,
+) : ViewModel() {
   private val _config = MutableStateFlow(softApRepository.config.value)
   private val _results = MutableStateFlow(UpdateResults())
 
@@ -113,7 +119,7 @@ constructor(private val softApRepository: SoftApRepository) : ViewModel() {
           passphrase = softApRepository.config.value.passphrase
         )
     }
-    softApRepository.updateSoftApConfiguration(_config.value)
+    softApControlRepository.updateSoftApConfiguration(_config.value)
     return true
   }
 }
