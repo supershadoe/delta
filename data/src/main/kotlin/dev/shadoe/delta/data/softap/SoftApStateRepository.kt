@@ -22,9 +22,7 @@ constructor(@WifiSystemService private val wifiManager: IWifiManager) {
       InternalState(fallbackPassphrase = generateRandomPassword())
     )
 
-  internal val shouldRestart = MutableStateFlow(false)
-
-  internal val status =
+  internal val mStatus =
     MutableStateFlow(
       SoftApStatus(
         enabledState = wifiManager.wifiApEnabledState,
@@ -40,7 +38,7 @@ constructor(@WifiSystemService private val wifiManager: IWifiManager) {
       )
     )
 
-  internal val config =
+  internal val mConfig =
     MutableStateFlow(
       Refine.unsafeCast<SoftApConfigurationHidden>(
           wifiManager.softApConfiguration

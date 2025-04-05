@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.asStateFlow
 class SoftApRepository
 @Inject
 constructor(private val softApStateRepository: SoftApStateRepository) {
-  val config = softApStateRepository.config.asStateFlow()
-  val status = softApStateRepository.status.asStateFlow()
+  val config = softApStateRepository.mConfig.asStateFlow()
+  val status = softApStateRepository.mStatus.asStateFlow()
 }

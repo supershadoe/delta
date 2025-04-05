@@ -102,8 +102,10 @@ constructor(
       .getOrDefault(false)
       .also {
         if (it) {
-          softApStateRepository.config.update { c }
-          softApStateRepository.shouldRestart.value = true
+          softApStateRepository.mConfig.update { c }
+          softApStateRepository.internalState.update {
+            it.copy(shouldRestart = true)
+          }
         }
       }
 }

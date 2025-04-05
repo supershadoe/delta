@@ -68,11 +68,11 @@ constructor(
   }
 
   override fun onEnabledStateChanged(@EnabledStateType state: Int) {
-    softApStateRepository.status.update { it.copy(enabledState = state) }
+    softApStateRepository.mStatus.update { it.copy(enabledState = state) }
   }
 
   override fun onTetheredClientsChanged(clients: List<TetheredClient>) {
-    softApStateRepository.status.update { it.copy(tetheredClients = clients) }
+    softApStateRepository.mStatus.update { it.copy(tetheredClients = clients) }
     scope.launch {
       clients
         .filter { it.hostname != null }
@@ -82,6 +82,8 @@ constructor(
   }
 
   override fun onSoftApCapabilitiesChanged(capabilities: SoftApCapabilities) {
-    softApStateRepository.status.update { it.copy(capabilities = capabilities) }
+    softApStateRepository.mStatus.update {
+      it.copy(capabilities = capabilities)
+    }
   }
 }

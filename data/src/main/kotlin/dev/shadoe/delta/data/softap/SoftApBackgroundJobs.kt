@@ -55,17 +55,17 @@ constructor(
         }
       }
       .onEach {
-        softApStateRepository.config.value =
+        softApStateRepository.mConfig.value =
           it.toBridgeClass(state = softApStateRepository.internalState.value)
       }
 
   private val restartOnConfigChange =
-    softApStateRepository.shouldRestart.onEach {
-      if (!it) return@onEach
+    softApStateRepository.internalState.onEach {
+      if (!it.shouldRestart) return@onEach
 
       val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
       val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
-      val status = softApStateRepository.status
+      val status = softApStateRepository.mStatus
       if (status.value.enabledState == enabled) {
         softApControlRepository.stopSoftAp()
         while (status.value.enabledState != disabled) {
@@ -77,7 +77,9 @@ constructor(
         }
       }
 
-      softApStateRepository.shouldRestart.value = false
+      softApStateRepository.internalState.update {
+        it.copy(shouldRestart = false)
+      }
     }
 
   init {
@@ -88,7 +90,7 @@ constructor(
             softApStateRepository.internalState.update {
               it.copy(fallbackPassphrase = value ?: generateRandomPassword())
             }
-            softApStateRepository.config.update {
+            softApStateRepository.mConfig.update {
               it.copy(
                 passphrase =
                   softApStateRepository.internalState.value.fallbackPassphrase
