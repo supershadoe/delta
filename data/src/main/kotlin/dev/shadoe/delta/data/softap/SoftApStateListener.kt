@@ -27,7 +27,7 @@ constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   @WifiSystemService private val wifiManager: IWifiManager,
   private val macAddressCacheRepository: MacAddressCacheRepository,
-  private val softApRepository: SoftApRepository,
+  private val softApStateRepository: SoftApStateRepository,
 ) : AutoCloseable, TetheringEventListener {
   companion object {
     private const val ADB_PACKAGE_NAME = "com.android.shell"
@@ -71,11 +71,11 @@ constructor(
   }
 
   override fun onEnabledStateChanged(@EnabledStateType state: Int) {
-    softApRepository._status.update { it.copy(enabledState = state) }
+    softApStateRepository.status.update { it.copy(enabledState = state) }
   }
 
   override fun onTetheredClientsChanged(clients: List<TetheredClient>) {
-    softApRepository._status.update { it.copy(tetheredClients = clients) }
+    softApStateRepository.status.update { it.copy(tetheredClients = clients) }
     scope.launch {
       clients
         .filter { it.hostname != null }
@@ -85,6 +85,6 @@ constructor(
   }
 
   override fun onSoftApCapabilitiesChanged(capabilities: SoftApCapabilities) {
-    softApRepository._status.update { it.copy(capabilities = capabilities) }
+    softApStateRepository.status.update { it.copy(capabilities = capabilities) }
   }
 }

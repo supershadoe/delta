@@ -4,11 +4,9 @@ import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.MacAddress
 import dev.shadoe.delta.data.MacAddressCacheRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 
-@Singleton
 class BlocklistRepository
 @Inject
 constructor(

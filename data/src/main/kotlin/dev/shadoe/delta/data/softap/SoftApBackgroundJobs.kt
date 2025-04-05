@@ -26,7 +26,7 @@ class SoftApBackgroundJobs
 @Inject
 constructor(
   @WifiSystemService private val wifiManager: IWifiManager,
-  private val softApRepository: SoftApRepository,
+  private val softApStateRepository: SoftApStateRepository,
   private val softApControlRepository: SoftApControlRepository,
 ) : AutoCloseable {
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -55,17 +55,17 @@ constructor(
         }
       }
       .onEach {
-        softApRepository._config.value =
-          it.toBridgeClass(state = softApRepository.internalState.value)
+        softApStateRepository.config.value =
+          it.toBridgeClass(state = softApStateRepository.internalState.value)
       }
 
   private val restartOnConfigChange =
-    softApRepository.shouldRestart.onEach {
+    softApStateRepository.shouldRestart.onEach {
       if (!it) return@onEach
 
       val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
       val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
-      val status = softApRepository.status
+      val status = softApStateRepository.status
       if (status.value.enabledState == enabled) {
         softApControlRepository.stopSoftAp()
         while (status.value.enabledState != disabled) {
@@ -77,7 +77,7 @@ constructor(
         }
       }
 
-      softApRepository.shouldRestart.value = false
+      softApStateRepository.shouldRestart.value = false
     }
 
   init {
@@ -85,13 +85,13 @@ constructor(
       wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
         object : IStringListener.Stub() {
           override fun onResult(value: String?) {
-            softApRepository.internalState.update {
+            softApStateRepository.internalState.update {
               it.copy(fallbackPassphrase = value ?: generateRandomPassword())
             }
-            softApRepository._config.update {
+            softApStateRepository.config.update {
               it.copy(
                 passphrase =
-                  softApRepository.internalState.value.fallbackPassphrase
+                  softApStateRepository.internalState.value.fallbackPassphrase
               )
             }
           }
