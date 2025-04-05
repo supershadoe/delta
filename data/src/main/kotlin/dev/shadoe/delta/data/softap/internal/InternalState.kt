@@ -4,5 +4,4 @@ import android.net.MacAddress
 
 internal data class InternalState(
   val fallbackPassphrase: String = "",
-  val macAddressCache: Map<MacAddress, String> = emptyMap(),
 )
