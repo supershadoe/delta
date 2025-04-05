@@ -7,7 +7,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 
-class BlocklistRepository
+class SoftApBlocklistRepository
 @Inject
 constructor(
   private val macAddressCacheRepository: MacAddressCacheRepository,
