@@ -32,4 +32,6 @@ constructor(
     flagsDao.setFlag(
       Flag(flag = ConfigFlag.NOT_FIRST_RUN.ordinal, value = true)
     )
+
+  suspend fun debugDumpFlags() = flagsDao.dump()
 }

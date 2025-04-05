@@ -38,6 +38,9 @@ fun DebugScreen(onNavigateUp: (() -> Unit)?, vm: DebugViewModel = viewModel()) {
 
   val config by vm.config.collectAsState()
   val status by vm.status.collectAsState()
+  val flags by vm.flags.collectAsState()
+  val macAddressCache by vm.macAddressCache.collectAsState()
+
   AppTheme {
     Scaffold(
       topBar = {
@@ -79,6 +82,25 @@ fun DebugScreen(onNavigateUp: (() -> Unit)?, vm: DebugViewModel = viewModel()) {
             modifier = Modifier.padding(top = 8.dp),
           )
           Text(text = "$status", modifier = Modifier.padding(bottom = 8.dp))
+        }
+        item {
+          Text(
+            text = "App internal flags",
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(top = 8.dp),
+          )
+          Text(text = flags, modifier = Modifier.padding(bottom = 8.dp))
+        }
+        item {
+          Text(
+            text = "Mac address cache",
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(top = 8.dp),
+          )
+          Text(
+            text = macAddressCache,
+            modifier = Modifier.padding(bottom = 8.dp),
+          )
         }
         item {
           Button(

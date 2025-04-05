@@ -10,5 +10,7 @@ interface FlagsDao {
   @Query("SELECT value FROM Flag WHERE flag = :flag LIMIT 1")
   suspend fun getFlag(flag: Int): Boolean?
 
+  @Query("SELECT * FROM Flag") suspend fun dump(): List<Flag>
+
   @Upsert suspend fun setFlag(flag: Flag)
 }

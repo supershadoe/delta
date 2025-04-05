@@ -9,6 +9,7 @@ import dev.shadoe.delta.data.database.models.HostInfo
 import dev.shadoe.delta.data.qualifiers.ConfigDatabase
 import dev.shadoe.delta.data.qualifiers.MacAddressCache
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.collections.iterator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+@Singleton
 class MacAddressCacheRepository
 @Inject
 constructor(
@@ -62,4 +64,6 @@ constructor(
 
   suspend fun getHostnamesFromCache(macAddressList: List<String>) =
     hostInfoDao.resolveMacAddressesToHostNames(macAddressList)
+
+  suspend fun debugDumpCache() = hostInfoDao.dump()
 }
