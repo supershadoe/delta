@@ -4,10 +4,10 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
+import dev.shadoe.delta.data.softap.SoftApBackgroundJobs
 import dev.shadoe.delta.data.softap.SoftApControlRepository
 import dev.shadoe.delta.data.softap.SoftApRepository
 import dev.shadoe.delta.data.softap.SoftApStateListener
@@ -23,6 +23,7 @@ class ControlViewModel
 constructor(
   private val softApRepository: SoftApRepository,
   private val softApControlRepository: SoftApControlRepository,
+  private val softApBackgroundJobs: SoftApBackgroundJobs,
   private val softApStateListener: SoftApStateListener,
 ) : ViewModel() {
   companion object {
@@ -35,18 +36,11 @@ constructor(
     private const val QR_CODE_EXTRA_HOTSPOT = "isHotspot"
   }
 
-  private val softApClosable =
-    softApRepository.callbackSubscriber(viewModelScope)
-
   private var isDppActivityAvailable = MutableStateFlow(true)
 
-  init {
-    addCloseable(softApControlRepository)
-    addCloseable(softApStateListener)
-  }
-
   override fun onCleared() {
-    runCatching { softApClosable.close() }
+    runCatching { softApBackgroundJobs.close() }
+    runCatching { softApStateListener.close() }
     super.onCleared()
   }
 

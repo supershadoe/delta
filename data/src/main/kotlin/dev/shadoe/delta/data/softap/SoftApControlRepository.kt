@@ -8,22 +8,13 @@ import android.os.Build
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.data.qualifiers.TetheringSystemService
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.milliseconds
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 class SoftApControlRepository
 @Inject
 constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   private val softApRepository: SoftApRepository,
-) : AutoCloseable {
+) {
   companion object {
     private const val ADB_PACKAGE_NAME = "com.android.shell"
   }
@@ -32,39 +23,6 @@ constructor(
     object : IIntResultListener.Stub() {
       override fun onResult(resultCode: Int) {}
     }
-
-  private val scope = CoroutineScope(Dispatchers.Unconfined + SupervisorJob())
-
-  private val shouldRestart = MutableStateFlow(false)
-
-  internal val restartOnConfigChange =
-    shouldRestart.onEach {
-      if (!it) return@onEach
-
-      val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
-      val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
-      val status = softApRepository.status
-      if (status.value.enabledState == enabled) {
-        stopSoftAp()
-        while (status.value.enabledState != disabled) {
-          delay(500.milliseconds)
-        }
-        startSoftAp()
-        while (status.value.enabledState != enabled) {
-          delay(500.milliseconds)
-        }
-      }
-
-      shouldRestart.value = false
-    }
-
-  init {
-    restartOnConfigChange.launchIn(scope)
-  }
-
-  override fun close() {
-    scope.cancel()
-  }
 
   fun startSoftAp(forceRestart: Boolean = false): Boolean {
     val enabledState = softApRepository.status.value.enabledState
