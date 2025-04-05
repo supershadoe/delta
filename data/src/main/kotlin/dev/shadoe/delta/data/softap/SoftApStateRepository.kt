@@ -12,6 +12,7 @@ import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @Singleton
 class SoftApStateRepository
@@ -45,4 +46,8 @@ constructor(@WifiSystemService private val wifiManager: IWifiManager) {
         )
         .toBridgeClass(state = internalState.value)
     )
+
+  val config = mConfig.asStateFlow()
+
+  val status = mStatus.asStateFlow()
 }

@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.data.softap.SoftApControlRepository
-import dev.shadoe.delta.data.softap.SoftApRepository
 import dev.shadoe.delta.data.softap.SoftApStateRepository
 import dev.shadoe.delta.data.softap.validators.PassphraseValidator
 import dev.shadoe.delta.data.softap.validators.SsidValidator
@@ -20,20 +19,19 @@ import kotlinx.coroutines.launch
 class SettingsViewModel
 @Inject
 constructor(
-  private val softApRepository: SoftApRepository,
   private val softApControlRepository: SoftApControlRepository,
   private val softApStateRepository: SoftApStateRepository,
 ) : ViewModel() {
-  private val _config = MutableStateFlow(softApRepository.config.value)
+  private val _config = MutableStateFlow(softApStateRepository.config.value)
   private val _results = MutableStateFlow(UpdateResults())
 
-  val status = softApRepository.status
+  val status = softApStateRepository.status
   val config = _config.asStateFlow()
   val results = _results.asStateFlow()
 
   init {
     viewModelScope.launch {
-      softApRepository.config.collect {
+      softApStateRepository.config.collect {
         if (_config.value == it) return@collect
         _config.value = it
       }
@@ -116,7 +114,7 @@ constructor(
     if (_config.value.passphrase.isEmpty()) {
       _config.value =
         _config.value.copy(
-          passphrase = softApRepository.config.value.passphrase
+          passphrase = softApStateRepository.config.value.passphrase
         )
     }
     softApControlRepository.updateSoftApConfiguration(_config.value)

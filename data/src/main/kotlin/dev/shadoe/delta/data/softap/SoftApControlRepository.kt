@@ -23,7 +23,6 @@ constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   @WifiSystemService private val wifiManager: IWifiManager,
   private val softApStateRepository: SoftApStateRepository,
-  private val softApRepository: SoftApRepository,
 ) {
   companion object {
     private const val TAG = "SoftApControlRepository"
@@ -35,7 +34,7 @@ constructor(
     }
 
   fun startSoftAp(forceRestart: Boolean = false): Boolean {
-    val enabledState = softApRepository.status.value.enabledState
+    val enabledState = softApStateRepository.status.value.enabledState
     var shouldStart = enabledState == SoftApEnabledState.WIFI_AP_STATE_DISABLED
     if (forceRestart) {
       shouldStart = enabledState == SoftApEnabledState.WIFI_AP_STATE_FAILED
@@ -62,7 +61,7 @@ constructor(
   }
 
   fun stopSoftAp(): Boolean {
-    val state = softApRepository.status.value.enabledState
+    val state = softApStateRepository.status.value.enabledState
     if (state != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
       return false
     }

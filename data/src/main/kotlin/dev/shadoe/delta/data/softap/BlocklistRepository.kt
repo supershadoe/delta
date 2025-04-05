@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.mapLatest
 class BlocklistRepository
 @Inject
 constructor(
-  private val softApControlRepository: SoftApControlRepository,
-  private val softApRepository: SoftApRepository,
   private val macAddressCacheRepository: MacAddressCacheRepository,
+  private val softApControlRepository: SoftApControlRepository,
+  private val softApStateRepository: SoftApStateRepository,
 ) {
   @OptIn(ExperimentalCoroutinesApi::class)
   val blockedClients =
-    softApRepository.config.mapLatest {
+    softApStateRepository.config.mapLatest {
       macAddressCacheRepository
         .getHostnamesFromCache(it.blockedDevices.map { it.macAddress })
         .map {
@@ -28,7 +28,7 @@ constructor(
     }
 
   fun blockDevice(device: ACLDevice) {
-    softApRepository.apply {
+    softApStateRepository.apply {
       config.value.let {
         softApControlRepository.updateSoftApConfiguration(
           it.copy(blockedDevices = it.blockedDevices + device.macAddress)
@@ -38,7 +38,7 @@ constructor(
   }
 
   fun unblockDevice(device: ACLDevice) {
-    softApRepository.apply {
+    softApStateRepository.apply {
       config.value.let {
         softApControlRepository.updateSoftApConfiguration(
           it.copy(blockedDevices = it.blockedDevices - device.macAddress)

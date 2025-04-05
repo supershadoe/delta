@@ -9,8 +9,8 @@ import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.data.softap.SoftApBackgroundJobs
 import dev.shadoe.delta.data.softap.SoftApControlRepository
-import dev.shadoe.delta.data.softap.SoftApRepository
 import dev.shadoe.delta.data.softap.SoftApStateListener
+import dev.shadoe.delta.data.softap.SoftApStateRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,10 +21,10 @@ import kotlinx.coroutines.flow.mapLatest
 class ControlViewModel
 @Inject
 constructor(
-  private val softApRepository: SoftApRepository,
-  private val softApControlRepository: SoftApControlRepository,
   private val softApBackgroundJobs: SoftApBackgroundJobs,
+  private val softApControlRepository: SoftApControlRepository,
   private val softApStateListener: SoftApStateListener,
+  private val softApStateRepository: SoftApStateRepository,
 ) : ViewModel() {
   companion object {
     private const val ACTION_QR_CODE_SCREEN =
@@ -50,51 +50,48 @@ constructor(
   fun stopHotspot() = softApControlRepository.stopSoftAp()
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val ssid
-    get() = softApRepository.config.mapLatest { it.ssid }
+  val ssid = softApStateRepository.config.mapLatest { it.ssid }
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val passphrase
-    get() = softApRepository.config.mapLatest { it.passphrase }
+  val passphrase = softApStateRepository.config.mapLatest { it.passphrase }
 
   @OptIn(ExperimentalCoroutinesApi::class)
   val shouldShowPassphrase =
-    softApRepository.config.mapLatest {
+    softApStateRepository.config.mapLatest {
       it.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN
     }
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val enabledState
-    get() = softApRepository.status.mapLatest { it.enabledState }
+  val enabledState = softApStateRepository.status.mapLatest { it.enabledState }
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val tetheredClientCount
-    get() = softApRepository.status.mapLatest { it.tetheredClients.size }
+  val tetheredClientCount =
+    softApStateRepository.status.mapLatest { it.tetheredClients.size }
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val shouldShowQrButton
-    get() =
-      combine(
-        softApRepository.status.mapLatest {
-          it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED
-        },
-        isDppActivityAvailable,
-      ) { p0, p1 ->
-        p0 && p1
-      }
+  val shouldShowQrButton =
+    combine(
+      softApStateRepository.status.mapLatest {
+        it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED
+      },
+      isDppActivityAvailable,
+    ) { p0, p1 ->
+      p0 && p1
+    }
 
   fun openQrCodeScreen(context: Context, isBigScreen: Boolean): Boolean {
     try {
       Intent(ACTION_QR_CODE_SCREEN)
         .apply {
-          val config = softApRepository.config.value
-          putExtra(QR_CODE_EXTRA_SSID, config.ssid)
-          putExtra(QR_CODE_EXTRA_SECURITY, config.securityType)
-          if (config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
-            putExtra(QR_CODE_EXTRA_PSK, config.passphrase)
+          softApStateRepository.config.value.let {
+            putExtra(QR_CODE_EXTRA_SSID, it.ssid)
+            putExtra(QR_CODE_EXTRA_SECURITY, it.securityType)
+            if (it.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+              putExtra(QR_CODE_EXTRA_PSK, it.passphrase)
+            }
+            putExtra(QR_CODE_EXTRA_HIDDEN, it.isHidden)
+            putExtra(QR_CODE_EXTRA_HOTSPOT, true)
           }
-          putExtra(QR_CODE_EXTRA_HIDDEN, config.isHidden)
-          putExtra(QR_CODE_EXTRA_HOTSPOT, true)
           if (isBigScreen) {
             addFlags(
               Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or

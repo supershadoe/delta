@@ -26,8 +26,8 @@ class SoftApBackgroundJobs
 @Inject
 constructor(
   @WifiSystemService private val wifiManager: IWifiManager,
-  private val softApStateRepository: SoftApStateRepository,
   private val softApControlRepository: SoftApControlRepository,
+  private val softApStateRepository: SoftApStateRepository,
 ) : AutoCloseable {
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
