@@ -7,6 +7,7 @@ import android.net.TetheringManager.TETHERING_WIFI
 import android.os.Build
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.data.qualifiers.TetheringSystemService
+import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import javax.inject.Inject
 
 class SoftApControlRepository
@@ -15,10 +16,6 @@ constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   private val softApRepository: SoftApRepository,
 ) {
-  companion object {
-    private const val ADB_PACKAGE_NAME = "com.android.shell"
-  }
-
   private val dummyIntResultReceiver =
     object : IIntResultListener.Stub() {
       override fun onResult(resultCode: Int) {}

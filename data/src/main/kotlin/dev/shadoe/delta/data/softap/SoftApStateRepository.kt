@@ -12,6 +12,7 @@ import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
 import dev.shadoe.delta.data.softap.internal.Extensions.toOriginalClass
 import dev.shadoe.delta.data.softap.internal.InternalState
+import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,7 +25,6 @@ class SoftApStateRepository
 constructor(@WifiSystemService private val wifiManager: IWifiManager) {
   companion object {
     private const val TAG = "SoftApStateRepository"
-    private const val ADB_PACKAGE_NAME = "com.android.shell"
   }
 
   internal val internalState =

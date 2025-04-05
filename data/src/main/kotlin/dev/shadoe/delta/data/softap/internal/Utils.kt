@@ -3,6 +3,8 @@ package dev.shadoe.delta.data.softap.internal
 import java.util.UUID
 
 internal object Utils {
+  const val ADB_PACKAGE_NAME = "com.android.shell"
+
   /*
    * Copyright (C) 2023 The Android Open Source Project
    * SPDX-License-Identifier: Apache-2.0

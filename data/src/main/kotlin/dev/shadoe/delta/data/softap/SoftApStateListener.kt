@@ -13,6 +13,7 @@ import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.callbacks.SoftApCallback
 import dev.shadoe.delta.data.softap.callbacks.TetheringEventCallback
 import dev.shadoe.delta.data.softap.internal.TetheringEventListener
+import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,10 +30,6 @@ constructor(
   private val macAddressCacheRepository: MacAddressCacheRepository,
   private val softApStateRepository: SoftApStateRepository,
 ) : AutoCloseable, TetheringEventListener {
-  companion object {
-    private const val ADB_PACKAGE_NAME = "com.android.shell"
-  }
-
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
   private val tetheringEventCallback = TetheringEventCallback(this)
