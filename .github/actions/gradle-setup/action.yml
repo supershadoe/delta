@@ -1,0 +1,21 @@
+name: 'Custom gradle setup'
+description: 'Gradle & Java setup for this project'
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - name: Setup JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 21
+    - name: Setup composite build caching
+      uses: actions/cache@v4
+      with:
+        path: gradle/build-logic/build
+        key: build-logic-${{ hashFiles('gradle/build-logic/src/**', 'gradle/build-logic/*.kts') }}
+    - name: Setup gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}

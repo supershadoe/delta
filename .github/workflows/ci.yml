@@ -11,73 +11,32 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  pre-build-job:
-    name: Pre-build job
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-      - name: Setup composite build caching
-        uses: actions/cache@v4
-        with:
-          path: gradle/build-logic/build
-          key: build-logic-${{ hashFiles('gradle/build-logic/src/**', 'gradle/build-logic/*.kts') }}
-      - name: Setup gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-      - name: Setup git
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email \
-            "41898282+github-actions[bot]@users.noreply.github.com"
-      - name: Run spotless (auto-formatter)
-        run: ./gradlew spotlessApply
+      - uses: ./.github/actions/gradle-setup
       - name: Run unit tests
         run: ./gradlew testReleaseUnitTest
-      - name: Generate diff and push to main
-        run: |
-          git fetch
-          if ! git diff "@" "@{upstream}" --exit-code; then
-            git add .
-            git stash
-            git rebase origin/HEAD
-            git stash pop
-          fi
-          if ! git diff --exit-code; then
-            git commit -am "Auto-formatted changes"
-            git push
-          fi
+  dependency-graph-submission:
+    name: Dependency graph submission
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/gradle-setup
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
+  lint-format:
+    name: 'Linting/Formatting'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/gradle-setup
+      - name: Check for formatting issues
+        run: ./gradlew spotlessCheck
   build-apk:
     name: Build app
     runs-on: ubuntu-latest
-    needs: [pre-build-job]
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-      - name: Setup composite build caching
-        uses: actions/cache@v4
-        with:
-          path: gradle/build-logic/build
-          key: build-logic-${{ hashFiles('gradle/build-logic/src/**', 'gradle/build-logic/*.kts') }}
-      - name: Setup gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+      - uses: ./.github/actions/gradle-setup
       - name: Decode signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
