@@ -26,6 +26,8 @@ jobs:
   dependency-graph-submission:
     name: Dependency graph submission
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
