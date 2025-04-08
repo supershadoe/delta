@@ -29,16 +29,16 @@ edit_version_name() {
     buildNum=$(echo $oldVersionName | cut -d+ -f2)
     newDate=$(date +%Y.%m)
     echo "Current date is $newDate" >&2
-    if [ "$1" = "pre" ]; then
+    if [ $oldDate != $newDate ]; then
+        echo "Date doesn't match current date, resetting build number..." >&2
+        buildNum=0
+    elif [ "$1" = "pre" ]; then
         if [ $buildNum -ge 0 ]; then
             echo "Pre-release call, not updating build number..." >&2
         else
             echo "Unknown build number, resetting it..." >&2
             buildNum=0
         fi
-    elif [ $oldDate != $newDate ]; then
-        echo "Date doesn't match current date, resetting build number..." >&2
-        buildNum=0
     else
         echo "Date matches the current date, incrementing build number..." >&2
         buildNum=$((buildNum + 1))
