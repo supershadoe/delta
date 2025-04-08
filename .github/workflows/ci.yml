@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Custom gradle setup
         uses: ./.github/actions/gradle-setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Run unit tests
         run: ./gradlew testReleaseUnitTest
   dependency-graph-submission:
@@ -29,6 +31,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Custom gradle setup
         uses: ./.github/actions/gradle-setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
   lint-format:
@@ -39,6 +43,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Custom gradle setup
         uses: ./.github/actions/gradle-setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Check for formatting issues
         run: ./gradlew spotlessCheck
   build-apk:
@@ -49,6 +55,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Custom gradle setup
         uses: ./.github/actions/gradle-setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Decode signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}

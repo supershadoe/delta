@@ -1,5 +1,9 @@
 name: 'Custom gradle setup'
 description: 'Gradle & Java setup for this project'
+inputs:
+  cache-encryption-key:
+    description: 'Encryption key for the configuration cache'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -16,4 +20,4 @@ runs:
     - name: Setup gradle
       uses: gradle/actions/setup-gradle@v4
       with:
-        cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+        cache-encryption-key: ${{ inputs.cache-encryption-key }}
