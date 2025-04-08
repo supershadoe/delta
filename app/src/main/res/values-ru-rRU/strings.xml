@@ -18,7 +18,7 @@
     <string name="crash_notif_channel_name">Канал сбоев</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Журнал сбоев</string>
-    <string name="crash_report_desc">В приложении произошёл сбой (</string>
+    <string name="crash_report_desc">В приложении произошёл сбой :(</string>
     <string name="crash_report_no_log">Нет информации о сбое</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Загрузка</string>
@@ -37,6 +37,8 @@
     <string name="passphrase_show">Показать пароль</string>
     <string name="passphrase_hide">Скрыть пароль</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="qr_code_button">Показать QR-код</string>
+    <string name="feature_not_supported">Функция не поддерживается на вашем устройстве.</string>
     <string name="triggered_debug_screen">Меню отладки разблокировано</string>
     <string name="no_ssid">нет названия точки доступа</string>
     <string name="connected_devices_button">Подключённые устройства (%d)</string>
@@ -128,8 +130,9 @@
     <string name="shizuku_not_running">Shizuku не запущен.</string>
     <string name="shizuku_start">Запустить Shizuku</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="shizuku_icon">Значок Shizuku</string>
     <string name="crash_report_setup_subtitle">Настройка сообщений об ошибках.</string>
-    <string name="crash_report_setup_desc">Нам нужно разрешение на показ уведомлений, чтобы сообщать вам о сбоях в приложении occur.</string>
+    <string name="crash_report_setup_desc">Нам нужно разрешение на показ уведомлений, чтобы сообщать вам о сбоях в приложении.</string>
     <string name="crash_report_setup_grant_perm">Выдать разрешение</string>
     <string name="crash_report_setup_done">Разрешение выдано ✅</string>
     <string name="setup_finish_button">Завершить настройку</string>
