@@ -15,28 +15,40 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/gradle-setup
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Custom gradle setup
+        uses: ./.github/actions/gradle-setup
       - name: Run unit tests
         run: ./gradlew testReleaseUnitTest
   dependency-graph-submission:
     name: Dependency graph submission
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/gradle-setup
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Custom gradle setup
+        uses: ./.github/actions/gradle-setup
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
   lint-format:
     name: 'Linting/Formatting'
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/gradle-setup
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Custom gradle setup
+        uses: ./.github/actions/gradle-setup
       - name: Check for formatting issues
         run: ./gradlew spotlessCheck
   build-apk:
     name: Build app
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/gradle-setup
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Custom gradle setup
+        uses: ./.github/actions/gradle-setup
       - name: Decode signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}

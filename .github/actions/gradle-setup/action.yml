@@ -3,8 +3,6 @@ description: 'Gradle & Java setup for this project'
 runs:
   using: 'composite'
   steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
     - name: Setup JDK
       uses: actions/setup-java@v4
       with:
