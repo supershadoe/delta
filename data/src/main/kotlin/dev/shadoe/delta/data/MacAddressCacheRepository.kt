@@ -3,10 +3,10 @@ package dev.shadoe.delta.data
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import dev.shadoe.delta.api.ConfigFlag
-import dev.shadoe.delta.data.database.ConfigDB
+import dev.shadoe.delta.data.database.dao.FlagsDao
+import dev.shadoe.delta.data.database.dao.HostInfoDao
 import dev.shadoe.delta.data.database.models.Flag
 import dev.shadoe.delta.data.database.models.HostInfo
-import dev.shadoe.delta.data.qualifiers.ConfigDatabase
 import dev.shadoe.delta.data.qualifiers.MacAddressCache
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,10 +22,10 @@ class MacAddressCacheRepository
 @Inject
 constructor(
   @MacAddressCache private val persistedMacAddressCache: DataStore<Preferences>,
-  @ConfigDatabase private val configDB: ConfigDB,
+  private val flagsDao: FlagsDao,
+  private val hostInfoDao: HostInfoDao,
   private val flagsRepository: FlagsRepository,
 ) {
-  private val hostInfoDao = configDB.hostInfoDao()
   private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
   private suspend fun migrateFromDatastoreToRoom() {
@@ -42,10 +42,8 @@ constructor(
     for (entry in data) {
       records.add(HostInfo(macAddress = entry.key, hostname = entry.value))
     }
-    configDB.hostInfoDao().addHostInfo(*records.toTypedArray())
-    configDB
-      .flagsDao()
-      .setFlag(Flag(flag = ConfigFlag.USES_ROOM_DB.ordinal, value = true))
+    hostInfoDao.addHostInfo(*records.toTypedArray())
+    flagsDao.setFlag(Flag(flag = ConfigFlag.USES_ROOM_DB.ordinal, value = true))
   }
 
   init {

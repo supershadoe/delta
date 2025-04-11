@@ -3,19 +3,17 @@ package dev.shadoe.delta.data
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shadoe.delta.api.ConfigFlag
-import dev.shadoe.delta.data.database.ConfigDB
+import dev.shadoe.delta.data.database.dao.FlagsDao
 import dev.shadoe.delta.data.database.models.Flag
-import dev.shadoe.delta.data.qualifiers.ConfigDatabase
 import java.io.File
 import javax.inject.Inject
 
 class FlagsRepository
 @Inject
 constructor(
-  @ConfigDatabase private val configDB: ConfigDB,
   @ApplicationContext private val applicationContext: Context,
+  private val flagsDao: FlagsDao,
 ) {
-  private val flagsDao = configDB.flagsDao()
 
   suspend fun shouldMigrateToRoom(): Boolean {
     var isRoomNotUsed =
