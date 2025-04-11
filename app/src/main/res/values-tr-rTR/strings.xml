@@ -26,7 +26,7 @@
     <string name="control_button_stop">Erişim noktasını durdur</string>
     <string name="control_button_start">Erişim noktasını başlat</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
-    <string name="failed_button">Hotspot başarısız: Başlatılamıyor</string>
+    <string name="failed_button">Hotspot başarısız oldu: Başlatılamıyor</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
     <string name="connected_devices">Bağlı cihazlar</string>
     <string name="no_client_hostname">(tanımlanamayan cihaz: isim yok)</string>
