@@ -47,6 +47,7 @@ constructor(
   val status = softApStateRepository.status
   val config = _config.asStateFlow()
   val results = _results.asStateFlow()
+  val presets = presetDao.observePresets()
 
   init {
     viewModelScope.launch {
@@ -55,16 +56,6 @@ constructor(
         _config.value = it
       }
     }
-  }
-
-  suspend fun getPresets() = presetDao.getAll()
-
-  suspend fun deletePreset(preset: Preset) = presetDao.delete(preset)
-
-  suspend fun saveConfigAsPreset(): Boolean {
-    if (results.value != UpdateResults()) return false
-    presetDao.insert(_config.value.toPreset())
-    return true
   }
 
   fun updateSsid(ssid: String) =
@@ -135,7 +126,27 @@ constructor(
       _config.value.copy(autoShutdownTimeout = autoShutdownTimeOut)
   }
 
+  fun deletePreset(preset: Preset) =
+    viewModelScope.launch { presetDao.delete(preset) }
+
+  fun saveConfigAsPreset(): Boolean {
+    val canSave = results.value == UpdateResults()
+    if (canSave) {
+      viewModelScope.launch { presetDao.insert(_config.value.toPreset()) }
+    }
+    return canSave
+  }
+
   fun applyPreset(preset: Preset) {
+    _results.update {
+      UpdateResults(
+        ssidResult =
+          preset.ssid?.let { SsidValidator.validate(it) }
+            ?: SsidValidator.Result.Success,
+        passphraseResult =
+          PassphraseValidator.validate(preset.passphrase, preset.securityType),
+      )
+    }
     _config.update {
       SoftApConfiguration(
         ssid = preset.ssid,
