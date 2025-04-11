@@ -97,6 +97,7 @@ dependencies {
   implementation(libs.hilt.android)
 
   implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.json)
 
   ksp(libs.hilt.compiler)

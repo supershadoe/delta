@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "d6ccba3d14a15e214dd1b28e935ecb6f",
+    "identityHash": "d60351f66a1198578250806143e8f8cc",
     "entities": [
       {
         "tableName": "Flag",
@@ -58,7 +58,7 @@
       },
       {
         "tableName": "Preset",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `passphrase` TEXT NOT NULL DEFAULT '', `ssid` TEXT, `securityType` INTEGER NOT NULL DEFAULT 0, `macRandomizationSetting` INTEGER NOT NULL DEFAULT 0, `isHidden` INTEGER NOT NULL DEFAULT 0, `speedType` INTEGER NOT NULL DEFAULT 1, `blockedDevices` TEXT NOT NULL DEFAULT '', `allowedClients` TEXT NOT NULL DEFAULT '', `isAutoShutdownEnabled` INTEGER NOT NULL DEFAULT 0, `autoShutdownTimeout` INTEGER NOT NULL DEFAULT -1, `maxClientLimit` INTEGER NOT NULL DEFAULT 0)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `passphrase` TEXT NOT NULL DEFAULT '', `ssid` TEXT, `securityType` INTEGER NOT NULL DEFAULT 0, `macRandomizationSetting` INTEGER NOT NULL DEFAULT 0, `isHidden` INTEGER NOT NULL DEFAULT 0, `speedType` INTEGER NOT NULL DEFAULT 1, `blockedDevices` TEXT NOT NULL DEFAULT '', `allowedClients` TEXT NOT NULL DEFAULT '', `isAutoShutdownEnabled` INTEGER NOT NULL DEFAULT 0, `autoShutdownTimeout` INTEGER NOT NULL DEFAULT -1, `maxClientLimit` INTEGER NOT NULL DEFAULT 0, `timestamp` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "id",
@@ -141,6 +141,13 @@
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "0"
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -156,7 +163,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6ccba3d14a15e214dd1b28e935ecb6f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd60351f66a1198578250806143e8f8cc')"
     ]
   }
 }

@@ -17,9 +17,27 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 private fun SoftApConfiguration.toPreset() =
   Preset(
+    ssid = ssid,
+    passphrase = passphrase,
+    securityType = securityType,
+    macRandomizationSetting = macRandomizationSetting,
+    isHidden = isHidden,
+    speedType = speedType,
+    blockedDevices = blockedDevices,
+    allowedClients = allowedClients,
+    isAutoShutdownEnabled = isAutoShutdownEnabled,
+    autoShutdownTimeout = autoShutdownTimeout,
+    maxClientLimit = maxClientLimit,
+    timestamp = Clock.System.now().toEpochMilliseconds(),
+  )
+
+private fun Preset.toSoftApConfiguration() =
+  SoftApConfiguration(
     ssid = ssid,
     passphrase = passphrase,
     securityType = securityType,
@@ -57,6 +75,9 @@ constructor(
       }
     }
   }
+
+  fun convertUnixTSToTime(timestamp: Long) =
+    Instant.fromEpochMilliseconds(timestamp).toString()
 
   fun updateSsid(ssid: String) =
     SsidValidator.validate(ssid)
@@ -147,21 +168,7 @@ constructor(
           PassphraseValidator.validate(preset.passphrase, preset.securityType),
       )
     }
-    _config.update {
-      SoftApConfiguration(
-        ssid = preset.ssid,
-        passphrase = preset.passphrase,
-        securityType = preset.securityType,
-        macRandomizationSetting = preset.macRandomizationSetting,
-        isHidden = preset.isHidden,
-        speedType = preset.speedType,
-        blockedDevices = preset.blockedDevices,
-        allowedClients = preset.allowedClients,
-        isAutoShutdownEnabled = preset.isAutoShutdownEnabled,
-        autoShutdownTimeout = preset.autoShutdownTimeout,
-        maxClientLimit = preset.maxClientLimit,
-      )
-    }
+    _config.update { preset.toSoftApConfiguration() }
   }
 
   // TODO: emit errors in UI
