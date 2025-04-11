@@ -80,7 +80,6 @@ internal fun MacRandomizationField(
               else -> R.string.mac_randomization_none
             }
           ),
-        modifier = Modifier.padding(start = 8.dp),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )

@@ -40,7 +40,6 @@ internal fun SecurityTypeField(
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
       Text(
         text = stringResource(R.string.security_proto_field_label),
-        modifier = Modifier.padding(start = 8.dp),
         style = MaterialTheme.typography.titleMedium,
       )
       LazyRow {
@@ -79,7 +78,6 @@ internal fun SecurityTypeField(
               else -> R.string.security_proto_not_supported
             }
           ),
-        modifier = Modifier.padding(start = 8.dp),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )

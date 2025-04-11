@@ -40,7 +40,6 @@ internal fun FrequencyBandField(
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
       Text(
         text = stringResource(R.string.freq_band_field_label),
-        modifier = Modifier.padding(start = 8.dp),
         style = MaterialTheme.typography.titleMedium,
       )
       LazyRow {
@@ -77,7 +76,6 @@ internal fun FrequencyBandField(
               else -> R.string.freq_band_unknown
             }
           ),
-        modifier = Modifier.padding(start = 8.dp),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )

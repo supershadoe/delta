@@ -76,7 +76,6 @@ internal fun AutoShutDownTimeOutField(
       }
       Text(
         text = stringResource(R.string.auto_shutdown_timeout_desc),
-        modifier = Modifier.padding(start = 8.dp),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
