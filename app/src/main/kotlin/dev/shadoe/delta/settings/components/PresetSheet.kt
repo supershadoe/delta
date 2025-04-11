@@ -72,12 +72,13 @@ fun PresetSheet(
                   buildAnnotatedString {
                     append(it.presetName)
                     pushStyle(
-                      style = SpanStyle(
-                        color =
-                          MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                            alpha = 0.6f
-                          )
-                      )
+                      style =
+                        SpanStyle(
+                          color =
+                            MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                              alpha = 0.6f
+                            )
+                        )
                     )
                     append(" (#${it.id})")
                   },
