@@ -62,6 +62,7 @@ import dev.shadoe.delta.settings.components.MacRandomizationField
 import dev.shadoe.delta.settings.components.MaxClientLimitField
 import dev.shadoe.delta.settings.components.PassphraseField
 import dev.shadoe.delta.settings.components.PresetField
+import dev.shadoe.delta.settings.components.PresetSaveDialog
 import dev.shadoe.delta.settings.components.PresetSheet
 import dev.shadoe.delta.settings.components.SecurityTypeField
 import dev.shadoe.delta.settings.components.SsidField
@@ -102,6 +103,7 @@ fun SettingsScreen(
   val failedToSaveText = stringResource(R.string.save_changes_failed_warning)
 
   var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
+  var shouldSavePreset by remember { mutableStateOf(false) }
   var isPresetListShown by remember { mutableStateOf(false) }
 
   @OptIn(ExperimentalMaterial3Api::class)
@@ -299,7 +301,7 @@ fun SettingsScreen(
         item {
           PresetField(
             onShowPresets = { isPresetListShown = true },
-            onSaveConfig = { vm.saveConfigAsPreset() },
+            onSaveConfig = { shouldSavePreset = true },
           )
         }
       }
@@ -336,6 +338,16 @@ fun SettingsScreen(
         }
       }
     }
+  }
+
+  if (shouldSavePreset) {
+    PresetSaveDialog(
+      onSave = {
+        vm.saveConfigAsPreset(it)
+        shouldSavePreset = false
+      },
+      onDismiss = { shouldSavePreset = false },
+    )
   }
 
   if (isPresetListShown) {

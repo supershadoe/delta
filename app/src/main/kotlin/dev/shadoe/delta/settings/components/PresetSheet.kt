@@ -22,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.data.database.models.Preset
 
@@ -66,7 +68,19 @@ fun PresetSheet(
           ) {
             Column(modifier = Modifier.fillMaxWidth(0.7f)) {
               Text(
-                text = "Preset ${it.id}",
+                text =
+                  buildAnnotatedString {
+                    append(it.presetName)
+                    pushStyle(
+                      style = SpanStyle(
+                        color =
+                          MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                            alpha = 0.6f
+                          )
+                      )
+                    )
+                    append(" (#${it.id})")
+                  },
                 style = MaterialTheme.typography.titleLarge,
               )
               Text(

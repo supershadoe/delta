@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "d60351f66a1198578250806143e8f8cc",
+    "identityHash": "3e8593153ac70fbf92b31ffa6a47bd7b",
     "entities": [
       {
         "tableName": "Flag",
@@ -58,7 +58,7 @@
       },
       {
         "tableName": "Preset",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `passphrase` TEXT NOT NULL DEFAULT '', `ssid` TEXT, `securityType` INTEGER NOT NULL DEFAULT 0, `macRandomizationSetting` INTEGER NOT NULL DEFAULT 0, `isHidden` INTEGER NOT NULL DEFAULT 0, `speedType` INTEGER NOT NULL DEFAULT 1, `blockedDevices` TEXT NOT NULL DEFAULT '', `allowedClients` TEXT NOT NULL DEFAULT '', `isAutoShutdownEnabled` INTEGER NOT NULL DEFAULT 0, `autoShutdownTimeout` INTEGER NOT NULL DEFAULT -1, `maxClientLimit` INTEGER NOT NULL DEFAULT 0, `timestamp` INTEGER NOT NULL DEFAULT 0)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `passphrase` TEXT NOT NULL DEFAULT '', `ssid` TEXT, `securityType` INTEGER NOT NULL DEFAULT 0, `macRandomizationSetting` INTEGER NOT NULL DEFAULT 0, `isHidden` INTEGER NOT NULL DEFAULT 0, `speedType` INTEGER NOT NULL DEFAULT 1, `blockedDevices` TEXT NOT NULL DEFAULT '', `allowedClients` TEXT NOT NULL DEFAULT '', `isAutoShutdownEnabled` INTEGER NOT NULL DEFAULT 0, `autoShutdownTimeout` INTEGER NOT NULL DEFAULT -1, `maxClientLimit` INTEGER NOT NULL DEFAULT 0, `presetName` TEXT NOT NULL DEFAULT '', `timestamp` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "id",
@@ -143,6 +143,13 @@
             "defaultValue": "0"
           },
           {
+            "fieldPath": "presetName",
+            "columnName": "presetName",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
             "fieldPath": "timestamp",
             "columnName": "timestamp",
             "affinity": "INTEGER",
@@ -163,7 +170,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd60351f66a1198578250806143e8f8cc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3e8593153ac70fbf92b31ffa6a47bd7b')"
     ]
   }
 }

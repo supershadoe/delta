@@ -20,37 +20,6 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
-private fun SoftApConfiguration.toPreset() =
-  Preset(
-    ssid = ssid,
-    passphrase = passphrase,
-    securityType = securityType,
-    macRandomizationSetting = macRandomizationSetting,
-    isHidden = isHidden,
-    speedType = speedType,
-    blockedDevices = blockedDevices,
-    allowedClients = allowedClients,
-    isAutoShutdownEnabled = isAutoShutdownEnabled,
-    autoShutdownTimeout = autoShutdownTimeout,
-    maxClientLimit = maxClientLimit,
-    timestamp = Clock.System.now().toEpochMilliseconds(),
-  )
-
-private fun Preset.toSoftApConfiguration() =
-  SoftApConfiguration(
-    ssid = ssid,
-    passphrase = passphrase,
-    securityType = securityType,
-    macRandomizationSetting = macRandomizationSetting,
-    isHidden = isHidden,
-    speedType = speedType,
-    blockedDevices = blockedDevices,
-    allowedClients = allowedClients,
-    isAutoShutdownEnabled = isAutoShutdownEnabled,
-    autoShutdownTimeout = autoShutdownTimeout,
-    maxClientLimit = maxClientLimit,
-  )
-
 @HiltViewModel
 class SettingsViewModel
 @Inject
@@ -150,10 +119,30 @@ constructor(
   fun deletePreset(preset: Preset) =
     viewModelScope.launch { presetDao.delete(preset) }
 
-  fun saveConfigAsPreset(): Boolean {
+  fun saveConfigAsPreset(name: String): Boolean {
     val canSave = results.value == UpdateResults()
     if (canSave) {
-      viewModelScope.launch { presetDao.insert(_config.value.toPreset()) }
+      viewModelScope.launch {
+        _config.value
+          .run {
+            Preset(
+              ssid = ssid,
+              passphrase = passphrase,
+              securityType = securityType,
+              macRandomizationSetting = macRandomizationSetting,
+              isHidden = isHidden,
+              speedType = speedType,
+              blockedDevices = blockedDevices,
+              allowedClients = allowedClients,
+              isAutoShutdownEnabled = isAutoShutdownEnabled,
+              autoShutdownTimeout = autoShutdownTimeout,
+              maxClientLimit = maxClientLimit,
+              presetName = name,
+              timestamp = Clock.System.now().toEpochMilliseconds(),
+            )
+          }
+          .let { presetDao.insert(it) }
+      }
     }
     return canSave
   }
@@ -168,7 +157,23 @@ constructor(
           PassphraseValidator.validate(preset.passphrase, preset.securityType),
       )
     }
-    _config.update { preset.toSoftApConfiguration() }
+    _config.update {
+      preset.run {
+        SoftApConfiguration(
+          ssid = ssid,
+          passphrase = passphrase,
+          securityType = securityType,
+          macRandomizationSetting = macRandomizationSetting,
+          isHidden = isHidden,
+          speedType = speedType,
+          blockedDevices = blockedDevices,
+          allowedClients = allowedClients,
+          isAutoShutdownEnabled = isAutoShutdownEnabled,
+          autoShutdownTimeout = autoShutdownTimeout,
+          maxClientLimit = maxClientLimit,
+        )
+      }
+    }
   }
 
   // TODO: emit errors in UI
