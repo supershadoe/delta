@@ -33,6 +33,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -60,6 +61,8 @@ import dev.shadoe.delta.settings.components.HiddenHotspotField
 import dev.shadoe.delta.settings.components.MacRandomizationField
 import dev.shadoe.delta.settings.components.MaxClientLimitField
 import dev.shadoe.delta.settings.components.PassphraseField
+import dev.shadoe.delta.settings.components.PresetField
+import dev.shadoe.delta.settings.components.PresetSheet
 import dev.shadoe.delta.settings.components.SecurityTypeField
 import dev.shadoe.delta.settings.components.SsidField
 import kotlinx.coroutines.launch
@@ -84,18 +87,22 @@ fun SettingsScreen(
 ) {
   val focusManager = LocalFocusManager.current
   val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
+  @OptIn(ExperimentalMaterial3Api::class)
+  val sheetState = rememberModalBottomSheetState()
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
 
   val config by vm.config.collectAsState()
   val status by vm.status.collectAsState()
   val results by vm.results.collectAsState()
+  val presets by vm.presets.collectAsState(listOf())
 
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
   val failedToSaveText = stringResource(R.string.save_changes_failed_warning)
 
   var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
+  var isPresetListShown by remember { mutableStateOf(false) }
 
   @OptIn(ExperimentalMaterial3Api::class)
   val appBarScrollBehavior =
@@ -272,14 +279,12 @@ fun SettingsScreen(
             allowedLimit = config.maxClientLimit,
           )
         }
-
         item {
           MacRandomizationField(
             macRandomizationSetting = config.macRandomizationSetting,
             onSettingChange = { vm.updateMacRandomizationSetting(it) },
           )
         }
-
         item {
           AutoShutDownTimeOutField(
             autoShutDownTimeOut =
@@ -291,8 +296,13 @@ fun SettingsScreen(
             onAutoShutdownChange = { vm.updateAutoShutdownTimeout(it) },
           )
         }
+        item {
+          PresetField(
+            onShowPresets = { isPresetListShown = true },
+            onSaveConfig = { vm.saveConfigAsPreset() },
+          )
+        }
       }
-
       item {
         Button(
           onClick = onClick@{
@@ -326,5 +336,20 @@ fun SettingsScreen(
         }
       }
     }
+  }
+
+  if (isPresetListShown) {
+    @OptIn(ExperimentalMaterial3Api::class)
+    PresetSheet(
+      sheetState = sheetState,
+      presets = presets,
+      onDismissRequest = { isPresetListShown = false },
+      timestampToStringConverter = { vm.convertUnixTSToTime(it) },
+      applyPreset = {
+        vm.applyPreset(it)
+        isPresetListShown = false
+      },
+      deletePreset = { vm.deletePreset(it) },
+    )
   }
 }
