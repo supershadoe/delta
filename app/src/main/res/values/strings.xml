@@ -115,6 +115,17 @@
     <string name="auto_shutdown_60">1 hour</string>
     <string name="auto_shutdown_default">Default</string>
     <string name="auto_shutdown_timeout_desc">Turns off hotspot after above set time if no devices are connected.</string>
+    <string name="presets_setting">Presets</string>
+    <string name="presets_field_icon">Presets icon</string>
+    <string name="presets_field_desc">Save and restore various hotspot settings for quickly switching between them.</string>
+    <string name="presets_show_button">Show presets</string>
+    <string name="presets_save_config_button">Save config</string>
+    <string name="preset_save_title">Provide preset name.</string>
+    <string name="presets_none_saved">There are no saved presets.</string>
+    <string name="preset_saved_on">Saved on (%s)</string>
+    <string name="preset_delete_button">Delete</string>
+    <string name="preset_apply_button">Apply</string>
+    <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
     <string name="passphrase_empty_warning">Enter a password.</string>
     <string name="save_changes_failed_warning">Failed to update hotspot settings.</string>

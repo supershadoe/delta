@@ -22,9 +22,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import dev.shadoe.delta.R
 import dev.shadoe.delta.data.database.models.Preset
 
 @ExperimentalMaterial3Api
@@ -47,13 +49,13 @@ fun PresetSheet(
         Modifier.padding(horizontal = 24.dp, vertical = 16.dp).fillMaxWidth(),
     ) {
       Text(
-        text = "Presets",
+        text = stringResource(R.string.presets_setting),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.headlineMedium,
       )
       if (presets.isEmpty()) {
         Box(modifier = Modifier.padding(top = 24.dp)) {
-          Text(text = "There are no saved presets.")
+          Text(text = stringResource(R.string.presets_none_saved))
         }
       }
       LazyColumn(
@@ -85,7 +87,11 @@ fun PresetSheet(
                 style = MaterialTheme.typography.titleLarge,
               )
               Text(
-                text = "Saved on " + timestampToStringConverter(it.timestamp),
+                text =
+                  stringResource(
+                    R.string.preset_saved_on,
+                    timestampToStringConverter(it.timestamp),
+                  ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
               )
@@ -94,13 +100,15 @@ fun PresetSheet(
               IconButton(onClick = { deletePreset(it) }) {
                 Icon(
                   imageVector = Icons.Rounded.Delete,
-                  contentDescription = "Delete",
+                  contentDescription =
+                    stringResource(R.string.preset_delete_button),
                 )
               }
               IconButton(onClick = { applyPreset(it) }) {
                 Icon(
                   imageVector = Icons.Rounded.SaveAlt,
-                  contentDescription = "Apply",
+                  contentDescription =
+                    stringResource(R.string.preset_apply_button),
                 )
               }
             }

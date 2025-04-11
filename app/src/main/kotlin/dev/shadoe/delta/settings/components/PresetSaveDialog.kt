@@ -9,6 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import dev.shadoe.delta.R
 
 @Composable
 fun PresetSaveDialog(onSave: (String) -> Unit, onDismiss: () -> Unit) {
@@ -16,10 +18,16 @@ fun PresetSaveDialog(onSave: (String) -> Unit, onDismiss: () -> Unit) {
   AlertDialog(
     onDismissRequest = onDismiss,
     confirmButton = {
-      TextButton(onClick = { onSave(presetName) }) { Text("Save") }
+      TextButton(onClick = { onSave(presetName) }) {
+        Text(stringResource(R.string.save_button))
+      }
     },
-    dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
-    title = { Text("Provide preset name") },
+    dismissButton = {
+      TextButton(onClick = onDismiss) {
+        Text(stringResource(R.string.cancel_button))
+      }
+    },
+    title = { Text(stringResource(R.string.preset_save_title)) },
     text = {
       TextField(value = presetName, onValueChange = { presetName = it })
     },
