@@ -6,14 +6,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.data.softap.SoftApControlRepository
 import dev.shadoe.delta.data.softap.SoftApStateRepository
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 // TODO (supershadoe): move strings to xml
-// TODO (supershadoe): add shizuku repo and check for shizuku state before any op
+// TODO (supershadoe): add shizuku repo and check for shizuku state before any
+// op
 // TODO (supershadoe): make soft ap state repo not depend on WifiManager
 
 @AndroidEntryPoint
@@ -27,15 +28,21 @@ class SoftApTile : TileService() {
     scope.launch {
       softApStateRepository.status.collect {
         qsTile?.apply {
-          state = when (it.enabledState) {
-            SoftApEnabledState.WIFI_AP_STATE_DISABLING -> Tile.STATE_UNAVAILABLE
-            SoftApEnabledState.WIFI_AP_STATE_DISABLED -> Tile.STATE_INACTIVE
-            SoftApEnabledState.WIFI_AP_STATE_ENABLING -> Tile.STATE_UNAVAILABLE
-            SoftApEnabledState.WIFI_AP_STATE_ENABLED -> Tile.STATE_ACTIVE
-            SoftApEnabledState.WIFI_AP_STATE_FAILED -> Tile.STATE_UNAVAILABLE
-            else -> Tile.STATE_INACTIVE
-          }
-          subtitle = if (it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) "${it.tetheredClients.size} devices" else "Turned off"
+          state =
+            when (it.enabledState) {
+              SoftApEnabledState.WIFI_AP_STATE_DISABLING ->
+                Tile.STATE_UNAVAILABLE
+              SoftApEnabledState.WIFI_AP_STATE_DISABLED -> Tile.STATE_INACTIVE
+              SoftApEnabledState.WIFI_AP_STATE_ENABLING ->
+                Tile.STATE_UNAVAILABLE
+              SoftApEnabledState.WIFI_AP_STATE_ENABLED -> Tile.STATE_ACTIVE
+              SoftApEnabledState.WIFI_AP_STATE_FAILED -> Tile.STATE_UNAVAILABLE
+              else -> Tile.STATE_INACTIVE
+            }
+          subtitle =
+            if (it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED)
+              "${it.tetheredClients.size} devices"
+            else "Turned off"
           updateTile()
         }
       }
