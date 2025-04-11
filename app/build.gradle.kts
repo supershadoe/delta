@@ -27,6 +27,15 @@ android {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
+  // Remove dependency blob signed with Google's public key
+  // https://android.izzysoft.de/articles/named/iod-scan-apkchecks#blobs
+  // Not sure if this causes any issues with Play Protect, but transparent
+  // reproducible builds > Google's trust in this app.
+  dependenciesInfo {
+    includeInApk = false
+    includeInBundle = false
+  }
+
   signingConfigs {
     create("default") {
       readSigningConfig(file("sign.json"))?.let { c ->
