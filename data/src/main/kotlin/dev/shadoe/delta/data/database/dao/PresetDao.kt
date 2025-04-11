@@ -10,7 +10,7 @@ import dev.shadoe.delta.data.database.models.Preset
 interface PresetDao {
   @Query("SELECT * FROM Preset") suspend fun getAll(): List<Preset>
 
-  @Insert suspend fun insertAll(vararg presets: Preset)
+  @Insert suspend fun insert(preset: Preset)
 
   @Delete suspend fun delete(preset: Preset)
 }

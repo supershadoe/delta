@@ -3,8 +3,11 @@ package dev.shadoe.delta.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
+import dev.shadoe.delta.data.database.dao.PresetDao
+import dev.shadoe.delta.data.database.models.Preset
 import dev.shadoe.delta.data.softap.SoftApControlRepository
 import dev.shadoe.delta.data.softap.SoftApStateRepository
 import dev.shadoe.delta.data.softap.validators.PassphraseValidator
@@ -15,12 +18,28 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private fun SoftApConfiguration.toPreset() =
+  Preset(
+    ssid = ssid,
+    passphrase = passphrase,
+    securityType = securityType,
+    macRandomizationSetting = macRandomizationSetting,
+    isHidden = isHidden,
+    speedType = speedType,
+    blockedDevices = blockedDevices,
+    allowedClients = allowedClients,
+    isAutoShutdownEnabled = isAutoShutdownEnabled,
+    autoShutdownTimeout = autoShutdownTimeout,
+    maxClientLimit = maxClientLimit,
+  )
+
 @HiltViewModel
 class SettingsViewModel
 @Inject
 constructor(
   private val softApControlRepository: SoftApControlRepository,
   private val softApStateRepository: SoftApStateRepository,
+  private val presetDao: PresetDao,
 ) : ViewModel() {
   private val _config = MutableStateFlow(softApStateRepository.config.value)
   private val _results = MutableStateFlow(UpdateResults())
@@ -36,6 +55,16 @@ constructor(
         _config.value = it
       }
     }
+  }
+
+  suspend fun getPresets() = presetDao.getAll()
+
+  suspend fun deletePreset(preset: Preset) = presetDao.delete(preset)
+
+  suspend fun saveConfigAsPreset(): Boolean {
+    if (results.value != UpdateResults()) return false
+    presetDao.insert(_config.value.toPreset())
+    return true
   }
 
   fun updateSsid(ssid: String) =
@@ -104,6 +133,24 @@ constructor(
   fun updateAutoShutdownTimeout(autoShutdownTimeOut: Long) {
     _config.value =
       _config.value.copy(autoShutdownTimeout = autoShutdownTimeOut)
+  }
+
+  fun applyPreset(preset: Preset) {
+    _config.update {
+      SoftApConfiguration(
+        ssid = preset.ssid,
+        passphrase = preset.passphrase,
+        securityType = preset.securityType,
+        macRandomizationSetting = preset.macRandomizationSetting,
+        isHidden = preset.isHidden,
+        speedType = preset.speedType,
+        blockedDevices = preset.blockedDevices,
+        allowedClients = preset.allowedClients,
+        isAutoShutdownEnabled = preset.isAutoShutdownEnabled,
+        autoShutdownTimeout = preset.autoShutdownTimeout,
+        maxClientLimit = preset.maxClientLimit,
+      )
+    }
   }
 
   // TODO: emit errors in UI
