@@ -16,6 +16,9 @@ object PassphraseValidator {
   }
 
   fun validate(passphrase: String, @SecurityType securityType: Int): Result {
+    if (securityType == SoftApSecurityType.SECURITY_TYPE_OPEN)
+      return Result.Success
+    if (passphrase.isEmpty()) return Result.PskTooShort
     val usesPsk =
       securityType == SoftApSecurityType.SECURITY_TYPE_WPA2_PSK ||
         securityType == SoftApSecurityType.SECURITY_TYPE_WPA3_SAE_TRANSITION
