@@ -22,8 +22,7 @@ class ControlViewModel
 constructor(
   private val softApControlRepository: SoftApControlRepository,
   val softApStateFacadeClosable: SoftApStateFacadeClosable,
-  private val softApStateRepository: SoftApStateFacade =
-    softApStateFacadeClosable.facade,
+  private val state: SoftApStateFacade = softApStateFacadeClosable.facade,
 ) : ViewModel() {
   companion object {
     private const val ACTION_QR_CODE_SCREEN =
@@ -47,28 +46,27 @@ constructor(
   fun stopHotspot() = softApControlRepository.stopSoftAp()
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val ssid = softApStateRepository.config.mapLatest { it.ssid }
+  val ssid = state.config.mapLatest { it.ssid }
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val passphrase = softApStateRepository.config.mapLatest { it.passphrase }
+  val passphrase = state.config.mapLatest { it.passphrase }
 
   @OptIn(ExperimentalCoroutinesApi::class)
   val shouldShowPassphrase =
-    softApStateRepository.config.mapLatest {
+    state.config.mapLatest {
       it.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN
     }
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val enabledState = softApStateRepository.status.mapLatest { it.enabledState }
+  val enabledState = state.status.mapLatest { it.enabledState }
 
   @OptIn(ExperimentalCoroutinesApi::class)
-  val tetheredClientCount =
-    softApStateRepository.status.mapLatest { it.tetheredClients.size }
+  val tetheredClientCount = state.status.mapLatest { it.tetheredClients.size }
 
   @OptIn(ExperimentalCoroutinesApi::class)
   val shouldShowQrButton =
     combine(
-      softApStateRepository.status.mapLatest {
+      state.status.mapLatest {
         it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED
       },
       isDppActivityAvailable,
@@ -80,7 +78,7 @@ constructor(
     try {
       Intent(ACTION_QR_CODE_SCREEN)
         .apply {
-          softApStateRepository.config.value.let {
+          state.config.value.let {
             putExtra(QR_CODE_EXTRA_SSID, it.ssid)
             putExtra(QR_CODE_EXTRA_SECURITY, it.securityType)
             if (it.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
