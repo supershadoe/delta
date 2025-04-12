@@ -15,7 +15,13 @@ import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.internal.Extensions.toOriginalClass
 import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class SoftApControlRepository
 @Inject
@@ -27,6 +33,8 @@ constructor(
   companion object {
     private const val TAG = "SoftApControlRepository"
   }
+
+  private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
   private val dummyIntResultReceiver =
     object : IIntResultListener.Stub() {
@@ -102,8 +110,20 @@ constructor(
       .also {
         if (it) {
           softApStateRepository.mConfig.update { c }
-          softApStateRepository.internalState.update {
-            it.copy(shouldRestart = true)
+          scope.launch {
+            val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
+            val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
+            val status = softApStateRepository.mStatus
+            if (status.value.enabledState == enabled) {
+              stopSoftAp()
+              while (status.value.enabledState != disabled) {
+                delay(500.milliseconds)
+              }
+              startSoftAp()
+              while (status.value.enabledState != enabled) {
+                delay(500.milliseconds)
+              }
+            }
           }
         }
       }

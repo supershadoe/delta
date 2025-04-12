@@ -5,12 +5,10 @@ import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfigurationHidden
 import android.os.Build
 import dev.rikka.tools.refine.Refine
-import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
 import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,29 +57,6 @@ constructor(
           it.toBridgeClass(state = softApStateRepository.internalState.value)
       }
 
-  private val restartOnConfigChange =
-    softApStateRepository.internalState.onEach {
-      if (!it.shouldRestart) return@onEach
-
-      val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
-      val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
-      val status = softApStateRepository.mStatus
-      if (status.value.enabledState == enabled) {
-        softApControlRepository.stopSoftAp()
-        while (status.value.enabledState != disabled) {
-          delay(500.milliseconds)
-        }
-        softApControlRepository.startSoftAp()
-        while (status.value.enabledState != enabled) {
-          delay(500.milliseconds)
-        }
-      }
-
-      softApStateRepository.internalState.update {
-        it.copy(shouldRestart = false)
-      }
-    }
-
   init {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
       wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
@@ -101,7 +76,6 @@ constructor(
       )
     }
     updateConfigOnExternalChange.launchIn(scope)
-    restartOnConfigChange.launchIn(scope)
   }
 
   override fun close() {
