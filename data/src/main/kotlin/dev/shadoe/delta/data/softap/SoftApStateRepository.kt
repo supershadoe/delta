@@ -10,10 +10,10 @@ import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.api.SoftApStatus
 import dev.shadoe.delta.data.softap.internal.InternalState
 import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
+import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
 
 @Singleton
 class SoftApStateRepository @Inject constructor() {
