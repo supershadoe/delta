@@ -7,10 +7,9 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
-import dev.shadoe.delta.data.softap.SoftApBackgroundJobs
 import dev.shadoe.delta.data.softap.SoftApControlRepository
-import dev.shadoe.delta.data.softap.SoftApStateListener
-import dev.shadoe.delta.data.softap.SoftApStateRepository
+import dev.shadoe.delta.data.softap.SoftApStateFacade
+import dev.shadoe.delta.data.softap.SoftApStateFacadeClosable
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,10 +20,10 @@ import kotlinx.coroutines.flow.mapLatest
 class ControlViewModel
 @Inject
 constructor(
-  private val softApBackgroundJobs: SoftApBackgroundJobs,
   private val softApControlRepository: SoftApControlRepository,
-  private val softApStateListener: SoftApStateListener,
-  private val softApStateRepository: SoftApStateRepository,
+  val softApStateFacadeClosable: SoftApStateFacadeClosable,
+  private val softApStateRepository: SoftApStateFacade =
+    softApStateFacadeClosable.facade,
 ) : ViewModel() {
   companion object {
     private const val ACTION_QR_CODE_SCREEN =
@@ -38,10 +37,8 @@ constructor(
 
   private var isDppActivityAvailable = MutableStateFlow(true)
 
-  override fun onCleared() {
-    runCatching { softApBackgroundJobs.close() }
-    runCatching { softApStateListener.close() }
-    super.onCleared()
+  init {
+    addCloseable(softApStateFacadeClosable)
   }
 
   fun startHotspot(forceRestart: Boolean = false) =
