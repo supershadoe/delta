@@ -1,23 +1,21 @@
 package dev.shadoe.delta.data.softap
 
-import android.net.wifi.IWifiManager
-import android.net.wifi.SoftApConfigurationHidden
-import dev.rikka.tools.refine.Refine
+import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
 import dev.shadoe.delta.api.SoftApCapabilities
+import dev.shadoe.delta.api.SoftApConfiguration
+import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.api.SoftApRandomizationSetting
+import dev.shadoe.delta.api.SoftApSecurityType
+import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.api.SoftApStatus
-import dev.shadoe.delta.data.qualifiers.WifiSystemService
-import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
 import dev.shadoe.delta.data.softap.internal.InternalState
 import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
-import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Singleton
-class SoftApStateRepository
-@Inject
-constructor(@WifiSystemService private val wifiManager: IWifiManager) {
+class SoftApStateRepository {
   internal val internalState =
     MutableStateFlow(
       InternalState(fallbackPassphrase = generateRandomPassword())
@@ -26,7 +24,7 @@ constructor(@WifiSystemService private val wifiManager: IWifiManager) {
   internal val mStatus =
     MutableStateFlow(
       SoftApStatus(
-        enabledState = wifiManager.wifiApEnabledState,
+        enabledState = SoftApEnabledState.WIFI_AP_STATE_DISABLED,
         tetheredClients = emptyList(),
         capabilities =
           SoftApCapabilities(
@@ -41,10 +39,19 @@ constructor(@WifiSystemService private val wifiManager: IWifiManager) {
 
   internal val mConfig =
     MutableStateFlow(
-      Refine.unsafeCast<SoftApConfigurationHidden>(
-          wifiManager.softApConfiguration
-        )
-        .toBridgeClass(state = internalState.value)
+      SoftApConfiguration(
+        ssid = "not configured",
+        passphrase = "none",
+        securityType = SoftApSecurityType.SECURITY_TYPE_OPEN,
+        macRandomizationSetting = SoftApRandomizationSetting.RANDOMIZATION_NONE,
+        isHidden = false,
+        speedType = SoftApSpeedType.BAND_2GHZ,
+        blockedDevices = listOf(),
+        allowedClients = listOf(),
+        isAutoShutdownEnabled = false,
+        autoShutdownTimeout = SoftApAutoShutdownTimeout.DEFAULT,
+        maxClientLimit = 0,
+      )
     )
 
   val config = mConfig.asStateFlow()
