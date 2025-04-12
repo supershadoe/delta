@@ -6,6 +6,13 @@
     <string name="blocklist">Blocklist</string>
     <string name="no_connected_devices">There are no connected devices.</string>
     <string name="open_icon">Open</string>
+    <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Hotspot</string>
+    <string name="tile_disabling">Turning off…</string>
+    <string name="tile_disabled">Off</string>
+    <string name="tile_enabling">Turning on…</string>
+    <string name="tile_enabled">%d devices</string>
+    <string name="tile_failed">Unavailable</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">No devices are blocked.</string>
     <string name="unblock_button">UNBLOCK</string>

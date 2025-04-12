@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-// TODO (supershadoe): move strings to xml
 // TODO (supershadoe): add shizuku repo and check for shizuku state before any
 // op
 // TODO (supershadoe): make soft ap state repo not depend on WifiManager
@@ -40,20 +39,22 @@ class SoftApTile : TileService() {
               else -> Tile.STATE_INACTIVE
             }
           subtitle =
-            if (it.enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED)
-              "${it.tetheredClients.size} devices"
-            else "Turned off"
+            when (it.enabledState) {
+              SoftApEnabledState.WIFI_AP_STATE_DISABLING ->
+                getString(R.string.tile_disabling)
+              SoftApEnabledState.WIFI_AP_STATE_DISABLED ->
+                getString(R.string.tile_disabled)
+              SoftApEnabledState.WIFI_AP_STATE_ENABLING ->
+                getString(R.string.tile_enabling)
+              SoftApEnabledState.WIFI_AP_STATE_ENABLED ->
+                getString(R.string.tile_enabled, it.tetheredClients.size)
+              SoftApEnabledState.WIFI_AP_STATE_FAILED ->
+                getString(R.string.tile_failed)
+              else -> getString(R.string.tile_failed)
+            }
           updateTile()
         }
       }
-    }
-  }
-
-  override fun onStartListening() {
-    super.onStartListening()
-    qsTile?.apply {
-      label = "Hotspot"
-      updateTile()
     }
   }
 
