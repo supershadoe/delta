@@ -8,8 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.data.softap.SoftApControlRepository
-import dev.shadoe.delta.data.softap.SoftApStateFacade
-import dev.shadoe.delta.data.softap.SoftApStateFacadeClosable
+import dev.shadoe.delta.data.softap.SoftApStateRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +20,7 @@ class ControlViewModel
 @Inject
 constructor(
   private val softApControlRepository: SoftApControlRepository,
-  val softApStateFacadeClosable: SoftApStateFacadeClosable,
-  private val state: SoftApStateFacade = softApStateFacadeClosable.facade,
+  private val state: SoftApStateRepository,
 ) : ViewModel() {
   companion object {
     private const val ACTION_QR_CODE_SCREEN =
@@ -35,10 +33,6 @@ constructor(
   }
 
   private var isDppActivityAvailable = MutableStateFlow(true)
-
-  init {
-    addCloseable(softApStateFacadeClosable)
-  }
 
   fun startHotspot(forceRestart: Boolean = false) =
     softApControlRepository.startSoftAp(forceRestart)

@@ -9,6 +9,7 @@ import dev.shadoe.delta.api.ShizukuStates
 import dev.shadoe.delta.crash.CrashHandlerUtils
 import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.shizuku.ShizukuRepository
+import dev.shadoe.delta.data.softap.SoftApStateFacade
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +22,7 @@ class NavViewModel
 constructor(
   @ApplicationContext private val applicationContext: Context,
   private val shizukuRepository: ShizukuRepository,
+  private val softApStateFacade: SoftApStateFacade,
   private val flagsRepository: FlagsRepository,
 ) : ViewModel() {
   private val _startScreen = MutableStateFlow<Route>(Routes.BlankScreen)
@@ -46,6 +48,11 @@ constructor(
     addCloseable(shizukuRepository.callbackSubscriber)
     viewModelScope.launch {
       shizukuRepository.shizukuState.collect {
+        if (it == ShizukuStates.CONNECTED) {
+          softApStateFacade.start()
+        } else {
+          softApStateFacade.stop()
+        }
         _startScreen.update { determineStartScreen() }
       }
     }

@@ -3,57 +3,79 @@ package dev.shadoe.delta
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import dagger.hilt.android.AndroidEntryPoint
+import dev.shadoe.delta.api.ShizukuStates
 import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.api.SoftApStatus
+import dev.shadoe.delta.data.shizuku.ShizukuRepository
 import dev.shadoe.delta.data.softap.SoftApControlRepository
-import dev.shadoe.delta.data.softap.SoftApStateRepository
+import dev.shadoe.delta.data.softap.SoftApStateFacade
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-
-// TODO (supershadoe): add shizuku repo and check for shizuku state before any
-// op
-// TODO (supershadoe): make soft ap state repo not depend on WifiManager
 
 @AndroidEntryPoint
 class SoftApTile : TileService() {
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+  private fun updateTileInfo(
+    @ShizukuStates.ShizukuStateType shizukuState: Int,
+    softApStatus: SoftApStatus,
+  ) {
+    if (shizukuState != ShizukuStates.CONNECTED) {
+      qsTile?.apply {
+        state = Tile.STATE_UNAVAILABLE
+        subtitle = getString(R.string.tile_disabled)
+        updateTile()
+      }
+      return
+    }
+    qsTile?.apply {
+      state =
+        when (softApStatus.enabledState) {
+          SoftApEnabledState.WIFI_AP_STATE_DISABLING -> Tile.STATE_UNAVAILABLE
+          SoftApEnabledState.WIFI_AP_STATE_DISABLED -> Tile.STATE_INACTIVE
+          SoftApEnabledState.WIFI_AP_STATE_ENABLING -> Tile.STATE_UNAVAILABLE
+          SoftApEnabledState.WIFI_AP_STATE_ENABLED -> Tile.STATE_ACTIVE
+          SoftApEnabledState.WIFI_AP_STATE_FAILED -> Tile.STATE_UNAVAILABLE
+          else -> Tile.STATE_INACTIVE
+        }
+      subtitle =
+        when (softApStatus.enabledState) {
+          SoftApEnabledState.WIFI_AP_STATE_DISABLING ->
+            getString(R.string.tile_disabling)
+          SoftApEnabledState.WIFI_AP_STATE_DISABLED ->
+            getString(R.string.tile_disabled)
+          SoftApEnabledState.WIFI_AP_STATE_ENABLING ->
+            getString(R.string.tile_enabling)
+          SoftApEnabledState.WIFI_AP_STATE_ENABLED ->
+            getString(R.string.tile_enabled, softApStatus.tetheredClients.size)
+          SoftApEnabledState.WIFI_AP_STATE_FAILED ->
+            getString(R.string.tile_failed)
+          else -> getString(R.string.tile_failed)
+        }
+      updateTile()
+    }
+  }
+
+  @Inject lateinit var shizukuRepository: ShizukuRepository
   @Inject lateinit var softApControlRepository: SoftApControlRepository
-  @Inject lateinit var softApStateRepository: SoftApStateRepository
+  @Inject lateinit var softApStateFacade: SoftApStateFacade
 
   override fun onCreate() {
     super.onCreate()
     scope.launch {
-      softApStateRepository.status.collect {
-        qsTile?.apply {
-          state =
-            when (it.enabledState) {
-              SoftApEnabledState.WIFI_AP_STATE_DISABLING ->
-                Tile.STATE_UNAVAILABLE
-              SoftApEnabledState.WIFI_AP_STATE_DISABLED -> Tile.STATE_INACTIVE
-              SoftApEnabledState.WIFI_AP_STATE_ENABLING ->
-                Tile.STATE_UNAVAILABLE
-              SoftApEnabledState.WIFI_AP_STATE_ENABLED -> Tile.STATE_ACTIVE
-              SoftApEnabledState.WIFI_AP_STATE_FAILED -> Tile.STATE_UNAVAILABLE
-              else -> Tile.STATE_INACTIVE
-            }
-          subtitle =
-            when (it.enabledState) {
-              SoftApEnabledState.WIFI_AP_STATE_DISABLING ->
-                getString(R.string.tile_disabling)
-              SoftApEnabledState.WIFI_AP_STATE_DISABLED ->
-                getString(R.string.tile_disabled)
-              SoftApEnabledState.WIFI_AP_STATE_ENABLING ->
-                getString(R.string.tile_enabling)
-              SoftApEnabledState.WIFI_AP_STATE_ENABLED ->
-                getString(R.string.tile_enabled, it.tetheredClients.size)
-              SoftApEnabledState.WIFI_AP_STATE_FAILED ->
-                getString(R.string.tile_failed)
-              else -> getString(R.string.tile_failed)
-            }
-          updateTile()
+      combine(shizukuRepository.shizukuState, softApStateFacade.status) {
+        shizukuState,
+        softApState ->
+        if (shizukuState == ShizukuStates.CONNECTED) {
+          softApStateFacade.start()
+        } else {
+          softApStateFacade.stop()
         }
+        updateTileInfo(shizukuState, softApState)
       }
     }
   }
