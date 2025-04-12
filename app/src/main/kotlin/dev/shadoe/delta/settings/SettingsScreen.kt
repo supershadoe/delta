@@ -65,6 +65,7 @@ import dev.shadoe.delta.settings.components.PresetField
 import dev.shadoe.delta.settings.components.PresetSaveDialog
 import dev.shadoe.delta.settings.components.PresetSheet
 import dev.shadoe.delta.settings.components.SecurityTypeField
+import dev.shadoe.delta.settings.components.SoftApTileField
 import dev.shadoe.delta.settings.components.SsidField
 import kotlinx.coroutines.launch
 
@@ -303,6 +304,9 @@ fun SettingsScreen(
             onShowPresets = { isPresetListShown = true },
             onSaveConfig = { shouldSavePreset = true },
           )
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+          item { SoftApTileField() }
         }
       }
       item {
