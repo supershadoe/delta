@@ -13,9 +13,10 @@ import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 @Singleton
-class SoftApStateRepository {
+class SoftApStateRepository @Inject constructor() {
   internal val internalState =
     MutableStateFlow(
       InternalState(fallbackPassphrase = generateRandomPassword())
