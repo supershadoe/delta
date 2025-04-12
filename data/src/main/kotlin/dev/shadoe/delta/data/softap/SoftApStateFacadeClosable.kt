@@ -1,6 +1,10 @@
 package dev.shadoe.delta.data.softap
 
-class SoftApStateFacadeClosable(val facade: SoftApStateFacade) : AutoCloseable {
+import javax.inject.Inject
+
+class SoftApStateFacadeClosable
+@Inject
+constructor(val facade: SoftApStateFacade) : AutoCloseable {
   init {
     facade.start()
   }
