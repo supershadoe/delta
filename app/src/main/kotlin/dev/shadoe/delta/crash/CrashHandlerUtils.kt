@@ -1,6 +1,8 @@
 package dev.shadoe.delta.crash
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -44,6 +46,15 @@ object CrashHandlerUtils {
         0,
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT,
+        ActivityOptions.makeBasic()
+          .apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+              setPendingIntentCreatorBackgroundActivityStartMode(
+                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+              )
+            }
+          }
+          .toBundle(),
         false,
       )
 
@@ -96,7 +107,7 @@ object CrashHandlerUtils {
         createNotificationChannel(notifChannel)
       }
 
-      notify(CRASH_NOTIF_ID, notification)
+      @SuppressLint("MissingPermission") notify(CRASH_NOTIF_ID, notification)
     }
   }
 }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -75,6 +76,7 @@ class SoftApTile : TileService() {
             p1 ->
             p0 to p1
           }
+          .distinctUntilChanged()
           .collectLatest { (shizukuState, softApState) ->
             if (shizukuState == ShizukuStates.CONNECTED) {
               softApStateFacade.start()
