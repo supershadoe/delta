@@ -12,13 +12,13 @@ import dev.shadoe.delta.data.softap.SoftApStateFacade
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SoftApTile : TileService() {
-  private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+  private var job: Job? = null
 
   private fun updateTileInfo(
     @ShizukuStates.ShizukuStateType shizukuState: Int,
@@ -64,9 +64,10 @@ class SoftApTile : TileService() {
   @Inject lateinit var softApControlRepository: SoftApControlRepository
   @Inject lateinit var softApStateFacade: SoftApStateFacade
 
-  override fun onCreate() {
-    super.onCreate()
-    scope.launch {
+  override fun onStartListening() {
+    super.onStartListening()
+    job?.cancel()
+    job = CoroutineScope(Dispatchers.Default).launch {
       combine(shizukuRepository.shizukuState, softApStateFacade.status) {
         shizukuState,
         softApState ->
@@ -78,6 +79,11 @@ class SoftApTile : TileService() {
         updateTileInfo(shizukuState, softApState)
       }
     }
+  }
+
+  override fun onStopListening() {
+    job?.cancel()
+    super.onStopListening()
   }
 
   override fun onClick() {
