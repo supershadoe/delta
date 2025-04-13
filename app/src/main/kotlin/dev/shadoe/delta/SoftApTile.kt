@@ -13,6 +13,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
@@ -67,18 +68,22 @@ class SoftApTile : TileService() {
   override fun onStartListening() {
     super.onStartListening()
     job?.cancel()
-    job = CoroutineScope(Dispatchers.Default).launch {
-      combine(shizukuRepository.shizukuState, softApStateFacade.status) {
-        shizukuState,
-        softApState ->
-        if (shizukuState == ShizukuStates.CONNECTED) {
-          softApStateFacade.start()
-        } else {
-          softApStateFacade.stop()
-        }
-        updateTileInfo(shizukuState, softApState)
+    job =
+      CoroutineScope(Dispatchers.Default).launch {
+        combine(shizukuRepository.shizukuState, softApStateFacade.status) {
+            p0,
+            p1 ->
+            p0 to p1
+          }
+          .collectLatest { (shizukuState, softApState) ->
+            if (shizukuState == ShizukuStates.CONNECTED) {
+              softApStateFacade.start()
+            } else {
+              softApStateFacade.stop()
+            }
+            updateTileInfo(shizukuState, softApState)
+          }
       }
-    }
   }
 
   override fun onStopListening() {
