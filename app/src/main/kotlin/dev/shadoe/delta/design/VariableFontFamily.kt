@@ -1,8 +1,5 @@
-package dev.shadoe.delta.design.fonts
+package dev.shadoe.delta.design
 
-import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -11,10 +8,7 @@ import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import dev.shadoe.delta.R
 
-// TODO: Potentially will backport app < SDK 30
-@SuppressLint("ObsoleteSdkInt")
 @OptIn(ExperimentalTextApi::class)
-@RequiresApi(Build.VERSION_CODES.O)
 internal val VariableFontFamily =
   FontFamily(
     Font(

@@ -1,54 +1,40 @@
 package dev.shadoe.delta.design
 
-import android.annotation.SuppressLint
-import android.os.Build
 import androidx.compose.material3.Typography
-import dev.shadoe.delta.design.fonts.StaticFontFamily
-import dev.shadoe.delta.design.fonts.VariableFontFamily
 
 object Typography {
   private val defaultTypography = Typography()
 
-  // Potentially will backport app < SDK 30
-  // Marked as to do elsewhere in [VariableFontFamily]
-  @SuppressLint("ObsoleteSdkInt")
-  private val fontFamily =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      VariableFontFamily
-    } else {
-      StaticFontFamily
-    }
-
   private val displayLarge =
-    defaultTypography.displayLarge.copy(fontFamily = fontFamily)
+    defaultTypography.displayLarge.copy(fontFamily = VariableFontFamily)
   private val displayMedium =
-    defaultTypography.displayMedium.copy(fontFamily = fontFamily)
+    defaultTypography.displayMedium.copy(fontFamily = VariableFontFamily)
   private val displaySmall =
-    defaultTypography.displaySmall.copy(fontFamily = fontFamily)
+    defaultTypography.displaySmall.copy(fontFamily = VariableFontFamily)
   private val headlineLarge =
-    defaultTypography.headlineLarge.copy(fontFamily = fontFamily)
+    defaultTypography.headlineLarge.copy(fontFamily = VariableFontFamily)
   private val headlineMedium =
-    defaultTypography.headlineMedium.copy(fontFamily = fontFamily)
+    defaultTypography.headlineMedium.copy(fontFamily = VariableFontFamily)
   private val headlineSmall =
-    defaultTypography.headlineSmall.copy(fontFamily = fontFamily)
+    defaultTypography.headlineSmall.copy(fontFamily = VariableFontFamily)
   private val titleLarge =
-    defaultTypography.titleLarge.copy(fontFamily = fontFamily)
+    defaultTypography.titleLarge.copy(fontFamily = VariableFontFamily)
   private val titleMedium =
-    defaultTypography.titleMedium.copy(fontFamily = fontFamily)
+    defaultTypography.titleMedium.copy(fontFamily = VariableFontFamily)
   private val titleSmall =
-    defaultTypography.titleSmall.copy(fontFamily = fontFamily)
+    defaultTypography.titleSmall.copy(fontFamily = VariableFontFamily)
   private val bodyLarge =
-    defaultTypography.bodyLarge.copy(fontFamily = fontFamily)
+    defaultTypography.bodyLarge.copy(fontFamily = VariableFontFamily)
   private val bodyMedium =
-    defaultTypography.bodyMedium.copy(fontFamily = fontFamily)
+    defaultTypography.bodyMedium.copy(fontFamily = VariableFontFamily)
   private val bodySmall =
-    defaultTypography.bodySmall.copy(fontFamily = fontFamily)
+    defaultTypography.bodySmall.copy(fontFamily = VariableFontFamily)
   private val labelLarge =
-    defaultTypography.labelLarge.copy(fontFamily = fontFamily)
+    defaultTypography.labelLarge.copy(fontFamily = VariableFontFamily)
   private val labelMedium =
-    defaultTypography.labelMedium.copy(fontFamily = fontFamily)
+    defaultTypography.labelMedium.copy(fontFamily = VariableFontFamily)
   private val labelSmall =
-    defaultTypography.labelSmall.copy(fontFamily = fontFamily)
+    defaultTypography.labelSmall.copy(fontFamily = VariableFontFamily)
 
   val value =
     Typography(
