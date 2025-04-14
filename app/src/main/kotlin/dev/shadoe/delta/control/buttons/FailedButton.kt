@@ -16,13 +16,13 @@ import dev.shadoe.delta.R
 import dev.shadoe.delta.common.shapes.PolygonShape
 
 @Composable
-internal fun FailedButton(forceRestart: () -> Unit) {
+internal fun FailedButton() {
   ControlButton(
     shape = PolygonShape(RoundedPolygon.circle(numVertices = 6)),
     interactionSource = remember { MutableInteractionSource() },
     isEnabled = false,
     isLoading = true,
-    onClick = forceRestart,
+    onClick = {},
   ) {
     Icon(
       imageVector = Icons.Rounded.WifiTetheringError,

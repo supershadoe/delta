@@ -35,6 +35,7 @@ class SoftApStateRepository @Inject constructor() {
             supportedFrequencyBands = emptyList(),
             supportedSecurityTypes = emptyList(),
           ),
+        isSoftApSupported = true,
       )
     )
 

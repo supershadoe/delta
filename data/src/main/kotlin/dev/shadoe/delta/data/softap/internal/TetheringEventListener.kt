@@ -18,4 +18,7 @@ internal interface TetheringEventListener {
    * This value should almost never change after start.
    */
   fun onSoftApCapabilitiesChanged(capabilities: SoftApCapabilities)
+
+  /** Callback that indicates whether the device supports Soft AP. */
+  fun onSoftApSupported(isSupported: Boolean)
 }

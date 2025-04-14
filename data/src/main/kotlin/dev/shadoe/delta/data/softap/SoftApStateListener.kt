@@ -86,4 +86,10 @@ constructor(
       it.copy(capabilities = capabilities)
     }
   }
+
+  override fun onSoftApSupported(isSupported: Boolean) {
+    softApStateRepository.mStatus.update {
+      it.copy(isSoftApSupported = isSupported)
+    }
+  }
 }

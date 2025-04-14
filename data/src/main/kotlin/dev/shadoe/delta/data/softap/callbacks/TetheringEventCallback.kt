@@ -6,7 +6,7 @@ import android.net.TetherStatesParcel
 import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
-import android.net.TetheringManager
+import android.net.TetheringManagerHidden
 import dev.shadoe.delta.api.LinkAddress
 import dev.shadoe.delta.api.TetheredClient as TetheredClientWrapper
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
@@ -21,6 +21,11 @@ internal class TetheringEventCallback(
 ) : ITetheringEventCallback.Stub() {
   override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
     parcel ?: return
+    tetheringEventListener.onSoftApSupported(
+      isSupported =
+        (parcel.supportedTypes != 0L) or
+          parcel.config.tetherableWifiRegexs.isNotEmpty()
+    )
     onTetherClientsChanged(parcel.tetheredClients)
   }
 
@@ -28,7 +33,12 @@ internal class TetheringEventCallback(
 
   override fun onUpstreamChanged(network: Network?) {}
 
-  override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {}
+  override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {
+    config ?: return
+    tetheringEventListener.onSoftApSupported(
+      config.tetherableWifiRegexs.isNotEmpty()
+    )
+  }
 
   override fun onTetherStatesChanged(states: TetherStatesParcel?) {}
 
@@ -50,17 +60,17 @@ internal class TetheringEventCallback(
     withContext(Dispatchers.Unconfined) {
       (clients ?: emptyList())
         .filterNotNull()
-        .filter { it.tetheringType == TetheringManager.TETHERING_WIFI }
-        .map {
-          val addresses = it.addresses.filterNotNull()
+        .filter { it.tetheringType == TetheringManagerHidden.TETHERING_WIFI }
+        .map { c ->
+          val addresses = c.addresses.filterNotNull()
           val address = addresses.firstOrNull()?.address
           val hostname = addresses.firstNotNullOfOrNull { it.hostname }
 
           TetheredClientWrapper(
-            macAddress = it.macAddress.toBridgeClass(),
+            macAddress = c.macAddress.toBridgeClass(),
             address = address?.address?.let { LinkAddress(it) },
             hostname = hostname,
-            tetheringType = it.tetheringType,
+            tetheringType = c.tetheringType,
           )
         }
     }

@@ -41,13 +41,11 @@ constructor(
       override fun onResult(resultCode: Int) {}
     }
 
-  fun startSoftAp(forceRestart: Boolean = false): Boolean {
-    val enabledState = softApStateRepository.status.value.enabledState
-    var shouldStart = enabledState == SoftApEnabledState.WIFI_AP_STATE_DISABLED
-    if (forceRestart) {
-      shouldStart = enabledState == SoftApEnabledState.WIFI_AP_STATE_FAILED
+  fun startSoftAp(): Boolean {
+    val state = softApStateRepository.status.value.enabledState
+    if (state != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
+      return false
     }
-    if (!shouldStart) return false
     val request =
       TetheringManagerHidden.TetheringRequest.Builder(TETHERING_WIFI).build()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

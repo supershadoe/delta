@@ -34,8 +34,7 @@ constructor(
 
   private var isDppActivityAvailable = MutableStateFlow(true)
 
-  fun startHotspot(forceRestart: Boolean = false) =
-    softApControlRepository.startSoftAp(forceRestart)
+  fun startHotspot() = softApControlRepository.startSoftAp()
 
   fun stopHotspot() = softApControlRepository.stopSoftAp()
 

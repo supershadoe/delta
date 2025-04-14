@@ -198,7 +198,7 @@ fun ControlScreen(
         ) {
           HotspotButton(
             enabledState = enabledState,
-            startHotspot = { vm.startHotspot(it) },
+            startHotspot = { vm.startHotspot() },
             stopHotspot = { vm.stopHotspot() },
           )
         }
