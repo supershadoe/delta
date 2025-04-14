@@ -12,7 +12,7 @@ plugins {
 
 android {
   namespace = "dev.shadoe.delta.data"
-  compileSdk = 35
+  compileSdk = 36
 
   defaultConfig {
     minSdk = 30
