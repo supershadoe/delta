@@ -3,9 +3,9 @@
 This app allows accessing advanced hotspot settings not exposed through the
 system settings app on devices that use Stock Android (Pixel, Moto, etc.)
 
-It has various information and features such as:
+It provides various information and features such as:
 - Usual info provided by settings app such as hotspot name, passphrase, security
-  type, frequency bands, quick connect using QR, etc.
+type, frequency bands, quick connect using QR, etc.
 - List of connected devices.
 - Modifying amount of devices that can connect.
 - Changing MAC randomization settings.
@@ -21,7 +21,7 @@ hotspot settings are hidden from Settings app and SystemUI.
 ### Installation
 
 1. Install Shizuku from [Play Store](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api)
-or other places like GitHub/IzzyOnDroid [(official site)](https://shizuku.rikka.app/download/)
+   or other places like GitHub/IzzyOnDroid [(official site)](https://shizuku.rikka.app/download/)
 2. Get Delta from either GitHub releases directly, using [Obtainium](https://github.com/ImranR98/Obtainium)
    or from [IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
    F-Droid repo.
