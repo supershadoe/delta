@@ -17,13 +17,12 @@
 package android.net;
 
 import android.annotation.SuppressLint;
-import android.net.TetheringManager.TetheringType;
+import android.net.TetheringManagerHidden.TetheringType;
 import android.net.wifi.SoftApConfiguration;
 import android.os.Parcel;
 import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import java.util.Objects;
 
 /** The mapping of tethering interface and type. */
 @SuppressLint("UnflaggedApi")
@@ -34,63 +33,54 @@ public final class TetheringInterface implements Parcelable {
 
     @SuppressLint("UnflaggedApi")
     public TetheringInterface(@TetheringType int type, @NonNull String iface) {
-        this(type, iface, null);
+        throw new RuntimeException("stub!");
     }
 
     public TetheringInterface(
             @TetheringType int type,
             @NonNull String iface,
             @Nullable SoftApConfiguration softApConfig) {
-        Objects.requireNonNull(iface);
-        mType = type;
-        mInterface = iface;
-        mSoftApConfig = softApConfig;
+        throw new RuntimeException("stub!");
     }
 
     /** Get tethering type. */
     @SuppressLint("UnflaggedApi")
     public int getType() {
-        return mType;
+        throw new RuntimeException("stub!");
     }
 
     /** Get tethering interface. */
     @NonNull @SuppressLint("UnflaggedApi")
     public String getInterface() {
-        return mInterface;
+        throw new RuntimeException("stub!");
     }
 
     /**
      * Get the SoftApConfiguration provided for this interface, if any. This will only be populated
-     * for apps with the same uid that specified the configuration, or apps with permission {@link
-     * android.Manifest.permission.NETWORK_SETTINGS}.
+     * for apps with the same uid that specified the configuration, or apps with permission
+     * android.Manifest.permission.NETWORK_SETTINGS.
      */
     @Nullable @SuppressLint("UnflaggedApi")
     public SoftApConfiguration getSoftApConfiguration() {
-        return mSoftApConfig;
+        throw new RuntimeException("stub!");
     }
 
     @Override
     @SuppressLint("UnflaggedApi")
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(mType);
-        dest.writeString(mInterface);
-        dest.writeParcelable(mSoftApConfig, flags);
+        throw new RuntimeException("stub!");
     }
 
     @Override
     @SuppressLint("UnflaggedApi")
     public int hashCode() {
-        return Objects.hash(mType, mInterface, mSoftApConfig);
+        throw new RuntimeException("stub!");
     }
 
     @Override
     @SuppressLint("UnflaggedApi")
     public boolean equals(@Nullable Object obj) {
-        if (!(obj instanceof TetheringInterface)) return false;
-        final TetheringInterface other = (TetheringInterface) obj;
-        return mType == other.mType
-                && mInterface.equals(other.mInterface)
-                && Objects.equals(mSoftApConfig, other.mSoftApConfig);
+        throw new RuntimeException("stub!");
     }
 
     @Override
@@ -105,26 +95,18 @@ public final class TetheringInterface implements Parcelable {
                 @NonNull @Override
                 @SuppressLint("UnflaggedApi")
                 public TetheringInterface createFromParcel(@NonNull Parcel in) {
-                    return new TetheringInterface(
-                            in.readInt(),
-                            in.readString(),
-                            in.readParcelable(SoftApConfiguration.class.getClassLoader()));
+                    throw new RuntimeException("stub!");
                 }
 
                 @NonNull @Override
                 @SuppressLint("UnflaggedApi")
                 public TetheringInterface[] newArray(int size) {
-                    return new TetheringInterface[size];
+                    throw new RuntimeException("stub!");
                 }
             };
 
     @NonNull @Override
     public String toString() {
-        return "TetheringInterface {mType="
-                + mType
-                + ", mInterface="
-                + mInterface
-                + ((mSoftApConfig == null) ? "" : ", mSoftApConfig=" + mSoftApConfig)
-                + "}";
+        throw new RuntimeException("stub!");
     }
 }

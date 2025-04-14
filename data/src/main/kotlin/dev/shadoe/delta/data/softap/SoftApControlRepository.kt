@@ -2,8 +2,8 @@ package dev.shadoe.delta.data.softap
 
 import android.net.IIntResultListener
 import android.net.ITetheringConnector
-import android.net.TetheringManager
-import android.net.TetheringManager.TETHERING_WIFI
+import android.net.TetheringManagerHidden
+import android.net.TetheringManagerHidden.TETHERING_WIFI
 import android.net.wifi.IWifiManager
 import android.os.Build
 import android.util.Log
@@ -49,7 +49,7 @@ constructor(
     }
     if (!shouldStart) return false
     val request =
-      TetheringManager.TetheringRequest.Builder(TETHERING_WIFI).build()
+      TetheringManagerHidden.TetheringRequest.Builder(TETHERING_WIFI).build()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
       tetheringConnector.startTethering(
         request.parcel,

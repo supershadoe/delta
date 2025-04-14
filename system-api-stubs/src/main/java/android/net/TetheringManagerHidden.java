@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import dev.rikka.tools.refine.RefineAs;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.Executor;
@@ -32,8 +33,9 @@ import java.util.concurrent.Executor;
  * <p>The primary responsibilities of this class are to provide the APIs for applications to start
  * tethering, stop tethering, query configuration and query status.
  */
+@RefineAs(TetheringManager.class)
 @SuppressLint({"NotCloseable", "UnflaggedApi"})
-public class TetheringManager {
+public class TetheringManagerHidden {
 
     /**
      * Indicates that this tethering connection will provide connectivity beyond this device (e.g.,

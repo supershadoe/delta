@@ -24,7 +24,6 @@ import android.os.Parcel;
 import android.os.RemoteException;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import dev.shadoe.delta.stubs.Utils;
 import java.util.List;
 import java.util.Map;
 
@@ -140,6 +139,6 @@ public interface ISoftApCallback extends IInterface {
      * @param info information about the AP instance
      * @param clients the disconnected clients of the AP instance
      */
-    @RequiresApi(Utils.VERSION_CODES.BAKLAVA)
+    @RequiresApi(Build.VERSION_CODES.BAKLAVA)
     void onClientsDisconnected(SoftApInfo info, List<WifiClient> clients);
 }

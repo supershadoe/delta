@@ -1,6 +1,7 @@
 package dev.shadoe.delta.data.softap.callbacks
 
-import android.net.TetheringManager.TETHERING_WIFI
+import android.net.TetheringManagerHidden
+import android.net.TetheringManagerHidden.TETHERING_WIFI
 import android.net.wifi.ISoftApCallback
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApCapability
@@ -9,6 +10,7 @@ import android.net.wifi.SoftApState
 import android.net.wifi.WifiClient
 import android.os.Build
 import androidx.annotation.RequiresApi
+import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_OPEN
 import dev.shadoe.delta.api.SoftApSecurityType.SECURITY_TYPE_WPA2_PSK
@@ -27,17 +29,15 @@ internal class SoftApCallback(
   private val wifiManager: IWifiManager,
 ) : ISoftApCallback.Stub() {
   override fun onStateChanged(state: SoftApState?) {
-    state?.let {
-      val isWifiTethering =
-        it.tetheringRequest
-          ?.parcel
-          ?.tetheringType
-          ?.let { it == TETHERING_WIFI }
-          .let { it != false }
-      if (isWifiTethering) {
-        tetheringEventListener.onEnabledStateChanged(it.state)
-      }
-    }
+    state ?: return
+    Refine.unsafeCast<TetheringManagerHidden.TetheringRequest>(
+        state.tetheringRequest
+      )
+      .parcel
+      ?.tetheringType
+      ?.let { it == TETHERING_WIFI }
+      .takeIf { it != false }
+      ?.let { tetheringEventListener.onEnabledStateChanged(state.state) }
   }
 
   @Deprecated("Removed in API 35")
