@@ -1,1 +1,1 @@
-Hotspot manager using Shizuku API
+Advanced hotspot settings for Pixel-like devices

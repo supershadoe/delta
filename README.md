@@ -1,37 +1,35 @@
 ## delta
 
-This is an in-development app to create hotspots on stock Android with
-more functionalities like a blocklist, usage limits, etc.
+This app allows accessing advanced hotspot settings not exposed through the
+system settings app on devices that use Stock Android (Pixel, Moto, etc.)
 
-This app can also trigger hotspot on devices like Samsung Tabs where tethering
-is hidden from Settings app and SystemUI for Wi-Fi only devices.
+It has various information and features such as:
+- Usual info provided by settings app such as hotspot name, passphrase, security
+  type, frequency bands, quick connect using QR, etc.
+- List of connected devices.
+- Modifying amount of devices that can connect.
+- Changing MAC randomization settings.
+- Setting auto turn-off timeout.
+- Blocklist to prevent certain devices from connecting.
+- Make hotspot's SSID hidden (device doesn't appear on WiFi scans)
+- Quick setting tile to easily turn hotspot on/off from notification shade.
 
-App was tested on a Pixel 6A with Android 15, compatibility with other devices
-is questionable at best as Android's internals change without a stable API.
+It uses Shizuku to obtain hotspot related details and to modify hotspot
+settings. It is also useful on devices like Samsung Tabs (WiFi-only) where
+hotspot settings are hidden from Settings app and SystemUI.
 
-The app is supposed to work on devices with Android >= 11 (R), feel free to file
-an issue if it doesn't work as expected.
+### Installation
 
-### How to use
-
-Get the release APK from GitHub releases and install; also get Shizuku app
-from Play Store.
+1. Install Shizuku from [Play Store](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api)
+or other places like GitHub/IzzyOnDroid [(official site)](https://shizuku.rikka.app/download/)
+2. Get Delta from either GitHub releases directly, using [Obtainium](https://github.com/ImranR98/Obtainium)
+   or from [IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
+   F-Droid repo.
 
 [<img src="https://github.com/ImranR98/Obtainium/blob/main/assets/graphics/badge_obtainium.png"
-alt="Get it on Obtainium"
-height="80">](https://github.com/ImranR98/Obtainium)
-
-### Features
-
-Check out the roadmap [here](https://github.com/users/supershadoe/projects/6/views/3)
-for better representation of the current status of the project.
-
-- [X] Trigger hotspot from in-app
-- [X] Connected devices info
-- [X] Edit hotspot settings from app
-- [X] Turn off automatically
-- [X] Blocklist
-- [ ] Timed connections/Usage limits
+alt="Get it on Obtainium" height="80">](https://github.com/ImranR98/Obtainium)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButton.png"
+alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
 
 ### Localization
 
