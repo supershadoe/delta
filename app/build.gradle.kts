@@ -15,7 +15,7 @@ plugins {
 
 android {
   namespace = "dev.shadoe.delta"
-  compileSdk = 35
+  compileSdk = 36
 
   defaultConfig {
     applicationId = "dev.shadoe.delta"
