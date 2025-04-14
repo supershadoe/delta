@@ -1,5 +1,6 @@
 package dev.shadoe.delta.control
 
+import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.QrCode2
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -82,6 +84,7 @@ fun ControlScreen(
     derivedStateOf { (appNameTaps + 1) % 5 == 0 }
   }
 
+  val isSoftApSupported by vm.isSoftApSupported.collectAsState(true)
   val ssid by vm.ssid.collectAsState("")
   val passphrase by vm.passphrase.collectAsState("")
   val enabledState by
@@ -250,5 +253,17 @@ fun ControlScreen(
         }
       }
     }
+  }
+
+  if (!isSoftApSupported) {
+    AlertDialog(
+      onDismissRequest = {},
+      confirmButton = {
+        TextButton(onClick = { (context as? Activity)?.finish() }) {
+          Text(text = stringResource(R.string.close_button))
+        }
+      },
+      text = { Text(text = stringResource(R.string.hotspot_not_supported)) },
+    )
   }
 }

@@ -46,6 +46,8 @@
     <string name="passphrase_hide">Hide passphrase</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">Debug screen unlocked</string>
+    <string name="hotspot_not_supported">Hotspot not supported by this device.</string>
+    <string name="close_button">CLOSE</string>
     <string name="qr_code_button">Show QR code</string>
     <string name="no_ssid">no ssid</string>
     <string name="connected_devices_button">Connected Devices (%d)</string>

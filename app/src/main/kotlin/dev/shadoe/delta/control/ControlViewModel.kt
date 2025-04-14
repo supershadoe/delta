@@ -39,6 +39,9 @@ constructor(
   fun stopHotspot() = softApControlRepository.stopSoftAp()
 
   @OptIn(ExperimentalCoroutinesApi::class)
+  val isSoftApSupported = state.status.mapLatest { it.isSoftApSupported }
+
+  @OptIn(ExperimentalCoroutinesApi::class)
   val ssid = state.config.mapLatest { it.ssid }
 
   @OptIn(ExperimentalCoroutinesApi::class)

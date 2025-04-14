@@ -19,13 +19,14 @@ import kotlinx.coroutines.withContext
 internal class TetheringEventCallback(
   private val tetheringEventListener: TetheringEventListener
 ) : ITetheringEventCallback.Stub() {
+  private var tetheringSupported = false
+
   override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
     parcel ?: return
-    tetheringEventListener.onSoftApSupported(
-      isSupported =
-        (parcel.supportedTypes != 0L) or
-          parcel.config.tetherableWifiRegexs.isNotEmpty()
-    )
+    tetheringSupported =
+      (parcel.supportedTypes != 0L) or
+        parcel.config.tetherableWifiRegexs.isNotEmpty()
+    tetheringEventListener.onSoftApSupported(isSupported = tetheringSupported)
     onTetherClientsChanged(parcel.tetheredClients)
   }
 
@@ -35,9 +36,9 @@ internal class TetheringEventCallback(
 
   override fun onConfigurationChanged(config: TetheringConfigurationParcel?) {
     config ?: return
-    tetheringEventListener.onSoftApSupported(
-      config.tetherableWifiRegexs.isNotEmpty()
-    )
+    tetheringSupported =
+      tetheringSupported or config.tetherableWifiRegexs.isNotEmpty()
+    tetheringEventListener.onSoftApSupported(isSupported = tetheringSupported)
   }
 
   override fun onTetherStatesChanged(states: TetherStatesParcel?) {}
