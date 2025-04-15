@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SoftApTile : TileService() {
   private var job: Job? = null
+  private var shizukuCallback: AutoCloseable? = null
 
   private fun updateTileInfo(
     @ShizukuStates.ShizukuStateType shizukuState: Int,
@@ -68,7 +69,9 @@ class SoftApTile : TileService() {
 
   override fun onStartListening() {
     super.onStartListening()
+    shizukuCallback?.close()
     job?.cancel()
+    shizukuCallback = shizukuRepository.callbackSubscriber
     job =
       CoroutineScope(Dispatchers.Default).launch {
         combine(shizukuRepository.shizukuState, softApStateFacade.status) {
@@ -89,6 +92,7 @@ class SoftApTile : TileService() {
   }
 
   override fun onStopListening() {
+    shizukuCallback?.close()
     job?.cancel()
     super.onStopListening()
   }
