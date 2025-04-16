@@ -55,6 +55,7 @@
     <string name="hotspot_not_enabled">Hotspot is not yet enabled.</string>
     <string name="hotspot_enable_action">ENABLE</string>
     <string name="edit_button">Edit</string>
+    <string name="copy_button">Copy</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <string name="debug_title">Debug screen</string>
     <string name="debug_trigger_crash">Trigger a crash</string>
