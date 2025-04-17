@@ -30,14 +30,14 @@ internal class SoftApCallback(
 ) : ISoftApCallback.Stub() {
   override fun onStateChanged(state: SoftApState?) {
     state ?: return
-    Refine.unsafeCast<TetheringManagerHidden.TetheringRequest>(
+    Refine.unsafeCast<TetheringManagerHidden.TetheringRequest?>(
         state.tetheringRequest
       )
-      .parcel
+      ?.parcel
       ?.tetheringType
       ?.let { it == TETHERING_WIFI }
-      .takeIf { it != false }
-      ?.let { tetheringEventListener.onEnabledStateChanged(state.state) }
+      .takeIf { it == true }
+      .let { tetheringEventListener.onEnabledStateChanged(state.state) }
   }
 
   @Deprecated("Removed in API 35")
