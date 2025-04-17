@@ -33,11 +33,13 @@ internal class SoftApCallback(
     Refine.unsafeCast<TetheringManagerHidden.TetheringRequest>(
         state.tetheringRequest
       )
-      .parcel
+      ?.parcel
       ?.tetheringType
       ?.let { it == TETHERING_WIFI }
-      .takeIf { it != false }
-      ?.let { tetheringEventListener.onEnabledStateChanged(state.state) }
+      .let {
+        if (it != false)
+          tetheringEventListener.onEnabledStateChanged(state.state)
+      }
   }
 
   @Deprecated("Removed in API 35")
