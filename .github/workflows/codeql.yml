@@ -1,4 +1,4 @@
-name: delta-ci-codeql
+name: CodeQL analysis
 on:
   schedule:
     - cron: '0 0 * * 1'
@@ -15,20 +15,10 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           build-mode: manual
-      - name: Setup JDK
-        uses: actions/setup-java@v4
+      - name: Custom gradle setup
+        uses: ./.github/actions/gradle-setup
         with:
-          distribution: temurin
-          java-version: 21
-      - name: Setup composite build caching
-        uses: actions/cache@v4
-        with:
-          path: gradle/build-logic/build
-          key: build-logic-${{ hashFiles('gradle/build-logic/src/**', 'gradle/build-logic/*.kts') }}
-      - name: Setup gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-encryption-key: ${{ inputs.cache-encryption-key || '' }}
       - name: Build app
         run: ./gradlew assembleDebugKeySignedRelease
       - name: Perform CodeQL Analysis

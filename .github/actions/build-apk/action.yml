@@ -1,0 +1,76 @@
+name: Build APK
+description: Builds debug and release APKs
+inputs:
+  cache-encryption-key:
+    description: 'Encryption key for the configuration cache'
+    required: false
+  sign-release:
+    description: 'Whether to configure signing for a release build'
+    required: true
+    default: 'false'
+  keystore-base64:
+    description: 'Base64 encoded keystore for signing'
+    required: false
+  sign-base64:
+    description: 'Base64 encoded signing configuration (sign.json)'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - name: Custom gradle setup
+      uses: ./.github/actions/gradle-setup
+      with:
+        cache-encryption-key: ${{ inputs.cache-encryption-key || '' }}
+    - name: Decode signing keystore
+      if: inputs.sign-release == 'true'
+      shell: bash
+      env:
+        KEYSTORE_BASE64: ${{ inputs.keystore-base64 }}
+      run: |
+        echo "Decoding keystore..."
+        if [ -z "$KEYSTORE_BASE64" ]; then
+          echo "Error: KEYSTORE_BASE64 input is missing for signed release."
+          exit 1
+        fi
+        echo $KEYSTORE_BASE64 | base64 -d > app/sign.keystore
+    - name: Deserialize signing configuration
+      if: inputs.sign-release == 'true'
+      shell: bash
+      env:
+        SIGN_BASE64: ${{ inputs.sign-base64 }}
+      run: |
+        echo "Configuring signing key..."
+        if [ -z "$SIGN_BASE64" ]; then
+          echo "Error: SIGN_BASE64 input is missing for signed release."
+          exit 1
+        fi
+        echo $SIGN_BASE64 | base64 -d > app/sign.json
+    - name: Build debug APK
+      shell: bash
+      run: ./gradlew assembleDebugKeySignedDebug
+    - name: Build debug key signed release APK
+      if: inputs.sign-release == 'false'
+      shell: bash
+      run: ./gradlew assembleDebugKeySignedRelease
+    - name: Build signed release APK
+      if: inputs.sign-release == 'true'
+      shell: bash
+      run: ./gradlew assembleDefaultKeySignedRelease
+    - name: Move APKs to root
+      shell: bash
+      run: |
+        DEBUG_APK_PATH = "app/build/outputs/apk/debugKeySigned/debug/app-debugKeySigned-debug.apk"
+        UNSIGNED_RELEASE_APK_PATH = "app/build/outputs/apk/debugKeySigned/release/app-debugKeySigned-release.apk"
+        SIGNED_RELEASE_APK_PATH = "app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk"
+        [ -e "$DEBUG_APK_PATH" ] && mv "$DEBUG_APK_PATH" "app-debug.apk"
+        [ -e "$UNSIGNED_RELEASE_APK_PATH" ] && mv "$UNSIGNED_RELEASE_APK_PATH" \
+          "app-release.apk"
+        [ -e "$SIGNED_RELEASE_APK_PATH" ] && mv "$SIGNED_RELEASE_APK_PATH" \
+          "app-release.apk"
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: app
+        path: app-*.apk
+        retention-days: 7
+        if-no-files-found: error

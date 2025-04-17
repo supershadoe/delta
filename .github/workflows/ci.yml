@@ -7,76 +7,74 @@ on:
     paths-ignore:
       - '*.md'
       - '*.txt'
+      - '.github/*'
+      - 'docs/*'
+      - 'fastlane/*'
+  pull_request:
+    types:
+      - ready_for_review
+      - review_requested
+      - synchronize
+    paths-ignore:
+      - '*.md'
+      - '*.txt'
+      - '.github/*'
+      - 'docs/*'
+      - 'fastlane/*'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  tests:
-    name: Tests
+  lint:
+    name: Lint check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Custom gradle setup
-        uses: ./.github/actions/gradle-setup
+      - name: Run lint check
+        uses: ./.github/actions/run-lint
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-read-only: github.event == 'pull_request'
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
       - name: Run unit tests
-        run: ./gradlew testReleaseUnitTest
+        uses: ./.github/actions/run-tests
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-read-only: github.event == 'pull_request'
   dependency-graph-submission:
     name: Dependency graph submission
     runs-on: ubuntu-latest
+    if: github.event != 'pull_request'
     permissions:
       contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Custom gradle setup
+      - name: Generate dependency graph
         uses: ./.github/actions/gradle-setup
         with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-      - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@v4
-  lint-format:
-    name: 'Linting/Formatting'
+          cache-encryption-key: ${{ inputs.cache-encryption-key || '' }}
+          gradle-action: dependency-submission
+  upload-strings-to-crowdin:
+    name: Upload string to crowdin
     runs-on: ubuntu-latest
+    if: github.event != 'pull_request'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Custom gradle setup
-        uses: ./.github/actions/gradle-setup
+      - name: Sync with crowdin
+        uses: crowdin/github-action@v2
         with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-      - name: Check for formatting issues
-        run: ./gradlew spotlessCheck
-  build-apk:
-    name: Build app
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Custom gradle setup
-        uses: ./.github/actions/gradle-setup
-        with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-      - name: Decode signing keystore
+          upload_sources: true
+          upload_translations: false
+          download_translations: false
+          create_pull_request: false
         env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: echo $KEYSTORE_BASE64 | base64 -d > app/sign.keystore
-      - name: Configure signing key
-        env:
-          SIGN_BASE64: ${{ secrets.SIGN_BASE64 }}
-        run: echo $SIGN_BASE64 | base64 -d > app/sign.json
-      - name: Build app
-        run: ./gradlew assembleDefaultKeySignedRelease
-      - name: Move apk to root
-        run: |
-          mv app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk \
-            app-release.apk
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app
-          path: app-release.apk
-          retention-days: 7
-          if-no-files-found: error
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PAT }}

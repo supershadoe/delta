@@ -1,9 +1,17 @@
-name: 'Custom gradle setup'
+name: Custom gradle setup
 description: 'Gradle & Java setup for this project'
 inputs:
   cache-encryption-key:
     description: 'Encryption key for the configuration cache'
     required: false
+  gradle-action:
+    description: 'Gradle action to use for this step'
+    required: false
+    default: 'setup-gradle'
+  read-only-cache:
+    description: 'Whether to use a read-only cache for this step'
+    required: false
+    default: 'false'
 runs:
   using: 'composite'
   steps:
@@ -19,5 +27,13 @@ runs:
         key: build-logic-${{ hashFiles('gradle/build-logic/src/**', 'gradle/build-logic/*.kts') }}
     - name: Setup gradle
       uses: gradle/actions/setup-gradle@v4
+      if: inputs.gradle-action == 'setup-gradle'
       with:
         cache-encryption-key: ${{ inputs.cache-encryption-key }}
+        cache-read-only: ${{ inputs.read-only-cache }}
+    - name: Generate and submit dependency graph
+      uses: gradle/actions/dependency-submission@v4
+      if: inputs.gradle-action == 'dependency-submission'
+      with:
+        cache-encryption-key: ${{ inputs.cache-encryption-key }}
+        dependency-graph-include-configurations: '.*RuntimeClasspath'

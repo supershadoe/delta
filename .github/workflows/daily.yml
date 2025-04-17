@@ -1,4 +1,4 @@
-name: delta-ci-daily
+name: Daily jobs
 on:
   schedule:
     - cron: '0 0 * * *'
@@ -36,8 +36,8 @@ jobs:
             Please create a new issue if the issue still persists.
           stale-issue-label: 'stale'
           stale-pr-label: 'stale'
-  synchronize-with-crowdin:
-    name: Sync translations
+  download-translations-from-crowdin:
+    name: Download translations from crowdin
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -48,7 +48,7 @@ jobs:
       - name: Sync with crowdin
         uses: crowdin/github-action@v2
         with:
-          upload_sources: true
+          upload_sources: false
           upload_translations: false
           download_translations: true
           skip_untranslated_strings: true
