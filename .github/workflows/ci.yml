@@ -35,7 +35,7 @@ jobs:
         uses: ./.github/actions/run-lints
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          cache-read-only: github.event == 'pull_request'
+          read-only-cache: github.event_name == 'pull_request'
   test:
     name: Testing
     runs-on: ubuntu-latest
@@ -46,11 +46,11 @@ jobs:
         uses: ./.github/actions/run-tests
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          cache-read-only: github.event == 'pull_request'
+          read-only-cache: github.event_name == 'pull_request'
   dependency-graph-submission:
     name: Dependency graph submission
     runs-on: ubuntu-latest
-    if: github.event != 'pull_request'
+    if: github.event_name != 'pull_request'
     permissions:
       contents: write
     steps:
@@ -59,12 +59,12 @@ jobs:
       - name: Generate dependency graph
         uses: ./.github/actions/gradle-setup
         with:
-          cache-encryption-key: ${{ inputs.cache-encryption-key || '' }}
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           gradle-action: dependency-submission
   upload-strings-to-crowdin:
     name: Upload string to crowdin
     runs-on: ubuntu-latest
-    if: github.event != 'pull_request'
+    if: github.event_name != 'pull_request'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

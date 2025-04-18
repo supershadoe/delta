@@ -18,7 +18,7 @@ jobs:
       - name: Custom gradle setup
         uses: ./.github/actions/gradle-setup
         with:
-          cache-encryption-key: ${{ inputs.cache-encryption-key || '' }}
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - name: Build app
         run: ./gradlew assembleDebugKeySignedRelease
       - name: Perform CodeQL Analysis
