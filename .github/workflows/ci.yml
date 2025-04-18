@@ -35,7 +35,7 @@ jobs:
         uses: ./.github/actions/run-lints
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          read-only-cache: github.event_name == 'pull_request'
+          read-only-cache: ${{ github.event_name == 'pull_request' }}
   test:
     name: Testing
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/run-tests
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          read-only-cache: github.event_name == 'pull_request'
+          read-only-cache: ${{ github.event_name == 'pull_request' }}
   dependency-graph-submission:
     name: Dependency graph submission
     runs-on: ubuntu-latest
