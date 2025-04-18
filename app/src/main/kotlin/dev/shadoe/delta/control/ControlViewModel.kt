@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
+import dev.shadoe.delta.data.softap.SoftApBlocklistRepository
 import dev.shadoe.delta.data.softap.SoftApControlRepository
 import dev.shadoe.delta.data.softap.SoftApStateRepository
 import javax.inject.Inject
@@ -21,6 +23,7 @@ class ControlViewModel
 constructor(
   private val softApControlRepository: SoftApControlRepository,
   private val state: SoftApStateRepository,
+  private val softApBlocklistRepository: SoftApBlocklistRepository,
 ) : ViewModel() {
   companion object {
     private const val ACTION_QR_CODE_SCREEN =
@@ -33,10 +36,6 @@ constructor(
   }
 
   private var isDppActivityAvailable = MutableStateFlow(true)
-
-  fun startHotspot() = softApControlRepository.startSoftAp()
-
-  fun stopHotspot() = softApControlRepository.stopSoftAp()
 
   @OptIn(ExperimentalCoroutinesApi::class)
   val isSoftApSupported = state.status.mapLatest { it.isSoftApSupported }
@@ -69,6 +68,22 @@ constructor(
     ) { p0, p1 ->
       p0 && p1
     }
+
+  @OptIn(ExperimentalCoroutinesApi::class)
+  val connectedClients = state.status.mapLatest { it.tetheredClients }
+
+  @OptIn(ExperimentalCoroutinesApi::class)
+  val blockedClients = softApBlocklistRepository.blockedClients
+
+  fun startHotspot() = softApControlRepository.startSoftAp()
+
+  fun stopHotspot() = softApControlRepository.stopSoftAp()
+
+  fun blockDevice(device: ACLDevice) =
+    softApBlocklistRepository.blockDevice(device)
+
+  fun unblockDevice(device: ACLDevice) =
+    softApBlocklistRepository.unblockDevice(device)
 
   fun openQrCodeScreen(context: Context, isBigScreen: Boolean): Boolean {
     try {

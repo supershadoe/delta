@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
@@ -84,7 +83,6 @@ private fun openSystemSettings(context: Context, isBigScreen: Boolean = false) {
 @Composable
 fun SettingsScreen(
   modifier: Modifier = Modifier,
-  onNavigateUp: (() -> Unit)?,
   vm: SettingsViewModel = viewModel(),
 ) {
   val focusManager = LocalFocusManager.current
@@ -102,6 +100,7 @@ fun SettingsScreen(
   val passphraseEmptyWarningText =
     stringResource(R.string.passphrase_empty_warning)
   val failedToSaveText = stringResource(R.string.save_changes_failed_warning)
+  val savedText = stringResource(R.string.save_changes_succeeded)
 
   var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
   var shouldSavePreset by remember { mutableStateOf(false) }
@@ -116,16 +115,6 @@ fun SettingsScreen(
       @OptIn(ExperimentalMaterial3Api::class)
       LargeTopAppBar(
         title = { Text(text = stringResource(R.string.settings)) },
-        navigationIcon = {
-          if (onNavigateUp != null) {
-            IconButton(onClick = onNavigateUp) {
-              Icon(
-                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                contentDescription = stringResource(R.string.back_button),
-              )
-            }
-          }
-        },
         actions = {
           val context = LocalContext.current
           IconButton(onClick = { openSystemSettings(context, isBigScreen) }) {
@@ -334,7 +323,13 @@ fun SettingsScreen(
                   )
                 }
               } else {
-                onNavigateUp?.invoke()
+                scope.launch {
+                  snackbarHostState.showSnackbar(
+                    message = savedText,
+                    withDismissAction = true,
+                    duration = SnackbarDuration.Short,
+                  )
+                }
               }
             }
         ) {
