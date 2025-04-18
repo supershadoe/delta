@@ -5,6 +5,7 @@ import android.net.ITetheringConnector
 import android.net.TetheringManagerHidden
 import android.net.TetheringManagerHidden.TETHERING_WIFI
 import android.net.wifi.IWifiManager
+import android.net.wifi.SoftApConfigurationHidden
 import android.os.Build
 import android.util.Log
 import dev.rikka.tools.refine.Refine
@@ -12,6 +13,7 @@ import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.data.qualifiers.TetheringSystemService
 import dev.shadoe.delta.data.qualifiers.WifiSystemService
+import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
 import dev.shadoe.delta.data.softap.internal.Extensions.toOriginalClass
 import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import javax.inject.Inject
@@ -125,4 +127,13 @@ constructor(
           }
         }
       }
+
+  fun refreshConfiguration() {
+    softApStateRepository.mConfig.update {
+      Refine.unsafeCast<SoftApConfigurationHidden>(
+          wifiManager.softApConfiguration
+        )
+        .toBridgeClass(state = softApStateRepository.internalState.value)
+    }
+  }
 }

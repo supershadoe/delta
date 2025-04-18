@@ -32,6 +32,8 @@ constructor(
 ) : AutoCloseable {
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
+  // TODO: replace this flow with lifecycle aware calls to
+  //  [SoftApControlRepository.refresh()]
   private val updateConfigOnExternalChange =
     flow {
         var prev =
