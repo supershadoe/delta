@@ -42,6 +42,8 @@ compose-nav-hilt = { group = "androidx.hilt" , name = "hilt-navigation-compose",
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
+adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite" }
+
 datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
@@ -105,6 +107,7 @@ compose = [
     "compose-nav-hilt",
     "compose-ui-tooling-preview",
     "compose-viewmodel",
+    "adaptive-navigation-suite"
 ]
 instTest = [
     "compose-ui-test-junit4",
