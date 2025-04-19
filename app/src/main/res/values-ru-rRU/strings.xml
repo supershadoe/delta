@@ -6,6 +6,13 @@
     <string name="blocklist">Список заблокированных устройств</string>
     <string name="no_connected_devices">Нет подключённых устройств.</string>
     <string name="open_icon">Открыть</string>
+    <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Точка доступа</string>
+    <string name="tile_disabling">Выключение…</string>
+    <string name="tile_disabled">Выключено</string>
+    <string name="tile_enabling">Включение…</string>
+    <string name="tile_enabled">%d устройств</string>
+    <string name="tile_failed">Недоступно</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Нет заблокированных устройств.</string>
     <string name="unblock_button">РАЗБЛОКИРОВАТЬ</string>
@@ -19,7 +26,7 @@
     <string name="crash_notif_channel_name">Канал сбоев</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Журнал сбоев</string>
-    <string name="crash_report_desc">В приложении произошёл сбой (</string>
+    <string name="crash_report_desc">В приложении произошёл сбой :(</string>
     <string name="crash_report_no_log">Нет информации о сбое</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Загрузка</string>
@@ -39,6 +46,8 @@
     <string name="passphrase_hide">Скрыть пароль</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">Меню отладки разблокировано</string>
+    <string name="hotspot_not_supported">Точка доступа не поддерживается на этом устройстве.</string>
+    <string name="close_button">ЗАКРЫТЬ</string>
     <string name="qr_code_button">Показать QR-код</string>
     <string name="no_ssid">нет названия точки доступа</string>
     <string name="connected_devices_button">Подключённые устройства (%d)</string>
@@ -108,6 +117,21 @@
     <string name="auto_shutdown_60">1 час</string>
     <string name="auto_shutdown_default">По умолчанию</string>
     <string name="auto_shutdown_timeout_desc">Выключать точку доступа через заданное время, если к ней не подключено ни одно устройство.</string>
+    <string name="presets_setting">Пресеты</string>
+    <string name="presets_field_icon">Значок пресетов</string>
+    <string name="presets_field_desc">Сохраняйте и восстанавливайте настройки различных точек доступа для быстрого переключения между ними.</string>
+    <string name="presets_show_button">Показать пресеты</string>
+    <string name="presets_save_config_button">Сохранить конфигурацию</string>
+    <string name="preset_save_title">Укажите название пресета.</string>
+    <string name="presets_none_saved">Нет сохранённых пресетов.</string>
+    <string name="preset_saved_on">Сохранено в %s</string>
+    <string name="preset_delete_button">Удалить</string>
+    <string name="preset_apply_button">Применить</string>
+    <string name="tile_field_icon">Значок переключателя</string>
+    <string name="tile_field_label">Добавить переключатель для быстрой настройки?</string>
+    <string name="tile_field_desc">Добавляет переключатель в центр управления, который помогает легко управлять точкой доступа, не запуская это приложение.</string>
+    <string name="tile_add_button">Добавить переключатель</string>
+    <string name="cancel_button">Отмена</string>
     <string name="save_button">Сохранить</string>
     <string name="passphrase_empty_warning">Введите пароль.</string>
     <string name="save_changes_failed_warning">Не удалось изменить настройки точки доступа.</string>

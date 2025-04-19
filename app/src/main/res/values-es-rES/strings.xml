@@ -1,23 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dev.shadoe.delta -->
+    <string name="app_name">Delta</string>
+    <string name="back_button">Atrás</string>
+    <string name="blocklist">Lista de bloqueados</string>
+    <string name="no_connected_devices">No hay dispositivos conectados.</string>
+    <string name="open_icon">Abrir</string>
+    <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Punto de acceso</string>
+    <string name="tile_disabling">Apagando…</string>
+    <string name="tile_disabled">Apagado</string>
+    <string name="tile_enabling">Encendiendo…</string>
+    <string name="tile_enabled">%d dispositivos</string>
+    <string name="tile_failed">No disponible</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">Ningún dispositivo bloqueado.</string>
+    <string name="unblock_button">DESBLOQUEAR</string>
+    <string name="blocklist_unblocked">Dispositivo eliminado de la lista de bloqueados.</string>
     <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">Informar</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">Cierre inesperado</string>
+    <string name="crash_notif_content">Cierre inesperado por error desconocido.</string>
+    <string name="crash_notif_channel_name"></string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_title">Registro de cierre inesperado</string>
+    <string name="crash_report_desc">Cierre inesperado :(</string>
+    <string name="crash_report_no_log">No hay información sobre el cierre inesperado</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
+    <string name="control_button_loading">Cargando</string>
+    <string name="control_button_stop">Detener hotspot</string>
+    <string name="control_button_start">Iniciar conexión</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
+    <string name="failed_button">Error del punto de acceso: No se puede iniciar</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Dispositivos conectados</string>
+    <string name="no_client_hostname">(dispositivo no identificado: sin nombre)</string>
+    <string name="ip_not_allocated">(Dirección IP no asignada)</string>
+    <string name="block_button">BLOQUEAR</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(sin contraseña)</string>
+    <string name="passphrase_hidden">(contraseña oculta)</string>
+    <string name="passphrase_show">Mostrar contraseña</string>
+    <string name="passphrase_hide">Ocultar contraseña</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="triggered_debug_screen">Opciones de depuración desbloqueadas</string>
+    <string name="hotspot_not_supported">Punto de acceso no disponible en este dispositivo.</string>
+    <string name="close_button">CERRAR</string>
+    <string name="qr_code_button">Mostrar QR</string>
+    <string name="no_ssid">sin ssid</string>
+    <string name="connected_devices_button">Dispositivos conectados (%d)</string>
+    <string name="feature_not_supported">Función no disponible en tu dispositivo.</string>
+    <string name="hotspot_not_enabled">Punto de acceso no habilitado.</string>
+    <string name="hotspot_enable_action">HABILITAR</string>
+    <string name="edit_button">Editar</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
+    <string name="debug_title">Pantalla de depuración</string>
+    <string name="debug_trigger_crash">Forzar un cierre inesperado</string>
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
+    <string name="settings">Ajustes</string>
+    <string name="error_icon">Error</string>
+    <string name="warning_icon">Advertencia</string>
+    <string name="settings_warn_samsung">Los ajustes avanzados y el apagado automático no funcionan en todos los dispositivos de Samsung. Estos ajustes pueden configurarse en los ajustes del dispositivo.</string>
+    <string name="open_system_settings">Abrir ajustes</string>
+    <string name="settings_desc">Configura los siguientes valores según tu preferencia :)</string>
+    <string name="ssid_field_icon">Nombre del icono del punto de acceso</string>
+    <string name="ssid_field_label">Nombre del punto de acceso</string>
+    <string name="ssid_too_short_warning">El nombre del punto de acceso es muy corto.</string>
+    <string name="ssid_too_long_warning">El nombre del punto de acceso es demasiado largo.</string>
+    <string name="security_proto_field_icon">Icono de tipo de seguridad</string>
+    <string name="security_proto_field_label">Tipo de seguridad</string>
+    <string name="security_proto_open">Nada</string>
+    <string name="security_proto_open_desc">Sin seguridad, cualquier persona puede conectarse sin contraseña.</string>
+    <string name="security_proto_wpa2_psk_desc">Proporciona la máxima compatibilidad con la mayoría de dispositivos.</string>
+    <string name="security_proto_wpa3_sae_transition_desc">Utiliza WPA3 pero cambia a WPA2 para dispositivos antiguos.</string>
+    <string name="auto_shutdown_20">20 minutos</string>
+    <string name="auto_shutdown_30">30 minutos</string>
+    <string name="auto_shutdown_60">1 hora</string>
+    <string name="auto_shutdown_timeout_desc">Apaga el punto de acceso después del tiempo configurado arriba si no hay dispositivos conectados.</string>
+    <string name="presets_save_config_button">Guardar configuración</string>
+    <string name="preset_saved_on">Guardado en %s</string>
+    <string name="preset_delete_button">Eliminar</string>
+    <string name="preset_apply_button">Aplicar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="save_button">Guardar</string>
+    <string name="passphrase_empty_warning">Introduce una contraseña.</string>
+    <string name="save_changes_failed_warning">Error al actualizar la configuración del punto de acceso.</string>
     <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">Configurar la aplicación</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">Icono de aplicación</string>
+    <string name="app_tagline">Ajustes de punto de acceso desbloqueados.</string>
+    <string name="setup_start_button">Iniciar configuración »</string>
+    <string name="setup_note">Requiere Shizuku o acceso root para funcionar.</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">Conectado a Shizuku, continua con la configuración!</string>
+    <string name="setup_continue_button">Continuar configuración</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">Esta aplicación utiliza APIs de sistema que generalmente no son accesibles desde el SDK de Android y por ello requiere Shizuku para obtener acceso a la API de Punto de acceso.</string>
+    <string name="shizuku_grant_access">Permitir acceso</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">Shizuku no está instalado.</string>
+    <string name="github">Github</string>
+    <string name="install_from_icon">Instalar desde</string>
+    <string name="play_store">Play Store</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku no se está ejecutando.</string>
+    <string name="shizuku_start">Iniciar Shizuku</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="setup_finish_button">Configuración finalizada</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Icono de Shizuku</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">No instalado.</string>
+    <string name="shizuku_setup_not_running">No se está ejecutando.</string>
+    <string name="shizuku_setup_not_connected">No conectado.</string>
+    <string name="shizuku_setup_connected">Conectado ✅</string>
 </resources>

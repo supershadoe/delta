@@ -6,6 +6,13 @@
     <string name="blocklist">Engel Listesi</string>
     <string name="no_connected_devices">Bağlı cihaz yok.</string>
     <string name="open_icon">Aç</string>
+    <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Erişim Noktası</string>
+    <string name="tile_disabling">Kapatılıyor…</string>
+    <string name="tile_disabled">Kapalı</string>
+    <string name="tile_enabling">Açılıyor…</string>
+    <string name="tile_enabled">%d cihaz</string>
+    <string name="tile_failed">Kullanılamıyor</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Engellenmiş cihaz yok.</string>
     <string name="unblock_button">ENGELİ KALDIR</string>
@@ -26,7 +33,7 @@
     <string name="control_button_stop">Erişim noktasını durdur</string>
     <string name="control_button_start">Erişim noktasını başlat</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
-    <string name="failed_button">Hotspot başarısız: Başlatılamıyor</string>
+    <string name="failed_button">Hotspot başarısız oldu: Başlatılamıyor</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
     <string name="connected_devices">Bağlı cihazlar</string>
     <string name="no_client_hostname">(tanımlanamayan cihaz: isim yok)</string>
@@ -39,6 +46,8 @@
     <string name="passphrase_hide">Parolayı gizle</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">Hata ayıklama ekranı açıldı</string>
+    <string name="hotspot_not_supported">Bu cihazda erişim noktası desteklenmiyor.</string>
+    <string name="close_button">KAPAT</string>
     <string name="qr_code_button">QR kodunu göster</string>
     <string name="no_ssid">ssid yok</string>
     <string name="connected_devices_button">Bağlı Cihazlar (%d)</string>
@@ -46,6 +55,7 @@
     <string name="hotspot_not_enabled">Erişim noktası henüz etkin değil.</string>
     <string name="hotspot_enable_action">ETKİNLEŞTİR</string>
     <string name="edit_button">Düzenle</string>
+    <string name="copy_button">Kopyala</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <string name="debug_title">Hata ayıklama ekranı</string>
     <string name="debug_trigger_crash">Bir çökme tetikle</string>
@@ -108,6 +118,21 @@
     <string name="auto_shutdown_60">1 saat</string>
     <string name="auto_shutdown_default">Varsayılan</string>
     <string name="auto_shutdown_timeout_desc">Bağlı cihaz yoksa yukarıdaki süre sonunda erişim noktasını kapatır.</string>
+    <string name="presets_setting">Ön Ayarlar</string>
+    <string name="presets_field_icon">Ön ayar simgesi</string>
+    <string name="presets_field_desc">Çeşitli erişim noktası ayarlarını kaydedin ve geri yükleyin, böylece aralarında hızlıca geçiş yapabilirsiniz.</string>
+    <string name="presets_show_button">Ön ayarları göster</string>
+    <string name="presets_save_config_button">Yapılandırmayı kaydet</string>
+    <string name="preset_save_title">Ön ayar adını sağlayın.</string>
+    <string name="presets_none_saved">Kaydedilmiş bir ön ayar yok.</string>
+    <string name="preset_saved_on">%s üzerine kaydedildi</string>
+    <string name="preset_delete_button">Sil</string>
+    <string name="preset_apply_button">Uygula</string>
+    <string name="tile_field_icon">Buton simgesi</string>
+    <string name="tile_field_label">Hızlı ayar butonu eklensin mi?</string>
+    <string name="tile_field_desc">Bu uygulamayı açmadan, erişim noktası yönetimini kolaylaştıran bir butonu hızlı ayarlar paneline ekler.</string>
+    <string name="tile_add_button">Buton ekle</string>
+    <string name="cancel_button">İptal</string>
     <string name="save_button">Kaydet</string>
     <string name="passphrase_empty_warning">Bir parola girin.</string>
     <string name="save_changes_failed_warning">Erişim noktası ayarları güncellenemedi.</string>
