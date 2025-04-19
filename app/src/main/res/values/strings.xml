@@ -13,6 +13,8 @@
     <string name="tile_enabling">Turning on…</string>
     <string name="tile_enabled">%d devices</string>
     <string name="tile_failed">Unavailable</string>
+    <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">Controls</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">No devices are blocked.</string>
     <string name="unblock_button">UNBLOCK</string>
@@ -35,13 +37,13 @@
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">Hotspot failed: Cannot start</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
-    <string name="connected_devices">Connected devices</string>
+    <string name="connected_devices">Connected</string>
     <string name="no_client_hostname">(unidentified device: no name)</string>
     <string name="ip_not_allocated">(IP address not yet allocated)</string>
     <string name="block_button">BLOCK</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
-    <string name="no_passphrase">(no passphrase)</string>
-    <string name="passphrase_hidden">(passphrase hidden)</string>
+    <string name="no_passphrase">(none)</string>
+    <string name="passphrase_hidden">(hidden)</string>
     <string name="passphrase_show">Show passphrase</string>
     <string name="passphrase_hide">Hide passphrase</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
@@ -143,6 +145,7 @@
     <string name="save_button">Save</string>
     <string name="passphrase_empty_warning">Enter a password.</string>
     <string name="save_changes_failed_warning">Failed to update hotspot settings.</string>
+    <string name="save_changes_succeeded">Updated hotspot settings.</string>
     <!-- dev.shadoe.delta.setup -->
     <string name="setup_title">Setup the app</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
