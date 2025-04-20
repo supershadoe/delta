@@ -73,6 +73,10 @@ constructor(
   val connectedClients = state.status.mapLatest { it.tetheredClients }
 
   @OptIn(ExperimentalCoroutinesApi::class)
+  val supportsBlocklist =
+    state.status.mapLatest { it.capabilities.clientForceDisconnectSupported }
+
+  @OptIn(ExperimentalCoroutinesApi::class)
   val blockedClients = softApBlocklistRepository.blockedClients
 
   fun startHotspot() = softApControlRepository.startSoftAp()

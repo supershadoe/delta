@@ -80,6 +80,7 @@ fun NewControlScreen(
     vm.enabledState.collectAsState(SoftApEnabledState.WIFI_AP_STATE_DISABLED)
   val tetheredClients by vm.connectedClients.collectAsState(listOf())
   val blockedClients by vm.blockedClients.collectAsState(listOf())
+  val supportsBlocklist by vm.supportsBlocklist.collectAsState(false)
 
   val stringFeatureNotSupported = stringResource(R.string.feature_not_supported)
   val blocklistUnblockedText = stringResource(R.string.blocklist_unblocked)
@@ -223,37 +224,37 @@ fun NewControlScreen(
                 ) {
                   Text(text = ip ?: stringResource(R.string.ip_not_allocated))
 
-                  if (ip != null) {
-                    Icon(
-                      imageVector = Icons.Rounded.ContentCopy,
-                      contentDescription = stringResource(R.string.copy_button),
-                      tint = MaterialTheme.colorScheme.primary,
-                      modifier =
-                        Modifier.size(
-                          with(density) {
-                            LocalTextStyle.current.fontSize.toDp()
-                          }
-                        ),
-                    )
-                  }
+                  ip ?: return@Row
+                  Icon(
+                    imageVector = Icons.Rounded.ContentCopy,
+                    contentDescription = stringResource(R.string.copy_button),
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier =
+                      Modifier.size(
+                        with(density) { LocalTextStyle.current.fontSize.toDp() }
+                      ),
+                  )
                 }
               }
             }
-            Button(
-              onClick = {
-                vm.blockDevice(
-                  device =
-                    ACLDevice(
-                      hostname = client.hostname,
-                      macAddress = client.macAddress,
-                    )
-                )
+            if (supportsBlocklist) {
+              Button(
+                onClick = {
+                  vm.blockDevice(
+                    device =
+                      ACLDevice(
+                        hostname = client.hostname,
+                        macAddress = client.macAddress,
+                      )
+                  )
+                }
+              ) {
+                Text(text = stringResource(R.string.block_button))
               }
-            ) {
-              Text(text = stringResource(R.string.block_button))
             }
           }
         }
+        takeIf { supportsBlocklist } ?: return@LazyColumn
         item {
           Row(
             modifier =
@@ -284,40 +285,39 @@ fun NewControlScreen(
             )
           }
         }
-        if (isBlocklistShown) {
-          if (blockedClients.isEmpty()) {
-            item {
-              Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center,
-              ) {
-                Text(text = stringResource(R.string.blocklist_none_blocked))
-              }
+        takeIf { isBlocklistShown } ?: return@LazyColumn
+        if (blockedClients.isEmpty()) {
+          item {
+            Box(
+              modifier = Modifier.fillMaxWidth(),
+              contentAlignment = Alignment.Center,
+            ) {
+              Text(text = stringResource(R.string.blocklist_none_blocked))
             }
           }
-          items(blockedClients) { d ->
-            Row(
-              modifier = Modifier.padding(16.dp),
-              verticalAlignment = Alignment.CenterVertically,
-            ) {
-              Column(modifier = Modifier.weight(1f)) {
-                Text(text = d.hostname ?: noClientHostnameText)
-                Text(text = d.macAddress.toString())
-              }
-              Button(
-                onClick = {
-                  vm.unblockDevice(d)
-                  scope.launch {
-                    snackbarHostState.showSnackbar(
-                      message = blocklistUnblockedText,
-                      duration = SnackbarDuration.Short,
-                      withDismissAction = true,
-                    )
-                  }
+        }
+        items(blockedClients) { d ->
+          Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+          ) {
+            Column(modifier = Modifier.weight(1f)) {
+              Text(text = d.hostname ?: noClientHostnameText)
+              Text(text = d.macAddress.toString())
+            }
+            Button(
+              onClick = {
+                vm.unblockDevice(d)
+                scope.launch {
+                  snackbarHostState.showSnackbar(
+                    message = blocklistUnblockedText,
+                    duration = SnackbarDuration.Short,
+                    withDismissAction = true,
+                  )
                 }
-              ) {
-                Text(text = stringResource(R.string.unblock_button))
               }
+            ) {
+              Text(text = stringResource(R.string.unblock_button))
             }
           }
         }
