@@ -63,7 +63,7 @@
     <string name="settings">Settings</string>
     <string name="error_icon">Error</string>
     <string name="warning_icon">Warning</string>
-    <string name="settings_warn_samsung">Advanced settings and auto shutdown do not work on all Samsung models. These settings can be configured in system settings app.</string>
+    <string name="settings_warn_samsung">In a lot of Samsung models, advanced settings and auto shutdown cannot be controlled from Delta. These settings should be configured in system settings app.</string>
     <string name="open_system_settings">Open settings app</string>
     <string name="settings_desc">Configure all the values below as per your liking :)</string>
     <string name="ssid_field_icon">Hotspot name icon</string>
