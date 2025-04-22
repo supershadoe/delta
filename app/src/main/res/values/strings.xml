@@ -18,7 +18,7 @@
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">No devices are blocked.</string>
     <string name="unblock_button">UNBLOCK</string>
-    <string name="blocklist_unblocked">Device removed from blocklist.</string>
+    <string name="blocklist_unblocked">Devices removed from blocklist.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Report</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
