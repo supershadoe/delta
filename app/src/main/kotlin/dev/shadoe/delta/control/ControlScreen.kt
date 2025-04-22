@@ -99,60 +99,62 @@ fun ControlScreen(
           vm = compVm,
         )
       }
-      item {
-        Text(
-          text = stringResource(R.string.connected_devices),
-          color = MaterialTheme.colorScheme.onSurfaceVariant,
-          style = MaterialTheme.typography.titleLarge,
-          modifier = Modifier.padding(16.dp),
-        )
-      }
-      if (tetheredClients.isEmpty()) {
+      if (enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
         item {
-          Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center,
-          ) {
-            Text(text = stringResource(R.string.no_connected_devices))
+          Text(
+            text = stringResource(R.string.connected_devices),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(16.dp),
+          )
+        }
+        if (tetheredClients.isEmpty()) {
+          item {
+            Box(
+              modifier = Modifier.fillMaxWidth(),
+              contentAlignment = Alignment.Center,
+            ) {
+              Text(text = stringResource(R.string.no_connected_devices))
+            }
           }
         }
-      }
-      items(tetheredClients) { client ->
-        Row(
-          modifier =
-            Modifier.fillMaxWidth()
-              .padding(horizontal = 16.dp, vertical = 4.dp),
-          horizontalArrangement = Arrangement.SpaceBetween,
-          verticalAlignment = Alignment.CenterVertically,
-        ) {
-          Column(modifier = Modifier.padding(horizontal = 8.dp)) {
-            Text(
-              text =
-                client.hostname ?: stringResource(R.string.no_client_hostname)
-            )
+        items(tetheredClients) { client ->
+          Row(
+            modifier =
+              Modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+          ) {
+            Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+              Text(
+                text =
+                  client.hostname ?: stringResource(R.string.no_client_hostname)
+              )
 
-            client.address?.address?.hostAddress.let { ip ->
-              Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                modifier =
-                  Modifier.clickable {
-                    ip ?: return@clickable
-                    clipboardManager.setText(AnnotatedString(ip))
-                  },
-              ) {
-                Text(text = ip ?: stringResource(R.string.ip_not_allocated))
-
-                ip ?: return@Row
-                Icon(
-                  imageVector = Icons.Rounded.ContentCopy,
-                  contentDescription = stringResource(R.string.copy_button),
-                  tint = MaterialTheme.colorScheme.primary,
+              client.address?.address?.hostAddress.let { ip ->
+                Row(
+                  horizontalArrangement = Arrangement.spacedBy(8.dp),
+                  verticalAlignment = Alignment.CenterVertically,
                   modifier =
-                    Modifier.size(
-                      with(density) { LocalTextStyle.current.fontSize.toDp() }
-                    ),
-                )
+                    Modifier.clickable {
+                      ip ?: return@clickable
+                      clipboardManager.setText(AnnotatedString(ip))
+                    },
+                ) {
+                  Text(text = ip ?: stringResource(R.string.ip_not_allocated))
+
+                  ip ?: return@Row
+                  Icon(
+                    imageVector = Icons.Rounded.ContentCopy,
+                    contentDescription = stringResource(R.string.copy_button),
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier =
+                      Modifier.size(
+                        with(density) { LocalTextStyle.current.fontSize.toDp() }
+                      ),
+                  )
+                }
               }
             }
           }
