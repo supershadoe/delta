@@ -34,6 +34,6 @@ constructor(
   fun blockDevice(device: ACLDevice) =
     softApBlocklistRepository.blockDevice(device)
 
-  fun unblockDevice(device: ACLDevice) =
-    softApBlocklistRepository.unblockDevice(device)
+  fun unblockDevices(devices: Set<ACLDevice>) =
+    softApBlocklistRepository.unblockDevices(devices)
 }

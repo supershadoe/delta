@@ -16,6 +16,7 @@ import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -60,6 +61,8 @@ fun ControlScreen(
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
   var isBlocklistShown by remember { mutableStateOf(false) }
+  var devicesToUnblock by
+    remember(isBlocklistShown) { mutableStateOf(setOf<ACLDevice>()) }
 
   val enabledState by
     vm.enabledState.collectAsState(SoftApEnabledState.WIFI_AP_STATE_DISABLED)
@@ -205,7 +208,7 @@ fun ControlScreen(
       if (blockedClients.isEmpty()) {
         item {
           Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
             contentAlignment = Alignment.Center,
           ) {
             Text(text = stringResource(R.string.blocklist_none_blocked))
@@ -214,16 +217,39 @@ fun ControlScreen(
       }
       items(blockedClients) { d ->
         Row(
-          modifier = Modifier.padding(16.dp),
+          modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
           verticalAlignment = Alignment.CenterVertically,
         ) {
+          if (devicesToUnblock.isNotEmpty()) {
+            Checkbox(
+              checked = devicesToUnblock.contains(d),
+              onCheckedChange = { isChecked ->
+                devicesToUnblock =
+                  if (isChecked) {
+                    devicesToUnblock.plus(d)
+                  } else {
+                    devicesToUnblock.minus(d)
+                  }
+              },
+            )
+          }
           Column(modifier = Modifier.weight(1f)) {
             Text(text = d.hostname ?: noClientHostnameText)
             Text(text = d.macAddress.toString())
           }
+          if (devicesToUnblock.isEmpty()) {
+            Button(onClick = { devicesToUnblock = devicesToUnblock.plus(d) }) {
+              Text(text = stringResource(R.string.unblock_button))
+            }
+          }
+        }
+      }
+      if (devicesToUnblock.isNotEmpty()) {
+        item {
           Button(
             onClick = {
-              vm.unblockDevice(d)
+              vm.unblockDevices(devicesToUnblock)
+              devicesToUnblock = setOf()
               scope.launch {
                 snackbarHostState.showSnackbar(
                   message = blocklistUnblockedText,
@@ -231,7 +257,8 @@ fun ControlScreen(
                   withDismissAction = true,
                 )
               }
-            }
+            },
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
           ) {
             Text(text = stringResource(R.string.unblock_button))
           }

@@ -16,9 +16,9 @@ constructor(
 ) {
   @OptIn(ExperimentalCoroutinesApi::class)
   val blockedClients =
-    softApStateRepository.config.mapLatest {
+    softApStateRepository.config.mapLatest { c ->
       macAddressCacheRepository
-        .getHostnamesFromCache(it.blockedDevices.map { it.macAddress })
+        .getHostnamesFromCache(c.blockedDevices.map { it.macAddress })
         .map {
           ACLDevice(
             hostname = it.hostname,
@@ -28,22 +28,25 @@ constructor(
     }
 
   fun blockDevice(device: ACLDevice) {
-    softApStateRepository.apply {
-      config.value.let {
-        softApControlRepository.updateSoftApConfiguration(
-          it.copy(blockedDevices = it.blockedDevices + device.macAddress)
-        )
-      }
+    softApStateRepository.config.value.let {
+      softApControlRepository.updateSoftApConfiguration(
+        it.copy(blockedDevices = it.blockedDevices + device.macAddress)
+      )
     }
   }
 
+  @Deprecated("Use unblockDevices instead")
   fun unblockDevice(device: ACLDevice) {
-    softApStateRepository.apply {
-      config.value.let {
-        softApControlRepository.updateSoftApConfiguration(
-          it.copy(blockedDevices = it.blockedDevices - device.macAddress)
+    unblockDevices(devices = setOf(device))
+  }
+
+  fun unblockDevices(devices: Iterable<ACLDevice>) {
+    softApStateRepository.config.value.let { c ->
+      softApControlRepository.updateSoftApConfiguration(
+        c.copy(
+          blockedDevices = c.blockedDevices.minus(devices.map { it.macAddress })
         )
-      }
+      )
     }
   }
 }
