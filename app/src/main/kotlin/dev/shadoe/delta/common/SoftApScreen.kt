@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.shadoe.delta.control.ControlScreen
 import dev.shadoe.delta.control.ControlViewModel
-import dev.shadoe.delta.control.NewControlScreen
 import dev.shadoe.delta.settings.SettingsScreen
 import dev.shadoe.delta.settings.SettingsViewModel
 
@@ -49,7 +49,7 @@ fun SoftApScreen() {
       when (currentDestination) {
         SoftApScreenDestinations.CONTROL -> {
           val vm = hiltViewModel<ControlViewModel>()
-          NewControlScreen(
+          ControlScreen(
             onNavigateToDebug = { navController.navigate(Routes.DebugScreen) },
             vm = vm,
           )
