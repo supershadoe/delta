@@ -59,7 +59,7 @@ import dev.shadoe.delta.control.components.SoftApControlButton
 import kotlinx.coroutines.launch
 
 @Composable
-fun NewControlScreen(
+fun ControlScreen(
   onNavigateToDebug: () -> Unit,
   vm: ControlViewModel = viewModel(),
 ) {
@@ -71,7 +71,9 @@ fun NewControlScreen(
   val snackbarHostState = remember { SnackbarHostState() }
   var isBlocklistShown by remember { mutableStateOf(false) }
 
-  val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+  val isBigScreen =
+    currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass ==
+      WindowWidthSizeClass.EXPANDED
   val ssid by vm.ssid.collectAsState("")
   val passphrase by vm.passphrase.collectAsState("")
   val shouldShowPassphrase by vm.shouldShowPassphrase.collectAsState(true)
@@ -85,15 +87,6 @@ fun NewControlScreen(
   val stringFeatureNotSupported = stringResource(R.string.feature_not_supported)
   val blocklistUnblockedText = stringResource(R.string.blocklist_unblocked)
   val noClientHostnameText = stringResource(R.string.no_client_hostname)
-
-  when (windowSizeClass.windowWidthSizeClass) {
-    WindowWidthSizeClass.COMPACT -> { // portrait
-    }
-    WindowWidthSizeClass.MEDIUM -> { // landscape/tab portrait
-    }
-    WindowWidthSizeClass.EXPANDED -> { // large
-    }
-  }
 
   Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
     Scaffold(
@@ -147,13 +140,7 @@ fun NewControlScreen(
               if (shouldShowQrButton) {
                 IconButton(
                   onClick = {
-                    if (
-                      !vm.openQrCodeScreen(
-                        context,
-                        windowSizeClass.windowWidthSizeClass ==
-                          WindowWidthSizeClass.EXPANDED,
-                      )
-                    ) {
+                    if (!vm.openQrCodeScreen(context, isBigScreen)) {
                       scope.launch {
                         snackbarHostState.showSnackbar(
                           message = stringFeatureNotSupported,
