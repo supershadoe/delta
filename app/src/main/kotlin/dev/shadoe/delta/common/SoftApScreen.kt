@@ -46,18 +46,27 @@ fun SoftApScreen() {
       },
       modifier = Modifier.widthIn(max = 2160.dp),
     ) {
-      when (currentDestination) {
-        SoftApScreenDestinations.CONTROL -> {
-          val vm = hiltViewModel<ControlViewModel>()
-          ControlScreen(
-            onNavigateToDebug = { navController.navigate(Routes.DebugScreen) },
-            vm = vm,
-          )
-        }
+      val modifier = Modifier.widthIn(max = 600.dp)
+      Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center,
+      ) {
+        when (currentDestination) {
+          SoftApScreenDestinations.CONTROL -> {
+            val vm = hiltViewModel<ControlViewModel>()
+            ControlScreen(
+              onNavigateToDebug = {
+                navController.navigate(Routes.DebugScreen)
+              },
+              modifier,
+              vm,
+            )
+          }
 
-        SoftApScreenDestinations.SETTINGS -> {
-          val vm = hiltViewModel<SettingsViewModel>()
-          SettingsScreen(vm = vm)
+          SoftApScreenDestinations.SETTINGS -> {
+            val vm = hiltViewModel<SettingsViewModel>()
+            SettingsScreen(modifier, vm)
+          }
         }
       }
     }
