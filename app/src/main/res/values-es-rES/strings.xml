@@ -61,7 +61,6 @@
     <string name="settings">Ajustes</string>
     <string name="error_icon">Error</string>
     <string name="warning_icon">Advertencia</string>
-    <string name="settings_warn_samsung">Los ajustes avanzados y el apagado automático no funcionan en todos los dispositivos de Samsung. Estos ajustes pueden configurarse en los ajustes del dispositivo.</string>
     <string name="open_system_settings">Abrir ajustes</string>
     <string name="settings_desc">Configura los siguientes valores según tu preferencia :)</string>
     <string name="ssid_field_icon">Nombre del icono del punto de acceso</string>

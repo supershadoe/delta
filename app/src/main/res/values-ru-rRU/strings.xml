@@ -55,6 +55,7 @@
     <string name="hotspot_not_enabled">Точка доступа выключена.</string>
     <string name="hotspot_enable_action">ВКЛЮЧИТЬ</string>
     <string name="edit_button">Изменить</string>
+    <string name="copy_button">Копировать</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <string name="debug_title">Меню отладки</string>
     <string name="debug_trigger_crash">Триггер сбоев</string>
@@ -62,7 +63,6 @@
     <string name="settings">Настройки</string>
     <string name="error_icon">Ошибка</string>
     <string name="warning_icon">Предупреждение</string>
-    <string name="settings_warn_samsung">Расширенные настройки и автоматические выключение точки доступа работают не на всех моделях Samsung. Для изменения этих параметров вы можете использовать встроенное приложение настроек.</string>
     <string name="open_system_settings">Открыть приложение настроек</string>
     <string name="settings_desc">Настройте все значения ниже по своему вкусу )</string>
     <string name="ssid_field_icon">Значок названия точки доступа</string>
