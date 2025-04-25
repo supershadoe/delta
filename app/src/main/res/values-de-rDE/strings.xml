@@ -4,9 +4,15 @@
     <string name="app_name">Delta</string>
     <string name="back_button">Gehe zurück</string>
     <string name="blocklist">Sperrliste</string>
-    <string name="no_connected_devices">Es sind keine Geräte angeschlossen.</string>
+    <string name="no_connected_devices">Es sind keine Geräte verbunden.</string>
     <string name="open_icon">Öffnen</string>
     <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Hotspot</string>
+    <string name="tile_disabling">Wird deaktiviert…</string>
+    <string name="tile_disabled">Aus</string>
+    <string name="tile_enabling">Wird aktiviert…</string>
+    <string name="tile_enabled">%d Geräte</string>
+    <string name="tile_failed">Nicht verfügbar</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Es sind keine Geräte blockiert.</string>
     <string name="unblock_button">ENTSPERREN</string>
@@ -40,6 +46,8 @@
     <string name="passphrase_hide">Passphrase ausblenden</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">Debug-Bildschirm entsperrt</string>
+    <string name="hotspot_not_supported">Dieses Gerät unterstützt keinen Hotspot.</string>
+    <string name="close_button">SCHLIESSEN</string>
     <string name="qr_code_button">QR-Code anzeigen</string>
     <string name="no_ssid">keine SSID</string>
     <string name="connected_devices_button">Verbundene Geräte (%d)</string>
@@ -47,6 +55,7 @@
     <string name="hotspot_not_enabled">Hotspot ist noch nicht aktiviert.</string>
     <string name="hotspot_enable_action">AKTIVIEREN</string>
     <string name="edit_button">Bearbeiten</string>
+    <string name="copy_button">Kopieren</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <string name="debug_title">Debug Bildschirm</string>
     <string name="debug_trigger_crash">Einen Absturz auslösen</string>
@@ -54,7 +63,7 @@
     <string name="settings">Einstellungen</string>
     <string name="error_icon">Fehler</string>
     <string name="warning_icon">Warnung</string>
-    <string name="settings_warn_samsung">Erweiterte Einstellungen und automatisches Herunterfahren funktionieren nicht bei allen Samsung-Modellen. Diese Einstellungen können in der App Systemeinstellungen konfiguriert werden.</string>
+    <string name="settings_warn_samsung">Bei vielen Samsung-Modellen können erweiterte Einstellungen und die automatische Deaktivierung nicht über Delta gesteuert werden. Diese Einstellungen müssen in den Systemeinstellungen konfiguriert werden.</string>
     <string name="open_system_settings">Einstellungen öffnen</string>
     <string name="settings_desc">Konfiguriere alle Werte unten nach deinem Geschmack :)</string>
     <string name="ssid_field_icon">Symbol für den Hotspot Namen</string>
@@ -66,15 +75,15 @@
     <string name="security_proto_open">Kein</string>
     <string name="security_proto_open_desc">Keine Sicherheit, jeder kann sich ohne Passphrase verbinden.</string>
     <string name="security_proto_wpa2_psk_desc">Bietet maximale Kompatibilität mit den meisten Geräten.</string>
-    <string name="security_proto_wpa3_sae_transition_desc">Verwendet WPA3, fällt aber für ältere Geräte auf WPA2 herunter.</string>
+    <string name="security_proto_wpa3_sae_transition_desc">Verwendet WPA3, fällt aber für ältere Geräte auf WPA2 zurück.</string>
     <string name="security_proto_wpa3_sae_desc">Neuestes Sicherheitsprotokoll, das im Allgemeinen von Geräten unterstützt wird, die nach 2020 veröffentlicht wurden.</string>
     <string name="security_proto_not_supported">Nicht unterstützt</string>
     <string name="passphrase_field_icon">Passphrase Symbol</string>
     <string name="passphrase_field_label">Passphrase</string>
     <string name="passphrase_too_short_warning">Passphrase ist zu kurz.</string>
     <string name="passphrase_too_long_warning">Passphrase ist zu lang.</string>
-    <string name="auto_shutdown_field_icon">Symbol für automatisches Herunterfahren</string>
-    <string name="auto_shutdown_field_title">automatisches Herunterfahren</string>
+    <string name="auto_shutdown_field_icon">Symbol für automatisches Ausschalten</string>
+    <string name="auto_shutdown_field_title">Automatisch ausschalten</string>
     <string name="auto_shutdown_field_desc">Schaltet den Hotspot aus, wenn für einige Zeit keine Geräte verbunden sind.</string>
     <string name="freq_band_field_icon">Symbol für Frequenzband</string>
     <string name="freq_band_field_label">Geschwindigkeitstyp</string>
@@ -84,13 +93,13 @@
     <string name="freq_band_60_GHz_desc">Kein beliebtes Frequenzband, sehr kurze Reichweite.</string>
     <string name="freq_band_unknown">Unbekannt</string>
     <string name="advanced_settings_label">Erweiterte Einstellungen</string>
-    <string name="collapse_icon">Einstürzen</string>
+    <string name="collapse_icon">Einklappen</string>
     <string name="expand_icon">Erweitern</string>
     <string name="hidden_network_field_icon">Verstecktes Netzwerksymbol</string>
     <string name="hidden_network_field_label">Verstecktes Netzwerk</string>
     <string name="hidden_network_field_desc">"Hotspot kann von anderen Geräten nur erkannt werden, wenn es manuell hinzugefügt wird."</string>
-    <string name="max_client_limit_field_icon">Symbol für maximales Client-Limit</string>
-    <string name="max_client_limit_field_label">Maximale Clientgrenze</string>
+    <string name="max_client_limit_field_icon">Symbol für maximales Verbindungslimit</string>
+    <string name="max_client_limit_field_label">Maximales Verbindungslimit</string>
     <string name="max_client_limit_field_count">%d Verbindungen</string>
     <string name="mac_randomization_field_icon">MAC-Zufallsgenerator-Symbol</string>
     <string name="mac_randomization_field_label">MAC- Zufallsauswahl</string>
@@ -109,6 +118,21 @@
     <string name="auto_shutdown_60">1 Stunde</string>
     <string name="auto_shutdown_default">Standard</string>
     <string name="auto_shutdown_timeout_desc">Schaltet den Hotspot nach der oben eingestellten Zeit aus, wenn keine Geräte angeschlossen sind.</string>
+    <string name="presets_setting">Voreinstellungen</string>
+    <string name="presets_field_icon">Voreinstellungs-Icon</string>
+    <string name="presets_field_desc">Speichern und Wiederherstellen verschiedener Hotspot-Einstellungen, um schnell zwischen ihnen zu wechseln.</string>
+    <string name="presets_show_button">Voreinstellungen anzeigen</string>
+    <string name="presets_save_config_button">Konfiguration speichern</string>
+    <string name="preset_save_title">Gebe einen voreingestellten Namen an.</string>
+    <string name="presets_none_saved">Es sind keine Voreinstellungen gespeichert.</string>
+    <string name="preset_saved_on">Gespeichert am %s</string>
+    <string name="preset_delete_button">Löschen</string>
+    <string name="preset_apply_button">Anwenden</string>
+    <string name="tile_field_icon">Kachel-Symbol</string>
+    <string name="tile_field_label">Schnelleinstellungs-Kachel hinzufügen?</string>
+    <string name="tile_field_desc">Fügt den Schnelleinstellungen eine Kachel hinzu, die dabei hilft, Hotspots einfach zu verwalten, ohne diese App starten zu müssen.</string>
+    <string name="tile_add_button">Kachel hinzufügen</string>
+    <string name="cancel_button">Abbrechen</string>
     <string name="save_button">Speichern</string>
     <string name="passphrase_empty_warning">Ein Passwort eingeben.</string>
     <string name="save_changes_failed_warning">Fehler beim Aktualisieren der Hotspot-Einstellungen.</string>
@@ -135,7 +159,7 @@
     <string name="shizuku_start">Shizuku starten</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
     <string name="crash_report_setup_subtitle">Richte Crash Reporter ein.</string>
-    <string name="crash_report_setup_desc">Wir benötigen eine Benachrichtigungsberechtigung, um Absturzprotokolle anzuzeigen, wenn Abstürze auftreten.</string>
+    <string name="crash_report_setup_desc">Wir benötigen die Benachrichtigungs-Berechtigung, um Absturzprotokolle anzuzeigen, wenn Abstürze auftreten.</string>
     <string name="crash_report_setup_grant_perm">Erlaubnis erteilen</string>
     <string name="crash_report_setup_done">Erlaubnis erteilt ✅</string>
     <string name="setup_finish_button">Setup beenden</string>
