@@ -8,6 +8,10 @@
     <string name="open_icon">開く</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">テザリング</string>
+    <string name="tile_disabling">オフにしています…</string>
+    <string name="tile_disabled">オフ</string>
+    <string name="tile_enabling">オンにしています…</string>
+    <string name="tile_enabled">%d台のデバイス</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">ブロックされているデバイスはありません。</string>
     <string name="unblock_button">ブロック解除</string>
@@ -41,11 +45,11 @@
     <string name="passphrase_hide">パスワードを隠す</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
     <string name="triggered_debug_screen">デバッグ画面を作動しました</string>
-    <string name="hotspot_not_supported">お使いのデバイスではテザリング機能がサポートされていません。</string>
+    <string name="hotspot_not_supported">このデバイスではテザリングはサポートされていません。</string>
     <string name="qr_code_button">QRコードを表示</string>
     <string name="no_ssid">無名</string>
     <string name="connected_devices_button">繋がってるデバイス (%d)</string>
-    <string name="feature_not_supported">お使いのデバイスでは、この機能はサポートされていません。</string>
+    <string name="feature_not_supported">このデバイスではこの機能はサポートされていません。</string>
     <string name="hotspot_not_enabled">アクセスポイントはまだOFF状態でいます。</string>
     <string name="hotspot_enable_action">ON</string>
     <string name="edit_button">設定</string>
@@ -56,30 +60,41 @@
     <string name="settings">設定</string>
     <string name="error_icon">エラー</string>
     <string name="warning_icon">注目</string>
-    <string name="settings_warn_samsung">詳細設定と自動シャットダウンは、すべてのSamsung モデルで機能するわけではありません。これらの設定はシステム設定で変更できます。</string>
+    <string name="settings_warn_samsung">ほとんどのSamsungモデルでは、アプリ内から詳細設定や自動シャットダウンを変更できません。システム設定からの変更は可能です。</string>
     <string name="ssid_field_label">アクセス ポイント名</string>
-    <string name="ssid_too_short_warning">アクセス ポイント名が短すぎます。</string>
-    <string name="ssid_too_long_warning">アクセス ポイント名が長すぎます。</string>
+    <string name="ssid_too_short_warning">アクセスポイントの名前が短すぎる。</string>
+    <string name="ssid_too_long_warning">アクセス ポイントの名前が長すぎる。</string>
     <string name="security_proto_field_label">セキュリティ</string>
-    <string name="security_proto_open_desc">セキュリティはありませんが、パスワードの入力なしで誰でも接続できます。</string>
+    <string name="security_proto_open_desc">パスワードの入力なしで誰でも接続できます。</string>
     <string name="security_proto_wpa2_psk_desc">ほとんどのデバイスとの最大限の互換性があります。</string>
-    <string name="security_proto_wpa3_sae_transition_desc">WPA3 を使用しますが、古いデバイスを接続した場合は WPA2 に低下します。</string>
-    <string name="security_proto_wpa3_sae_desc">最新のセキュリティ プロトコルです。一般的に 2020 年以降に発売されたデバイスでサポートされます。</string>
+    <string name="security_proto_wpa3_sae_transition_desc">WPA3 を使用しますが、古いデバイスでは WPA2 に落ちます。</string>
+    <string name="security_proto_wpa3_sae_desc">最新のセキュリティ・プロトコルで、2020年以降のデバイスの多くがサポート済みです。</string>
     <string name="passphrase_field_label">パスワード</string>
-    <string name="passphrase_too_short_warning">パスワードが短すぎます。</string>
-    <string name="passphrase_too_long_warning">パスワードが長すぎます。</string>
+    <string name="passphrase_too_short_warning">パスワードが短すぎる。</string>
+    <string name="passphrase_too_long_warning">パスワードが長すぎる。</string>
     <string name="auto_shutdown_field_title">自動シャットダウン</string>
-    <string name="auto_shutdown_field_desc">一定時間デバイスが接続されていない場合にテザリングをオフにします。</string>
-    <string name="freq_band_2_4_GHz_desc">ほぼすべてのデバイスでサポートされていますが、あまり高速ではありません。</string>
+    <string name="auto_shutdown_field_desc">しばらくデバイスが接続されていない場合、テザリングをオフにします。</string>
+    <string name="freq_band_2_4_GHz_desc">ほとんどのデバイスで使えますが、あまりスピードではありません。</string>
+    <string name="auto_shutdown_5">5 分</string>
+    <string name="auto_shutdown_10">10 分</string>
+    <string name="auto_shutdown_20">20 分</string>
+    <string name="auto_shutdown_30">30 分</string>
+    <string name="auto_shutdown_60">1 時間</string>
+    <string name="auto_shutdown_default">デフォルト</string>
+    <string name="preset_delete_button">削除</string>
     <!-- dev.shadoe.delta.setup -->
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
-    <string name="setup_note">機能するには Shizuku またはroot権限が必要です。</string>
+    <string name="setup_note">機能するには Shizuku や root 権限が必要です。</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
-    <string name="shizuku_not_connected_desc">このアプリは、Android SDK からは通常アクセスできないシステム API を使用するため、Hotspot API にアクセスするには Shizuku が必要です。</string>
+    <string name="shizuku_not_connected_desc">このアプリは Android SDK にいないシステムAPIを利用するため Shizuku アプリが必要です。</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
-    <string name="crash_report_setup_desc">クラッシュが発生した場合、クラッシュログを表示するための通知の許可が必要です。</string>
+    <string name="crash_report_setup_desc">アプリがクラッシュしたときに、エラーログを通知でお知らせするには、通知の許可が必要です。</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_setup_not_installed">インストールしてません。</string>
+    <string name="shizuku_setup_not_running">実行してません。</string>
+    <string name="shizuku_setup_not_connected">繋がってません。</string>
+    <string name="shizuku_setup_connected">繋がっています ✅</string>
 </resources>

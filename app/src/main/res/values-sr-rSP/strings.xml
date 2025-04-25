@@ -1,24 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dev.shadoe.delta -->
+    <string name="app_name">Delta</string>
+    <string name="back_button">Nazad</string>
+    <string name="blocklist">Crna lista</string>
+    <string name="no_connected_devices">Nema povezanih uređaja.</string>
+    <string name="open_icon">Otvori</string>
     <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Hotspot</string>
+    <string name="tile_disabling">Isključivanje…</string>
+    <string name="tile_disabled">Isključi</string>
+    <string name="tile_enabling">Uključivanje…</string>
+    <string name="tile_enabled">%d uređaja</string>
+    <string name="tile_failed">Nedostupno</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">Nema uređaja na crnoj listi.</string>
+    <string name="unblock_button">UKLONI S CRNE LISTE</string>
+    <string name="blocklist_unblocked">Uređaj uklonjen s crne liste.</string>
     <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">Prijavi</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">Dogodila se greška</string>
+    <string name="crash_notif_sub_text">Rukovodilac grešaka</string>
+    <string name="crash_notif_content">Dogodila se nepoznata greška.</string>
+    <string name="crash_notif_channel_name">Istorija grešaka</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_title">Istorija grešaka</string>
+    <string name="crash_report_desc">Dogodila se greška :(</string>
+    <string name="crash_report_no_log">Nema informacija o problemu</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
+    <string name="control_button_loading">Učitavanje</string>
+    <string name="control_button_stop">Isključi hotspot</string>
+    <string name="control_button_start">Uključi hotspot</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
+    <string name="failed_button">Hotspot neuspešan: Ne može da se pokrene</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Povezani uređaji</string>
+    <string name="no_client_hostname">(nedefinisan uređaj: nema ime)</string>
+    <string name="ip_not_allocated">(IP adresa još nije dodeljena)</string>
+    <string name="block_button">BLOKIRAJ</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(nema šifre)</string>
+    <string name="passphrase_hidden">(šifra sakrivena)</string>
+    <string name="passphrase_show">Prikaži šifru</string>
+    <string name="passphrase_hide">Sakri šifru</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="triggered_debug_screen">Debug screen otključan</string>
+    <string name="hotspot_not_supported">Ovaj uređaj ne podržava hotspot.</string>
+    <string name="close_button">ZATVORI</string>
+    <string name="qr_code_button">Prikaži QR kod</string>
+    <string name="no_ssid">nema ssid</string>
+    <string name="connected_devices_button">Povezani uređaji (%d)</string>
+    <string name="feature_not_supported">Opcija nije podržana na ovom uređaju.</string>
+    <string name="hotspot_not_enabled">Hotspot nije uključen.</string>
+    <string name="hotspot_enable_action">UKLJUČI</string>
+    <string name="edit_button">Uredi</string>
+    <string name="copy_button">Kopiraj</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
+    <string name="debug_title">Debug screen</string>
+    <string name="debug_trigger_crash">Pokreni crash</string>
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
+    <string name="settings">Podešavanje</string>
+    <string name="error_icon">Greška</string>
+    <string name="warning_icon">Upozorenje</string>
+    <string name="open_system_settings">Otvori postavke telefona</string>
+    <string name="settings_desc">Podesi sve po ličnoj želji :)</string>
+    <string name="ssid_field_icon">Ikona hotspota</string>
+    <string name="ssid_field_label">Ime hotspota</string>
+    <string name="ssid_too_short_warning">Ime hotspota je prekratko.</string>
+    <string name="ssid_too_long_warning">Ime hotspota je predugačko.</string>
+    <string name="security_proto_field_icon">Tip sigurnosti ikona</string>
+    <string name="security_proto_field_label">Tip sigurnosti</string>
+    <string name="security_proto_open">Ništa</string>
+    <string name="security_proto_open_desc">Bez sigurnosti, svako može da se poveže bez šifre.</string>
+    <string name="security_proto_wpa2_psk_desc">Maksimalna kompatibilnost sa većinom uređaja.</string>
+    <string name="security_proto_wpa3_sae_transition_desc">Koristi WPA3 ali se prebaci na WPA2 za starije uređaje.</string>
+    <string name="security_proto_wpa3_sae_desc">Najnoviji sigurnosni protokol, uređaj napravljeni posle 2020 bi trebalo da ga podržavaju.</string>
+    <string name="security_proto_not_supported">Nije podržano</string>
+    <string name="passphrase_field_icon">Ikona lozinke</string>
+    <string name="passphrase_field_label">Lozinka</string>
+    <string name="passphrase_too_short_warning">Lozinka prekratka.</string>
+    <string name="passphrase_too_long_warning">Lozinka predugačka.</string>
+    <string name="auto_shutdown_field_icon">Automatsko isključivanje ikona</string>
+    <string name="auto_shutdown_field_title">Automatsko isključivanje</string>
+    <string name="auto_shutdown_field_desc">Isključi hotspot kad nijedan uređaj nije povezan.</string>
+    <string name="freq_band_field_icon">Frekvencija ikona</string>
+    <string name="freq_band_field_label">Tip brzine</string>
+    <string name="freq_band_2_4_GHz_desc">Podržano od strane svih uređaja ali nije veoma brzo.</string>
+    <string name="freq_band_5_GHz_desc">Način rada s 2 antene: Brže na podržanim uređajima + kompatibilno sa starijim.</string>
+    <string name="freq_band_6_GHz_desc">Način rada s 3 antene: Najnovija tehnologija, nije podržana u svim državama.</string>
+    <string name="freq_band_60_GHz_desc">Nepopularna frekvencija, veoma mala distanca rada.</string>
+    <string name="freq_band_unknown">Nepoznato</string>
+    <string name="advanced_settings_label">Napredna podešavanja</string>
+    <string name="collapse_icon">Skupi</string>
+    <string name="expand_icon">Otvori</string>
+    <string name="hidden_network_field_icon">Sakrivena mreža ikona</string>
+    <string name="hidden_network_field_label">Sakrivena mreža</string>
+    <string name="hidden_network_field_desc">"Hotspot neće biti vidljiv drugim uređajima osim ako nije manualni povezan."</string>
+    <string name="max_client_limit_field_icon">Maksimum korisnika ikona</string>
+    <string name="max_client_limit_field_label">Limit povezanih uređaja</string>
+    <string name="max_client_limit_field_count">%d klijenata</string>
+    <string name="mac_randomization_field_icon">MAC nasumična ikona</string>
+    <string name="mac_randomization_field_label">Nasumičan MAC</string>
+    <string name="mac_randomization_none">Ništa</string>
+    <string name="mac_randomization_none_desc">Služi za identifikaciju samog sebe tokom pružanja hotspota.</string>
+    <string name="mac_randomization_persistent">Stalan</string>
+    <string name="mac_randomization_persistent_desc">MAC adresa je nasumična svaki put kada se promeni ime hotspota.</string>
+    <string name="mac_randomization_non_persistent">Ne stalna</string>
+    <string name="mac_randomization_non_persistent_desc">MAC adresa je nasumična svaki put kada se promeni ime hotspota.</string>
+    <string name="auto_shutdown_timeout_field_icon">Ikona timeout-a</string>
+    <string name="auto_shutdown_timeout_field_label">Tajmer za automatsko isključivanje</string>
+    <string name="auto_shutdown_5">5 minuta</string>
+    <string name="auto_shutdown_10">10 minuta</string>
+    <string name="auto_shutdown_20">20 minuta</string>
+    <string name="auto_shutdown_30">30 minuta</string>
+    <string name="auto_shutdown_60">1 sat</string>
+    <string name="auto_shutdown_default">Podrazumevano</string>
+    <string name="auto_shutdown_timeout_desc">Isključi hotspot ukoliko posle ovog vremena nema povezanih uređaja.</string>
+    <string name="presets_setting">Podrazumevano</string>
+    <string name="presets_field_icon">Podrazumevana ikona</string>
+    <string name="presets_field_desc">Sačuvaj i povrati podršavanja hotspota za bržu promenu izemđu njih.</string>
+    <string name="presets_show_button">Prikaži podrazumevano</string>
+    <string name="presets_save_config_button">Sačuvaj konfiguraciju</string>
+    <string name="preset_save_title">Unesi ime podrazumevanog.</string>
+    <string name="presets_none_saved">Nema sačuvanih podrazumevanih opcija.</string>
+    <string name="preset_saved_on">Sačuvano na %s</string>
+    <string name="preset_delete_button">Ukloni</string>
+    <string name="preset_apply_button">Primeni</string>
+    <string name="tile_field_icon">Slika pločice</string>
+    <string name="tile_field_label">Dodaj pločicu za brzi pristup?</string>
+    <string name="tile_field_desc">Dodaje pločicu sa brzim pofešavanjima koje pomažu s podešavanjima hotspota bez otvaranja aplikacije.</string>
+    <string name="tile_add_button">Dodaj pločicu</string>
+    <string name="cancel_button">Otkaži</string>
+    <string name="save_button">Sačuvaj</string>
+    <string name="passphrase_empty_warning">Unesi šifru.</string>
+    <string name="save_changes_failed_warning">Neuspešno ažurirana podešavanja hotspot-a.</string>
     <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">Podesi aplikaciju</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">Ikona aplikacije</string>
+    <string name="app_tagline">Podešavanja hotspot-a, otključano.</string>
+    <string name="setup_start_button">Pokreni podršavanje »</string>
+    <string name="setup_note">Zahteva Shizuku ili pristup root-u da bi radilo.</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">Povezano sa Shizuku, nastavi podešavanje!</string>
+    <string name="setup_continue_button">Nastavi podešavanje</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">Ova aplikacija koristi API koji se na nalaze u standardnom Android SDK-u te je potreban Shizuku da bi se dobio pristup Hotspot API-u.</string>
+    <string name="shizuku_grant_access">Odobri pristup</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">Shizuku nije instaliran.</string>
+    <string name="github">GitHub</string>
+    <string name="install_from_icon">Instalirano preko</string>
+    <string name="play_store">Play Store-a</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku nije pokrenut.</string>
+    <string name="shizuku_start">Pokreni Shizuku</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">Podesi crash reporter-a.</string>
+    <string name="crash_report_setup_desc">Potrebna nam je dozvola za slanje notification-a da bi Vam prikazali crash logove ako dođe do njih.</string>
+    <string name="crash_report_setup_grant_perm">Odobri pristup</string>
+    <string name="crash_report_setup_done">Pristup dat ✅</string>
+    <string name="setup_finish_button">Završi podešavanje</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Shizuku ikona</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">Nije instalirano.</string>
+    <string name="shizuku_setup_not_running">Nije pokrenuto.</string>
+    <string name="shizuku_setup_not_connected">Nije povezano.</string>
+    <string name="shizuku_setup_connected">Povezano ✅</string>
 </resources>
