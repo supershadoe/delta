@@ -164,88 +164,90 @@ fun ControlScreen(
         }
       }
     }
-    takeIf { supportsBlocklist } ?: return@LazyColumn
-    item {
-      Row(
-        modifier =
-          Modifier.fillMaxWidth()
-            .clickable { isBlocklistShown = !isBlocklistShown }
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-      ) {
-        Text(
-          text = stringResource(R.string.blocklist),
-          color = MaterialTheme.colorScheme.onSurfaceVariant,
-          style = MaterialTheme.typography.titleLarge,
-        )
-        Icon(
-          modifier = Modifier.align(Alignment.CenterVertically),
-          imageVector =
-            if (isBlocklistShown) {
-              Icons.Rounded.KeyboardArrowUp
-            } else {
-              Icons.Rounded.KeyboardArrowDown
-            },
-          contentDescription =
-            if (isBlocklistShown) {
-              stringResource(R.string.collapse_icon)
-            } else {
-              stringResource(R.string.expand_icon)
-            },
-        )
-      }
-    }
-    takeIf { isBlocklistShown } ?: return@LazyColumn
-    if (blockedClients.isEmpty()) {
+    if (supportsBlocklist) {
       item {
-        Box(
-          modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-          contentAlignment = Alignment.Center,
+        Row(
+          modifier =
+            Modifier.fillMaxWidth()
+              .clickable { isBlocklistShown = !isBlocklistShown }
+              .padding(16.dp),
+          horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-          Text(text = stringResource(R.string.blocklist_none_blocked))
-        }
-      }
-    }
-    items(blockedClients) { d ->
-      Row(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        if (devicesToUnblock.isNotEmpty()) {
-          Checkbox(
-            checked = devicesToUnblock.contains(d),
-            onCheckedChange = { isChecked ->
-              devicesToUnblock =
-                if (isChecked) {
-                  devicesToUnblock.plus(d)
-                } else {
-                  devicesToUnblock.minus(d)
-                }
-            },
+          Text(
+            text = stringResource(R.string.blocklist),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleLarge,
+          )
+          Icon(
+            modifier = Modifier.align(Alignment.CenterVertically),
+            imageVector =
+              if (isBlocklistShown) {
+                Icons.Rounded.KeyboardArrowUp
+              } else {
+                Icons.Rounded.KeyboardArrowDown
+              },
+            contentDescription =
+              if (isBlocklistShown) {
+                stringResource(R.string.collapse_icon)
+              } else {
+                stringResource(R.string.expand_icon)
+              },
           )
         }
-        Column(modifier = Modifier.weight(1f)) {
-          Text(text = d.hostname ?: noClientHostnameText)
-          Text(text = d.macAddress.toString())
-        }
-        if (devicesToUnblock.isEmpty()) {
-          Button(onClick = { devicesToUnblock = devicesToUnblock.plus(d) }) {
-            Text(text = stringResource(R.string.unblock_button))
+      }
+    }
+    if (isBlocklistShown) {
+      if (blockedClients.isEmpty()) {
+        item {
+          Box(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            contentAlignment = Alignment.Center,
+          ) {
+            Text(text = stringResource(R.string.blocklist_none_blocked))
           }
         }
       }
-    }
-    if (devicesToUnblock.isNotEmpty()) {
-      item {
-        Button(
-          onClick = {
-            vm.unblockDevices(devicesToUnblock)
-            devicesToUnblock = setOf()
-            onShowSnackbar(clientUnblockedSnackbar)
-          },
-          modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+      items(blockedClients) { d ->
+        Row(
+          modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+          verticalAlignment = Alignment.CenterVertically,
         ) {
-          Text(text = stringResource(R.string.unblock_button))
+          if (devicesToUnblock.isNotEmpty()) {
+            Checkbox(
+              checked = devicesToUnblock.contains(d),
+              onCheckedChange = { isChecked ->
+                devicesToUnblock =
+                  if (isChecked) {
+                    devicesToUnblock.plus(d)
+                  } else {
+                    devicesToUnblock.minus(d)
+                  }
+              },
+            )
+          }
+          Column(modifier = Modifier.weight(1f)) {
+            Text(text = d.hostname ?: noClientHostnameText)
+            Text(text = d.macAddress.toString())
+          }
+          if (devicesToUnblock.isEmpty()) {
+            Button(onClick = { devicesToUnblock = devicesToUnblock.plus(d) }) {
+              Text(text = stringResource(R.string.unblock_button))
+            }
+          }
+        }
+      }
+      if (devicesToUnblock.isNotEmpty()) {
+        item {
+          Button(
+            onClick = {
+              vm.unblockDevices(devicesToUnblock)
+              devicesToUnblock = setOf()
+              onShowSnackbar(clientUnblockedSnackbar)
+            },
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+          ) {
+            Text(text = stringResource(R.string.unblock_button))
+          }
         }
       }
     }
