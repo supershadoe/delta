@@ -16,9 +16,7 @@ object Routes {
     @Serializable object CrashHandlerSetupScreen : Route
   }
 
-  @Serializable object HotspotScreen : Route
-
-  @Serializable object HotspotEditScreen : Route
+  @Serializable object SoftApScreen : Route
 
   @Serializable object BlocklistScreen : Route
 

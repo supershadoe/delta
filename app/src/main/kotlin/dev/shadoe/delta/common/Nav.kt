@@ -22,8 +22,6 @@ import dev.shadoe.delta.blocklist.BlockListViewModel
 import dev.shadoe.delta.blocklist.BlocklistScreen
 import dev.shadoe.delta.debug.DebugScreen
 import dev.shadoe.delta.debug.DebugViewModel
-import dev.shadoe.delta.settings.SettingsScreen
-import dev.shadoe.delta.settings.SettingsViewModel
 import dev.shadoe.delta.setup.CrashHandlerSetupScreen
 import dev.shadoe.delta.setup.FirstUseScreen
 import dev.shadoe.delta.setup.ShizukuSetupScreen
@@ -88,25 +86,7 @@ fun Nav(vm: NavViewModel = viewModel()) {
       composable<Routes.Setup.CrashHandlerSetupScreen> {
         CrashHandlerSetupScreen(onSetupFinished = { vm.onSetupFinished() })
       }
-      composable<Routes.HotspotScreen> {
-        //        val vm = hiltViewModel<ControlViewModel>()
-        //        ControlScreen(
-        //          onNavigateToDebug = {
-        // navController.navigate(Routes.DebugScreen) },
-        //          onNavigateToBlocklist = {
-        //            navController.navigate(Routes.BlocklistScreen)
-        //          },
-        //          onNavigateToSettings = {
-        //            navController.navigate(Routes.HotspotEditScreen)
-        //          },
-        //          vm = vm,
-        //        )
-        SoftApScreen()
-      }
-      composable<Routes.HotspotEditScreen> {
-        val vm = hiltViewModel<SettingsViewModel>()
-        SettingsScreen(vm = vm)
-      }
+      composable<Routes.SoftApScreen> { SoftApScreen() }
       composable<Routes.BlocklistScreen> {
         val vm = hiltViewModel<BlockListViewModel>()
         BlocklistScreen(onNavigateUp = { navController.navigateUp() }, vm = vm)

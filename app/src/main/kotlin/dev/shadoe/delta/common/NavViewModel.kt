@@ -40,7 +40,7 @@ constructor(
       isFirstRun -> Routes.Setup.FirstUseScreen
       shizukuConnected -> Routes.Setup.ShizukuSetupScreen
       crashHandlerSetup -> Routes.Setup.CrashHandlerSetupScreen
-      else -> Routes.HotspotScreen
+      else -> Routes.SoftApScreen
     }
   }
 
