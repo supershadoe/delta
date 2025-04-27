@@ -4,22 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.outlined.Warning
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
 import dev.shadoe.delta.api.SoftApSecurityType
+import dev.shadoe.delta.common.components.FoldableWrapper
 import dev.shadoe.delta.settings.components.AutoShutDownTimeOutField
 import dev.shadoe.delta.settings.components.AutoShutdownField
 import dev.shadoe.delta.settings.components.FrequencyBandField
@@ -211,35 +207,14 @@ fun SettingsScreen(
         onBandChange = { vm.updateSpeedType(it) },
       )
     }
-
     item {
-      Row(
-        modifier =
-          Modifier.fillMaxWidth().clickable {
-            isAdvancedSettingsEnabled = !isAdvancedSettingsEnabled
-          },
-        horizontalArrangement = Arrangement.SpaceBetween,
-      ) {
-        Text(
-          text = stringResource(R.string.advanced_settings_label),
-          modifier = Modifier.padding(8.dp),
-        )
-        Icon(
-          modifier = Modifier.align(Alignment.CenterVertically),
-          imageVector =
-            if (isAdvancedSettingsEnabled) {
-              Icons.Rounded.KeyboardArrowUp
-            } else {
-              Icons.Rounded.KeyboardArrowDown
-            },
-          contentDescription =
-            if (isAdvancedSettingsEnabled) {
-              stringResource(R.string.collapse_icon)
-            } else {
-              stringResource(R.string.expand_icon)
-            },
-        )
-      }
+      FoldableWrapper(
+        text = stringResource(R.string.advanced_settings_label),
+        foldableState = isAdvancedSettingsEnabled,
+        onFoldableToggled = {
+          isAdvancedSettingsEnabled = !isAdvancedSettingsEnabled
+        },
+      )
     }
     if (isAdvancedSettingsEnabled) {
       item {
