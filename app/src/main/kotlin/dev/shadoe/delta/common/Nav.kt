@@ -18,8 +18,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.shadoe.delta.blocklist.BlockListViewModel
-import dev.shadoe.delta.blocklist.BlocklistScreen
 import dev.shadoe.delta.debug.DebugScreen
 import dev.shadoe.delta.debug.DebugViewModel
 import dev.shadoe.delta.setup.CrashHandlerSetupScreen
@@ -89,10 +87,6 @@ fun Nav(vm: NavViewModel = viewModel()) {
       composable<Routes.SoftApScreen> {
         val vm = hiltViewModel<SoftApScreenViewModel>()
         SoftApScreen(vm)
-      }
-      composable<Routes.BlocklistScreen> {
-        val vm = hiltViewModel<BlockListViewModel>()
-        BlocklistScreen(onNavigateUp = { navController.navigateUp() }, vm = vm)
       }
       composable<Routes.DebugScreen> {
         val vm = hiltViewModel<DebugViewModel>()
