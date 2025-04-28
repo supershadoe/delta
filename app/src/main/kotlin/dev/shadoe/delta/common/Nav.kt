@@ -86,7 +86,10 @@ fun Nav(vm: NavViewModel = viewModel()) {
       composable<Routes.Setup.CrashHandlerSetupScreen> {
         CrashHandlerSetupScreen(onSetupFinished = { vm.onSetupFinished() })
       }
-      composable<Routes.SoftApScreen> { SoftApScreen() }
+      composable<Routes.SoftApScreen> {
+        val vm = hiltViewModel<SoftApScreenViewModel>()
+        SoftApScreen(vm)
+      }
       composable<Routes.BlocklistScreen> {
         val vm = hiltViewModel<BlockListViewModel>()
         BlocklistScreen(onNavigateUp = { navController.navigateUp() }, vm = vm)
