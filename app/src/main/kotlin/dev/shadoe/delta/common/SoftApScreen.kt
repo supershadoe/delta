@@ -1,5 +1,6 @@
 package dev.shadoe.delta.common
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,16 +21,20 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.shadoe.delta.R
 import dev.shadoe.delta.control.ControlScreen
 import dev.shadoe.delta.control.ControlViewModel
 import dev.shadoe.delta.control.components.AppBarWithDebugAction
@@ -37,12 +43,15 @@ import dev.shadoe.delta.settings.SettingsViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun SoftApScreen() {
+fun SoftApScreen(vm: SoftApScreenViewModel = viewModel()) {
+  val context = LocalContext.current
   val navController = LocalNavController.current
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
   val pagerState =
     rememberPagerState(pageCount = { SoftApScreenDestinations.entries.size })
+
+  val isSoftApSupported by vm.isSoftApSupported.collectAsState(initial = false)
 
   Box(
     modifier =
@@ -115,5 +124,17 @@ fun SoftApScreen() {
         }
       }
     }
+  }
+
+  if (!isSoftApSupported) {
+    AlertDialog(
+      onDismissRequest = {},
+      confirmButton = {
+        TextButton(onClick = { (context as? Activity)?.finish() }) {
+          Text(text = stringResource(R.string.close_button))
+        }
+      },
+      text = { Text(text = stringResource(R.string.hotspot_not_supported)) },
+    )
   }
 }

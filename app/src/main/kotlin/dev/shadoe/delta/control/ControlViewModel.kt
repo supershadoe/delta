@@ -17,9 +17,6 @@ constructor(
   private val softApBlocklistRepository: SoftApBlocklistRepository,
 ) : ViewModel() {
   @OptIn(ExperimentalCoroutinesApi::class)
-  val isSoftApSupported = state.status.mapLatest { it.isSoftApSupported }
-
-  @OptIn(ExperimentalCoroutinesApi::class)
   val enabledState = state.status.mapLatest { it.enabledState }
 
   @OptIn(ExperimentalCoroutinesApi::class)
