@@ -1,0 +1,9 @@
+### 2025.04+1
+
+- Add presets support for saving and restoring settings
+- Add quick setting tile for devices where SystemUI doesn't show one
+- Added proper checking of blocklist/tethering support on devices
+- Automatically fix tethering if it fails due to bad config
+- Tap to copy IP address
+- Redesigned UI
+- Allow changing language for Delta app alone in System settings app
