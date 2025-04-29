@@ -2,6 +2,7 @@
 <resources>
     <!-- dev.shadoe.delta -->
     <!-- dev.shadoe.delta.SoftApTile -->
+    <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <!-- dev.shadoe.delta.crash -->
     <!-- dev.shadoe.delta.crash.CrashHandler -->

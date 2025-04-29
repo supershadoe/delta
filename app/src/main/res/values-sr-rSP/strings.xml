@@ -13,10 +13,10 @@
     <string name="tile_enabling">Uključivanje…</string>
     <string name="tile_enabled">%d uređaja</string>
     <string name="tile_failed">Nedostupno</string>
+    <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Nema uređaja na crnoj listi.</string>
     <string name="unblock_button">UKLONI S CRNE LISTE</string>
-    <string name="blocklist_unblocked">Uređaj uklonjen s crne liste.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Prijavi</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
@@ -35,13 +35,10 @@
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">Hotspot neuspešan: Ne može da se pokrene</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
-    <string name="connected_devices">Povezani uređaji</string>
     <string name="no_client_hostname">(nedefinisan uređaj: nema ime)</string>
     <string name="ip_not_allocated">(IP adresa još nije dodeljena)</string>
     <string name="block_button">BLOKIRAJ</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
-    <string name="no_passphrase">(nema šifre)</string>
-    <string name="passphrase_hidden">(šifra sakrivena)</string>
     <string name="passphrase_show">Prikaži šifru</string>
     <string name="passphrase_hide">Sakri šifru</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
