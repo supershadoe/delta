@@ -128,10 +128,11 @@ fun SettingsScreen(
       item {
         Box(
           modifier =
-            Modifier.padding(top = 16.dp).background(
-              color = MaterialTheme.colorScheme.tertiaryContainer,
-              shape = RoundedCornerShape(12.dp),
-            )
+            Modifier.padding(top = 16.dp)
+              .background(
+                color = MaterialTheme.colorScheme.tertiaryContainer,
+                shape = RoundedCornerShape(12.dp),
+              )
         ) {
           Row(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
