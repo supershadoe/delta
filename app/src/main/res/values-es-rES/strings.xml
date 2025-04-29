@@ -13,10 +13,10 @@
     <string name="tile_enabling">Encendiendo…</string>
     <string name="tile_enabled">%d dispositivos</string>
     <string name="tile_failed">No disponible</string>
+    <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Ningún dispositivo bloqueado.</string>
     <string name="unblock_button">DESBLOQUEAR</string>
-    <string name="blocklist_unblocked">Dispositivo eliminado de la lista de bloqueados.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Informar</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
@@ -34,13 +34,10 @@
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">Error del punto de acceso: No se puede iniciar</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
-    <string name="connected_devices">Dispositivos conectados</string>
     <string name="no_client_hostname">(dispositivo no identificado: sin nombre)</string>
     <string name="ip_not_allocated">(Dirección IP no asignada)</string>
     <string name="block_button">BLOQUEAR</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
-    <string name="no_passphrase">(sin contraseña)</string>
-    <string name="passphrase_hidden">(contraseña oculta)</string>
     <string name="passphrase_show">Mostrar contraseña</string>
     <string name="passphrase_hide">Ocultar contraseña</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
