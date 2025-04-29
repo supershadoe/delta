@@ -128,7 +128,7 @@ fun SettingsScreen(
       item {
         Box(
           modifier =
-            Modifier.background(
+            Modifier.padding(top = 16.dp).background(
               color = MaterialTheme.colorScheme.tertiaryContainer,
               shape = RoundedCornerShape(12.dp),
             )
@@ -168,7 +168,7 @@ fun SettingsScreen(
     item {
       Text(
         text = stringResource(R.string.settings_desc),
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(vertical = 16.dp),
       )
     }
     item {

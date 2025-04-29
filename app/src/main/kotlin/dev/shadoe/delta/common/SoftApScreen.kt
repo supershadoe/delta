@@ -51,7 +51,7 @@ fun SoftApScreen(vm: SoftApScreenViewModel = viewModel()) {
   val pagerState =
     rememberPagerState(pageCount = { SoftApScreenDestinations.entries.size })
 
-  val isSoftApSupported by vm.isSoftApSupported.collectAsState(initial = false)
+  val isSoftApSupported by vm.isSoftApSupported.collectAsState(initial = true)
 
   Box(
     modifier =
