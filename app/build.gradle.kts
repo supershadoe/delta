@@ -77,6 +77,11 @@ android {
     }
   }
 
+  androidResources {
+    @Suppress("UnstableApiUsage")
+    generateLocaleConfig = true
+  }
+
   buildFeatures { compose = true }
 
   compileOptions {
