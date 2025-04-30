@@ -1,4 +1,4 @@
-### 2025.04+1
+### 2025.05+0
 
 - Add presets support for saving and restoring settings
 - Add quick setting tile for devices where SystemUI doesn't show one
