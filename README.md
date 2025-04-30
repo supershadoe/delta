@@ -13,6 +13,7 @@ type, frequency bands, quick connect using QR, etc.
 - Blocklist to prevent certain devices from connecting.
 - Make hotspot's SSID hidden (device doesn't appear on WiFi scans)
 - Quick setting tile to easily turn hotspot on/off from notification shade.
+- Control hotspot using Tasker/other automation apps.
 
 It uses Shizuku to obtain hotspot related details and to modify hotspot
 settings. It is also useful on devices like Samsung Tabs (WiFi-only) where
