@@ -16,6 +16,7 @@
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">ブロックされているデバイスはありません。</string>
     <string name="unblock_button">ブロック解除</string>
+    <string name="blocklist_unblocked">ブロックリストからデバイスを外しました。</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">報告する</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
@@ -34,10 +35,13 @@
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">テザリングを利用できません</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">繋がってるデバイス</string>
     <string name="no_client_hostname">(名もなきデバイス)</string>
     <string name="ip_not_allocated">(IPアドレスはまだ与えられていない)</string>
     <string name="block_button">ブロック</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(パスワードなし)</string>
+    <string name="passphrase_hidden">(隠している)</string>
     <string name="passphrase_show">パスワードを見せる</string>
     <string name="passphrase_hide">パスワードを隠す</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
