@@ -16,4 +16,11 @@ enum class ConfigFlag {
    * older versions or when app is installed afresh.
    */
   USES_ROOM_DB,
+
+  /**
+   * Adding a permission to the receiver cannot let arbitrary apps send intents
+   * to this app. Thus, a setting is added in the app for power users to enable
+   * insecure receivers.
+   */
+  INSECURE_RECEIVER_ENABLED,
 }

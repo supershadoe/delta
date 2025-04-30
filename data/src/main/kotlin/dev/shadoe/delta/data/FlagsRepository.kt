@@ -41,5 +41,13 @@ constructor(
       Flag(flag = ConfigFlag.NOT_FIRST_RUN.ordinal, value = true)
     )
 
+  suspend fun isInsecureReceiverEnabled() =
+    flagsDao.getFlag(ConfigFlag.INSECURE_RECEIVER_ENABLED.ordinal) == true
+
+  suspend fun setInsecureReceiverStatus(enabled: Boolean) =
+    flagsDao.setFlag(
+      Flag(flag = ConfigFlag.INSECURE_RECEIVER_ENABLED.ordinal, value = enabled)
+    )
+
   suspend fun debugDumpFlags() = flagsDao.dump()
 }
