@@ -19,8 +19,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.api.TetheredClient
 import dev.shadoe.delta.control.components.BlocklistComponentActions
 import dev.shadoe.delta.control.components.BlocklistComponentState
+import dev.shadoe.delta.control.components.ConnectedClientsListActions
+import dev.shadoe.delta.control.components.ConnectedClientsListState
 import dev.shadoe.delta.control.components.SoftApControl
 import dev.shadoe.delta.control.components.SoftApControlViewModel
 import dev.shadoe.delta.control.components.blocklistComponent
@@ -33,6 +36,8 @@ fun ControlScreen(
   vm: ControlViewModel = viewModel(),
 ) {
   var isBlocklistShown by remember { mutableStateOf(false) }
+  var devicesToBlock by
+    remember(isBlocklistShown) { mutableStateOf(setOf<TetheredClient>()) }
   var devicesToUnblock by
     remember(isBlocklistShown) { mutableStateOf(setOf<ACLDevice>()) }
 
@@ -49,7 +54,14 @@ fun ControlScreen(
       override val duration = SnackbarDuration.Short
       override val actionLabel = null
     }
-  val clientUnblockedSnackbar =
+  val clientsBlockedSnackbar =
+    object : SnackbarVisuals {
+      override val message = stringResource(R.string.blocklist_blocked)
+      override val duration = SnackbarDuration.Short
+      override val withDismissAction = true
+      override val actionLabel = null
+    }
+  val clientsUnblockedSnackbar =
     object : SnackbarVisuals {
       override val message = stringResource(R.string.blocklist_unblocked)
       override val duration = SnackbarDuration.Short
@@ -69,9 +81,26 @@ fun ControlScreen(
     }
     if (enabledState == SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
       connectedClientsList(
-        tetheredClients,
-        supportsBlocklist,
-        onBlockClient = { vm.blockDevice(it) },
+        state =
+          ConnectedClientsListState(
+            tetheredClients = tetheredClients,
+            supportsBlocklist = supportsBlocklist,
+            devicesToBlock = devicesToBlock,
+          ),
+        actions =
+          ConnectedClientsListActions(
+            addToBlockList = { devicesToBlock += it },
+            removeFromBlockList = { devicesToBlock -= it },
+            onBlockClients = {
+              vm.blockDevices(
+                devicesToBlock.map {
+                  ACLDevice(hostname = it.hostname, macAddress = it.macAddress)
+                }
+              )
+              devicesToBlock = setOf()
+              onShowSnackbar(clientsBlockedSnackbar)
+            },
+          ),
       )
     }
     if (supportsBlocklist) {
@@ -90,7 +119,7 @@ fun ControlScreen(
             onUnblockClients = {
               vm.unblockDevices(devicesToUnblock)
               devicesToUnblock = setOf()
-              onShowSnackbar(clientUnblockedSnackbar)
+              onShowSnackbar(clientsUnblockedSnackbar)
             },
           ),
       )

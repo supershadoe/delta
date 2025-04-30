@@ -27,17 +27,14 @@ constructor(
         }
     }
 
-  fun blockDevice(device: ACLDevice) {
-    softApStateRepository.config.value.let {
+  fun blockDevices(devices: Iterable<ACLDevice>) {
+    softApStateRepository.config.value.let { c ->
       softApControlRepository.updateSoftApConfiguration(
-        it.copy(blockedDevices = it.blockedDevices + device.macAddress)
+        c.copy(
+          blockedDevices = c.blockedDevices.plus(devices.map { it.macAddress })
+        )
       )
     }
-  }
-
-  @Deprecated("Use unblockDevices instead")
-  fun unblockDevice(device: ACLDevice) {
-    unblockDevices(devices = setOf(device))
   }
 
   fun unblockDevices(devices: Iterable<ACLDevice>) {

@@ -28,9 +28,9 @@ constructor(
 
   val blockedClients = softApBlocklistRepository.blockedClients
 
-  fun blockDevice(device: ACLDevice) =
-    softApBlocklistRepository.blockDevice(device)
+  fun blockDevices(devices: Iterable<ACLDevice>) =
+    softApBlocklistRepository.blockDevices(devices)
 
-  fun unblockDevices(devices: Set<ACLDevice>) =
+  fun unblockDevices(devices: Iterable<ACLDevice>) =
     softApBlocklistRepository.unblockDevices(devices)
 }
