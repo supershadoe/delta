@@ -55,6 +55,8 @@ import dev.shadoe.delta.settings.components.PresetSheet
 import dev.shadoe.delta.settings.components.SecurityTypeField
 import dev.shadoe.delta.settings.components.SoftApTileField
 import dev.shadoe.delta.settings.components.SsidField
+import dev.shadoe.delta.settings.components.TaskerIntegrationField
+import dev.shadoe.delta.settings.components.TaskerIntegrationInfo
 
 private fun openSystemSettings(context: Context, isBigScreen: Boolean = false) {
   context.startActivity(
@@ -83,6 +85,8 @@ fun SettingsScreen(
   val status by vm.status.collectAsState()
   val results by vm.results.collectAsState()
   val presets by vm.presets.collectAsState(listOf())
+  val taskerIntegrationStatus by
+    vm.taskerIntegrationStatus.collectAsState(false)
 
   val passphraseEmptyWarningSnackbar =
     object : SnackbarVisuals {
@@ -112,6 +116,7 @@ fun SettingsScreen(
   var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
   var shouldSavePreset by remember { mutableStateOf(false) }
   var isPresetListShown by remember { mutableStateOf(false) }
+  var isTaskerInfoShown by remember { mutableStateOf(false) }
 
   LazyColumn(
     modifier =
@@ -257,6 +262,13 @@ fun SettingsScreen(
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         item { SoftApTileField() }
       }
+      item {
+        TaskerIntegrationField(
+          isTaskerIntegrationEnabled = taskerIntegrationStatus,
+          onTaskerIntegrationChange = { vm.updateTaskerIntegrationStatus(it) },
+          onShowTaskerIntegrationInfo = { isTaskerInfoShown = true },
+        )
+      }
     }
     item {
       Button(
@@ -301,5 +313,9 @@ fun SettingsScreen(
       },
       deletePreset = { vm.deletePreset(it) },
     )
+  }
+
+  if (isTaskerInfoShown) {
+    TaskerIntegrationInfo(onDismissDialog = { isTaskerInfoShown = false })
   }
 }

@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
+import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.database.dao.PresetDao
 import dev.shadoe.delta.data.database.models.Preset
 import dev.shadoe.delta.data.softap.SoftApControlRepository
@@ -13,12 +14,16 @@ import dev.shadoe.delta.data.softap.SoftApStateRepository
 import dev.shadoe.delta.data.softap.validators.PassphraseValidator
 import dev.shadoe.delta.data.softap.validators.SsidValidator
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+
+private data class SettingsFlags(val insecureReceiverEnabled: Boolean)
 
 @HiltViewModel
 class SettingsViewModel
@@ -26,10 +31,13 @@ class SettingsViewModel
 constructor(
   private val softApControlRepository: SoftApControlRepository,
   private val softApStateRepository: SoftApStateRepository,
+  private val flagsRepository: FlagsRepository,
   private val presetDao: PresetDao,
 ) : ViewModel() {
   private val _config = MutableStateFlow(softApStateRepository.config.value)
   private val _results = MutableStateFlow(UpdateResults())
+  private val _flags =
+    MutableStateFlow(SettingsFlags(insecureReceiverEnabled = false))
 
   val status = softApStateRepository.status
   val config = _config.asStateFlow()
@@ -37,13 +45,21 @@ constructor(
   val presets = presetDao.observePresets()
 
   init {
+    // TODO: instead of auto-updating, show a message in UI asking if user
+    //       wants to reload config
     viewModelScope.launch {
       softApStateRepository.config.collect {
         if (_config.value == it) return@collect
         _config.value = it
       }
     }
+    viewModelScope.launch {
+      updateTaskerIntegrationStatus(flagsRepository.isInsecureReceiverEnabled())
+    }
   }
+
+  @OptIn(ExperimentalCoroutinesApi::class)
+  val taskerIntegrationStatus = _flags.mapLatest { it.insecureReceiverEnabled }
 
   fun convertUnixTSToTime(timestamp: Long) =
     Instant.fromEpochMilliseconds(timestamp).toString()
@@ -176,6 +192,10 @@ constructor(
     }
   }
 
+  fun updateTaskerIntegrationStatus(enabled: Boolean) {
+    _flags.update { it.copy(insecureReceiverEnabled = enabled) }
+  }
+
   // TODO: emit errors in UI
   fun commit(): Boolean {
     if (results.value != UpdateResults()) return false
@@ -188,6 +208,11 @@ constructor(
         )
     }
     softApControlRepository.updateSoftApConfiguration(_config.value)
+    viewModelScope.launch {
+      flagsRepository.setInsecureReceiverStatus(
+        _flags.value.insecureReceiverEnabled
+      )
+    }
     return true
   }
 }

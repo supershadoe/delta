@@ -150,8 +150,12 @@
     <string name="tile_add_button">Add tile</string>
     <string name="tasker_integration_field_icon">Automation icon</string>
     <string name="tasker_integration_field_label">Tasker integration</string>
-    <string name="tasker_integration_field_desc">Allows tasker to manage hotspot settings via this app.</string>
+    <string name="tasker_integration_field_desc">[insecure] Allows tasker to manage hotspot settings via this app.</string>
     <string name="tasker_integration_info_button">Setup info</string>
+    <string name="tasker_integration_info">There are two intents provided by this app — &lt;tt>dev.shadoe.delta.action.START_SOFT_AP&lt;/tt> and &lt;tt>dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt> to start and stop hotspot respectively. Although this is very helpful for the power users who want to automate a lot, it should be known that turning this feature on lets &lt;b>ANY app&lt;/b> broadcast this action (&lt;b>not just Tasker&lt;/b>), thus providing an attack vector for a malicious app.&lt;br>&lt;br>One hypothetical scenario where this might be dangerous is if two devices have the same malware and they try to communicate to each other via LAN and abuse Delta to do that.</string>
+    <string name="tasker_integration_info_copy_start_action">Copy &lt;tt>START_SOFT_AP&lt;/tt></string>
+    <string name="tasker_integration_info_copy_stop_action">Copy &lt;tt>STOP_SOFT_AP&lt;/tt></string>
+    <string name="tasker_integration_info_copy_comp_name">Copy component name</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
     <string name="passphrase_empty_warning">Enter a password.</string>
