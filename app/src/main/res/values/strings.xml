@@ -6,6 +6,11 @@
     <string name="blocklist">Blocklist</string>
     <string name="no_connected_devices">There are no connected devices.</string>
     <string name="open_icon">Open</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">Failed to start hotspot.</string>
+    <string name="soft_ap_failure_notif_content">Is Shizuku running and connected to the app?</string>
+    <string name="soft_ap_failure_notif_channel_name">Error notifications</string>
+    <string name="soft_ap_failure_notif_channel_desc">Posts notification for any errors occurring in the app.</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Turning off…</string>
