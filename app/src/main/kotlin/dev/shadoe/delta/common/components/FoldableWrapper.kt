@@ -27,9 +27,10 @@ fun FoldableWrapper(
 ) {
   Row(
     modifier =
-      modifier.then(
-        Modifier.fillMaxWidth().clickable { onFoldableToggled() }.padding(16.dp)
-      ),
+      Modifier.fillMaxWidth()
+        .clickable { onFoldableToggled() }
+        .padding(vertical = 16.dp)
+        .then(modifier),
     horizontalArrangement = Arrangement.SpaceBetween,
   ) {
     Text(

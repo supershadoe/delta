@@ -37,6 +37,7 @@ internal fun LazyListScope.blocklistComponent(
       text = stringResource(R.string.blocklist),
       foldableState = state.isBlocklistShown,
       onFoldableToggled = actions.onBlocklistToggled,
+      modifier = Modifier.padding(horizontal = 16.dp),
     )
   }
   if (state.isBlocklistShown) {
