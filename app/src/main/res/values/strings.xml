@@ -27,6 +27,7 @@
     <string name="crash_notif_sub_text">App crash handler</string>
     <string name="crash_notif_content">The app has crashed due to an unexpected error.</string>
     <string name="crash_notif_channel_name">Crash channel</string>
+    <string name="crash_notif_channel_desc">Reports some unexpected error with crash logs.</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Crash Log</string>
     <string name="crash_report_desc">The app has crashed :(</string>

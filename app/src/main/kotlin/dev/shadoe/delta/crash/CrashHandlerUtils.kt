@@ -103,6 +103,9 @@ object CrashHandlerUtils {
             .setName(
               applicationContext.getString(R.string.crash_notif_channel_name)
             )
+            .setDescription(
+              applicationContext.getString(R.string.crash_notif_channel_desc)
+            )
             .build()
         createNotificationChannel(notifChannel)
       }
