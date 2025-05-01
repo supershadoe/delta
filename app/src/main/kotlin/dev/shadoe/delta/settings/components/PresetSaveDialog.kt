@@ -18,7 +18,13 @@ fun PresetSaveDialog(onSave: (String) -> Unit, onDismiss: () -> Unit) {
   AlertDialog(
     onDismissRequest = onDismiss,
     confirmButton = {
-      TextButton(onClick = { onSave(presetName) }) {
+      TextButton(
+        onClick = {
+          if (presetName.isNotEmpty()) {
+            onSave(presetName)
+          }
+        }
+      ) {
         Text(stringResource(R.string.save_button))
       }
     },
@@ -29,7 +35,17 @@ fun PresetSaveDialog(onSave: (String) -> Unit, onDismiss: () -> Unit) {
     },
     title = { Text(stringResource(R.string.preset_save_title)) },
     text = {
-      TextField(value = presetName, onValueChange = { presetName = it })
+      TextField(
+        value = presetName,
+        onValueChange = { presetName = it },
+        singleLine = true,
+        supportingText = {
+          if (presetName.isEmpty()) {
+            Text(stringResource(R.string.preset_save_empty))
+          }
+        },
+        isError = presetName.isEmpty(),
+      )
     },
   )
 }

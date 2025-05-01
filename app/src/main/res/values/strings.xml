@@ -140,6 +140,7 @@
     <string name="presets_show_button">Show presets</string>
     <string name="presets_save_config_button">Save config</string>
     <string name="preset_save_title">Provide preset name</string>
+    <string name="preset_save_empty">Preset name cannot be empty.</string>
     <string name="presets_none_saved">There are no saved presets.</string>
     <string name="preset_saved_on">Saved on %s</string>
     <string name="preset_delete_button">Delete</string>
