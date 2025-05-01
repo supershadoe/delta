@@ -9,9 +9,9 @@ import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
 import dev.shadoe.delta.api.SoftApRandomizationSetting
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
-import dev.shadoe.delta.data.database.converters.PresetConverter
+import dev.shadoe.delta.data.database.converters.MacAddressConverter
 
-@TypeConverters(PresetConverter::class)
+@TypeConverters(MacAddressConverter::class)
 @Entity
 data class Preset(
   @PrimaryKey(autoGenerate = true) val id: Int = 0,

@@ -1,7 +1,6 @@
 package dev.shadoe.delta.data.softap
 
 import dev.shadoe.delta.api.ACLDevice
-import dev.shadoe.delta.api.MacAddress
 import dev.shadoe.delta.data.MacAddressCacheRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,14 +16,9 @@ constructor(
   @OptIn(ExperimentalCoroutinesApi::class)
   val blockedClients =
     softApStateStore.config.mapLatest { c ->
-      macAddressCacheRepository
-        .getHostnamesFromCache(c.blockedDevices.map { it.macAddress })
-        .map {
-          ACLDevice(
-            hostname = it.hostname,
-            macAddress = MacAddress(it.macAddress),
-          )
-        }
+      macAddressCacheRepository.getHostnamesFromCache(c.blockedDevices).map {
+        ACLDevice(hostname = it.hostname, macAddress = it.macAddress)
+      }
     }
 
   fun blockDevices(devices: Iterable<ACLDevice>) {

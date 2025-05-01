@@ -73,12 +73,7 @@ constructor(
 
   override fun onTetheredClientsChanged(clients: List<TetheredClient>) {
     softApStateStore.mStatus.update { it.copy(tetheredClients = clients) }
-    scope.launch {
-      clients
-        .filter { it.hostname != null }
-        .map { it.macAddress.toString() to it.hostname!! }
-        .let { macAddressCacheRepository.updateHostInfoInCache(it) }
-    }
+    scope.launch { macAddressCacheRepository.updateHostInfoInCache(clients) }
   }
 
   override fun onSoftApCapabilitiesChanged(capabilities: SoftApCapabilities) {
