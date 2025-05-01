@@ -1,8 +1,8 @@
 package dev.shadoe.delta.settings.components
 
-import android.content.ComponentName
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material3.AlertDialog
@@ -42,65 +42,93 @@ fun TaskerIntegrationInfo(onDismissDialog: () -> Unit) {
       Text(text = stringResource(R.string.tasker_integration_field_label))
     },
     text = {
-      Column {
-        Text(
-          text =
-            AnnotatedString.fromHtml(
-              stringResource(R.string.tasker_integration_info)
-            )
-        )
-        Column(
-          modifier = Modifier.fillMaxWidth(),
-          horizontalAlignment = Alignment.End,
-        ) {
-          TextButton(
-            onClick = {
-              clipboardManager.setText(
-                AnnotatedString(
-                  ComponentName(
-                      context.packageName,
-                      SoftApBroadcastReceiver::class.java.name,
-                    )
-                    .flattenToString()
-                )
+      LazyColumn {
+        item {
+          Text(
+            text =
+              AnnotatedString.fromHtml(
+                stringResource(R.string.tasker_integration_info)
+              )
+          )
+        }
+        item {
+          Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.CenterEnd,
+          ) {
+            TextButton(
+              onClick = {
+                clipboardManager.setText(AnnotatedString(context.packageName))
+              }
+            ) {
+              Text(
+                text =
+                  stringResource(R.string.tasker_integration_info_copy_pkg_name)
               )
             }
-          ) {
-            Text(
-              AnnotatedString.fromHtml(
-                stringResource(R.string.tasker_integration_info_copy_comp_name)
-              )
-            )
           }
-          TextButton(
-            onClick = {
-              clipboardManager.setText(
-                AnnotatedString(SoftApBroadcastReceiver.ACTION_STOP_SOFT_AP)
+        }
+        item {
+          Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.CenterEnd,
+          ) {
+            TextButton(
+              onClick = {
+                clipboardManager.setText(
+                  AnnotatedString(SoftApBroadcastReceiver::class.java.name)
+                )
+              }
+            ) {
+              Text(
+                text =
+                  stringResource(R.string.tasker_integration_info_copy_cls_name)
               )
             }
-          ) {
-            Text(
-              AnnotatedString.fromHtml(
-                stringResource(
-                  R.string.tasker_integration_info_copy_stop_action
-                )
-              )
-            )
           }
-          TextButton(
-            onClick = {
-              clipboardManager.setText(
-                AnnotatedString(SoftApBroadcastReceiver.ACTION_START_SOFT_AP)
-              )
-            }
+        }
+        item {
+          Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.CenterEnd,
           ) {
-            Text(
-              AnnotatedString.fromHtml(
-                stringResource(
-                  R.string.tasker_integration_info_copy_start_action
+            TextButton(
+              onClick = {
+                clipboardManager.setText(
+                  AnnotatedString(SoftApBroadcastReceiver.ACTION_STOP_SOFT_AP)
+                )
+              }
+            ) {
+              Text(
+                AnnotatedString.fromHtml(
+                  stringResource(
+                    R.string.tasker_integration_info_copy_stop_action
+                  )
                 )
               )
-            )
+            }
+          }
+        }
+        item {
+          Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.CenterEnd,
+          ) {
+            TextButton(
+              onClick = {
+                clipboardManager.setText(
+                  AnnotatedString(SoftApBroadcastReceiver.ACTION_START_SOFT_AP)
+                )
+              }
+            ) {
+              Text(
+                AnnotatedString.fromHtml(
+                  stringResource(
+                    R.string.tasker_integration_info_copy_start_action
+                  )
+                )
+              )
+            }
           }
         }
       }
