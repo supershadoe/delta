@@ -25,7 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SoftApControlRepository
+class SoftApController
 @Inject
 constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,

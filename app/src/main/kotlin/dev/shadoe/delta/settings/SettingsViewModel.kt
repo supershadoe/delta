@@ -9,7 +9,7 @@ import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.database.dao.PresetDao
 import dev.shadoe.delta.data.database.models.Preset
-import dev.shadoe.delta.data.softap.SoftApControlRepository
+import dev.shadoe.delta.data.softap.SoftApController
 import dev.shadoe.delta.data.softap.SoftApStateStore
 import dev.shadoe.delta.data.softap.validators.PassphraseValidator
 import dev.shadoe.delta.data.softap.validators.SsidValidator
@@ -29,7 +29,7 @@ private data class SettingsFlags(val insecureReceiverEnabled: Boolean)
 class SettingsViewModel
 @Inject
 constructor(
-  private val softApControlRepository: SoftApControlRepository,
+  private val softApController: SoftApController,
   private val softApStateStore: SoftApStateStore,
   private val flagsRepository: FlagsRepository,
   private val presetDao: PresetDao,
@@ -207,7 +207,7 @@ constructor(
           passphrase = softApStateStore.config.value.passphrase
         )
     }
-    softApControlRepository.updateSoftApConfiguration(_config.value)
+    softApController.updateSoftApConfiguration(_config.value)
     viewModelScope.launch {
       flagsRepository.setInsecureReceiverStatus(
         _flags.value.insecureReceiverEnabled

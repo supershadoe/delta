@@ -7,7 +7,7 @@ import dev.shadoe.delta.api.ShizukuStates
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApStatus
 import dev.shadoe.delta.data.shizuku.ShizukuRepository
-import dev.shadoe.delta.data.softap.SoftApControlRepository
+import dev.shadoe.delta.data.softap.SoftApController
 import dev.shadoe.delta.data.softap.SoftApStateFacade
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -64,7 +64,7 @@ class SoftApTile : TileService() {
   }
 
   @Inject lateinit var shizukuRepository: ShizukuRepository
-  @Inject lateinit var softApControlRepository: SoftApControlRepository
+  @Inject lateinit var softApController: SoftApController
   @Inject lateinit var softApStateFacade: SoftApStateFacade
 
   override fun onStartListening() {
@@ -100,8 +100,8 @@ class SoftApTile : TileService() {
   override fun onClick() {
     super.onClick()
     when (qsTile.state) {
-      Tile.STATE_INACTIVE -> softApControlRepository.startSoftAp()
-      Tile.STATE_ACTIVE -> softApControlRepository.stopSoftAp()
+      Tile.STATE_INACTIVE -> softApController.startSoftAp()
+      Tile.STATE_ACTIVE -> softApController.stopSoftAp()
       Tile.STATE_UNAVAILABLE -> {}
     }
   }

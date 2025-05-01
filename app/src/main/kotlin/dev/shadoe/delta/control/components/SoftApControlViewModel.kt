@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
-import dev.shadoe.delta.data.softap.SoftApControlRepository
+import dev.shadoe.delta.data.softap.SoftApController
 import dev.shadoe.delta.data.softap.SoftApStateStore
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.mapLatest
 class SoftApControlViewModel
 @Inject
 constructor(
-  private val softApControlRepository: SoftApControlRepository,
+  private val softApController: SoftApController,
   private val state: SoftApStateStore,
 ) : ViewModel() {
   companion object {
@@ -60,9 +60,9 @@ constructor(
       p0 && p1
     }
 
-  fun startSoftAp() = softApControlRepository.startSoftAp()
+  fun startSoftAp() = softApController.startSoftAp()
 
-  fun stopSoftAp() = softApControlRepository.stopSoftAp()
+  fun stopSoftAp() = softApController.stopSoftAp()
 
   fun openQrCodeScreen(context: Context, isBigScreen: Boolean): Boolean {
     try {

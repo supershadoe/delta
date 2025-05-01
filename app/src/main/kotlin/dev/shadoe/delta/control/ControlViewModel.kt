@@ -3,7 +3,7 @@ package dev.shadoe.delta.control
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.ACLDevice
-import dev.shadoe.delta.data.softap.SoftApBlocklistRepository
+import dev.shadoe.delta.data.softap.SoftApBlocklistManager
 import dev.shadoe.delta.data.softap.SoftApStateStore
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +14,7 @@ class ControlViewModel
 @Inject
 constructor(
   state: SoftApStateStore,
-  private val softApBlocklistRepository: SoftApBlocklistRepository,
+  private val softApBlocklistManager: SoftApBlocklistManager,
 ) : ViewModel() {
   @OptIn(ExperimentalCoroutinesApi::class)
   val enabledState = state.status.mapLatest { it.enabledState }
@@ -26,11 +26,11 @@ constructor(
   val supportsBlocklist =
     state.status.mapLatest { it.capabilities.clientForceDisconnectSupported }
 
-  val blockedClients = softApBlocklistRepository.blockedClients
+  val blockedClients = softApBlocklistManager.blockedClients
 
   fun blockDevices(devices: Iterable<ACLDevice>) =
-    softApBlocklistRepository.blockDevices(devices)
+    softApBlocklistManager.blockDevices(devices)
 
   fun unblockDevices(devices: Iterable<ACLDevice>) =
-    softApBlocklistRepository.unblockDevices(devices)
+    softApBlocklistManager.unblockDevices(devices)
 }

@@ -7,11 +7,11 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 
-class SoftApBlocklistRepository
+class SoftApBlocklistManager
 @Inject
 constructor(
   private val macAddressCacheRepository: MacAddressCacheRepository,
-  private val softApControlRepository: SoftApControlRepository,
+  private val softApController: SoftApController,
   private val softApStateStore: SoftApStateStore,
 ) {
   @OptIn(ExperimentalCoroutinesApi::class)
@@ -29,7 +29,7 @@ constructor(
 
   fun blockDevices(devices: Iterable<ACLDevice>) {
     softApStateStore.config.value.let { c ->
-      softApControlRepository.updateSoftApConfiguration(
+      softApController.updateSoftApConfiguration(
         c.copy(
           blockedDevices = c.blockedDevices.plus(devices.map { it.macAddress })
         )
@@ -39,7 +39,7 @@ constructor(
 
   fun unblockDevices(devices: Iterable<ACLDevice>) {
     softApStateStore.config.value.let { c ->
-      softApControlRepository.updateSoftApConfiguration(
+      softApController.updateSoftApConfiguration(
         c.copy(
           blockedDevices = c.blockedDevices.minus(devices.map { it.macAddress })
         )

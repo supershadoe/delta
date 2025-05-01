@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-class SoftApBackgroundJobs
+class SoftApMonitor
 @Inject
 constructor(
   @WifiSystemService private val wifiManager: IWifiManager,
-  private val softApControlRepository: SoftApControlRepository,
+  private val softApController: SoftApController,
   private val softApStateStore: SoftApStateStore,
 ) : AutoCloseable {
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -68,7 +68,7 @@ constructor(
       .mapLatest { it.enabledState == SoftApEnabledState.WIFI_AP_STATE_FAILED }
       .onEach {
         if (!it) return@onEach
-        softApControlRepository.stopSoftAp()
+        softApController.stopSoftAp()
       }
 
   init {

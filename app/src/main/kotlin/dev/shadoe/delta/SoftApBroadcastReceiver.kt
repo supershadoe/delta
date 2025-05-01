@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.shadoe.delta.api.ShizukuStates
 import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.shizuku.ShizukuRepository
-import dev.shadoe.delta.data.softap.SoftApControlRepository
+import dev.shadoe.delta.data.softap.SoftApController
 import dev.shadoe.delta.data.softap.SoftApStateFacade
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
@@ -33,7 +33,7 @@ class SoftApBroadcastReceiver : BroadcastReceiver() {
   }
 
   @Inject lateinit var shizukuRepository: ShizukuRepository
-  @Inject lateinit var softApControlRepository: SoftApControlRepository
+  @Inject lateinit var softApController: SoftApController
   @Inject lateinit var flagsRepository: FlagsRepository
   @Inject lateinit var softApStateFacade: SoftApStateFacade
 
@@ -107,8 +107,8 @@ class SoftApBroadcastReceiver : BroadcastReceiver() {
 
     softApStateFacade.start()
     when (intent.action) {
-      ACTION_START_SOFT_AP -> softApControlRepository.startSoftAp()
-      ACTION_STOP_SOFT_AP -> softApControlRepository.stopSoftAp()
+      ACTION_START_SOFT_AP -> softApController.startSoftAp()
+      ACTION_STOP_SOFT_AP -> softApController.stopSoftAp()
     }
     cleanup()
   }

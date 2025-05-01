@@ -14,11 +14,11 @@ class SoftApStateFacade
 @Inject
 constructor(
   private val listenerProvider: Provider<SoftApStateListener>,
-  private val backgroundJobsProvider: Provider<SoftApBackgroundJobs>,
+  private val backgroundJobsProvider: Provider<SoftApMonitor>,
   state: SoftApStateStore,
 ) {
   private var softApStateListener: SoftApStateListener? = null
-  private var softApBackgroundJobs: SoftApBackgroundJobs? = null
+  private var softApMonitor: SoftApMonitor? = null
   private var subscribers = AtomicInt(0)
 
   val status = state.status
@@ -28,8 +28,7 @@ constructor(
     val current = subscribers.incrementAndFetch()
     if (current == 1) {
       softApStateListener = softApStateListener ?: listenerProvider.get()
-      softApBackgroundJobs =
-        softApBackgroundJobs ?: backgroundJobsProvider.get()
+      softApMonitor = softApMonitor ?: backgroundJobsProvider.get()
     }
   }
 
@@ -42,8 +41,8 @@ constructor(
       runCatching {
         softApStateListener?.close()
         softApStateListener = null
-        softApBackgroundJobs?.close()
-        softApBackgroundJobs = null
+        softApMonitor?.close()
+        softApMonitor = null
       }
     }
   }
