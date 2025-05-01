@@ -148,6 +148,9 @@
     <string name="tile_field_label">Add quick setting tile?</string>
     <string name="tile_field_desc">Adds a tile to quick settings shade that helps in easily managing hotspot without launching this app.</string>
     <string name="tile_add_button">Add tile</string>
+    <string name="tile_added">Tile was added successfully!</string>
+    <string name="tile_already_added">Tile was already added.</string>
+    <string name="tile_add_error">Failed to add tile, try again later.</string>
     <string name="tasker_integration_field_icon">Automation icon</string>
     <string name="tasker_integration_field_label">Tasker integration</string>
     <string name="tasker_integration_field_desc">[insecure] Allows tasker to manage hotspot settings via this app.</string>

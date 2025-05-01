@@ -260,7 +260,7 @@ fun SettingsScreen(
         )
       }
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        item { SoftApTileField() }
+        item { SoftApTileField(onShowSnackbar) }
       }
       item {
         TaskerIntegrationField(

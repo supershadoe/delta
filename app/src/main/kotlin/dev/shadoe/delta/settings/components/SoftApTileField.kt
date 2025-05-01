@@ -15,6 +15,8 @@ import androidx.compose.material.icons.rounded.SettingsSuggest
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarVisuals
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,19 +28,43 @@ import dev.shadoe.delta.R
 import dev.shadoe.delta.SoftApTile
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-private fun addTileToQuickSettings(context: Context) {
+private fun addTileToQuickSettings(
+  context: Context,
+  onShowSnackbar: (SnackbarVisuals) -> Unit,
+) {
   val sbm = context.getSystemService(StatusBarManager::class.java)
   sbm.requestAddTileService(
     ComponentName(context.packageName, SoftApTile::class.java.name),
     context.getString(R.string.tile_title),
     Icon.createWithResource(context, R.drawable.ic_launcher_foreground),
     context.mainExecutor,
-  ) {}
+  ) {
+    if (it != StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_NOT_ADDED) {
+      onShowSnackbar(generateSnackbarVisual(context, it))
+    }
+  }
 }
+
+private fun generateSnackbarVisual(context: Context, result: Int) =
+  object : SnackbarVisuals {
+    override val message =
+      context.getString(
+        when (result) {
+          StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ALREADY_ADDED ->
+            R.string.tile_already_added
+          StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ADDED ->
+            R.string.tile_added
+          else -> R.string.tile_add_error
+        }
+      )
+    override val withDismissAction = true
+    override val actionLabel = null
+    override val duration = SnackbarDuration.Short
+  }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-internal fun SoftApTileField() {
+internal fun SoftApTileField(onShowSnackbar: (SnackbarVisuals) -> Unit = {}) {
   val context = LocalContext.current
   Row(
     modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
@@ -62,7 +88,7 @@ internal fun SoftApTileField() {
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
-      Button(onClick = { addTileToQuickSettings(context) }) {
+      Button(onClick = { addTileToQuickSettings(context, onShowSnackbar) }) {
         Text(text = stringResource(R.string.tile_add_button))
       }
     }
