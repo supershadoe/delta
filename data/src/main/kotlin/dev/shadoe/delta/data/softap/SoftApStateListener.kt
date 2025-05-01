@@ -28,7 +28,7 @@ constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   @WifiSystemService private val wifiManager: IWifiManager,
   private val macAddressCacheRepository: MacAddressCacheRepository,
-  private val softApStateRepository: SoftApStateRepository,
+  private val softApStateStore: SoftApStateStore,
 ) : AutoCloseable, TetheringEventListener {
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -68,11 +68,11 @@ constructor(
   }
 
   override fun onEnabledStateChanged(@EnabledStateType state: Int) {
-    softApStateRepository.mStatus.update { it.copy(enabledState = state) }
+    softApStateStore.mStatus.update { it.copy(enabledState = state) }
   }
 
   override fun onTetheredClientsChanged(clients: List<TetheredClient>) {
-    softApStateRepository.mStatus.update { it.copy(tetheredClients = clients) }
+    softApStateStore.mStatus.update { it.copy(tetheredClients = clients) }
     scope.launch {
       clients
         .filter { it.hostname != null }
@@ -82,14 +82,10 @@ constructor(
   }
 
   override fun onSoftApCapabilitiesChanged(capabilities: SoftApCapabilities) {
-    softApStateRepository.mStatus.update {
-      it.copy(capabilities = capabilities)
-    }
+    softApStateStore.mStatus.update { it.copy(capabilities = capabilities) }
   }
 
   override fun onSoftApSupported(isSupported: Boolean) {
-    softApStateRepository.mStatus.update {
-      it.copy(isSoftApSupported = isSupported)
-    }
+    softApStateStore.mStatus.update { it.copy(isSoftApSupported = isSupported) }
   }
 }

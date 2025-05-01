@@ -28,7 +28,7 @@ class SoftApBackgroundJobs
 constructor(
   @WifiSystemService private val wifiManager: IWifiManager,
   private val softApControlRepository: SoftApControlRepository,
-  private val softApStateRepository: SoftApStateRepository,
+  private val softApStateStore: SoftApStateStore,
 ) : AutoCloseable {
   private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -58,13 +58,13 @@ constructor(
         }
       }
       .onEach {
-        softApStateRepository.mConfig.value =
-          it.toBridgeClass(state = softApStateRepository.internalState.value)
+        softApStateStore.mConfig.value =
+          it.toBridgeClass(state = softApStateStore.internalState.value)
       }
 
   @OptIn(ExperimentalCoroutinesApi::class)
   private fun resetSoftApState() =
-    softApStateRepository.status
+    softApStateStore.status
       .mapLatest { it.enabledState == SoftApEnabledState.WIFI_AP_STATE_FAILED }
       .onEach {
         if (!it) return@onEach
@@ -76,13 +76,13 @@ constructor(
       wifiManager.queryLastConfiguredTetheredApPassphraseSinceBoot(
         object : IStringListener.Stub() {
           override fun onResult(value: String?) {
-            softApStateRepository.internalState.update {
+            softApStateStore.internalState.update {
               it.copy(fallbackPassphrase = value ?: generateRandomPassword())
             }
-            softApStateRepository.mConfig.update {
+            softApStateStore.mConfig.update {
               it.copy(
                 passphrase =
-                  softApStateRepository.internalState.value.fallbackPassphrase
+                  softApStateStore.internalState.value.fallbackPassphrase
               )
             }
           }

@@ -10,7 +10,7 @@ import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.database.dao.PresetDao
 import dev.shadoe.delta.data.database.models.Preset
 import dev.shadoe.delta.data.softap.SoftApControlRepository
-import dev.shadoe.delta.data.softap.SoftApStateRepository
+import dev.shadoe.delta.data.softap.SoftApStateStore
 import dev.shadoe.delta.data.softap.validators.PassphraseValidator
 import dev.shadoe.delta.data.softap.validators.SsidValidator
 import javax.inject.Inject
@@ -30,16 +30,16 @@ class SettingsViewModel
 @Inject
 constructor(
   private val softApControlRepository: SoftApControlRepository,
-  private val softApStateRepository: SoftApStateRepository,
+  private val softApStateStore: SoftApStateStore,
   private val flagsRepository: FlagsRepository,
   private val presetDao: PresetDao,
 ) : ViewModel() {
-  private val _config = MutableStateFlow(softApStateRepository.config.value)
+  private val _config = MutableStateFlow(softApStateStore.config.value)
   private val _results = MutableStateFlow(UpdateResults())
   private val _flags =
     MutableStateFlow(SettingsFlags(insecureReceiverEnabled = false))
 
-  val status = softApStateRepository.status
+  val status = softApStateStore.status
   val config = _config.asStateFlow()
   val results = _results.asStateFlow()
   val presets = presetDao.observePresets()
@@ -48,7 +48,7 @@ constructor(
     // TODO: instead of auto-updating, show a message in UI asking if user
     //       wants to reload config
     viewModelScope.launch {
-      softApStateRepository.config.collect {
+      softApStateStore.config.collect {
         if (_config.value == it) return@collect
         _config.value = it
       }
@@ -204,7 +204,7 @@ constructor(
     if (_config.value.passphrase.isEmpty()) {
       _config.value =
         _config.value.copy(
-          passphrase = softApStateRepository.config.value.passphrase
+          passphrase = softApStateStore.config.value.passphrase
         )
     }
     softApControlRepository.updateSoftApConfiguration(_config.value)

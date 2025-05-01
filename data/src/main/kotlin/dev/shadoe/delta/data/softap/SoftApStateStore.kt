@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Singleton
-class SoftApStateRepository @Inject constructor() {
+class SoftApStateStore @Inject constructor() {
   internal val internalState =
     MutableStateFlow(
       InternalState(fallbackPassphrase = generateRandomPassword())

@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.ConfigFlag
 import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.MacAddressCacheRepository
-import dev.shadoe.delta.data.softap.SoftApStateRepository
+import dev.shadoe.delta.data.softap.SoftApStateStore
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,12 +17,12 @@ import kotlinx.coroutines.withContext
 class DebugViewModel
 @Inject
 constructor(
-  softApStateRepository: SoftApStateRepository,
+  softApStateStore: SoftApStateStore,
   private val flagsRepository: FlagsRepository,
   private val macAddressCacheRepository: MacAddressCacheRepository,
 ) : ViewModel() {
-  val config = softApStateRepository.config
-  val status = softApStateRepository.status
+  val config = softApStateStore.config
+  val status = softApStateStore.status
   val flags = MutableStateFlow("")
   val macAddressCache = MutableStateFlow("")
 

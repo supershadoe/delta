@@ -30,7 +30,7 @@ class SoftApControlRepository
 constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   @WifiSystemService private val wifiManager: IWifiManager,
-  private val softApStateRepository: SoftApStateRepository,
+  private val softApStateStore: SoftApStateStore,
 ) {
   companion object {
     private const val TAG = "SoftApControlRepository"
@@ -44,7 +44,7 @@ constructor(
     }
 
   fun startSoftAp(): Boolean {
-    val state = softApStateRepository.status.value.enabledState
+    val state = softApStateStore.status.value.enabledState
     if (state != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
       return false
     }
@@ -69,7 +69,7 @@ constructor(
   }
 
   fun stopSoftAp(): Boolean {
-    val state = softApStateRepository.status.value.enabledState
+    val state = softApStateStore.status.value.enabledState
     if (state != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
       return false
     }
@@ -109,11 +109,11 @@ constructor(
       .getOrDefault(false)
       .also {
         if (it) {
-          softApStateRepository.mConfig.update { c }
+          softApStateStore.mConfig.update { c }
           scope.launch {
             val enabled = SoftApEnabledState.WIFI_AP_STATE_ENABLED
             val disabled = SoftApEnabledState.WIFI_AP_STATE_DISABLED
-            val status = softApStateRepository.mStatus
+            val status = softApStateStore.mStatus
             if (status.value.enabledState == enabled) {
               stopSoftAp()
               while (status.value.enabledState != disabled) {
@@ -129,11 +129,11 @@ constructor(
       }
 
   fun refreshConfiguration() {
-    softApStateRepository.mConfig.update {
+    softApStateStore.mConfig.update {
       Refine.unsafeCast<SoftApConfigurationHidden>(
           wifiManager.softApConfiguration
         )
-        .toBridgeClass(state = softApStateRepository.internalState.value)
+        .toBridgeClass(state = softApStateStore.internalState.value)
     }
   }
 }

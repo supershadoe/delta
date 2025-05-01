@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.ACLDevice
 import dev.shadoe.delta.data.softap.SoftApBlocklistRepository
-import dev.shadoe.delta.data.softap.SoftApStateRepository
+import dev.shadoe.delta.data.softap.SoftApStateStore
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.mapLatest
 class ControlViewModel
 @Inject
 constructor(
-  state: SoftApStateRepository,
+  state: SoftApStateStore,
   private val softApBlocklistRepository: SoftApBlocklistRepository,
 ) : ViewModel() {
   @OptIn(ExperimentalCoroutinesApi::class)

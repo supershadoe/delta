@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shadoe.delta.api.SoftApEnabledState
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.data.softap.SoftApControlRepository
-import dev.shadoe.delta.data.softap.SoftApStateRepository
+import dev.shadoe.delta.data.softap.SoftApStateStore
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ class SoftApControlViewModel
 @Inject
 constructor(
   private val softApControlRepository: SoftApControlRepository,
-  private val state: SoftApStateRepository,
+  private val state: SoftApStateStore,
 ) : ViewModel() {
   companion object {
     private const val ACTION_QR_CODE_SCREEN =

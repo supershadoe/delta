@@ -15,7 +15,7 @@ class SoftApStateFacade
 constructor(
   private val listenerProvider: Provider<SoftApStateListener>,
   private val backgroundJobsProvider: Provider<SoftApBackgroundJobs>,
-  state: SoftApStateRepository,
+  state: SoftApStateStore,
 ) {
   private var softApStateListener: SoftApStateListener? = null
   private var softApBackgroundJobs: SoftApBackgroundJobs? = null
