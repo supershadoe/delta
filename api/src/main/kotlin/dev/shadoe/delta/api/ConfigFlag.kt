@@ -15,7 +15,7 @@ enum class ConfigFlag {
    * This is set either after migrating app from Datastore when upgrading from
    * older versions or when app is installed afresh.
    */
-  USES_ROOM_DB,
+  @Deprecated("Not used anymore", level = DeprecationLevel.HIDDEN) USES_ROOM_DB,
 
   /**
    * Adding a permission to the receiver cannot let arbitrary apps send intents

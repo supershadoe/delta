@@ -5,7 +5,6 @@ androidx-annotation = "1.9.1"
 composeBom = "2025.04.00"
 coreKtx = "1.16.0"
 coroutines = "1.10.2"
-datastore = "1.1.3"
 datetime = "0.6.2"
 espressoCore = "3.6.1"
 graphics-shapes = "1.0.1"
@@ -33,18 +32,14 @@ androidx-graphics-shapes = { group = "androidx.graphics", name = "graphics-shape
 
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 compose-nav = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 compose-nav-hilt = { group = "androidx.hilt" , name = "hilt-navigation-compose", version.ref = "hilt-nav-compose" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
-
-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite" }
-
-datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
 
@@ -100,6 +95,7 @@ room = { id = "androidx.room", version.ref = "room" }
 [bundles]
 compose = [
     "compose-activity",
+    "compose-adaptive",
     "compose-foundation",
     "compose-material3",
     "compose-material-icons-extended",
@@ -107,7 +103,6 @@ compose = [
     "compose-nav-hilt",
     "compose-ui-tooling-preview",
     "compose-viewmodel",
-    "adaptive-navigation-suite"
 ]
 instTest = [
     "compose-ui-test-junit4",

@@ -3,6 +3,7 @@ package dev.shadoe.delta.debug
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.shadoe.delta.api.ConfigFlag
 import dev.shadoe.delta.data.FlagsRepository
 import dev.shadoe.delta.data.MacAddressCacheRepository
 import dev.shadoe.delta.data.softap.SoftApStateRepository
@@ -28,7 +29,11 @@ constructor(
   init {
     viewModelScope.launch {
       withContext(Dispatchers.IO) {
-        flags.value = flagsRepository.debugDumpFlags().toString()
+        flags.value =
+          flagsRepository
+            .debugDumpFlags()
+            .map { ConfigFlag.entries[it.flag].name to it.value }
+            .toString()
         macAddressCache.value =
           macAddressCacheRepository.debugDumpCache().toString()
       }

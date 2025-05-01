@@ -43,7 +43,6 @@ dependencies {
   compileOnly(project(path = ":system-api-stubs"))
   implementation(project(path = ":api"))
   implementation(libs.shizuku.api)
-  implementation(libs.datastore.preferences.core)
   implementation(libs.hilt.android)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.serialization.json)
