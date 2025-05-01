@@ -6,6 +6,7 @@
     <string name="blocklist">Sperrliste</string>
     <string name="no_connected_devices">Es sind keine Geräte verbunden.</string>
     <string name="open_icon">Öffnen</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Wird deaktiviert…</string>

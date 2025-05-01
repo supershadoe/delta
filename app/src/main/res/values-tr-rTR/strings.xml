@@ -6,6 +6,7 @@
     <string name="blocklist">Blok listesi</string>
     <string name="no_connected_devices">Bağlı cihaz yok.</string>
     <string name="open_icon">Aç</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Kapatılıyor…</string>
@@ -18,6 +19,7 @@
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Engellenmiş cihaz yok.</string>
     <string name="unblock_button">Engeli Kaldır</string>
+    <string name="blocklist_blocked">Cihazlar blok listesine eklendi.</string>
     <string name="blocklist_unblocked">Cihazlar blok listesinden çıkarıldı.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Raporla</string>

@@ -6,6 +6,7 @@
     <string name="blocklist">Список заблокированных устройств</string>
     <string name="no_connected_devices">Нет подключённых устройств.</string>
     <string name="open_icon">Открыть</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Точка доступа</string>
     <string name="tile_disabling">Выключение…</string>
@@ -39,6 +40,7 @@
     <string name="ip_not_allocated">(IP-адрес ещё не выделен)</string>
     <string name="block_button">ЗАБЛОКИРОВАТЬ</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="passphrase_hidden">(скрыт)</string>
     <string name="passphrase_show">Показать пароль</string>
     <string name="passphrase_hide">Скрыть пароль</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->

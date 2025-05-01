@@ -6,6 +6,7 @@
     <string name="blocklist">Crna lista</string>
     <string name="no_connected_devices">Nema povezanih uređaja.</string>
     <string name="open_icon">Otvori</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Isključivanje…</string>
