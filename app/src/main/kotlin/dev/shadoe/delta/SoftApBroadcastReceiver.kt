@@ -22,8 +22,6 @@ import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class SoftApBroadcastReceiver : BroadcastReceiver() {
-  private var shizukuCallback: AutoCloseable? = null
-
   companion object {
     private const val SOFT_AP_FAILURE_CHANNEL_ID =
       "dev.shadoe.delta.softApFailure"
@@ -85,8 +83,7 @@ class SoftApBroadcastReceiver : BroadcastReceiver() {
   }
 
   fun cleanup() {
-    softApStateFacade.stop()
-    shizukuCallback?.close()
+    softApStateFacade.unsubscribe()
   }
 
   override fun onReceive(context: Context, intent: Intent) {
@@ -98,18 +95,19 @@ class SoftApBroadcastReceiver : BroadcastReceiver() {
     }
     if (!isReceiverEnabled) return
 
-    shizukuCallback = shizukuRepository.callbackSubscriber
+    softApStateFacade.subscribe()
+
     if (shizukuRepository.shizukuState.value != ShizukuStates.CONNECTED) {
       sendFailureNotification(context)
       cleanup()
       return
     }
 
-    softApStateFacade.start()
     when (intent.action) {
       ACTION_START_SOFT_AP -> softApController.startSoftAp()
       ACTION_STOP_SOFT_AP -> softApController.stopSoftAp()
     }
+
     cleanup()
   }
 }

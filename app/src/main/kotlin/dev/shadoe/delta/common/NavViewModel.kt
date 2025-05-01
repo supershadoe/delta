@@ -46,13 +46,10 @@ constructor(
 
   init {
     addCloseable(shizukuRepository.callbackSubscriber)
+    softApStateFacade.subscribe()
+    addCloseable { softApStateFacade.unsubscribe() }
     viewModelScope.launch {
       shizukuRepository.shizukuState.collect {
-        if (it == ShizukuStates.CONNECTED) {
-          softApStateFacade.start()
-        } else {
-          softApStateFacade.stop()
-        }
         _startScreen.update { determineStartScreen() }
       }
     }
