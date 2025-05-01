@@ -19,7 +19,9 @@ constructor(private val hostInfoDao: HostInfoDao) {
   }
 
   suspend fun getHostnamesFromCache(macAddressList: List<MacAddress>) =
-    hostInfoDao.resolveMacAddressesToHostNames(macAddressList)
+    hostInfoDao.resolveMacAddressesToHostNames(macAddressList).associate {
+      it.macAddress to it.hostname
+    }
 
   suspend fun debugDumpCache() = hostInfoDao.dump()
 }

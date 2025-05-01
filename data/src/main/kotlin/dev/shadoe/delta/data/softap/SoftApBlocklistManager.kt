@@ -15,11 +15,13 @@ constructor(
 ) {
   @OptIn(ExperimentalCoroutinesApi::class)
   val blockedClients =
-    softApStateStore.config.mapLatest { c ->
-      macAddressCacheRepository.getHostnamesFromCache(c.blockedDevices).map {
-        ACLDevice(hostname = it.hostname, macAddress = it.macAddress)
+    softApStateStore.config
+      .mapLatest { c -> c.blockedDevices }
+      .mapLatest { macAddresses ->
+        val cache =
+          macAddressCacheRepository.getHostnamesFromCache(macAddresses)
+        macAddresses.map { ACLDevice(hostname = cache[it], macAddress = it) }
       }
-    }
 
   fun blockDevices(devices: Iterable<ACLDevice>) {
     softApStateStore.config.value.let { c ->
