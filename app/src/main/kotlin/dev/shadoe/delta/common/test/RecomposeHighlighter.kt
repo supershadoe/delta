@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.shadoe.delta.test
+package dev.shadoe.delta.common.test
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
