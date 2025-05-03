@@ -8,3 +8,6 @@
 - Redesigned UI
 - Allow changing language for Delta app alone in System settings app
 - Allow triggering hotspot from Tasker
+- New languages
+  - Fully translated: German
+  - Partial: Serbian & Spanish
