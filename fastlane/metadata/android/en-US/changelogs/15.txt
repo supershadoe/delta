@@ -1,13 +1,15 @@
 ### 2025.05+0
 
-- Add presets support for saving and restoring settings
-- Add quick setting tile for devices where SystemUI doesn't show one
-- Added proper checking of blocklist/tethering support on devices
+BREAKING CHANGE: Update to previous version before this
+
+- Presets support for saving/restoring settings
+- Quick setting tile for devices where SystemUI doesn't show one
+- Proper checking of blocklist/tethering support on devices
 - Automatically fix tethering if it fails due to bad config
 - Tap to copy IP address
 - Redesigned UI
-- Allow changing language for Delta app alone in System settings app
-- Allow triggering hotspot from Tasker
+- Can change language for Delta alone in System settings
+- Tasker integration
 - New languages
   - Fully translated: German
   - Partial: Serbian & Spanish
