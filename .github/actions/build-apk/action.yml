@@ -59,9 +59,9 @@ runs:
     - name: Move APKs to root
       shell: bash
       run: |
-        DEBUG_APK_PATH = "app/build/outputs/apk/debugKeySigned/debug/app-debugKeySigned-debug.apk"
-        UNSIGNED_RELEASE_APK_PATH = "app/build/outputs/apk/debugKeySigned/release/app-debugKeySigned-release.apk"
-        SIGNED_RELEASE_APK_PATH = "app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk"
+        DEBUG_APK_PATH="app/build/outputs/apk/debugKeySigned/debug/app-debugKeySigned-debug.apk"
+        UNSIGNED_RELEASE_APK_PATH="app/build/outputs/apk/debugKeySigned/release/app-debugKeySigned-release.apk"
+        SIGNED_RELEASE_APK_PATH="app/build/outputs/apk/defaultKeySigned/release/app-defaultKeySigned-release.apk"
         [ -e "$DEBUG_APK_PATH" ] && mv "$DEBUG_APK_PATH" "app-debug.apk"
         [ -e "$UNSIGNED_RELEASE_APK_PATH" ] && mv "$UNSIGNED_RELEASE_APK_PATH" \
           "app-release.apk"
