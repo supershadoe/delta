@@ -90,6 +90,13 @@ android {
   }
 
   kotlinOptions { jvmTarget = "21" }
+
+  packaging {
+    resources {
+      excludes += "META-INF/LICENSE.md"
+      excludes += "META-INF/LICENSE-notice.md"
+    }
+  }
 }
 
 dependencies {
@@ -115,7 +122,9 @@ dependencies {
   implementation(libs.kotlinx.serialization.json)
 
   ksp(libs.hilt.compiler)
-  testImplementation(libs.kotlin.test.junit)
+  androidTestImplementation(libs.kotlin.test.junit)
+  androidTestImplementation(libs.mockk)
+  androidTestImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.bundles.instTest)
   debugImplementation(libs.bundles.studioPreview)
   debugImplementation(libs.leakcanary)
