@@ -6,6 +6,11 @@
     <string name="blocklist">Sperrliste</string>
     <string name="no_connected_devices">Es sind keine Geräte verbunden.</string>
     <string name="open_icon">Öffnen</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">Hotspot konnte nicht gestartet werden.</string>
+    <string name="soft_ap_failure_notif_content">Läuft Shizuku und ist mit der App verbunden?</string>
+    <string name="soft_ap_failure_notif_channel_name">Fehlermeldungen</string>
+    <string name="soft_ap_failure_notif_channel_desc">Sendet Benachrichtigungen über alle in der App auftretenden Fehler.</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Wird deaktiviert…</string>
@@ -14,9 +19,12 @@
     <string name="tile_enabled">%d Geräte</string>
     <string name="tile_failed">Nicht verfügbar</string>
     <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">Steuerung</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Es sind keine Geräte blockiert.</string>
     <string name="unblock_button">ENTSPERREN</string>
+    <string name="blocklist_blocked">Geräte zur Sperrliste hinzugefügt.</string>
+    <string name="blocklist_unblocked">Geräte von der Sperrliste entfernt.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Bericht</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
@@ -24,6 +32,7 @@
     <string name="crash_notif_sub_text">App-Absturz-Handler</string>
     <string name="crash_notif_content">Die App ist aufgrund eines unerwarteten Fehlers abgestürzt.</string>
     <string name="crash_notif_channel_name">Absturzkanal</string>
+    <string name="crash_notif_channel_desc">Meldet einige unerwartete Fehler mit Absturzprotokollen.</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Absturzprotokoll</string>
     <string name="crash_report_desc">Die App ist abgestürzt :(</string>
@@ -35,10 +44,13 @@
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">Hotspot fehlgeschlagen: Kann nicht gestartet werden</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Verbunden</string>
     <string name="no_client_hostname">(unbekanntes Gerät: kein Name)</string>
     <string name="ip_not_allocated">(IP-Adresse noch nicht vergeben)</string>
     <string name="block_button">BLOCKIEREN</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(kein)</string>
+    <string name="passphrase_hidden">(versteckt)</string>
     <string name="passphrase_show">Passphrase anzeigen</string>
     <string name="passphrase_hide">Passphrase ausblenden</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
@@ -120,7 +132,8 @@
     <string name="presets_field_desc">Speichern und Wiederherstellen verschiedener Hotspot-Einstellungen, um schnell zwischen ihnen zu wechseln.</string>
     <string name="presets_show_button">Voreinstellungen anzeigen</string>
     <string name="presets_save_config_button">Konfiguration speichern</string>
-    <string name="preset_save_title">Gebe einen voreingestellten Namen an.</string>
+    <string name="preset_save_title">Gebe einen voreingestellten Namen an</string>
+    <string name="preset_save_empty">Der voreingestellte Name darf nicht leer sein.</string>
     <string name="presets_none_saved">Es sind keine Voreinstellungen gespeichert.</string>
     <string name="preset_saved_on">Gespeichert am %s</string>
     <string name="preset_delete_button">Löschen</string>
@@ -129,10 +142,23 @@
     <string name="tile_field_label">Schnelleinstellungs-Kachel hinzufügen?</string>
     <string name="tile_field_desc">Fügt den Schnelleinstellungen eine Kachel hinzu, die dabei hilft, Hotspots einfach zu verwalten, ohne diese App starten zu müssen.</string>
     <string name="tile_add_button">Kachel hinzufügen</string>
+    <string name="tile_added">Kachel wurde erfolgreich hinzugefügt!</string>
+    <string name="tile_already_added">Kachel wurde bereits hinzugefügt.</string>
+    <string name="tile_add_error">Kachel konnte nicht hinzugefügt werden, versuche es später erneut.</string>
+    <string name="tasker_integration_field_icon">Automatisierungssymbol</string>
+    <string name="tasker_integration_field_label">Tasker-Integration</string>
+    <string name="tasker_integration_field_desc">[unsicher] Ermöglicht es Tasker, Hotspot-Einstellungen über diese App zu verwalten.</string>
+    <string name="tasker_integration_info_button">Setup-Info</string>
+    <string name="tasker_integration_info">Diese App bietet zwei Funktionen — &lt;tt&gt;dev.shadoe.delta.action.START_SOFT_AP&lt;/tt&gt; und &lt;tt&gt;dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt&gt; zum Starten und Stoppen des Hotspots. Obwohl dies für Power-User, die viel automatisieren möchten, sehr hilfreich ist, sollte man wissen, dass durch Aktivieren dieser Funktion &lt;b&gt;JEDE App&lt;/b&gt; diese Aktion senden kann (&lt;b&gt;nicht nur Tasker&lt;b&gt;), was einen Angriffsvektor für eine bösartige App darstellt.&lt;br&gt;&lt;br&gt;Ein hypothetisches Szenario, in dem dies gefährlich sein könnte, ist, wenn zwei Geräte mit derselben Malware infiziert sind und versuchen, über LAN miteinander zu kommunizieren und Delta dafür zu missbrauchen.</string>
+    <string name="tasker_integration_info_copy_start_action">Kopiere &lt;tt&gt;START_SOFT_AP&lt;/tt&gt;</string>
+    <string name="tasker_integration_info_copy_stop_action">Kopiere &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
+    <string name="tasker_integration_info_copy_pkg_name">Paketnamen kopieren</string>
+    <string name="tasker_integration_info_copy_cls_name">Klassennamen kopieren</string>
     <string name="cancel_button">Abbrechen</string>
     <string name="save_button">Speichern</string>
     <string name="passphrase_empty_warning">Ein Passwort eingeben.</string>
     <string name="save_changes_failed_warning">Fehler beim Aktualisieren der Hotspot-Einstellungen.</string>
+    <string name="save_changes_succeeded">Hotspot-Einstellungen aktualisiert.</string>
     <!-- dev.shadoe.delta.setup -->
     <string name="setup_title">Einrichtung der App</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->

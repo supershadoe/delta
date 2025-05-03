@@ -6,6 +6,7 @@
     <string name="blocklist">Crna lista</string>
     <string name="no_connected_devices">Nema povezanih uređaja.</string>
     <string name="open_icon">Otvori</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Isključivanje…</string>
@@ -119,7 +120,6 @@
     <string name="presets_field_desc">Sačuvaj i povrati podršavanja hotspota za bržu promenu izemđu njih.</string>
     <string name="presets_show_button">Prikaži podrazumevano</string>
     <string name="presets_save_config_button">Sačuvaj konfiguraciju</string>
-    <string name="preset_save_title">Unesi ime podrazumevanog.</string>
     <string name="presets_none_saved">Nema sačuvanih podrazumevanih opcija.</string>
     <string name="preset_saved_on">Sačuvano na %s</string>
     <string name="preset_delete_button">Ukloni</string>

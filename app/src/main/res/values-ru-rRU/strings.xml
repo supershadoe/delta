@@ -6,6 +6,11 @@
     <string name="blocklist">Список заблокированных устройств</string>
     <string name="no_connected_devices">Нет подключённых устройств.</string>
     <string name="open_icon">Открыть</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">Не удалось запустить точку доступа.</string>
+    <string name="soft_ap_failure_notif_content">Shizuku запущен и подключён к приложению?</string>
+    <string name="soft_ap_failure_notif_channel_name">Уведомления об ошибках</string>
+    <string name="soft_ap_failure_notif_channel_desc">Отправлять уведомления об ошибках случившихся в приложении.</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Точка доступа</string>
     <string name="tile_disabling">Выключение…</string>
@@ -35,10 +40,13 @@
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">Не удалось включить точку доступа</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Подключённые</string>
     <string name="no_client_hostname">(неизвестное устройство: нет имени)</string>
     <string name="ip_not_allocated">(IP-адрес ещё не выделен)</string>
     <string name="block_button">ЗАБЛОКИРОВАТЬ</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(нет)</string>
+    <string name="passphrase_hidden">(скрыт)</string>
     <string name="passphrase_show">Показать пароль</string>
     <string name="passphrase_hide">Скрыть пароль</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
@@ -119,7 +127,6 @@
     <string name="presets_field_desc">Сохраняйте и восстанавливайте настройки различных точек доступа для быстрого переключения между ними.</string>
     <string name="presets_show_button">Показать пресеты</string>
     <string name="presets_save_config_button">Сохранить конфигурацию</string>
-    <string name="preset_save_title">Укажите название пресета.</string>
     <string name="presets_none_saved">Нет сохранённых пресетов.</string>
     <string name="preset_saved_on">Сохранено в %s</string>
     <string name="preset_delete_button">Удалить</string>
@@ -128,10 +135,16 @@
     <string name="tile_field_label">Добавить переключатель для быстрой настройки?</string>
     <string name="tile_field_desc">Добавляет переключатель в центр управления, который помогает легко управлять точкой доступа, не запуская это приложение.</string>
     <string name="tile_add_button">Добавить переключатель</string>
+    <string name="tasker_integration_field_icon">Значок автоматизации</string>
+    <string name="tasker_integration_field_label">Интеграция Tasker</string>
+    <string name="tasker_integration_field_desc">[небезопасно] Позволяет Tasker управлять настройками точки доступа через это приложение.</string>
+    <string name="tasker_integration_info_copy_start_action">Скопировать &lt;tt&gt;START_SOFT_AP&lt;/tt&gt;</string>
+    <string name="tasker_integration_info_copy_stop_action">Скопировать &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
     <string name="cancel_button">Отмена</string>
     <string name="save_button">Сохранить</string>
     <string name="passphrase_empty_warning">Введите пароль.</string>
     <string name="save_changes_failed_warning">Не удалось изменить настройки точки доступа.</string>
+    <string name="save_changes_succeeded">Настройки точки доступа обновлены.</string>
     <!-- dev.shadoe.delta.setup -->
     <string name="setup_title">Настройка приложения</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
