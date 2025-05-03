@@ -6,6 +6,7 @@
     <string name="blocklist">Lista de bloqueados</string>
     <string name="no_connected_devices">No hay dispositivos conectados.</string>
     <string name="open_icon">Abrir</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Punto de acceso</string>
     <string name="tile_disabling">Apagando…</string>
