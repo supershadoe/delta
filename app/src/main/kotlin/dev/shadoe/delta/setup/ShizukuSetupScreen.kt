@@ -3,6 +3,7 @@ package dev.shadoe.delta.setup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -52,7 +53,7 @@ fun ShizukuSetupScreen(
   val shape = remember(roundedPillStar) { PolygonShape(roundedPillStar) }
   Scaffold {
     Column(
-      modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)
+      modifier = Modifier.displayCutoutPadding().fillMaxSize().padding(it).padding(horizontal = 16.dp)
     ) {
       Box(
         modifier = Modifier.weight(3f).fillMaxWidth(),
