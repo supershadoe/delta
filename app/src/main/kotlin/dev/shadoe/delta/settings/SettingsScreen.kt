@@ -3,6 +3,7 @@ package dev.shadoe.delta.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -14,9 +15,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
@@ -86,7 +90,7 @@ fun SettingsScreen(
   val results by vm.results.collectAsState()
   val presets by vm.presets.collectAsState(listOf())
   val taskerIntegrationStatus by
-    vm.taskerIntegrationStatus.collectAsState(false)
+  vm.taskerIntegrationStatus.collectAsState(false)
 
   val passphraseEmptyWarningSnackbar =
     object : SnackbarVisuals {
@@ -118,175 +122,196 @@ fun SettingsScreen(
   var isPresetListShown by remember { mutableStateOf(false) }
   var isTaskerInfoShown by remember { mutableStateOf(false) }
 
-  LazyColumn(
-    modifier =
-      modifier.then(
-        other =
-          Modifier.fillMaxSize().padding(horizontal = 16.dp).pointerInput(
-            Unit
-          ) {
-            detectTapGestures(onTap = { focusManager.clearFocus() })
-          }
-      )
-  ) {
-    if (Build.MANUFACTURER == "samsung") {
-      item {
-        Box(
-          modifier =
-            Modifier.padding(top = 16.dp)
-              .background(
-                color = MaterialTheme.colorScheme.tertiaryContainer,
-                shape = RoundedCornerShape(12.dp),
-              )
-        ) {
-          Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-          ) {
-            Icon(
-              imageVector = Icons.Outlined.Warning,
-              contentDescription = stringResource(R.string.warning_icon),
-            )
-            Column(modifier = Modifier.padding(start = 16.dp)) {
-              val context = LocalContext.current
-              Text(
-                text = stringResource(R.string.settings_warn_samsung),
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-              )
-              Button(
-                onClick = { openSystemSettings(context, isBigScreen) },
-                modifier = Modifier.padding(top = 8.dp),
-              ) {
-                Icon(
-                  imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-                  contentDescription = stringResource(R.string.open_icon),
+  Column {
+    LazyColumn(
+      modifier =
+        modifier.then(
+          other =
+            Modifier.fillMaxSize().padding(horizontal = 16.dp).pointerInput(
+              Unit
+            ) {
+              detectTapGestures(onTap = { focusManager.clearFocus() })
+            }
+        ).weight(1f)
+    ) {
+      if (Build.MANUFACTURER == "samsung") {
+        item {
+          Box(
+            modifier =
+              Modifier.padding(top = 16.dp)
+                .background(
+                  color = MaterialTheme.colorScheme.tertiaryContainer,
+                  shape = RoundedCornerShape(12.dp),
                 )
+          ) {
+            Row(
+              modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+              verticalAlignment = Alignment.CenterVertically,
+            ) {
+              Icon(
+                imageVector = Icons.Outlined.Warning,
+                contentDescription = stringResource(R.string.warning_icon),
+              )
+              Column(modifier = Modifier.padding(start = 16.dp)) {
+                val context = LocalContext.current
                 Text(
-                  text = stringResource(R.string.open_system_settings),
-                  modifier = Modifier.padding(start = 8.dp),
+                  text = stringResource(R.string.settings_warn_samsung),
+                  color = MaterialTheme.colorScheme.onTertiaryContainer,
                 )
+                Button(
+                  onClick = { openSystemSettings(context, isBigScreen) },
+                  modifier = Modifier.padding(top = 8.dp),
+                ) {
+                  Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
+                    contentDescription = stringResource(R.string.open_icon),
+                  )
+                  Text(
+                    text = stringResource(R.string.open_system_settings),
+                    modifier = Modifier.padding(start = 8.dp),
+                  )
+                }
               }
             }
           }
         }
       }
-    }
-    item {
-      Text(
-        text = stringResource(R.string.settings_desc),
-        modifier = Modifier.padding(vertical = 16.dp),
-      )
-    }
-    item {
-      SsidField(
-        ssid = config.ssid ?: "",
-        onSsidChange = { vm.updateSsid(it) },
-        currentResult = results.ssidResult,
-      )
-    }
-    item {
-      SecurityTypeField(
-        securityType = config.securityType,
-        supportedSecurityTypes = status.capabilities.supportedSecurityTypes,
-        onSecurityTypeChange = { vm.updateSecurityType(it) },
-      )
-    }
-    if (config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
       item {
-        PassphraseField(
-          passphrase = config.passphrase,
-          onPassphraseChange = { vm.updatePassphrase(it) },
-          currentResult = results.passphraseResult,
-        )
-      }
-    }
-    item {
-      AutoShutdownField(
-        isAutoShutdownEnabled = config.isAutoShutdownEnabled,
-        onAutoShutdownChange = { vm.updateAutoShutdown(it) },
-      )
-    }
-    item {
-      FrequencyBandField(
-        frequencyBand = config.speedType,
-        supportedBands = status.capabilities.supportedFrequencyBands,
-        onBandChange = { vm.updateSpeedType(it) },
-      )
-    }
-    item {
-      FoldableWrapper(
-        text = stringResource(R.string.advanced_settings_label),
-        foldableState = isAdvancedSettingsEnabled,
-        onFoldableToggled = {
-          isAdvancedSettingsEnabled = !isAdvancedSettingsEnabled
-        },
-      )
-    }
-    if (isAdvancedSettingsEnabled) {
-      item {
-        HiddenHotspotField(
-          isHiddenHotspotEnabled = config.isHidden,
-          onHiddenHotspotChange = { vm.updateIsHidden(it) },
+        Text(
+          text = stringResource(R.string.settings_desc),
+          modifier = Modifier.padding(vertical = 16.dp),
         )
       }
       item {
-        MaxClientLimitField(
-          maxClient = status.capabilities.maxSupportedClients,
-          onMaxClientChange = { vm.updateMaxClientLimit(it.toInt()) },
-          allowedLimit = config.maxClientLimit,
+        SsidField(
+          ssid = config.ssid ?: "",
+          onSsidChange = { vm.updateSsid(it) },
+          currentResult = results.ssidResult,
         )
       }
       item {
-        MacRandomizationField(
-          macRandomizationSetting = config.macRandomizationSetting,
-          onSettingChange = { vm.updateMacRandomizationSetting(it) },
+        SecurityTypeField(
+          securityType = config.securityType,
+          supportedSecurityTypes = status.capabilities.supportedSecurityTypes,
+          onSecurityTypeChange = { vm.updateSecurityType(it) },
+        )
+      }
+      if (config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN) {
+        item {
+          PassphraseField(
+            passphrase = config.passphrase,
+            onPassphraseChange = { vm.updatePassphrase(it) },
+            currentResult = results.passphraseResult,
+          )
+        }
+      }
+      item {
+        AutoShutdownField(
+          isAutoShutdownEnabled = config.isAutoShutdownEnabled,
+          onAutoShutdownChange = { vm.updateAutoShutdown(it) },
         )
       }
       item {
-        AutoShutDownTimeOutField(
-          autoShutDownTimeOut =
-            config.autoShutdownTimeout.takeIf {
-              it in SoftApAutoShutdownTimeout.supportedShutdownTimeouts
-            } ?: SoftApAutoShutdownTimeout.DEFAULT,
-          supportedAutoShutdownType =
-            SoftApAutoShutdownTimeout.supportedShutdownTimeouts,
-          onAutoShutdownChange = { vm.updateAutoShutdownTimeout(it) },
+        FrequencyBandField(
+          frequencyBand = config.speedType,
+          supportedBands = status.capabilities.supportedFrequencyBands,
+          onBandChange = { vm.updateSpeedType(it) },
         )
       }
       item {
-        PresetField(
-          onShowPresets = { isPresetListShown = true },
-          onSaveConfig = { shouldSavePreset = true },
+        FoldableWrapper(
+          text = stringResource(R.string.advanced_settings_label),
+          foldableState = isAdvancedSettingsEnabled,
+          onFoldableToggled = {
+            isAdvancedSettingsEnabled = !isAdvancedSettingsEnabled
+          },
         )
+      }
+      item {
+        AnimatedVisibility(isAdvancedSettingsEnabled) {
+          HiddenHotspotField(
+            isHiddenHotspotEnabled = config.isHidden,
+            onHiddenHotspotChange = { vm.updateIsHidden(it) },
+          )
+        }
+      }
+      item {
+        AnimatedVisibility(isAdvancedSettingsEnabled) {
+          MaxClientLimitField(
+            maxClient = status.capabilities.maxSupportedClients,
+            onMaxClientChange = { vm.updateMaxClientLimit(it.toInt()) },
+            allowedLimit = config.maxClientLimit,
+          )
+        }
+      }
+      item {
+        AnimatedVisibility(isAdvancedSettingsEnabled) {
+          MacRandomizationField(
+            macRandomizationSetting = config.macRandomizationSetting,
+            onSettingChange = { vm.updateMacRandomizationSetting(it) },
+          )
+        }
+      }
+      item {
+        AnimatedVisibility(isAdvancedSettingsEnabled) {
+          AutoShutDownTimeOutField(
+            autoShutDownTimeOut =
+              config.autoShutdownTimeout.takeIf {
+                it in SoftApAutoShutdownTimeout.supportedShutdownTimeouts
+              } ?: SoftApAutoShutdownTimeout.DEFAULT,
+            supportedAutoShutdownType =
+              SoftApAutoShutdownTimeout.supportedShutdownTimeouts,
+            onAutoShutdownChange = { vm.updateAutoShutdownTimeout(it) },
+          )
+        }
+      }
+      item {
+        AnimatedVisibility(isAdvancedSettingsEnabled) {
+          PresetField(
+            onShowPresets = { isPresetListShown = true },
+            onSaveConfig = { shouldSavePreset = true },
+          )
+        }
       }
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        item { SoftApTileField(onShowSnackbar) }
+        item {
+          AnimatedVisibility(isAdvancedSettingsEnabled) {
+            SoftApTileField(onShowSnackbar)
+          }
+        }
       }
       item {
-        TaskerIntegrationField(
-          isTaskerIntegrationEnabled = taskerIntegrationStatus,
-          onTaskerIntegrationChange = { vm.updateTaskerIntegrationStatus(it) },
-          onShowTaskerIntegrationInfo = { isTaskerInfoShown = true },
-        )
+        AnimatedVisibility(isAdvancedSettingsEnabled) {
+          TaskerIntegrationField(
+            isTaskerIntegrationEnabled = taskerIntegrationStatus,
+            onTaskerIntegrationChange = { vm.updateTaskerIntegrationStatus(it) },
+            onShowTaskerIntegrationInfo = { isTaskerInfoShown = true },
+          )
+        }
       }
     }
-    item {
-      Button(
-        onClick = onClick@{
-            if (
-              config.passphrase.isEmpty() &&
-                config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN
-            ) {
-              onShowSnackbar(passphraseEmptyWarningSnackbar)
-              return@onClick
-            }
-            onShowSnackbar(
-              if (vm.commit()) savedSnackbar else failedToSaveSnackbar
-            )
-          }
-      ) {
-        Text(text = stringResource(R.string.save_button))
-      }
+    HorizontalDivider()
+    ExtendedFloatingActionButton(
+      onClick = onClick@{
+        if (
+          config.passphrase.isEmpty() &&
+          config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN
+        ) {
+          onShowSnackbar(passphraseEmptyWarningSnackbar)
+          return@onClick
+        }
+        onShowSnackbar(
+          if (vm.commit()) savedSnackbar else failedToSaveSnackbar
+        )
+      },
+      modifier = Modifier.align(Alignment.End).padding(horizontal = 16.dp, vertical = 8.dp),
+    ) {
+      Icon(
+        imageVector = Icons.Default.Save,
+        contentDescription = stringResource(R.string.save_icon),
+        modifier = Modifier.padding(end = 12.dp),
+      )
+      Text(text = stringResource(R.string.save_button))
     }
   }
 

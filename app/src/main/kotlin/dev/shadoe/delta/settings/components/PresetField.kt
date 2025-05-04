@@ -1,6 +1,9 @@
 package dev.shadoe.delta.settings.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -41,12 +44,15 @@ internal fun PresetField(onShowPresets: () -> Unit, onSaveConfig: () -> Unit) {
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
-      Row {
+      @OptIn(ExperimentalLayoutApi::class)
+      FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+      ) {
         Button(onClick = onShowPresets) {
           Text(text = stringResource(R.string.presets_show_button))
         }
         Button(
-          modifier = Modifier.padding(start = 8.dp),
+          modifier = Modifier,
           onClick = onSaveConfig,
         ) {
           Text(text = stringResource(R.string.presets_save_config_button))

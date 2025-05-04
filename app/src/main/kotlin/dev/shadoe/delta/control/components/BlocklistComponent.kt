@@ -1,5 +1,10 @@
 package dev.shadoe.delta.control.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,18 +45,26 @@ internal fun LazyListScope.blocklistComponent(
       modifier = Modifier.padding(horizontal = 16.dp),
     )
   }
-  if (state.isBlocklistShown) {
-    if (state.blockedClients.isEmpty()) {
-      item {
-        Box(
-          modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-          contentAlignment = Alignment.Center,
-        ) {
-          Text(text = stringResource(R.string.blocklist_none_blocked))
-        }
+  item {
+    AnimatedVisibility(
+      visible = state.isBlocklistShown && state.blockedClients.isEmpty(),
+      enter = fadeIn() + expandVertically(),
+      exit = fadeOut() + shrinkVertically(),
+    ) {
+      Box(
+        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+        contentAlignment = Alignment.Center,
+      ) {
+        Text(text = stringResource(R.string.blocklist_none_blocked))
       }
     }
-    items(state.blockedClients) { client ->
+  }
+  items(state.blockedClients) { client ->
+    AnimatedVisibility(
+      visible = state.isBlocklistShown,
+      enter = fadeIn() + expandVertically(),
+      exit = fadeOut() + shrinkVertically(),
+    ) {
       BlockedClientComponent(
         state =
           BlockedClientComponentState(
@@ -73,8 +86,12 @@ internal fun LazyListScope.blocklistComponent(
       )
     }
   }
-  if (state.devicesToUnblock.isNotEmpty()) {
-    item {
+  item {
+    AnimatedVisibility(
+      visible = state.devicesToUnblock.isNotEmpty(),
+      enter = fadeIn() + expandVertically(),
+      exit = fadeOut() + shrinkVertically(),
+    ) {
       Button(
         onClick = actions.onUnblockClients,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
