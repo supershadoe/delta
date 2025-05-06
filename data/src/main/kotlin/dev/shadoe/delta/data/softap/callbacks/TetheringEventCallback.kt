@@ -7,6 +7,7 @@ import android.net.TetheredClient
 import android.net.TetheringCallbackStartedParcel
 import android.net.TetheringConfigurationParcel
 import android.net.TetheringManagerHidden
+import android.os.Build
 import dev.shadoe.delta.api.LinkAddress
 import dev.shadoe.delta.api.TetheredClient as TetheredClientWrapper
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
@@ -23,9 +24,11 @@ internal class TetheringEventCallback(
 
   override fun onCallbackStarted(parcel: TetheringCallbackStartedParcel?) {
     parcel ?: return
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      tetheringSupported = parcel.supportedTypes != 0L
+    }
     tetheringSupported =
-      (parcel.supportedTypes != 0L) or
-        parcel.config.tetherableWifiRegexs.isNotEmpty()
+      tetheringSupported or parcel.config.tetherableWifiRegexs.isNotEmpty()
     tetheringEventListener.onSoftApSupported(isSupported = tetheringSupported)
     onTetherClientsChanged(parcel.tetheredClients)
   }
