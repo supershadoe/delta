@@ -90,7 +90,7 @@ fun SettingsScreen(
   val results by vm.results.collectAsState()
   val presets by vm.presets.collectAsState(listOf())
   val taskerIntegrationStatus by
-  vm.taskerIntegrationStatus.collectAsState(false)
+    vm.taskerIntegrationStatus.collectAsState(false)
 
   val passphraseEmptyWarningSnackbar =
     object : SnackbarVisuals {
@@ -125,14 +125,16 @@ fun SettingsScreen(
   Column {
     LazyColumn(
       modifier =
-        modifier.then(
-          other =
-            Modifier.fillMaxSize().padding(horizontal = 16.dp).pointerInput(
-              Unit
-            ) {
-              detectTapGestures(onTap = { focusManager.clearFocus() })
-            }
-        ).weight(1f)
+        modifier
+          .then(
+            other =
+              Modifier.fillMaxSize().padding(horizontal = 16.dp).pointerInput(
+                Unit
+              ) {
+                detectTapGestures(onTap = { focusManager.clearFocus() })
+              }
+          )
+          .weight(1f)
     ) {
       if (Build.MANUFACTURER == "samsung") {
         item {
@@ -284,7 +286,9 @@ fun SettingsScreen(
         AnimatedVisibility(isAdvancedSettingsEnabled) {
           TaskerIntegrationField(
             isTaskerIntegrationEnabled = taskerIntegrationStatus,
-            onTaskerIntegrationChange = { vm.updateTaskerIntegrationStatus(it) },
+            onTaskerIntegrationChange = {
+              vm.updateTaskerIntegrationStatus(it)
+            },
             onShowTaskerIntegrationInfo = { isTaskerInfoShown = true },
           )
         }
@@ -293,18 +297,20 @@ fun SettingsScreen(
     HorizontalDivider()
     ExtendedFloatingActionButton(
       onClick = onClick@{
-        if (
-          config.passphrase.isEmpty() &&
-          config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN
-        ) {
-          onShowSnackbar(passphraseEmptyWarningSnackbar)
-          return@onClick
-        }
-        onShowSnackbar(
-          if (vm.commit()) savedSnackbar else failedToSaveSnackbar
-        )
-      },
-      modifier = Modifier.align(Alignment.End).padding(horizontal = 16.dp, vertical = 8.dp),
+          if (
+            config.passphrase.isEmpty() &&
+              config.securityType != SoftApSecurityType.SECURITY_TYPE_OPEN
+          ) {
+            onShowSnackbar(passphraseEmptyWarningSnackbar)
+            return@onClick
+          }
+          onShowSnackbar(
+            if (vm.commit()) savedSnackbar else failedToSaveSnackbar
+          )
+        },
+      modifier =
+        Modifier.align(Alignment.End)
+          .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
       Icon(
         imageVector = Icons.Default.Save,

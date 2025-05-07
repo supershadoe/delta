@@ -41,7 +41,11 @@ fun FirstUseScreen(onStartSetup: () -> Unit) {
   val shape = remember(roundedPillStar) { PolygonShape(roundedPillStar) }
   Scaffold {
     Column(
-      modifier = Modifier.displayCutoutPadding().fillMaxSize().padding(it).padding(horizontal = 16.dp)
+      modifier =
+        Modifier.displayCutoutPadding()
+          .fillMaxSize()
+          .padding(it)
+          .padding(horizontal = 16.dp)
     ) {
       Box(
         modifier = Modifier.weight(3f).fillMaxWidth(),

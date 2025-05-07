@@ -46,7 +46,8 @@ fun DebugScreen(onNavigateUp: (() -> Unit)?, vm: DebugViewModel = viewModel()) {
 
   AppTheme {
     Scaffold(
-      modifier = Modifier.background(colorScheme.background).displayCutoutPadding(),
+      modifier =
+        Modifier.background(colorScheme.background).displayCutoutPadding(),
       topBar = {
         @OptIn(ExperimentalMaterial3Api::class)
         TopAppBar(
@@ -62,7 +63,7 @@ fun DebugScreen(onNavigateUp: (() -> Unit)?, vm: DebugViewModel = viewModel()) {
             }
           },
         )
-      }
+      },
     ) {
       LazyColumn(
         modifier =

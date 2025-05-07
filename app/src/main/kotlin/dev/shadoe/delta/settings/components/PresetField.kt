@@ -45,16 +45,11 @@ internal fun PresetField(onShowPresets: () -> Unit, onSaveConfig: () -> Unit) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
       @OptIn(ExperimentalLayoutApi::class)
-      FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-      ) {
+      FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Button(onClick = onShowPresets) {
           Text(text = stringResource(R.string.presets_show_button))
         }
-        Button(
-          modifier = Modifier,
-          onClick = onSaveConfig,
-        ) {
+        Button(modifier = Modifier, onClick = onSaveConfig) {
           Text(text = stringResource(R.string.presets_save_config_button))
         }
       }
