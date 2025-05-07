@@ -3,7 +3,6 @@ package dev.shadoe.delta.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -20,7 +19,6 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
@@ -45,6 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
 import dev.shadoe.delta.api.SoftApSecurityType
+import dev.shadoe.delta.common.components.FadeInExpanded
 import dev.shadoe.delta.common.components.FoldableWrapper
 import dev.shadoe.delta.settings.components.AutoShutDownTimeOutField
 import dev.shadoe.delta.settings.components.AutoShutdownField
@@ -122,19 +121,17 @@ fun SettingsScreen(
   var isPresetListShown by remember { mutableStateOf(false) }
   var isTaskerInfoShown by remember { mutableStateOf(false) }
 
-  Column {
+  Box {
     LazyColumn(
       modifier =
-        modifier
-          .then(
-            other =
-              Modifier.fillMaxSize().padding(horizontal = 16.dp).pointerInput(
-                Unit
-              ) {
-                detectTapGestures(onTap = { focusManager.clearFocus() })
-              }
-          )
-          .weight(1f)
+        modifier.then(
+          other =
+            Modifier.fillMaxSize().padding(horizontal = 16.dp).pointerInput(
+              Unit
+            ) {
+              detectTapGestures(onTap = { focusManager.clearFocus() })
+            }
+        )
     ) {
       if (Build.MANUFACTURER == "samsung") {
         item {
@@ -230,7 +227,7 @@ fun SettingsScreen(
         )
       }
       item {
-        AnimatedVisibility(isAdvancedSettingsEnabled) {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
           HiddenHotspotField(
             isHiddenHotspotEnabled = config.isHidden,
             onHiddenHotspotChange = { vm.updateIsHidden(it) },
@@ -238,7 +235,7 @@ fun SettingsScreen(
         }
       }
       item {
-        AnimatedVisibility(isAdvancedSettingsEnabled) {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
           MaxClientLimitField(
             maxClient = status.capabilities.maxSupportedClients,
             onMaxClientChange = { vm.updateMaxClientLimit(it.toInt()) },
@@ -247,7 +244,7 @@ fun SettingsScreen(
         }
       }
       item {
-        AnimatedVisibility(isAdvancedSettingsEnabled) {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
           MacRandomizationField(
             macRandomizationSetting = config.macRandomizationSetting,
             onSettingChange = { vm.updateMacRandomizationSetting(it) },
@@ -255,7 +252,7 @@ fun SettingsScreen(
         }
       }
       item {
-        AnimatedVisibility(isAdvancedSettingsEnabled) {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
           AutoShutDownTimeOutField(
             autoShutDownTimeOut =
               config.autoShutdownTimeout.takeIf {
@@ -268,7 +265,7 @@ fun SettingsScreen(
         }
       }
       item {
-        AnimatedVisibility(isAdvancedSettingsEnabled) {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
           PresetField(
             onShowPresets = { isPresetListShown = true },
             onSaveConfig = { shouldSavePreset = true },
@@ -277,13 +274,13 @@ fun SettingsScreen(
       }
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         item {
-          AnimatedVisibility(isAdvancedSettingsEnabled) {
+          FadeInExpanded(isAdvancedSettingsEnabled) {
             SoftApTileField(onShowSnackbar)
           }
         }
       }
       item {
-        AnimatedVisibility(isAdvancedSettingsEnabled) {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
           TaskerIntegrationField(
             isTaskerIntegrationEnabled = taskerIntegrationStatus,
             onTaskerIntegrationChange = {
@@ -294,7 +291,6 @@ fun SettingsScreen(
         }
       }
     }
-    HorizontalDivider()
     ExtendedFloatingActionButton(
       onClick = onClick@{
           if (
@@ -309,7 +305,7 @@ fun SettingsScreen(
           )
         },
       modifier =
-        Modifier.align(Alignment.End)
+        Modifier.align(Alignment.BottomEnd)
           .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
       Icon(
