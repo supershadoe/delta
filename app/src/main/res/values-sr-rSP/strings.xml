@@ -7,6 +7,10 @@
     <string name="no_connected_devices">Nema povezanih uređaja.</string>
     <string name="open_icon">Otvori</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">Neuspešno pokretanje hotpost-a.</string>
+    <string name="soft_ap_failure_notif_content">Da li Shizuku radi, i da li je povezan na ovu aplikaciju?</string>
+    <string name="soft_ap_failure_notif_channel_name">Greška poruka</string>
+    <string name="soft_ap_failure_notif_channel_desc">Šalje poruku za svaku grešku koja se desi u aplikaciji.</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Isključivanje…</string>
@@ -15,9 +19,12 @@
     <string name="tile_enabled">%d uređaja</string>
     <string name="tile_failed">Nedostupno</string>
     <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">Kotrole</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Nema uređaja na crnoj listi.</string>
     <string name="unblock_button">UKLONI S CRNE LISTE</string>
+    <string name="blocklist_blocked">Uređaji dodati na crnu listu.</string>
+    <string name="blocklist_unblocked">Uređaj uklonjen s crne liste.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Prijavi</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
@@ -25,6 +32,7 @@
     <string name="crash_notif_sub_text">Rukovodilac grešaka</string>
     <string name="crash_notif_content">Dogodila se nepoznata greška.</string>
     <string name="crash_notif_channel_name">Istorija grešaka</string>
+    <string name="crash_notif_channel_desc">Prijavljuje neke neočekivane greške sa spiskom grešaka.</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Istorija grešaka</string>
     <string name="crash_report_desc">Dogodila se greška :(</string>
@@ -36,10 +44,13 @@
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
     <string name="failed_button">Hotspot neuspešan: Ne može da se pokrene</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Povezano</string>
     <string name="no_client_hostname">(nedefinisan uređaj: nema ime)</string>
     <string name="ip_not_allocated">(IP adresa još nije dodeljena)</string>
     <string name="block_button">BLOKIRAJ</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(ništa)</string>
+    <string name="passphrase_hidden">(skriveno)</string>
     <string name="passphrase_show">Prikaži šifru</string>
     <string name="passphrase_hide">Sakri šifru</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
@@ -61,6 +72,7 @@
     <string name="settings">Podešavanje</string>
     <string name="error_icon">Greška</string>
     <string name="warning_icon">Upozorenje</string>
+    <string name="settings_warn_samsung">Na većini Samsung modela, napredna podešavanja i automatsko isključivanje se ne mogu kontrolisati kroz Deltu. Ova podešavanja bi trebalo da se podese u sistemskim podešavanjima.</string>
     <string name="open_system_settings">Otvori postavke telefona</string>
     <string name="settings_desc">Podesi sve po ličnoj želji :)</string>
     <string name="ssid_field_icon">Ikona hotspota</string>
@@ -120,6 +132,8 @@
     <string name="presets_field_desc">Sačuvaj i povrati podršavanja hotspota za bržu promenu izemđu njih.</string>
     <string name="presets_show_button">Prikaži podrazumevano</string>
     <string name="presets_save_config_button">Sačuvaj konfiguraciju</string>
+    <string name="preset_save_title">Unesi ime podrazumevanog</string>
+    <string name="preset_save_empty">Podrazumevano ime ne može da bude prazno.</string>
     <string name="presets_none_saved">Nema sačuvanih podrazumevanih opcija.</string>
     <string name="preset_saved_on">Sačuvano na %s</string>
     <string name="preset_delete_button">Ukloni</string>
@@ -128,10 +142,23 @@
     <string name="tile_field_label">Dodaj pločicu za brzi pristup?</string>
     <string name="tile_field_desc">Dodaje pločicu sa brzim pofešavanjima koje pomažu s podešavanjima hotspota bez otvaranja aplikacije.</string>
     <string name="tile_add_button">Dodaj pločicu</string>
+    <string name="tile_added">Pločica je uspešno dodata!</string>
+    <string name="tile_already_added">Pločica je već dodata.</string>
+    <string name="tile_add_error">Neuspešno dodavanje pločice, probaj opet kasnije.</string>
+    <string name="tasker_integration_field_icon">Automatizacija ikona</string>
+    <string name="tasker_integration_field_label">Tasker integracija</string>
+    <string name="tasker_integration_field_desc">[nesigurno] Dozvoli Tasker-u da kotroliše podešavanja hotspot-a kroz ovu aplikaciju.</string>
+    <string name="tasker_integration_info_button">Podešavanje info</string>
+    <string name="tasker_integration_info">Ova aplikacija pruža dva intent-a — &lt;tt&gt;dev.shadoe.delta.action.START_SOFT_AP&lt;/tt&gt; I &lt;tt&gt;dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt&gt; da pokrenu i isključe hotspot. Iako je ovo veoma korisno za napredne korisnike koji hoće sve da automatizuju, morate da znate da omogućavanjem ove opcije dozvoljava &lt;b&gt;SVAKOJ aplikaciji&lt;/b&gt; da vrši ove akcije (&lt;b&gt;ne samo Tasker&lt;/b&gt;), i tako pravi vektor napada za maliciozne aplikacije.&lt;br&gt;&lt;br&gt;Jedan hipotetički scenarijo gde ovo moze biti opasno je ako dva uređaja imaju isti malware i pokušaju da komuniciraju međusobno preko LAN-a i iskoriste Deltu za to.</string>
+    <string name="tasker_integration_info_copy_start_action">Kopiraj &lt;tt&gt;START_SOFT_AP&lt;/tt&gt;</string>
+    <string name="tasker_integration_info_copy_stop_action">Kopiraj &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
+    <string name="tasker_integration_info_copy_pkg_name">Kopiraj ime paketa</string>
+    <string name="tasker_integration_info_copy_cls_name">Kopiraj ime klase</string>
     <string name="cancel_button">Otkaži</string>
     <string name="save_button">Sačuvaj</string>
     <string name="passphrase_empty_warning">Unesi šifru.</string>
     <string name="save_changes_failed_warning">Neuspešno ažurirana podešavanja hotspot-a.</string>
+    <string name="save_changes_succeeded">Ažurirana hotspot podešavanja.</string>
     <!-- dev.shadoe.delta.setup -->
     <string name="setup_title">Podesi aplikaciju</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->

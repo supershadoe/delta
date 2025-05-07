@@ -19,6 +19,7 @@
     <string name="tile_enabled">%d устройств</string>
     <string name="tile_failed">Недоступно</string>
     <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">Управление</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Нет заблокированных устройств.</string>
     <string name="unblock_button">РАЗБЛОКИРОВАТЬ</string>
@@ -29,6 +30,7 @@
     <string name="crash_notif_sub_text">Обработчик сбоев приложения</string>
     <string name="crash_notif_content">В приложении произошёл сбой из-за неожиданной ошибки.</string>
     <string name="crash_notif_channel_name">Канал сбоев</string>
+    <string name="crash_notif_channel_desc">Сообщает о неожиданной ошибке в журналах сбоев.</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Журнал сбоев</string>
     <string name="crash_report_desc">В приложении произошёл сбой :(</string>
@@ -127,6 +129,8 @@
     <string name="presets_field_desc">Сохраняйте и восстанавливайте настройки различных точек доступа для быстрого переключения между ними.</string>
     <string name="presets_show_button">Показать пресеты</string>
     <string name="presets_save_config_button">Сохранить конфигурацию</string>
+    <string name="preset_save_title">Введите название пресета</string>
+    <string name="preset_save_empty">Название пресета не может быть пустым.</string>
     <string name="presets_none_saved">Нет сохранённых пресетов.</string>
     <string name="preset_saved_on">Сохранено в %s</string>
     <string name="preset_delete_button">Удалить</string>
@@ -135,11 +139,17 @@
     <string name="tile_field_label">Добавить переключатель для быстрой настройки?</string>
     <string name="tile_field_desc">Добавляет переключатель в центр управления, который помогает легко управлять точкой доступа, не запуская это приложение.</string>
     <string name="tile_add_button">Добавить переключатель</string>
+    <string name="tile_added">Переключатель добавлен успешно!</string>
+    <string name="tile_already_added">Переключатель уже добавлен.</string>
+    <string name="tile_add_error">Не удалось добавить переключатель, повторите попытку позже.</string>
     <string name="tasker_integration_field_icon">Значок автоматизации</string>
     <string name="tasker_integration_field_label">Интеграция Tasker</string>
     <string name="tasker_integration_field_desc">[небезопасно] Позволяет Tasker управлять настройками точки доступа через это приложение.</string>
+    <string name="tasker_integration_info_button">Настройка</string>
     <string name="tasker_integration_info_copy_start_action">Скопировать &lt;tt&gt;START_SOFT_AP&lt;/tt&gt;</string>
     <string name="tasker_integration_info_copy_stop_action">Скопировать &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
+    <string name="tasker_integration_info_copy_pkg_name">Скопировать имя пакета</string>
+    <string name="tasker_integration_info_copy_cls_name">Скопировать имя класса</string>
     <string name="cancel_button">Отмена</string>
     <string name="save_button">Сохранить</string>
     <string name="passphrase_empty_warning">Введите пароль.</string>
