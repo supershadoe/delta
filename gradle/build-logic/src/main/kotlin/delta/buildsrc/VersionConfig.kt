@@ -7,6 +7,6 @@ data class VersionConfig(
 
 val versionConfig
   get() = VersionConfig(
-    versionCode = 16,
-    versionName = "2025.05+1",
+    versionCode = 17,
+    versionName = "2025.05+2",
   )
