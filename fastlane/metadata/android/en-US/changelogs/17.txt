@@ -1,0 +1,4 @@
+### 2025.05+2
+
+Hotfix update: fixes crashes on Android 11 due to a new check
+added in app for availability of hotspot feature.
