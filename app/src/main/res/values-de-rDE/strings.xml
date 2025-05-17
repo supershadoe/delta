@@ -156,6 +156,7 @@
     <string name="tasker_integration_info_copy_cls_name">Klassennamen kopieren</string>
     <string name="cancel_button">Abbrechen</string>
     <string name="save_button">Speichern</string>
+    <string name="save_icon">Speichersymbol</string>
     <string name="passphrase_empty_warning">Ein Passwort eingeben.</string>
     <string name="save_changes_failed_warning">Fehler beim Aktualisieren der Hotspot-Einstellungen.</string>
     <string name="save_changes_succeeded">Hotspot-Einstellungen aktualisiert.</string>
