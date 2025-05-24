@@ -156,6 +156,7 @@
     <string name="tasker_integration_info_copy_cls_name">Sınıf adını kopyala</string>
     <string name="cancel_button">İptal</string>
     <string name="save_button">Kaydet</string>
+    <string name="save_icon">Simgeyi kaydet</string>
     <string name="passphrase_empty_warning">Bir parola girin.</string>
     <string name="save_changes_failed_warning">Hotspot ayarları güncellenemedi.</string>
     <string name="save_changes_succeeded">Hotspot ayarları güncellendi.</string>
