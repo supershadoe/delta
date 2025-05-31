@@ -30,7 +30,7 @@
     <string name="crash_report_desc">アプリが死んだ o(╥﹏╥)o</string>
     <string name="crash_report_no_log">クラッシュの事情はわかりません、ログが全くないです</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
-    <string name="control_button_loading">移行中</string>
+    <string name="control_button_loading">切り替え中</string>
     <string name="control_button_stop">アクセスポイントをOFFする</string>
     <string name="control_button_start">アクセスポイントをONする</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
@@ -61,7 +61,7 @@
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
     <string name="settings">設定</string>
     <string name="error_icon">エラー</string>
-    <string name="warning_icon">注目</string>
+    <string name="warning_icon">警告</string>
     <string name="settings_warn_samsung">ほとんどのSamsungモデルでは、アプリ内から詳細設定や自動シャットダウンを変更できません。システム設定からの変更は可能です。</string>
     <string name="ssid_field_label">アクセス ポイント名</string>
     <string name="ssid_too_short_warning">アクセスポイントの名前が短すぎる。</string>
@@ -76,7 +76,7 @@
     <string name="passphrase_too_long_warning">パスワードが長すぎる。</string>
     <string name="auto_shutdown_field_title">自動シャットダウン</string>
     <string name="auto_shutdown_field_desc">しばらくデバイスが接続されていない場合、テザリングをオフにします。</string>
-    <string name="freq_band_2_4_GHz_desc">ほとんどのデバイスで使えますが、あまりスピードではありません。</string>
+    <string name="freq_band_2_4_GHz_desc">ほとんどのデバイスに対応していますが、あまり高速ではありません。</string>
     <string name="auto_shutdown_5">5 分</string>
     <string name="auto_shutdown_10">10 分</string>
     <string name="auto_shutdown_20">20 分</string>
