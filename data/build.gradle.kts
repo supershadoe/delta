@@ -29,12 +29,7 @@ android {
     }
   }
 
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-  }
-
-  kotlinOptions { jvmTarget = "21" }
+  java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 }
 
 room { schemaDirectory("$projectDir/schema") }

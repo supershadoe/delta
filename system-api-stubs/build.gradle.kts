@@ -27,10 +27,7 @@ android {
 
   buildFeatures { aidl = true }
 
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_21
-  }
+  java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 
   afterEvaluate {
     tasks.withType<AidlCompile>().configureEach {
