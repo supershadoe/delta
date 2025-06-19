@@ -161,6 +161,17 @@
     <string name="tasker_integration_info_copy_stop_action">Copy &lt;tt>STOP_SOFT_AP&lt;/tt></string>
     <string name="tasker_integration_info_copy_pkg_name">Copy package name</string>
     <string name="tasker_integration_info_copy_cls_name">Copy class name</string>
+    <string name="data_export_field_icon">Data export icon</string>
+    <string name="data_export_field_name">Export/Import</string>
+    <string name="data_export_field_desc">Export/import app data for backup purposes.</string>
+    <string name="data_export_export_button">Export</string>
+    <string name="data_export_import_button">Import</string>
+    <string name="export_success">Exported successfully.</string>
+    <string name="export_failed">Export failed.</string>
+    <string name="restart_required">Restart required</string>
+    <string name="restart_required_import_succcess_desc">The database was imported successfully. The app must restart to apply the new settings.</string>
+    <string name="restart_app">RESTART</string>
+    <string name="import_failed">Import failed.</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
     <string name="save_icon">Save icon</string>
