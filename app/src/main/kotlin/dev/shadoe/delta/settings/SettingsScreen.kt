@@ -1,8 +1,12 @@
 package dev.shadoe.delta.settings
 
+import android.app.Activity
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -17,6 +21,7 @@ import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -26,6 +31,7 @@ import androidx.compose.material3.SnackbarVisuals
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,19 +40,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.shadoe.delta.MainActivity
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.SoftApAutoShutdownTimeout
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.common.components.FadeInExpanded
 import dev.shadoe.delta.common.components.FoldableWrapper
+import dev.shadoe.delta.settings.components.AppRestartDialog
 import dev.shadoe.delta.settings.components.AutoShutDownTimeOutField
 import dev.shadoe.delta.settings.components.AutoShutdownField
+import dev.shadoe.delta.settings.components.DataExportField
 import dev.shadoe.delta.settings.components.FrequencyBandField
 import dev.shadoe.delta.settings.components.HiddenHotspotField
 import dev.shadoe.delta.settings.components.MacRandomizationField
@@ -73,16 +82,49 @@ private fun openSystemSettings(context: Context, isBigScreen: Boolean = false) {
   )
 }
 
+private fun restartApp(context: Context) {
+  context.startActivity(
+    Intent.makeRestartActivityTask(
+      ComponentName(context, MainActivity::class.java)
+    )
+  )
+  (context as? Activity)?.finish()
+  Runtime.getRuntime().exit(0)
+}
+
+private abstract class QuickSnackbarVisuals : SnackbarVisuals {
+  override val withDismissAction = true
+  override val actionLabel = null
+  override val duration = SnackbarDuration.Short
+}
+
 @Composable
 fun SettingsScreen(
   modifier: Modifier = Modifier,
   onShowSnackbar: (SnackbarVisuals) -> Unit = {},
   vm: SettingsViewModel = viewModel(),
 ) {
+  val context = LocalContext.current
   val focusManager = LocalFocusManager.current
-  val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
+  val isBigScreen = LocalWindowInfo.current.containerSize.width >= 700
   @OptIn(ExperimentalMaterial3Api::class)
   val sheetState = rememberModalBottomSheetState()
+
+  val pickImportFileLauncher =
+    rememberLauncherForActivityResult(
+      contract = ActivityResultContracts.OpenDocument()
+    ) { it ->
+      it ?: return@rememberLauncherForActivityResult
+      vm.importData(it)
+    }
+
+  val createExportFileLauncher =
+    rememberLauncherForActivityResult(
+      contract = ActivityResultContracts.CreateDocument("application/zip")
+    ) { it ->
+      it ?: return@rememberLauncherForActivityResult
+      vm.exportData(it)
+    }
 
   val config by vm.config.collectAsState()
   val status by vm.status.collectAsState()
@@ -90,36 +132,69 @@ fun SettingsScreen(
   val presets by vm.presets.collectAsState(listOf())
   val taskerIntegrationStatus by
     vm.taskerIntegrationStatus.collectAsState(false)
+  val exportStatus by vm.exportStatus.collectAsState()
+  val importStatus by vm.importStatus.collectAsState()
 
   val passphraseEmptyWarningSnackbar =
-    object : SnackbarVisuals {
+    object : QuickSnackbarVisuals() {
       override val message = stringResource(R.string.passphrase_empty_warning)
-      override val withDismissAction = true
-      override val actionLabel = null
-      override val duration = SnackbarDuration.Short
     }
 
   val failedToSaveSnackbar =
-    object : SnackbarVisuals {
+    object : QuickSnackbarVisuals() {
       override val message =
         stringResource(R.string.save_changes_failed_warning)
-      override val withDismissAction = true
-      override val actionLabel = null
-      override val duration = SnackbarDuration.Short
     }
 
   val savedSnackbar =
-    object : SnackbarVisuals {
+    object : QuickSnackbarVisuals() {
       override val message = stringResource(R.string.save_changes_succeeded)
-      override val withDismissAction = true
-      override val actionLabel = null
-      override val duration = SnackbarDuration.Short
+    }
+
+  val exportedSuccessfully =
+    object : QuickSnackbarVisuals() {
+      override val message = stringResource(R.string.export_success)
+    }
+
+  val failedToExport =
+    object : QuickSnackbarVisuals() {
+      override val message = stringResource(R.string.export_failed)
+    }
+
+  val failedToImport =
+    object : QuickSnackbarVisuals() {
+      override val message = stringResource(R.string.import_failed)
     }
 
   var isAdvancedSettingsEnabled by remember { mutableStateOf(false) }
   var shouldSavePreset by remember { mutableStateOf(false) }
   var isPresetListShown by remember { mutableStateOf(false) }
   var isTaskerInfoShown by remember { mutableStateOf(false) }
+
+  LaunchedEffect(importStatus, exportStatus) {
+    when (importStatus) {
+      ImportStatus.Failure -> onShowSnackbar(failedToImport)
+      else -> {}
+    }
+    when (exportStatus) {
+      ExportStatus.Success -> onShowSnackbar(exportedSuccessfully)
+      ExportStatus.Failure -> onShowSnackbar(failedToExport)
+      else -> {}
+    }
+  }
+
+  if (
+    importStatus == ImportStatus.Processing ||
+      exportStatus == ExportStatus.Processing
+  ) {
+    Box(
+      modifier = Modifier.fillMaxSize(),
+      contentAlignment = Alignment.Center,
+    ) {
+      CircularProgressIndicator()
+    }
+    return
+  }
 
   Box {
     LazyColumn(
@@ -290,6 +365,18 @@ fun SettingsScreen(
           )
         }
       }
+      item {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
+          DataExportField(
+            onExportData = {
+              createExportFileLauncher.launch("${vm.defaultDBName}.zip")
+            },
+            onImportData = {
+              pickImportFileLauncher.launch(arrayOf("application/zip"))
+            },
+          )
+        }
+      }
     }
     ExtendedFloatingActionButton(
       onClick = onClick@{
@@ -344,5 +431,9 @@ fun SettingsScreen(
 
   if (isTaskerInfoShown) {
     TaskerIntegrationInfo(onDismissDialog = { isTaskerInfoShown = false })
+  }
+
+  if (importStatus == ImportStatus.Success) {
+    AppRestartDialog(onRestart = { restartApp(context) })
   }
 }
