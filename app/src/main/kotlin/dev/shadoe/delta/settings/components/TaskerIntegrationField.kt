@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Autorenew
+import androidx.compose.material.icons.automirrored.rounded.CompareArrows
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +29,7 @@ internal fun TaskerIntegrationField(
     verticalAlignment = Alignment.CenterVertically,
   ) {
     Icon(
-      imageVector = Icons.Rounded.Autorenew,
+      imageVector = Icons.AutoMirrored.Rounded.CompareArrows,
       contentDescription =
         stringResource(R.string.tasker_integration_field_icon),
     )

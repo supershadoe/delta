@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.History
+import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +27,7 @@ internal fun PresetField(onShowPresets: () -> Unit, onSaveConfig: () -> Unit) {
     verticalAlignment = Alignment.CenterVertically,
   ) {
     Icon(
-      imageVector = Icons.Rounded.History,
+      imageVector = Icons.Rounded.Save,
       contentDescription = stringResource(R.string.presets_field_icon),
     )
     Column(
