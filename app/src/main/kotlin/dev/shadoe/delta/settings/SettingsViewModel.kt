@@ -1,5 +1,6 @@
 package dev.shadoe.delta.settings
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,6 +8,7 @@ import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApSecurityType
 import dev.shadoe.delta.api.SoftApSpeedType
 import dev.shadoe.delta.data.FlagsRepository
+import dev.shadoe.delta.data.database.ConfigDBBackupManager
 import dev.shadoe.delta.data.database.dao.PresetDao
 import dev.shadoe.delta.data.database.models.Preset
 import dev.shadoe.delta.data.softap.SoftApController
@@ -33,16 +35,23 @@ constructor(
   private val softApStateStore: SoftApStateStore,
   private val flagsRepository: FlagsRepository,
   private val presetDao: PresetDao,
+  private val configDBBackupManager: ConfigDBBackupManager,
 ) : ViewModel() {
   private val _config = MutableStateFlow(softApStateStore.config.value)
   private val _results = MutableStateFlow(UpdateResults())
   private val _flags =
     MutableStateFlow(SettingsFlags(insecureReceiverEnabled = false))
+  private val _importStatus = MutableStateFlow(ImportStatus.Idle)
+  private val _exportStatus = MutableStateFlow(ExportStatus.Idle)
 
   val status = softApStateStore.status
   val config = _config.asStateFlow()
   val results = _results.asStateFlow()
   val presets = presetDao.observePresets()
+  val importStatus = _importStatus.asStateFlow()
+  val exportStatus = _exportStatus.asStateFlow()
+
+  val defaultDBName = ConfigDBBackupManager.DB_NAME
 
   init {
     // TODO: instead of auto-updating, show a message in UI asking if user
@@ -194,6 +203,24 @@ constructor(
 
   fun updateTaskerIntegrationStatus(enabled: Boolean) {
     _flags.update { it.copy(insecureReceiverEnabled = enabled) }
+  }
+
+  fun exportData(uri: Uri) {
+    viewModelScope.launch {
+      _exportStatus.update { ExportStatus.Processing }
+      runCatching { configDBBackupManager.exportDatabase(uri) }
+        .onFailure { _exportStatus.update { ExportStatus.Failure } }
+        .onSuccess { _exportStatus.update { ExportStatus.Success } }
+    }
+  }
+
+  fun importData(uri: Uri) {
+    viewModelScope.launch {
+      _importStatus.update { ImportStatus.Processing }
+      runCatching { configDBBackupManager.importDatabase(uri) }
+        .onFailure { _importStatus.update { ImportStatus.Failure } }
+        .onSuccess { _importStatus.update { ImportStatus.Success } }
+    }
   }
 
   // TODO: emit errors in UI
