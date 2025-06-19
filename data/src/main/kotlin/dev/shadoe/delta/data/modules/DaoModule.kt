@@ -8,25 +8,19 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.shadoe.delta.data.database.ConfigDB
-import javax.inject.Qualifier
+import dev.shadoe.delta.data.qualifiers.ConfigDatabase
 import javax.inject.Singleton
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-private annotation class ConfigDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DaoModule {
+  const val DB_NAME = "config_database"
+
   @Singleton
   @ConfigDatabase
   @Provides
   fun provideConfigDatabase(@ApplicationContext applicationContext: Context) =
-    Room.databaseBuilder(
-        applicationContext,
-        ConfigDB::class.java,
-        "config_database",
-      )
+    Room.databaseBuilder(applicationContext, ConfigDB::class.java, DB_NAME)
       .build()
 
   @Singleton
