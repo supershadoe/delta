@@ -1,5 +1,6 @@
 package dev.shadoe.delta.control.components
 
+import android.content.ClipData
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,15 +17,17 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.ClipEntry
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
 import dev.shadoe.delta.api.TetheredClient
+import kotlinx.coroutines.launch
 
 data class ConnectedClientComponentState(
   val client: TetheredClient,
@@ -43,7 +46,8 @@ fun ConnectedClientComponent(
   state: ConnectedClientComponentState,
   actions: ConnectedClientComponentActions,
 ) {
-  val clipboardManager = LocalClipboardManager.current
+  val clipboard = LocalClipboard.current
+  val scope = rememberCoroutineScope()
   val density = LocalDensity.current
   Row(
     modifier =
@@ -68,7 +72,9 @@ fun ConnectedClientComponent(
           modifier =
             Modifier.clickable {
               ip ?: return@clickable
-              clipboardManager.setText(AnnotatedString(ip))
+              scope.launch {
+                clipboard.setClipEntry(ClipEntry(ClipData.newPlainText(ip, ip)))
+              }
             },
         ) {
           Text(text = ip ?: stringResource(R.string.ip_not_allocated))
