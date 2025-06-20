@@ -30,6 +30,15 @@ android {
   }
 
   java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+
+  testOptions {
+    unitTests {
+      all {
+        // https://github.com/mockk/mockk/issues/1171
+        it.jvmArgs("-XX:+EnableDynamicAgentLoading")
+      }
+    }
+  }
 }
 
 room { schemaDirectory("$projectDir/schema") }
@@ -49,7 +58,8 @@ dependencies {
   ksp(libs.hilt.compiler)
   ksp(libs.room.compiler)
   testImplementation(libs.kotlin.test.junit)
-  testImplementation(libs.mockk)
   testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.mockk)
+  testImplementation(libs.roboelectric)
   testImplementation(project(path = ":system-api-stubs"))
 }

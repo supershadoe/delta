@@ -18,6 +18,7 @@ leakcanary = "2.14"
 mockk = "1.14.2"
 navigation-compose = "2.9.0"
 refine = "4.4.0"
+roboelectric = "4.15"
 room = "2.7.1"
 serialization-json = "1.8.1"
 shizuku = "13.1.5"
@@ -69,6 +70,7 @@ leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", v
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+roboelectric = { group = "org.robolectric", name = "robolectric", version.ref = "roboelectric" }
 
 # Instrumented tests
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
