@@ -41,6 +41,18 @@ constructor(
       override fun onResult(resultCode: Int) {}
     }
 
+  private fun setSoftApConfiguration(c: SoftApConfiguration) =
+    Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(c.toOriginalClass())
+      .let {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+          if (!wifiManager.validateSoftApConfiguration(it)) {
+            return@let false
+          }
+        }
+        wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
+        return@let true
+      }
+
   fun startSoftAp(): Boolean {
     val state = softApStateStore.status.value.enabledState
     if (state != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
@@ -88,18 +100,6 @@ constructor(
     }
     return true
   }
-
-  private fun setSoftApConfiguration(c: SoftApConfiguration) =
-    Refine.unsafeCast<android.net.wifi.SoftApConfiguration>(c.toOriginalClass())
-      .let {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-          if (!wifiManager.validateSoftApConfiguration(it)) {
-            return@let false
-          }
-        }
-        wifiManager.setSoftApConfiguration(it, ADB_PACKAGE_NAME)
-        return@let true
-      }
 
   fun updateSoftApConfiguration(c: SoftApConfiguration): Boolean =
     runCatching { setSoftApConfiguration(c) }
