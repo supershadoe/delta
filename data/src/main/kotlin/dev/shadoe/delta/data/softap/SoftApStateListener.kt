@@ -8,6 +8,7 @@ import dev.shadoe.delta.api.SoftApCapabilities
 import dev.shadoe.delta.api.SoftApEnabledState.EnabledStateType
 import dev.shadoe.delta.api.TetheredClient
 import dev.shadoe.delta.data.MacAddressCacheRepository
+import dev.shadoe.delta.data.qualifiers.SoftApBackgroundTasksScope
 import dev.shadoe.delta.data.qualifiers.TetheringSystemService
 import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.callbacks.SoftApCallback
@@ -16,8 +17,6 @@ import dev.shadoe.delta.data.softap.internal.TetheringEventListener
 import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -29,9 +28,8 @@ constructor(
   @WifiSystemService private val wifiManager: IWifiManager,
   private val macAddressCacheRepository: MacAddressCacheRepository,
   private val softApStateStore: SoftApStateStore,
+  @SoftApBackgroundTasksScope private val scope: CoroutineScope,
 ) : AutoCloseable, TetheringEventListener {
-  private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-
   private val tetheringEventCallback = TetheringEventCallback(this)
 
   private val softApCallback = SoftApCallback(this, wifiManager)

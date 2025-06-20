@@ -1,6 +1,7 @@
 package dev.shadoe.delta.data.softap
 
 import dev.shadoe.delta.api.ShizukuStates
+import dev.shadoe.delta.data.qualifiers.SoftApBackgroundTasksScope
 import dev.shadoe.delta.data.shizuku.ShizukuRepository
 import javax.inject.Inject
 import javax.inject.Provider
@@ -10,7 +11,6 @@ import kotlin.concurrent.atomics.ExperimentalAtomicApi
 import kotlin.concurrent.atomics.decrementAndFetch
 import kotlin.concurrent.atomics.incrementAndFetch
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +27,7 @@ constructor(
   private val listenerProvider: Provider<SoftApStateListener>,
   private val backgroundJobsProvider: Provider<SoftApMonitor>,
   state: SoftApStateStore,
+  @SoftApBackgroundTasksScope private val scope: CoroutineScope,
 ) {
   private var softApStateListener: SoftApStateListener? = null
   private var softApMonitor: SoftApMonitor? = null
@@ -59,7 +60,7 @@ constructor(
     shizukuSubscriber = shizukuRepository.callbackSubscriber
     shizukuStateCollector?.cancel()
     shizukuStateCollector =
-      CoroutineScope(Dispatchers.Default).launch {
+      scope.launch {
         @OptIn(ExperimentalCoroutinesApi::class)
         shizukuRepository.shizukuState
           .mapLatest { it == ShizukuStates.CONNECTED }

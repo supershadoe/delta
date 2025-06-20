@@ -11,6 +11,7 @@ import android.util.Log
 import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.api.SoftApConfiguration
 import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.data.qualifiers.SoftApBackgroundTasksScope
 import dev.shadoe.delta.data.qualifiers.TetheringSystemService
 import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
@@ -19,8 +20,6 @@ import dev.shadoe.delta.data.softap.internal.Utils.ADB_PACKAGE_NAME
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,12 +30,11 @@ constructor(
   @TetheringSystemService private val tetheringConnector: ITetheringConnector,
   @WifiSystemService private val wifiManager: IWifiManager,
   private val softApStateStore: SoftApStateStore,
+  @SoftApBackgroundTasksScope private val scope: CoroutineScope,
 ) {
   companion object {
     private const val TAG = "SoftApControlRepository"
   }
-
-  private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
   private val dummyIntResultReceiver =
     object : IIntResultListener.Stub() {

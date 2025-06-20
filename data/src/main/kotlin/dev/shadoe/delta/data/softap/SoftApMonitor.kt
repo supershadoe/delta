@@ -6,15 +6,14 @@ import android.net.wifi.SoftApConfigurationHidden
 import android.os.Build
 import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.api.SoftApEnabledState
+import dev.shadoe.delta.data.qualifiers.SoftApBackgroundTasksScope
 import dev.shadoe.delta.data.qualifiers.WifiSystemService
 import dev.shadoe.delta.data.softap.internal.Extensions.toBridgeClass
 import dev.shadoe.delta.data.softap.internal.Utils.generateRandomPassword
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
@@ -29,9 +28,8 @@ constructor(
   @WifiSystemService private val wifiManager: IWifiManager,
   private val softApController: SoftApController,
   private val softApStateStore: SoftApStateStore,
+  @SoftApBackgroundTasksScope private val scope: CoroutineScope,
 ) : AutoCloseable {
-  private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-
   // TODO: replace this flow with lifecycle aware calls to
   //  [SoftApControlRepository.refresh()]
   private val updateConfigOnExternalChange =
