@@ -23,6 +23,8 @@
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">Нет заблокированных устройств.</string>
     <string name="unblock_button">РАЗБЛОКИРОВАТЬ</string>
+    <string name="blocklist_blocked">Устройства добавлены в чёрный список.</string>
+    <string name="blocklist_unblocked">Устройства удалены из чёрного списка.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Сообщить</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
@@ -150,8 +152,19 @@
     <string name="tasker_integration_info_copy_stop_action">Скопировать &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
     <string name="tasker_integration_info_copy_pkg_name">Скопировать имя пакета</string>
     <string name="tasker_integration_info_copy_cls_name">Скопировать имя класса</string>
+    <string name="data_export_field_name">Экспорт/Импорт</string>
+    <string name="data_export_field_desc">Экспорт/импорт данных приложения для резервной копии.</string>
+    <string name="data_export_export_button">Экспорт</string>
+    <string name="data_export_import_button">Импорт</string>
+    <string name="export_success">Экспортировано успешно.</string>
+    <string name="export_failed">Не удалось экспортировать.</string>
+    <string name="restart_required">Необходима перезагрузка</string>
+    <string name="restart_required_import_succcess_desc">База данных успешно импортирована. Необходимо перезагрузить приложение для применения новых настроек.</string>
+    <string name="restart_app">ПЕРЕЗАГРУЗИТЬ</string>
+    <string name="import_failed">Не удалось импортировать.</string>
     <string name="cancel_button">Отмена</string>
     <string name="save_button">Сохранить</string>
+    <string name="save_icon">Значок сохранения</string>
     <string name="passphrase_empty_warning">Введите пароль.</string>
     <string name="save_changes_failed_warning">Не удалось изменить настройки точки доступа.</string>
     <string name="save_changes_succeeded">Настройки точки доступа обновлены.</string>
