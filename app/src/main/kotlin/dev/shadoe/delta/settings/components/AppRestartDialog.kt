@@ -31,8 +31,7 @@ fun AppRestartDialog(onRestart: () -> Unit) {
       LazyColumn {
         item {
           Text(
-            text =
-              stringResource(R.string.restart_required_import_success_desc)
+            text = stringResource(R.string.restart_required_import_success_desc)
           )
         }
       }
