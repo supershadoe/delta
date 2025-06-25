@@ -7,6 +7,7 @@
     <string name="no_connected_devices">繋がってるデバイスはありません。</string>
     <string name="open_icon">開く</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">テザリング を開始できませんでした。</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">テザリング</string>
     <string name="tile_disabling">オフにしています…</string>
@@ -17,6 +18,7 @@
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">ブロックされているデバイスはありません。</string>
     <string name="unblock_button">ブロック解除</string>
+    <string name="blocklist_blocked">デバイスがブロックリストに追加されました。</string>
     <string name="blocklist_unblocked">ブロックリストからデバイスを外しました。</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">報告する</string>
@@ -30,7 +32,7 @@
     <string name="crash_report_desc">アプリが死んだ o(╥﹏╥)o</string>
     <string name="crash_report_no_log">クラッシュの事情はわかりません、ログが全くないです</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
-    <string name="control_button_loading">移行中</string>
+    <string name="control_button_loading">切り替え中</string>
     <string name="control_button_stop">アクセスポイントをOFFする</string>
     <string name="control_button_start">アクセスポイントをONする</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
@@ -61,7 +63,7 @@
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
     <string name="settings">設定</string>
     <string name="error_icon">エラー</string>
-    <string name="warning_icon">注目</string>
+    <string name="warning_icon">警告</string>
     <string name="settings_warn_samsung">ほとんどのSamsungモデルでは、アプリ内から詳細設定や自動シャットダウンを変更できません。システム設定からの変更は可能です。</string>
     <string name="ssid_field_label">アクセス ポイント名</string>
     <string name="ssid_too_short_warning">アクセスポイントの名前が短すぎる。</string>
@@ -76,24 +78,39 @@
     <string name="passphrase_too_long_warning">パスワードが長すぎる。</string>
     <string name="auto_shutdown_field_title">自動シャットダウン</string>
     <string name="auto_shutdown_field_desc">しばらくデバイスが接続されていない場合、テザリングをオフにします。</string>
-    <string name="freq_band_2_4_GHz_desc">ほとんどのデバイスで使えますが、あまりスピードではありません。</string>
+    <string name="freq_band_2_4_GHz_desc">ほとんどのデバイスに対応していますが、あまり高速ではありません。</string>
+    <string name="freq_band_5_GHz_desc">デュアルバンド モード: 対応デバイスでは高速に機能し、古いデバイスとも互換性があります。</string>
+    <string name="freq_band_6_GHz_desc">トライバンド モード: 最新テクノロジーで、全ての国で利用出来るとは限りません。</string>
+    <string name="max_client_limit_field_label">接続できるクライアント数の制限</string>
+    <string name="max_client_limit_field_count">%d クライアント</string>
+    <string name="mac_randomization_field_label">MACアドレスのランダム化</string>
+    <string name="mac_randomization_persistent_desc">MACアドレスは、アクセスポイント名が変更される度にランダム化されます。</string>
+    <string name="mac_randomization_non_persistent_desc">MACアドレスは、テザリングが開始される度にランダム化されます。</string>
+    <string name="auto_shutdown_timeout_field_label">自動シャットダウン タイムアウト</string>
     <string name="auto_shutdown_5">5 分</string>
     <string name="auto_shutdown_10">10 分</string>
     <string name="auto_shutdown_20">20 分</string>
     <string name="auto_shutdown_30">30 分</string>
     <string name="auto_shutdown_60">1 時間</string>
     <string name="auto_shutdown_default">デフォルト</string>
+    <string name="auto_shutdown_timeout_desc">しばらくデバイスが接続されていない場合、テザリングをオフにします。</string>
+    <string name="presets_setting">プリセット</string>
+    <string name="preset_save_empty">プリセットの名前を空白にはできません。</string>
     <string name="preset_delete_button">削除</string>
     <!-- dev.shadoe.delta.setup -->
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
     <string name="setup_note">機能するには Shizuku や root 権限が必要です。</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">Shizuku に接続しました。セットアップを続けてください！</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
     <string name="shizuku_not_connected_desc">このアプリは Android SDK にいないシステムAPIを利用するため Shizuku アプリが必要です。</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">Shizuku がインストールされていません。</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku が起動していません。</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
     <string name="crash_report_setup_desc">アプリがクラッシュしたときに、エラーログを通知でお知らせするには、通知の許可が必要です。</string>
+    <string name="crash_report_setup_done">権限が付与されました✅</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
     <string name="shizuku_setup_not_installed">インストールしてません。</string>
     <string name="shizuku_setup_not_running">実行してません。</string>
