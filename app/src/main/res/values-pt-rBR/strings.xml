@@ -1,26 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dev.shadoe.delta -->
+    <string name="app_name">Delta</string>
+    <string name="back_button">Voltar</string>
+    <string name="blocklist">Lista de bloqueio</string>
+    <string name="no_connected_devices">Sem dispositivos conectados</string>
+    <string name="open_icon">Abrir</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">Falha ao iniciar ponto de acesso.</string>
+    <string name="soft_ap_failure_notif_content">Shizuku está em execução e conectado ao aplicativo?</string>
+    <string name="soft_ap_failure_notif_channel_name">Notificações de erro</string>
     <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Ponto de acesso</string>
+    <string name="tile_disabling">Desligando...</string>
+    <string name="tile_disabled">Desligado</string>
+    <string name="tile_enabling">Ligando...</string>
+    <string name="tile_enabled">%d dispositivos</string>
+    <string name="tile_failed">Indisponível</string>
     <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">Controles</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">Sem dispositivos bloqueados</string>
+    <string name="unblock_button">DESBLOQUEADO</string>
+    <string name="blocklist_blocked">Dispositivos adicionados a lista de bloqueio</string>
+    <string name="blocklist_unblocked">Dispositivos removidos da lista de bloqueio.</string>
     <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">Denunciar</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">O aplicativo parou de funcionar</string>
+    <string name="crash_notif_content">O aplicativo parou de funcionar devido a um erro inesperado.</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_desc">O aplicativo parou de funcionar :(</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
+    <string name="control_button_loading">Carregando</string>
+    <string name="control_button_stop">Desativar ponto de acesso</string>
+    <string name="control_button_start">Ativar ponto de acesso</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
+    <string name="failed_button">Falha ao ativar ponto de acesso: Não foi possível iniciar</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Conectado</string>
+    <string name="no_client_hostname">(dispositivo não identificado: sem nome)</string>
+    <string name="block_button">BLOQUEAR</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
     <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="hotspot_not_supported">Ponto de acesso não suportado neste dispositivo.</string>
+    <string name="close_button">FECHAR</string>
+    <string name="qr_code_button">Mostrar código QR</string>
+    <string name="connected_devices_button">Dispositivos Conectados (%d)</string>
+    <string name="feature_not_supported">Funcionalidade não suportada no seu dispositivo.</string>
+    <string name="hotspot_not_enabled">O ponto de acesso ainda não está ativado.</string>
+    <string name="hotspot_enable_action">ATIVAR</string>
+    <string name="edit_button">Editar</string>
+    <string name="copy_button">Copiar</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
+    <string name="settings">Configurações</string>
+    <string name="error_icon">Erro</string>
+    <string name="warning_icon">Aviso</string>
+    <string name="settings_desc">Configure os valores abaixo conforme sua preferência :)</string>
+    <string name="ssid_field_label">Nome do ponto de acesso</string>
+    <string name="ssid_too_short_warning">O nome do ponto de acesso é muito curto.</string>
+    <string name="ssid_too_long_warning">O nome do ponto de acesso é muito longo.</string>
+    <string name="security_proto_field_label">Tipo de Segurança</string>
+    <string name="security_proto_not_supported">Não suportado</string>
+    <string name="freq_band_unknown">Desconhecido</string>
+    <string name="advanced_settings_label">Configurações avançadas</string>
+    <string name="expand_icon">Expandir</string>
+    <string name="auto_shutdown_5">5 minutos</string>
+    <string name="auto_shutdown_10">10 minutos</string>
+    <string name="auto_shutdown_20">20 minutos</string>
+    <string name="auto_shutdown_30">30 minutos</string>
+    <string name="auto_shutdown_60">1 hora</string>
+    <string name="auto_shutdown_default">Padrão</string>
+    <string name="preset_saved_on">Salvo em %s</string>
+    <string name="preset_delete_button">Deletar</string>
+    <string name="preset_apply_button">Aplicar</string>
+    <string name="data_export_field_name">Exportar/Importar</string>
+    <string name="data_export_export_button">Exportar</string>
+    <string name="data_export_import_button">Importar</string>
+    <string name="export_success">Exportado com sucesso.</string>
+    <string name="export_failed">Falha ao exportar.</string>
+    <string name="restart_app">REINICIAR</string>
+    <string name="import_failed">Falha ao importar.</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="save_button">Salvar</string>
+    <string name="passphrase_empty_warning">Insira uma senha.</string>
     <!-- dev.shadoe.delta.setup -->
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="setup_note">Requer Shizuku ou root para funcionar.</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_grant_access">Permitir acesso</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">Shizuku não está instalado.</string>
+    <string name="github">GitHub</string>
+    <string name="play_store">Play Store</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">O Shizuku não está em execução.</string>
+    <string name="shizuku_start">Iniciar o Shizuku</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Ícone do Shizuku</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">Não instalado.</string>
+    <string name="shizuku_setup_not_running">Não está em execução.</string>
+    <string name="shizuku_setup_not_connected">Não conectado.</string>
+    <string name="shizuku_setup_connected">Conectado ✅</string>
 </resources>
