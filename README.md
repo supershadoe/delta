@@ -1,7 +1,7 @@
 ## delta
 
 This app allows accessing advanced hotspot settings not exposed through the
-system settings app on devices that use Stock Android (Pixel, Moto, etc.)
+system settings app on devices that use Stock Android (Pixel, Nothing, etc.)
 
 It provides various information and features such as:
 - Usual info provided by settings app such as hotspot name, passphrase, security
