@@ -1,0 +1,66 @@
+---
+title: Quick Start Guide
+description: Setup guide for first time users
+sidebar:
+  order: 1
+---
+
+import { Image } from 'astro:assets';
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Here is a step-by-step guide for you to get started if you are using apps like
+this for the first time.
+
+## Enable Developer Options
+
+First, you need to enable Developer Options on your Android device.
+
+<Steps>
+1. Go to **Settings** > **About phone**.
+2. Tap on **Build number** seven times until you see a message that says,
+   "You are now a developer!".
+3. You may need to enter your device's PIN or password to complete this step.
+</Steps>
+
+## Install Shizuku
+
+Download and install Shizuku app from [Google Play Store](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api)
+or from the [official website](https://shizuku.rikka.app/download/).
+
+## Setting up Shizuku
+
+Refer to this [setup guide](https://shizuku.rikka.app/guide/setup/) on
+Shizuku's website.
+
+<Aside>
+For non-rooted devices, you will need to restart the Shizuku service every
+time you reboot your device.
+</Aside>
+
+<Aside type="caution">
+- Do not disable Developer Options after setting up Shizuku, as this will cause it
+to stop working.
+- You can turn off Wireless Debugging after Shizuku has started, but **do not**
+turn off USB Debugging. Shizuku needs at least one of them to be enabled to
+keep running in the background. The `adbd` process, which Shizuku relies on,
+will be terminated if both are disabled.
+</Aside>
+
+## Install Delta
+
+Now that Shizuku is set up, you can install Delta.
+
+Grab the latest release of Delta either from [GitHub](https://github.com/supershadoe/delta/releases/latest)
+directly, using [Obtainium](https://github.com/ImranR98/Obtainium) or from the
+[IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta) F-Droid repo.
+
+[<Image src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png"
+alt="Get it on Obtainium" width="269" height="80"/>](https://github.com/ImranR98/Obtainium)
+
+[<Image src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButton.png"
+alt="Get it on IzzyOnDroid" width="275" height="80"/>](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
+
+## Using Delta
+
+Once Delta is installed, open the app. It will request permission to access Shizuku.
+Grant it, and you're ready to start using the app!

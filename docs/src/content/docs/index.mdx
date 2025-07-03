@@ -1,0 +1,57 @@
+---
+title: Delta
+editUrl: false
+head:
+  - tag: title
+    content: Delta
+hero:
+  tagline: Advanced hotspot settings for Pixel-like devices.
+  image:
+    file: ../../assets/logo_outline.svg
+  actions:
+    - text: Download
+      link: https://github.com/supershadoe/delta/releases/latest
+      icon: external
+    - text: Quick start Guide
+      link: /quick-start-guide/
+      icon: right-arrow
+      variant: minimal
+lastUpdated: false
+sidebar:
+  hidden: true
+template: splash
+---
+
+import { Picture } from 'astro:assets';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import Showcase from '../../assets/showcase.svg';
+
+<div className="flex flex-col justify-center items-center lg:flex-row">
+<Showcase role="img" className="motion-safe:animate-slide-right will-change-transform" />
+<div className="motion-safe:animate-slide-left will-change-transform">
+## Features
+
+Delta provides various information and features such as:
+- Usual info provided by settings app such as hotspot name, passphrase, security
+type, frequency bands, quick connect using QR, etc.
+- List of connected devices.
+- Modifying amount of devices that can connect.
+- Changing MAC randomization settings.
+- Setting auto turn-off timeout.
+- Blocklist to prevent certain devices from connecting.
+- Make hotspot's SSID hidden (device doesn't appear on WiFi scans)
+- Quick setting tile to easily turn hotspot on/off from notification shade.
+- Control hotspot using Tasker/other automation apps.
+</div>
+</div>
+
+## Links
+
+<CardGrid>
+    <Card title="FAQ" icon="open-book">
+        Find answers to common questions in the [FAQ](/faq/).
+    </Card>
+    <Card title="Quick Start Guide" icon="right-arrow">
+        Get started quickly with the [Quick Start Guide](/quick-start-guide/).
+    </Card>
+</CardGrid>
