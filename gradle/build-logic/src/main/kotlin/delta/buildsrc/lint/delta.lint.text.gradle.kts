@@ -16,7 +16,7 @@ spotless {
     endWithNewline()
   }
   flexmark {
-    target("**/*.md")
+    target("*.md")
     flexmark()
   }
 }

@@ -6,7 +6,6 @@ spotless {
     removeUnusedImports()
     googleJavaFormat().aosp().reflowLongStrings()
     formatAnnotations()
-    target("**/*.java")
-    targetExclude("build/**")
+    target("src/*/java/**/*.java")
   }
 }
