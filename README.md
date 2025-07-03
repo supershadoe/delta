@@ -27,10 +27,10 @@ hotspot settings are hidden from Settings app and SystemUI.
    or from [IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
    F-Droid repo.
 
-[<img src="https://github.com/ImranR98/Obtainium/blob/main/assets/graphics/badge_obtainium.png"
-alt="Get it on Obtainium" height="80">](https://github.com/ImranR98/Obtainium)
+[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png"
+alt="Get it on Obtainium" height="80"/>](https://github.com/ImranR98/Obtainium)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButton.png"
-alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
+alt="Get it on IzzyOnDroid" height="80"/>](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
 
 ### Localization
 
