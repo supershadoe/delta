@@ -55,9 +55,7 @@ constructor(
         if (zipFilePath.toRealPath().parent != dbPath) {
           throw IllegalArgumentException("Potentially malicious zip file")
         }
-        FileOutputStream(zipFilePath.toFile()).use {
-          zipInputStream.copyTo(it)
-        }
+        FileOutputStream(zipFilePath.toFile()).use { zipInputStream.copyTo(it) }
         entry = zipInputStream.nextEntry
       }
 
