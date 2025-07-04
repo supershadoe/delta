@@ -19,18 +19,14 @@ It uses Shizuku to obtain hotspot related details and to modify hotspot
 settings. It is also useful on devices like Samsung Tabs (WiFi-only) where
 hotspot settings are hidden from Settings app and SystemUI.
 
-### Installation
+### Installation and queries
 
-1. Install Shizuku from [Play Store](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api)
-   or other places like GitHub/IzzyOnDroid [(official site)](https://shizuku.rikka.app/download/)
-2. Get Delta from either GitHub releases directly, using [Obtainium](https://github.com/ImranR98/Obtainium)
-   or from [IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
-   F-Droid repo.
+Get started with the app using the [quick start guide](https://delta.shadoe.dev/quick-start-guide/)
+which has step-by-step instructions on how to install the app.
 
-[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png"
-alt="Get it on Obtainium" height="80"/>](https://github.com/ImranR98/Obtainium)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButton.png"
-alt="Get it on IzzyOnDroid" height="80"/>](https://apt.izzysoft.de/fdroid/index/apk/dev.shadoe.delta)
+### Any questions?
+
+Refer to the [FAQ section](https://delta.shadoe.dev/faq/)
 
 ### Localization
 
@@ -40,6 +36,13 @@ can contribute through [Crowdin](https://crowdin.com/project/delta-app)
 Open up a discussion on [GitHub](https://github.com/supershadoe/delta/discussions/new?category=ideas)
 or [mail me](mailto:shadoe@shadoe.dev) to enable any language on Crowdin other
 than the ones already enabled.
+
+> [!NOTE]
+> By providing translations on Crowdin, you agree that your translated content
+> will be licensed under BSD-3-Clause, similar to the app.
+
+Signing-off on commits is enforced on GitHub but not on Crowdin and thus, I
+wanted to make it explicit.
 
 ### Want to contribute?
 
