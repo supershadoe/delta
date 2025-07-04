@@ -13,6 +13,8 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
+import kotlin.io.path.Path
+import kotlin.io.path.div
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -38,16 +40,22 @@ constructor(
   suspend fun importDatabase(file: Uri) =
     withContext(Dispatchers.IO) {
       configDb.close()
-      getDbFiles().forEach { it.takeIf { it.exists() }?.delete() }
+      val dbFiles = getDbFiles()
+
+      dbFiles.forEach { it.takeIf { it.exists() }?.delete() }
 
       val inputStream = applicationContext.contentResolver.openInputStream(file)
       inputStream ?: throw FileNotFoundException("$file cannot be opened.")
 
       val zipInputStream = ZipInputStream(inputStream)
-      val dbPath = applicationContext.getDatabasePath(DB_NAME).parentFile
+      val dbPath = dbFiles[0].parentFile!!
       var entry = zipInputStream.nextEntry
       while (entry != null) {
-        FileOutputStream(File(dbPath, entry.name)).use {
+        val zipFilePath = Path(dbPath.path) / entry.name
+        if (zipFilePath.toRealPath().parent != dbPath) {
+          throw IllegalArgumentException("Potentially malicious zip file")
+        }
+        FileOutputStream(zipFilePath.toFile()).use {
           zipInputStream.copyTo(it)
         }
         entry = zipInputStream.nextEntry
