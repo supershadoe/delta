@@ -81,6 +81,8 @@
     <string name="freq_band_2_4_GHz_desc">ほとんどのデバイスに対応していますが、あまり高速ではありません。</string>
     <string name="freq_band_5_GHz_desc">デュアルバンド モード: 対応デバイスでは高速に機能し、古いデバイスとも互換性があります。</string>
     <string name="freq_band_6_GHz_desc">トライバンド モード: 最新テクノロジーで、全ての国で利用出来るとは限りません。</string>
+    <string name="freq_band_60_GHz_desc">一般的には使用されていない周波数帯です。通信が可能な範囲が非常に狭いです。</string>
+    <string name="hidden_network_field_desc">"手動で追加しない限り、他の端末から非公開のアクセスポイントを検出することはできません。"</string>
     <string name="max_client_limit_field_label">接続できるクライアント数の制限</string>
     <string name="max_client_limit_field_count">%d クライアント</string>
     <string name="mac_randomization_field_label">MACアドレスのランダム化</string>
@@ -95,8 +97,24 @@
     <string name="auto_shutdown_default">デフォルト</string>
     <string name="auto_shutdown_timeout_desc">しばらくデバイスが接続されていない場合、テザリングをオフにします。</string>
     <string name="presets_setting">プリセット</string>
-    <string name="preset_save_empty">プリセットの名前を空白にはできません。</string>
+    <string name="preset_save_empty">プリセットの名前を空白にすることはできません。</string>
     <string name="preset_delete_button">削除</string>
+    <string name="tile_field_desc">クイック設定にタイルを追加し、このアプリを起動せずにアクセスポイントを簡単に管理できるようにします。</string>
+    <string name="tile_add_button">タイルを追加</string>
+    <string name="tile_added">タイルの追加に成功しました！</string>
+    <string name="tile_already_added">タイルは既に追加されています。</string>
+    <string name="tile_add_error">タイルの追加に失敗しました。後ほどお試しください</string>
+    <string name="tasker_integration_field_desc">[セキュリティ低下] Taskerがこのアプリを通してアクセスポイントの設定を管理できるようになります。</string>
+    <string name="tasker_integration_info">このアプリは、テザリングの開始と停止をそれぞれ行うための2つのインテント ( &lt;tt&gt;dev.shadoe.delta.action.START_SOFT_AP&lt;/tt&gt; と &lt;tt&gt;dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt&gt;)を提供します。
+この機能は、自動化を望むパワーユーザーに非常に役立つものですが、有効にすると&lt;b&gt;任意のアプリ&lt;/b&gt;がこのアクションをブロードキャストできるようになり（&lt;b&gt;Tasker に限りません&lt;/b&gt;）、悪意のあるアプリによる攻撃の経路を提供してしまう点に注意が必要です。&lt;br&gt;&lt;br&gt; この機能が危険になる可能性のある仮定の一つは、2つのデバイスが同じマルウェアに感染し、LAN経由で通信を試み、Deltaを悪用して目的を達成しようとする場合です。</string>
+    <string name="tasker_integration_info_copy_start_action">&lt;tt&gt;START_SOFT_AP&lt;/tt&gt; をコピー</string>
+    <string name="tasker_integration_info_copy_stop_action">&lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt; をコピー</string>
+    <string name="tasker_integration_info_copy_pkg_name">パッケージ名 をコピー</string>
+    <string name="tasker_integration_info_copy_cls_name">クラス名 をコピー</string>
+    <string name="restart_required_import_success_desc">データベースのインポートに成功しました。設定を有効化するにはアプリの再起動が必要です。</string>
+    <string name="passphrase_empty_warning">パスワードを入力。</string>
+    <string name="save_changes_failed_warning">設定を更新できませんでした。</string>
+    <string name="save_changes_succeeded">設定が更新されました。</string>
     <!-- dev.shadoe.delta.setup -->
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
     <string name="setup_note">機能するには Shizuku や root 権限が必要です。</string>
@@ -106,10 +124,13 @@
     <string name="shizuku_not_connected_desc">このアプリは Android SDK にいないシステムAPIを利用するため Shizuku アプリが必要です。</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku がインストールされていません。</string>
+    <string name="github">GitHub</string>
+    <string name="play_store">Play ストア</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
     <string name="shizuku_not_running">Shizuku が起動していません。</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
     <string name="crash_report_setup_desc">アプリがクラッシュしたときに、エラーログを通知でお知らせするには、通知の許可が必要です。</string>
+    <string name="crash_report_setup_grant_perm">権限を付与</string>
     <string name="crash_report_setup_done">権限が付与されました✅</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
     <string name="shizuku_setup_not_installed">インストールしてません。</string>
