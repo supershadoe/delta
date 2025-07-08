@@ -6,6 +6,8 @@
     <string name="blocklist">Blocklist</string>
     <string name="no_connected_devices">There are no connected devices.</string>
     <string name="open_icon">Open</string>
+    <string name="decrement">Decrement</string>
+    <string name="increment">Increment</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <string name="soft_ap_failure_notif_title">Failed to start hotspot.</string>
     <string name="soft_ap_failure_notif_content">Is Shizuku running and connected to the app?</string>
@@ -116,7 +118,8 @@
     <string name="hidden_network_field_desc">"Hotspot won't be discoverable by other devices unless added manually."</string>
     <string name="max_client_limit_field_icon">Maximum Client Limit Icon</string>
     <string name="max_client_limit_field_label">Maximum Client Limit</string>
-    <string name="max_client_limit_field_count">%d clients</string>
+    <string name="max_client_limit_field_empty">Client limit cannot be empty.</string>
+    <string name="max_client_limit_field_desc">Your device supports connecting at most %d clients.</string>
     <string name="mac_randomization_field_icon">MAC Randomization Icon</string>
     <string name="mac_randomization_field_label">MAC Randomization</string>
     <string name="mac_randomization_none">None</string>

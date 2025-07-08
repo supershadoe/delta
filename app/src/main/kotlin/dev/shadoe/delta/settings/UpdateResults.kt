@@ -7,4 +7,5 @@ data class UpdateResults(
   val ssidResult: SsidValidator.Result = SsidValidator.Result.Success,
   val passphraseResult: PassphraseValidator.Result =
     PassphraseValidator.Result.Success,
+  val isMaxClientLimitEmpty: Boolean = false,
 )

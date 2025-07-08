@@ -127,8 +127,16 @@ constructor(
     _config.value = _config.value.copy(isHidden = isHidden)
   }
 
-  fun updateMaxClientLimit(maxClient: Int) {
-    _config.value = _config.value.copy(maxClientLimit = maxClient)
+  fun updateMaxClientLimit(maxClient: Int?) {
+    if (maxClient == null) {
+      _results.update { it.copy(isMaxClientLimitEmpty = true) }
+      _config.update {
+        it.copy(maxClientLimit = status.value.capabilities.maxSupportedClients)
+      }
+    } else {
+      _results.update { it.copy(isMaxClientLimitEmpty = false) }
+      _config.update { it.copy(maxClientLimit = maxClient) }
+    }
   }
 
   fun updateMacRandomizationSetting(macRandomizationSetting: Int) {

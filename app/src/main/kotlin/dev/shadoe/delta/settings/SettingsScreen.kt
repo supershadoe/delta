@@ -312,9 +312,9 @@ fun SettingsScreen(
       item {
         FadeInExpanded(isAdvancedSettingsEnabled) {
           MaxClientLimitField(
+            currentLimit = config.maxClientLimit,
             maxClient = status.capabilities.maxSupportedClients,
-            onMaxClientChange = { vm.updateMaxClientLimit(it.toInt()) },
-            allowedLimit = config.maxClientLimit,
+            onMaxClientChange = { vm.updateMaxClientLimit(it) },
           )
         }
       }
