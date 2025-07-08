@@ -108,7 +108,6 @@
     <string name="hidden_network_field_desc">"Точка доступа не будет отображаться на других устройствах, если ее не добавить вручную."</string>
     <string name="max_client_limit_field_icon">Значок максимального количества подключённых устройств</string>
     <string name="max_client_limit_field_label">Максимальное количество подключённых устройств</string>
-    <string name="max_client_limit_field_count">%d устройств</string>
     <string name="mac_randomization_field_icon">Значок рандомизации MAC-адреса</string>
     <string name="mac_randomization_field_label">Рандомизация MAC-адреса</string>
     <string name="mac_randomization_none">Нет</string>

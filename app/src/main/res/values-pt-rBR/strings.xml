@@ -97,7 +97,6 @@
     <string name="hidden_network_field_icon">Ícone de rede oculto</string>
     <string name="hidden_network_field_label">Rede Oculta</string>
     <string name="hidden_network_field_desc">"O ponto de acesso não poderá ser encontrado por outros dispositivos, a menos que seja adicionado manualmente."</string>
-    <string name="max_client_limit_field_count">%d clientes</string>
     <string name="mac_randomization_field_icon">Ícone de Randomização de MAC</string>
     <string name="mac_randomization_field_label">Randomização de MAC</string>
     <string name="mac_randomization_none">Nenhum</string>

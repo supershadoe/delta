@@ -109,7 +109,6 @@
     <string name="hidden_network_field_desc">"Hotspot neće biti vidljiv drugim uređajima osim ako nije manualni povezan."</string>
     <string name="max_client_limit_field_icon">Maksimum korisnika ikona</string>
     <string name="max_client_limit_field_label">Limit povezanih uređaja</string>
-    <string name="max_client_limit_field_count">%d klijenata</string>
     <string name="mac_randomization_field_icon">MAC nasumična ikona</string>
     <string name="mac_randomization_field_label">Nasumičan MAC</string>
     <string name="mac_randomization_none">Ništa</string>

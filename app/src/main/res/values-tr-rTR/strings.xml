@@ -109,7 +109,6 @@
     <string name="hidden_network_field_desc">"Hotspot, manuel olarak eklenmediği sürece diğer cihazlar tarafından bulunamaz."</string>
     <string name="max_client_limit_field_icon">Maksimum İstemci Limiti Simgesi</string>
     <string name="max_client_limit_field_label">Maksimum İstemci Limiti</string>
-    <string name="max_client_limit_field_count">%d istemci</string>
     <string name="mac_randomization_field_icon">MAC Rastgeleleştirme Simgesi</string>
     <string name="mac_randomization_field_label">MAC Rastgeleleştirme</string>
     <string name="mac_randomization_none">Hiçbiri</string>

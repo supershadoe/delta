@@ -84,7 +84,6 @@
     <string name="freq_band_60_GHz_desc">一般的には使用されていない周波数帯です。通信が可能な範囲が非常に狭いです。</string>
     <string name="hidden_network_field_desc">"手動で追加しない限り、他の端末から非公開のアクセスポイントを検出することはできません。"</string>
     <string name="max_client_limit_field_label">接続できるクライアント数の制限</string>
-    <string name="max_client_limit_field_count">%d クライアント</string>
     <string name="mac_randomization_field_label">MACアドレスのランダム化</string>
     <string name="mac_randomization_persistent_desc">MACアドレスは、アクセスポイント名が変更される度にランダム化されます。</string>
     <string name="mac_randomization_non_persistent_desc">MACアドレスは、テザリングが開始される度にランダム化されます。</string>
