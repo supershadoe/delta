@@ -33,8 +33,6 @@ constructor(
   private var softApMonitor: SoftApMonitor? = null
   private var shizukuSubscriber: AutoCloseable? = null
   private var shizukuStateCollector: Job? = null
-
-  private var isRunning = false
   private var subscribers = AtomicInt(0)
 
   val status = state.status
@@ -53,6 +51,7 @@ constructor(
       softApMonitor?.close()
     }
     softApMonitor = null
+    softApStateListener = null
   }
 
   private fun start() {
@@ -67,7 +66,6 @@ constructor(
           .distinctUntilChanged()
           .collectLatest { if (it) startListening() else stopListening() }
       }
-    isRunning = true
   }
 
   private fun stop() {
@@ -76,19 +74,16 @@ constructor(
     shizukuSubscriber = null
     shizukuStateCollector?.cancel()
     shizukuStateCollector = null
-    isRunning = false
   }
 
   fun subscribe() {
     val current = subscribers.incrementAndFetch()
-    if (current == 1 && !isRunning) {
-      start()
-    }
+    if (current == 1) start()
   }
 
   fun unsubscribe() {
     val current = subscribers.decrementAndFetch()
+    if (current == 0) stop()
     if (current < 0) subscribers.store(0)
-    if (current == 0 && isRunning) stop()
   }
 }
