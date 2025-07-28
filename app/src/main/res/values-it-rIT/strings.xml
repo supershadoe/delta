@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dev.shadoe.delta -->
+    <string name="app_name">Delta</string>
+    <string name="back_button">Indietro</string>
+    <string name="blocklist">Lista bloccati</string>
+    <string name="no_connected_devices">Non sono presenti dispositivi connessi.</string>
+    <string name="open_icon">Apri</string>
+    <string name="decrement">Diminuisci</string>
+    <string name="increment">Aumenta</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">Impossibile avviare l\'hotspot.</string>
+    <string name="soft_ap_failure_notif_content">Shizuku è in esecuzione e connesso all\'app?</string>
+    <string name="soft_ap_failure_notif_channel_name">Notifiche di errore</string>
     <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">Hotspot</string>
+    <string name="tile_disabling">Spegnendo…</string>
+    <string name="tile_disabled">Spento</string>
+    <string name="tile_enabling">Accendendo…</string>
+    <string name="tile_enabled">%d dispositivi</string>
+    <string name="tile_failed">Non disponibile</string>
     <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">Controlli</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">Nessun dispositivo bloccato.</string>
+    <string name="unblock_button">SBLOCCA</string>
+    <string name="blocklist_blocked">Dispositivi aggiungi alla lista bloccati.</string>
+    <string name="blocklist_unblocked">Dispositivi rimossi dalla lista bloccati.</string>
     <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">Segnala</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">App arrestata inaspettatamente</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
