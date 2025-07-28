@@ -109,7 +109,6 @@
     <string name="hidden_network_field_desc">"Hotspot kann von anderen Geräten nur erkannt werden, wenn es manuell hinzugefügt wird."</string>
     <string name="max_client_limit_field_icon">Symbol für maximales Verbindungslimit</string>
     <string name="max_client_limit_field_label">Maximales Verbindungslimit</string>
-    <string name="max_client_limit_field_count">%d Verbindungen</string>
     <string name="mac_randomization_field_icon">MAC-Zufallsgenerator-Symbol</string>
     <string name="mac_randomization_field_label">MAC- Zufallsauswahl</string>
     <string name="mac_randomization_none">Keine</string>
