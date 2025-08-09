@@ -151,6 +151,7 @@
     <string name="tasker_integration_info_copy_stop_action">Скопировать &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
     <string name="tasker_integration_info_copy_pkg_name">Скопировать имя пакета</string>
     <string name="tasker_integration_info_copy_cls_name">Скопировать имя класса</string>
+    <string name="data_export_field_icon">Значок экспорта данных</string>
     <string name="data_export_field_name">Экспорт/Импорт</string>
     <string name="data_export_field_desc">Экспорт/импорт данных приложения для резервной копии.</string>
     <string name="data_export_export_button">Экспорт</string>
