@@ -17,13 +17,11 @@
 package android.net.wifi;
 
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 public interface IWifiManager extends IInterface {
     /** Local-side IPC implementation stub class. */
@@ -50,38 +48,34 @@ public interface IWifiManager extends IInterface {
                 throws RemoteException {
             throw new RuntimeException("stub!");
         }
-
-        public static final java.lang.String DESCRIPTOR = "android.net.wifi.IWifiManager";
     }
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    boolean is24GHzBandSupported();
 
     boolean is5GHzBandSupported();
 
     boolean is6GHzBandSupported();
 
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     boolean validateSoftApConfiguration(SoftApConfiguration config);
 
     int getWifiApEnabledState();
 
     SoftApConfiguration getSoftApConfiguration();
 
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     void queryLastConfiguredTetheredApPassphraseSinceBoot(IStringListener listener);
 
     boolean setSoftApConfiguration(SoftApConfiguration softApConfig, String packageName);
 
-    @RequiresApi(Build.VERSION_CODES.S)
+    // Used on Android S and above
     void registerSoftApCallback(ISoftApCallback callback);
 
-    @RequiresApi(Build.VERSION_CODES.S)
-    void unregisterSoftApCallback(ISoftApCallback callback);
-
-    @Deprecated(since = "S")
+    // Used on Android R
     void registerSoftApCallback(IBinder binder, ISoftApCallback callback, int callbackIdentifier);
 
-    @Deprecated(since = "S")
+    // Used on few Android R versions (OEM ROMs based on an older AOSP commit)
+    void registerSoftApCallback(IBinder binder, ISoftApCallback callback);
+
+    // Used on Android S and above
+    void unregisterSoftApCallback(ISoftApCallback callback);
+
+    // Used on Android R
     void unregisterSoftApCallback(int callbackIdentifier);
 }

@@ -17,17 +17,14 @@
 package android.net.wifi;
 
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 /** Interface for IStringListener. */
 public interface IStringListener extends IInterface {
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     abstract class Stub extends Binder implements IStringListener {
         /** Construct the stub at attach it to the interface. */
         public Stub() {
