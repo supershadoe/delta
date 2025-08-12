@@ -39,15 +39,16 @@ constructor(
       tetheringEventCallback,
       ADB_PACKAGE_NAME,
     )
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    try {
       wifiManager.registerSoftApCallback(softApCallback)
-    } else {
-      @Suppress("DEPRECATION")
+    } catch (_: NoSuchMethodException) {
       wifiManager.registerSoftApCallback(
         Binder(),
         softApCallback,
         softApCallback.hashCode(),
       )
+    } catch (_: NoSuchMethodException) {
+      wifiManager.registerSoftApCallback(Binder(), softApCallback)
     }
   }
 
