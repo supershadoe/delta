@@ -75,7 +75,6 @@ public interface ITetheringConnector extends IInterface {
             String callingAttributionTag,
             IIntResultListener receiver);
 
-    @RequiresApi(Build.VERSION_CODES.S)
     void startTethering(
             TetheringRequestParcel request,
             String callerPkg,
@@ -118,12 +117,13 @@ public interface ITetheringConnector extends IInterface {
     @Deprecated(since = "S")
     void setUsbTethering(boolean enable, String callerPkg, IIntResultListener receiver);
 
-    @Deprecated(since = "S")
     void startTethering(
             TetheringRequestParcel request, String callerPkg, IIntResultListener receiver);
 
-    @Deprecated(since = "S")
     void stopTethering(int type, String callerPkg, IIntResultListener receiver);
+
+    void startTethering(
+            int type, ResultReceiver receiver, boolean showProvisioningUi, String callerPkg);
 
     @Deprecated(since = "S")
     void requestLatestTetheringEntitlementResult(

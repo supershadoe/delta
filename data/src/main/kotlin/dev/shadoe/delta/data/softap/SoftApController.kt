@@ -7,6 +7,9 @@ import android.net.TetheringManagerHidden.TETHERING_WIFI
 import android.net.wifi.IWifiManager
 import android.net.wifi.SoftApConfigurationHidden
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.ResultReceiver
 import android.util.Log
 import dev.rikka.tools.refine.Refine
 import dev.shadoe.delta.api.SoftApConfiguration
@@ -60,20 +63,28 @@ constructor(
     }
     val request =
       TetheringManagerHidden.TetheringRequest.Builder(TETHERING_WIFI).build()
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    try {
       tetheringConnector.startTethering(
         request.parcel,
         ADB_PACKAGE_NAME,
         null,
         dummyIntResultReceiver,
       )
-    } else {
-      @Suppress("DEPRECATION")
+    } catch (_: NoSuchMethodException) {
       tetheringConnector.startTethering(
         request.parcel,
         ADB_PACKAGE_NAME,
         dummyIntResultReceiver,
       )
+    } catch (_: NoSuchMethodException) {
+      tetheringConnector.startTethering(
+        TETHERING_WIFI,
+        ResultReceiver(Handler(Looper.getMainLooper())),
+        false,
+        ADB_PACKAGE_NAME,
+      )
+    } catch (_: NoSuchMethodException) {
+      return false
     }
     return true
   }
