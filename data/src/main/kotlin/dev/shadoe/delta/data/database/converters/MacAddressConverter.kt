@@ -9,8 +9,13 @@ class MacAddressConverter {
     macAddressList.joinToString(",") { macAddressToString(it) }
 
   @TypeConverter
-  fun stringToMacAddressList(serialized: String) =
-    serialized.split(",").map { stringToMacAddress(it) }
+  fun stringToMacAddressList(serialized: String): List<MacAddress> {
+    return if (serialized.isEmpty()) {
+      emptyList()
+    } else {
+      serialized.split(",").map { stringToMacAddress(it) }
+    }
+  }
 
   @TypeConverter
   fun macAddressToString(macAddress: MacAddress) = macAddress.macAddress
