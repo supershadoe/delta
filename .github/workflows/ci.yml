@@ -47,8 +47,8 @@ jobs:
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           read-only-cache: ${{ github.event_name == 'pull_request' }}
-  sast:
-    name: SAST using CodeQL
+  sast-java-kt:
+    name: CodeQL (java-kotlin)
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -59,6 +59,7 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           build-mode: manual
+          languages: java-kotlin
       - name: Custom gradle setup
         uses: ./.github/actions/gradle-setup
         with:
@@ -70,6 +71,23 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:java-kotlin"
+  sast-actions:
+    name: CodeQL (GH actions)
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          build-mode: none
+          languages: actions
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:actions"
   dependency-graph-submission:
     name: Dependency graph submission
     runs-on: ubuntu-latest
