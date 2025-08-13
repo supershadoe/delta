@@ -16,14 +16,15 @@ import dev.shadoe.delta.data.softap.SoftApStateStore
 import dev.shadoe.delta.data.softap.validators.PassphraseValidator
 import dev.shadoe.delta.data.softap.validators.SsidValidator
 import javax.inject.Inject
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 
 private data class SettingsFlags(val insecureReceiverEnabled: Boolean)
 
@@ -70,6 +71,7 @@ constructor(
   @OptIn(ExperimentalCoroutinesApi::class)
   val taskerIntegrationStatus = _flags.mapLatest { it.insecureReceiverEnabled }
 
+  @OptIn(ExperimentalTime::class)
   fun convertUnixTSToTime(timestamp: Long) =
     Instant.fromEpochMilliseconds(timestamp).toString()
 
@@ -152,6 +154,7 @@ constructor(
   fun deletePreset(preset: Preset) =
     viewModelScope.launch { presetDao.delete(preset) }
 
+  @OptIn(ExperimentalTime::class)
   fun saveConfigAsPreset(name: String): Boolean {
     val canSave = results.value == UpdateResults()
     if (canSave) {
