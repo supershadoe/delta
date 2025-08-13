@@ -234,7 +234,7 @@ constructor(
     }
   }
 
-  // TODO: emit errors in UI
+  // TODO: Make the emitted error more descriptive.
   fun commit(): Boolean {
     if (results.value != UpdateResults()) return false
     // Only happens when someone erases the passphrase but also selects
@@ -245,12 +245,11 @@ constructor(
           passphrase = softApStateStore.config.value.passphrase
         )
     }
-    softApController.updateSoftApConfiguration(_config.value)
     viewModelScope.launch {
       flagsRepository.setInsecureReceiverStatus(
         _flags.value.insecureReceiverEnabled
       )
     }
-    return true
+    return softApController.updateSoftApConfiguration(_config.value)
   }
 }
