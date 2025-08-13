@@ -6,6 +6,8 @@
     <string name="blocklist">Engelleme Listesi</string>
     <string name="no_connected_devices">Bağlı cihaz yok.</string>
     <string name="open_icon">Aç</string>
+    <string name="decrement">Azalt</string>
+    <string name="increment">Artır</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <string name="soft_ap_failure_notif_title">Hotspot başlatılamadı.</string>
     <string name="soft_ap_failure_notif_content">Shizuku çalışıyor ve uygulamaya bağlı mı?</string>
@@ -109,6 +111,8 @@
     <string name="hidden_network_field_desc">"Hotspot, manuel olarak eklenmediği sürece diğer cihazlar tarafından bulunamaz."</string>
     <string name="max_client_limit_field_icon">Maksimum İstemci Limiti Simgesi</string>
     <string name="max_client_limit_field_label">Maksimum İstemci Limiti</string>
+    <string name="max_client_limit_field_empty">İstemci limiti boş bırakılamaz.</string>
+    <string name="max_client_limit_field_desc">Cihazınız en fazla %d istemciye bağlantı desteği sunar.</string>
     <string name="mac_randomization_field_icon">MAC Rastgeleleştirme Simgesi</string>
     <string name="mac_randomization_field_label">MAC Rastgeleleştirme</string>
     <string name="mac_randomization_none">Hiçbiri</string>
