@@ -1,4 +1,7 @@
 name: Daily jobs
+permissions:
+  contents: read
+  pull-requests: write
 on:
   schedule:
     - cron: '0 0 * * *'
