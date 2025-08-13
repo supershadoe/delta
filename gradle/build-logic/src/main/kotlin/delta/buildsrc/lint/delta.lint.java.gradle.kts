@@ -4,7 +4,7 @@ spotless {
   java {
     importOrder()
     removeUnusedImports()
-    googleJavaFormat().aosp().reflowLongStrings()
+    googleJavaFormat("1.28.0").aosp().reflowLongStrings()
     formatAnnotations()
     target("src/*/java/**/*.java")
   }

@@ -17,6 +17,6 @@ spotless {
   }
   flexmark {
     target("*.md")
-    flexmark()
+    flexmark("0.64.8")
   }
 }
