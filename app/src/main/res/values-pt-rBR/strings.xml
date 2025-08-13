@@ -6,6 +6,8 @@
     <string name="blocklist">Lista de bloqueio</string>
     <string name="no_connected_devices">Sem dispositivos conectados.</string>
     <string name="open_icon">Abrir</string>
+    <string name="decrement">Diminuir</string>
+    <string name="increment">Aumentar</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <string name="soft_ap_failure_notif_title">Falha ao iniciar ponto de acesso.</string>
     <string name="soft_ap_failure_notif_content">Shizuku está em execução e conectado ao aplicativo?</string>
@@ -29,11 +31,14 @@
     <string name="crash_notif_action">Denunciar</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
     <string name="crash_notif_title">O aplicativo parou de funcionar</string>
+    <string name="crash_notif_sub_text">Gerenciador de falhas do aplicativo</string>
     <string name="crash_notif_content">O aplicativo parou de funcionar devido a um erro inesperado.</string>
+    <string name="crash_notif_channel_name">Canal de falhas</string>
     <string name="crash_notif_channel_desc">Relata erros inesperados com registros de falha.</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">Registro de Falhas</string>
     <string name="crash_report_desc">O aplicativo parou de funcionar :(</string>
+    <string name="crash_report_no_log">Não há informações sobre falhas disponíveis</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">Carregando</string>
     <string name="control_button_stop">Desativar ponto de acesso</string>
@@ -51,6 +56,7 @@
     <string name="passphrase_show">Mostrar senha</string>
     <string name="passphrase_hide">Esconder senha</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="triggered_debug_screen">Tela de depuração desbloqueada</string>
     <string name="hotspot_not_supported">Ponto de acesso não suportado neste dispositivo.</string>
     <string name="close_button">FECHAR</string>
     <string name="qr_code_button">Mostrar código QR</string>
@@ -62,11 +68,13 @@
     <string name="edit_button">Editar</string>
     <string name="copy_button">Copiar</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
+    <string name="debug_title">Tela de depuração</string>
     <string name="debug_trigger_crash">Causar uma falha</string>
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
     <string name="settings">Configurações</string>
     <string name="error_icon">Erro</string>
     <string name="warning_icon">Aviso</string>
+    <string name="settings_warn_samsung">Em vários dispositivos Samsung, configurações avançadas e desligamento automático não podem ser controlados pelo Delta. Essas configurações devem ser manipuladas nas configurações do dispositivo.</string>
     <string name="open_system_settings">Abrir configurações</string>
     <string name="settings_desc">Configure os valores abaixo conforme sua preferência :)</string>
     <string name="ssid_field_icon">Nome do ícone do ponto de acesso</string>
@@ -85,10 +93,14 @@
     <string name="passphrase_field_label">Senha</string>
     <string name="passphrase_too_short_warning">A senha é muito curta.</string>
     <string name="passphrase_too_long_warning">A senha é muito longa.</string>
+    <string name="auto_shutdown_field_icon">Ícone de desligamento automático</string>
+    <string name="auto_shutdown_field_title">Desligar automaticamente</string>
     <string name="auto_shutdown_field_desc">Desliga o ponto de acesso quando não houverem dispositivos conectados por algum tempo.</string>
     <string name="freq_band_field_icon">Ícone de faixa de frequência</string>
     <string name="freq_band_field_label">Tipo de Velocidade</string>
     <string name="freq_band_2_4_GHz_desc">Suportado por quase todos os dispositivos, mas não muito rápido.</string>
+    <string name="freq_band_5_GHz_desc">Modo dual-band: mais rápido em dispositivos compatíveis e compatível com dispositivos antigos.</string>
+    <string name="freq_band_6_GHz_desc">Modo tribanda: tecnologia de última geração, não disponível em todos os países.</string>
     <string name="freq_band_60_GHz_desc">Não é uma faixa de frequência popular, tem alcance muito curto.</string>
     <string name="freq_band_unknown">Desconhecido</string>
     <string name="advanced_settings_label">Configurações avançadas</string>
@@ -97,27 +109,52 @@
     <string name="hidden_network_field_icon">Ícone de rede oculto</string>
     <string name="hidden_network_field_label">Rede Oculta</string>
     <string name="hidden_network_field_desc">"O ponto de acesso não poderá ser encontrado por outros dispositivos, a menos que seja adicionado manualmente."</string>
+    <string name="max_client_limit_field_icon">Ícone do Limite de Clientes</string>
+    <string name="max_client_limit_field_label">Limite Máximo de Clientes</string>
+    <string name="max_client_limit_field_empty">O limite de clientes não pode estar vazio.</string>
+    <string name="max_client_limit_field_desc">Seu dispositivo permite a conexão de no máximo %d clientes.</string>
     <string name="mac_randomization_field_icon">Ícone de Randomização de MAC</string>
     <string name="mac_randomization_field_label">Randomização de MAC</string>
     <string name="mac_randomization_none">Nenhum</string>
+    <string name="mac_randomization_none_desc">Usa o endereço MAC do dispositivo para se identificar ao fornecer o ponto de acesso</string>
+    <string name="mac_randomization_persistent">Persistente</string>
     <string name="mac_randomization_persistent_desc">O endereço MAC é randomizado toda vez que o nome do ponto de acesso muda.</string>
+    <string name="mac_randomization_non_persistent">Não persistente</string>
     <string name="mac_randomization_non_persistent_desc">O endereço MAC é randomizado toda vez que o ponto de acesso é iniciado.</string>
+    <string name="auto_shutdown_timeout_field_icon">Ícone de expiração</string>
+    <string name="auto_shutdown_timeout_field_label">Tempo de inatividade antes do desligamento</string>
     <string name="auto_shutdown_5">5 minutos</string>
     <string name="auto_shutdown_10">10 minutos</string>
     <string name="auto_shutdown_20">20 minutos</string>
     <string name="auto_shutdown_30">30 minutos</string>
     <string name="auto_shutdown_60">1 hora</string>
     <string name="auto_shutdown_default">Padrão</string>
+    <string name="auto_shutdown_timeout_desc">Desliga o ponto de acesso após o tempo definido, se nenhum dispositivo estiver conectado.</string>
+    <string name="presets_setting">Predefinições</string>
+    <string name="presets_field_icon">Ícone de predefinições</string>
+    <string name="presets_field_desc">Salvar e restaurar várias configurações de ponto de acesso para alternar rapidamente entre elas.</string>
+    <string name="presets_show_button">Mostrar predefinições</string>
     <string name="presets_save_config_button">Salvar configurações</string>
+    <string name="preset_save_title">Fornecer o nome da predefinição</string>
+    <string name="preset_save_empty">O nome da predefinição não pode estar vazio.</string>
+    <string name="presets_none_saved">Não há predefinições salvas.</string>
     <string name="preset_saved_on">Salvo em %s</string>
     <string name="preset_delete_button">Deletar</string>
     <string name="preset_apply_button">Aplicar</string>
+    <string name="tile_field_icon">Ícone de bloco</string>
     <string name="tile_field_label">Adicionar bloco de configuração rápida?</string>
+    <string name="tile_field_desc">Adiciona um bloco à área de configurações rápidas que permite gerenciar o ponto de acesso com facilidade, sem abrir este app.</string>
     <string name="tile_add_button">Adicionar bloco</string>
     <string name="tile_added">O bloco foi adicionado com sucesso!</string>
     <string name="tile_already_added">Bloco já adicionado.</string>
     <string name="tile_add_error">Falha ao adicionar bloco, tente novamente mais tarde.</string>
     <string name="tasker_integration_field_icon">Ícone de automação</string>
+    <string name="tasker_integration_field_label">Integração com o Tasker</string>
+    <string name="tasker_integration_field_desc">[inseguro] Permite que o Tasker gerencie as configurações de ponto de acesso por meio deste app.</string>
+    <string name="tasker_integration_info_button">Informações de configuração</string>
+    <string name="tasker_integration_info">Há duas soluções providenciadas por este app — &lt;tt&gt;dev.shadoe.delta.action.START_SOFT_AP&lt;/tt&gt; and &lt;tt&gt;dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt&gt; para iniciar e parar pontos de acesso, respectivamente. Embora isso seja extremamente útil para usuários avançados que queiram automatizar várias coisas, é importante notar que ativar este recurso permite que &lt;b&gt;QUALQUER app&lt;/b&gt; transmita essas ações (&lt;b&gt;não apenas o Tasker&lt;/b&gt;), criando assim uma possível brecha para apps maliciosos.&lt;br&gt;&lt;br&gt;Um cenário hipotético em que isso pode ser perigoso seria se dois dispositivos tivessem o mesmo malware e tentassem se comunicar entre si via LAN, explorando o Delta para isso.</string>
+    <string name="tasker_integration_info_copy_start_action">Copiar &lt;tt&gt;START_SOFT_AP&lt;/tt&gt;</string>
+    <string name="tasker_integration_info_copy_stop_action">Copiar &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
     <string name="tasker_integration_info_copy_pkg_name">Copiar nome do pacote</string>
     <string name="tasker_integration_info_copy_cls_name">Copiar nome da classe</string>
     <string name="data_export_field_icon">Ícone de exportação de dados</string>
@@ -138,11 +175,17 @@
     <string name="save_changes_failed_warning">Falha ao atualizar as configurações do ponto de acesso.</string>
     <string name="save_changes_succeeded">Configurações do ponto de acesso atualizadas.</string>
     <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">Configurar o aplicativo</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
     <string name="app_icon">Ícone do aplicativo</string>
+    <string name="app_tagline">Configurações de ponto de acesso, desbloqueadas.</string>
+    <string name="setup_start_button">Iniciar configuração »</string>
     <string name="setup_note">Requer Shizuku ou root para funcionar.</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">Conectado ao Shizuku, prossiga com a configuração!</string>
+    <string name="setup_continue_button">Continuar configuração</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">Este aplicativo usa APIs que geralmente não são acessíveis pelo Android SDK. Por isso, requer o uso do Shizuku para obter acesso à API de ponto de acesso.</string>
     <string name="shizuku_grant_access">Permitir acesso</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku não está instalado.</string>
@@ -153,9 +196,11 @@
     <string name="shizuku_not_running">O Shizuku não está em execução.</string>
     <string name="shizuku_start">Iniciar o Shizuku</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">Configurar o relatório de falhas.</string>
     <string name="crash_report_setup_desc">É necessário permitir notificações para exibir os registros de falhas, caso falhas ocorram.</string>
     <string name="crash_report_setup_grant_perm">Conceder permissão</string>
     <string name="crash_report_setup_done">Permissão garantida ✅</string>
+    <string name="setup_finish_button">Finalizar configuração</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
     <string name="shizuku_icon">Ícone do Shizuku</string>
     <string name="shizuku_setup_title">Shizuku</string>
