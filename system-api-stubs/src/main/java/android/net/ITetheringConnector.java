@@ -16,14 +16,12 @@
 package android.net;
 
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 public interface ITetheringConnector extends IInterface {
     /** Local-side IPC implementation stub class. */
@@ -54,26 +52,9 @@ public interface ITetheringConnector extends IInterface {
         public static final java.lang.String DESCRIPTOR = "android.net.ITetheringConnector";
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
-    void tether(
-            String iface,
-            String callerPkg,
-            String callingAttributionTag,
-            IIntResultListener receiver);
+    void registerTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
 
-    @RequiresApi(Build.VERSION_CODES.S)
-    void untether(
-            String iface,
-            String callerPkg,
-            String callingAttributionTag,
-            IIntResultListener receiver);
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    void setUsbTethering(
-            boolean enable,
-            String callerPkg,
-            String callingAttributionTag,
-            IIntResultListener receiver);
+    void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
 
     void startTethering(
             TetheringRequestParcel request,
@@ -81,57 +62,18 @@ public interface ITetheringConnector extends IInterface {
             String callingAttributionTag,
             IIntResultListener receiver);
 
-    @RequiresApi(Build.VERSION_CODES.S)
-    void stopTethering(
-            int type, String callerPkg, String callingAttributionTag, IIntResultListener receiver);
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    void requestLatestTetheringEntitlementResult(
-            int type,
-            ResultReceiver receiver,
-            boolean showEntitlementUi,
-            String callerPkg,
-            String callingAttributionTag);
-
-    void registerTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
-
-    void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    void isTetheringSupported(
-            String callerPkg, String callingAttributionTag, IIntResultListener receiver);
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    void stopAllTethering(
-            String callerPkg, String callingAttributionTag, IIntResultListener receiver);
-
-    @Deprecated(since = "S")
-    void setPreferTestNetworks(boolean prefer, IIntResultListener listener);
-
-    @Deprecated(since = "S")
-    void tether(String iface, String callerPkg, IIntResultListener receiver);
-
-    @Deprecated(since = "S")
-    void untether(String iface, String callerPkg, IIntResultListener receiver);
-
-    @Deprecated(since = "S")
-    void setUsbTethering(boolean enable, String callerPkg, IIntResultListener receiver);
-
     void startTethering(
             TetheringRequestParcel request, String callerPkg, IIntResultListener receiver);
-
-    void stopTethering(int type, String callerPkg, IIntResultListener receiver);
 
     void startTethering(
             int type, ResultReceiver receiver, boolean showProvisioningUi, String callerPkg);
 
-    @Deprecated(since = "S")
-    void requestLatestTetheringEntitlementResult(
-            int type, ResultReceiver receiver, boolean showEntitlementUi, String callerPkg);
+    void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi);
 
-    @Deprecated(since = "S")
-    void isTetheringSupported(String callerPkg, IIntResultListener receiver);
+    void stopTethering(
+            int type, String callerPkg, String callingAttributionTag, IIntResultListener receiver);
 
-    @Deprecated(since = "S")
-    void stopAllTethering(String callerPkg, IIntResultListener receiver);
+    void stopTethering(int type, String callerPkg, IIntResultListener receiver);
+
+    void stopTethering(int type);
 }

@@ -84,6 +84,12 @@ constructor(
         ADB_PACKAGE_NAME,
       )
     } catch (_: NoSuchMethodException) {
+      tetheringConnector.startTethering(
+        TETHERING_WIFI,
+        ResultReceiver(Handler(Looper.getMainLooper())),
+        false,
+      )
+    } catch (_: NoSuchMethodException) {
       return false
     }
     return true
@@ -94,20 +100,23 @@ constructor(
     if (state != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
       return false
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    try {
       tetheringConnector.stopTethering(
         TETHERING_WIFI,
         ADB_PACKAGE_NAME,
         null,
         dummyIntResultReceiver,
       )
-    } else {
-      @Suppress("DEPRECATION")
+    } catch (_: NoSuchMethodException) {
       tetheringConnector.stopTethering(
         TETHERING_WIFI,
         ADB_PACKAGE_NAME,
         dummyIntResultReceiver,
       )
+    } catch (_: NoSuchMethodException) {
+      tetheringConnector.stopTethering(TETHERING_WIFI)
+    } catch (_: NoSuchMethodException) {
+      return false
     }
     return true
   }
