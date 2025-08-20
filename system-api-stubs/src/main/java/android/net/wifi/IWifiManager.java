@@ -56,8 +56,6 @@ public interface IWifiManager extends IInterface {
 
     boolean validateSoftApConfiguration(SoftApConfiguration config);
 
-    int getWifiApEnabledState();
-
     SoftApConfiguration getSoftApConfiguration();
 
     void queryLastConfiguredTetheredApPassphraseSinceBoot(IStringListener listener);
