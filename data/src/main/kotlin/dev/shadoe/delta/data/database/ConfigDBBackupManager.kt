@@ -48,11 +48,11 @@ constructor(
       inputStream ?: throw FileNotFoundException("$file cannot be opened.")
 
       val zipInputStream = ZipInputStream(inputStream)
-      val dbPath = dbFiles[0].parentFile!!
+      val dbPath = Path(dbFiles[0].parentFile!!.path)
       var entry = zipInputStream.nextEntry
       while (entry != null) {
-        val zipFilePath = Path(dbPath.path) / entry.name
-        if (zipFilePath.toRealPath().parent != dbPath) {
+        val zipFilePath = dbPath / entry.name
+        if (zipFilePath.normalize().parent != dbPath) {
           throw IllegalArgumentException("Potentially malicious zip file")
         }
         FileOutputStream(zipFilePath.toFile()).use { zipInputStream.copyTo(it) }

@@ -171,11 +171,14 @@ fun SettingsScreen(
   var isPresetListShown by remember { mutableStateOf(false) }
   var isTaskerInfoShown by remember { mutableStateOf(false) }
 
-  LaunchedEffect(importStatus, exportStatus) {
+  LaunchedEffect(importStatus) {
     when (importStatus) {
       ImportStatus.Failure -> onShowSnackbar(failedToImport)
       else -> {}
     }
+  }
+
+  LaunchedEffect(exportStatus) {
     when (exportStatus) {
       ExportStatus.Success -> onShowSnackbar(exportedSuccessfully)
       ExportStatus.Failure -> onShowSnackbar(failedToExport)
