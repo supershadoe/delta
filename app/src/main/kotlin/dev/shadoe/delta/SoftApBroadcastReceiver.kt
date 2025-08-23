@@ -104,8 +104,10 @@ class SoftApBroadcastReceiver : BroadcastReceiver() {
     }
 
     when (intent.action) {
-      ACTION_START_SOFT_AP -> softApController.startSoftAp()
-      ACTION_STOP_SOFT_AP -> softApController.stopSoftAp()
+      // The listener doesn't send state back before the call
+      // to toggle soft ap runs
+      ACTION_START_SOFT_AP -> softApController.startSoftAp(forceStart = true)
+      ACTION_STOP_SOFT_AP -> softApController.stopSoftAp(forceStop = true)
     }
 
     cleanup()

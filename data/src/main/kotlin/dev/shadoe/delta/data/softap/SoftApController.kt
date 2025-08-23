@@ -56,9 +56,10 @@ constructor(
         return@let true
       }
 
-  fun startSoftAp(): Boolean {
+  // TODO: remove this workaround during rewrite
+  fun startSoftAp(forceStart: Boolean = false): Boolean {
     val state = softApStateStore.status.value.enabledState
-    if (state != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
+    if (!forceStart && state != SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
       return false
     }
     val request =
@@ -95,9 +96,10 @@ constructor(
     return true
   }
 
-  fun stopSoftAp(): Boolean {
+  // TODO: remove this workaround during rewrite
+  fun stopSoftAp(forceStop: Boolean = false): Boolean {
     val state = softApStateStore.status.value.enabledState
-    if (state != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
+    if (!forceStop && state != SoftApEnabledState.WIFI_AP_STATE_ENABLED) {
       return false
     }
     try {
