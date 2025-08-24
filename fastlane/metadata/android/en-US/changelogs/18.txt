@@ -1,0 +1,11 @@
+### 2025.08+0
+
+- Added import/export feature for backing up the app data even on devices without Play services sync.
+- New translations
+  - Fully supported: Portugese, Serbian
+  - Partial: Italian
+- Fixed presets not applying
+- Fixed crashes on certain devices running Android 11
+- Fixed STOP_SOFT_AP intent action not running: Tasker-related fix
+- Change max client limit from a slider to a spinbox for granular control
+- More translations added for Japanese, Russian, Turkish, German and Spanish
