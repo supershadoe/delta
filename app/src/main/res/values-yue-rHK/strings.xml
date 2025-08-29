@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- dev.shadoe.delta -->
+    <string name="app_name">Delta</string>
+    <string name="back_button">返回</string>
+    <string name="blocklist">封鎖名單</string>
+    <string name="no_connected_devices">冇連接到嘅設備。</string>
+    <string name="open_icon">打開</string>
+    <string name="decrement">減少</string>
+    <string name="increment">增加</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">開啟熱點失敗。</string>
+    <string name="soft_ap_failure_notif_content">Shizuku 系唔系運行緊而且連接咗到呢個應用？</string>
+    <string name="soft_ap_failure_notif_channel_name">出錯通知</string>
+    <string name="soft_ap_failure_notif_channel_desc">發佈應用裏面發生嘅任何出錯嘅通知。</string>
+    <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">熱點</string>
+    <string name="tile_disabling">閂緊…</string>
+    <string name="tile_disabled">已關閉</string>
+    <string name="tile_enabling">開緊…</string>
+    <string name="tile_enabled">%d 部設備</string>
+    <string name="tile_failed">用唔到</string>
+    <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">控制</string>
+    <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">冇設備被封鎖。</string>
+    <string name="unblock_button">解除封鎖</string>
+    <string name="blocklist_blocked">設備已加到封鎖名單。</string>
+    <string name="blocklist_unblocked">設備已從封鎖名單度移除。</string>
+    <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">報告</string>
+    <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">應用程式已崩潰</string>
+    <string name="crash_notif_sub_text">應用程式崩潰處理程序</string>
+    <string name="crash_notif_content">應用程式因為意外出錯而崩潰。</string>
+    <string name="crash_notif_channel_name">崩潰頻道</string>
+    <string name="crash_notif_channel_desc">報告帶有崩潰日誌嘅一啲意外錯誤。</string>
+    <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_title">崩潰日誌</string>
+    <string name="crash_report_desc">應用程式崩潰咗 :(</string>
+    <string name="crash_report_no_log">冇崩潰資訊</string>
+    <!-- dev.shadoe.delta.control.buttons.ControlButton -->
+    <string name="control_button_loading">加載緊</string>
+    <string name="control_button_stop">停止熱點</string>
+    <string name="control_button_start">開啟熱點</string>
+    <!-- dev.shadoe.delta.control.buttons.FailedButton -->
+    <string name="failed_button">熱點失敗：開唔到</string>
+    <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">已連接</string>
+    <string name="no_client_hostname">（未識別嘅設備：冇名）</string>
+    <string name="ip_not_allocated">（仲未分配 IP 地址）</string>
+    <string name="block_button">封鎖</string>
+    <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">（冇）</string>
+    <string name="passphrase_hidden">（已隱藏）</string>
+    <string name="passphrase_show">顯示密碼</string>
+    <string name="passphrase_hide">隱藏密碼</string>
+    <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="triggered_debug_screen">調試畫面已解鎖</string>
+    <string name="hotspot_not_supported">呢部設備唔支持熱點功能。</string>
+    <string name="close_button">關閉</string>
+    <string name="qr_code_button">顯示二維碼</string>
+    <string name="no_ssid">冇 SSID</string>
+    <string name="connected_devices_button">已連接設備 (%d)</string>
+    <string name="feature_not_supported">你部設備唔支持呢個功能。</string>
+    <string name="hotspot_not_enabled">熱點仲未開啟。</string>
+    <string name="hotspot_enable_action">開啟</string>
+    <string name="edit_button">編輯</string>
+    <string name="copy_button">複製</string>
+    <!-- dev.shadoe.delta.debug.DebugActivity -->
+    <string name="debug_title">調試畫面</string>
+    <string name="debug_trigger_crash">觸發崩潰</string>
+    <!-- dev.shadoe.delta.settings.SettingsScreen -->
+    <string name="settings">設置</string>
+    <string name="error_icon">出錯</string>
+    <string name="warning_icon">警告</string>
+    <string name="settings_warn_samsung">喺好多三星型號度，高級設定同自動關閉冇辦法通過 Delta 控制。呢啲設置應該喺系統設置應用度配置。</string>
+    <string name="open_system_settings">打開設置應用</string>
+    <string name="settings_desc">根據你嘅喜好配置下面所有值 :)</string>
+    <string name="ssid_field_icon">熱點名稱圖標</string>
+    <string name="ssid_field_label">熱點名稱</string>
+    <string name="ssid_too_short_warning">熱點名稱太短。</string>
+    <string name="ssid_too_long_warning">熱點名稱太長。</string>
+    <string name="security_proto_field_icon">安全類型圖標</string>
+    <string name="security_proto_field_label">安全類型</string>
+    <string name="security_proto_open">冇</string>
+    <string name="security_proto_open_desc">冇安全性，任何人唔使密碼就可以連接。</string>
+    <string name="security_proto_wpa2_psk_desc">為大多數設備提供最大兼容性。</string>
+    <string name="security_proto_wpa3_sae_transition_desc">用 WPA3，但會為舊設備降級到 WPA2。</string>
+    <string name="security_proto_wpa3_sae_desc">最新嘅安全協議，通常 2020 年之後發佈嘅設備都支持。</string>
+    <string name="security_proto_not_supported">唔支持</string>
+    <string name="passphrase_field_icon">密碼圖標</string>
+    <string name="passphrase_field_label">密碼</string>
+    <string name="passphrase_too_short_warning">密碼太短。</string>
+    <string name="passphrase_too_long_warning">密碼太長。</string>
+    <string name="auto_shutdown_field_icon">自動關閉圖標</string>
+    <string name="auto_shutdown_field_title">自動關閉</string>
+    <string name="auto_shutdown_field_desc">當一段時間冇設備連接嗰時，就會關閉熱點。</string>
+    <string name="freq_band_field_icon">頻段圖標</string>
+    <string name="freq_band_field_label">速度類型</string>
+    <string name="freq_band_2_4_GHz_desc">差唔多所有設備都支持，但系速度唔快。</string>
+    <string name="freq_band_5_GHz_desc">雙頻模式：喺支持嘅設備上速度更快 + 兼容舊設備。</string>
+    <string name="freq_band_6_GHz_desc">三頻模式：最新技術，唔系所有國家/地區都有。</string>
+    <string name="freq_band_60_GHz_desc">唔系咁流行嘅頻段，範圍好短。</string>
+    <string name="freq_band_unknown">未知</string>
+    <string name="advanced_settings_label">高級設定</string>
+    <string name="collapse_icon">收起</string>
+    <string name="expand_icon">展開</string>
+    <string name="hidden_network_field_icon">隱藏網絡圖標</string>
+    <string name="hidden_network_field_label">隱藏網絡</string>
+    <string name="hidden_network_field_desc">“除非手動添加，唔系嘅話熱點唔會被其他設備發現。”</string>
+    <string name="max_client_limit_field_icon">最大客戶端限製圖標</string>
+    <string name="max_client_limit_field_label">最大客戶端限制</string>
+    <string name="max_client_limit_field_empty">客戶端限制唔可以系空。</string>
+    <string name="max_client_limit_field_desc">你部設備最多支持連接 %d 個客戶端。</string>
+    <string name="mac_randomization_field_icon">MAC 隨機化圖標</string>
+    <string name="mac_randomization_field_label">MAC 隨機化</string>
+    <string name="mac_randomization_none">冇</string>
+    <string name="mac_randomization_none_desc">喺提供熱點嗰時用設備 MAC 地址嚟識別自己。</string>
+    <string name="mac_randomization_persistent">持久</string>
+    <string name="mac_randomization_persistent_desc">每次熱點名稱改咗，MAC 地址都會隨機化。</string>
+    <string name="mac_randomization_non_persistent">非持久</string>
+    <string name="mac_randomization_non_persistent_desc">每次開熱點嗰時，MAC 地址都會隨機化。</string>
+    <string name="auto_shutdown_timeout_field_icon">超時圖標</string>
+    <string name="auto_shutdown_timeout_field_label">自動關閉超時</string>
+    <string name="auto_shutdown_5">5 分鐘</string>
+    <string name="auto_shutdown_10">10 分鐘</string>
+    <string name="auto_shutdown_20">20 分鐘</string>
+    <string name="auto_shutdown_30">30 分鐘</string>
+    <string name="auto_shutdown_60">1 小時</string>
+    <string name="auto_shutdown_default">默認</string>
+    <string name="auto_shutdown_timeout_desc">如果冇設備連接，就喺上面設置嘅時間之後關閉熱點。</string>
+    <string name="presets_setting">預設</string>
+    <string name="presets_field_icon">預設圖標</string>
+    <string name="presets_field_desc">保存同恢復各種熱點設定，方便喺唔同設置之間快速切換。</string>
+    <string name="presets_show_button">顯示預設</string>
+    <string name="presets_save_config_button">保存配置</string>
+    <string name="preset_save_title">提供預設名稱</string>
+    <string name="preset_save_empty">預設名稱唔可以系空。</string>
+    <string name="presets_none_saved">冇保存到嘅預設。</string>
+    <string name="preset_saved_on">保存於 %s</string>
+    <string name="preset_delete_button">刪除</string>
+    <string name="preset_apply_button">應用</string>
+    <string name="tile_field_icon">磁貼圖標</string>
+    <string name="tile_field_label">加個快速設置磁貼？</string>
+    <string name="tile_field_desc">喺快速設置面板加一個磁貼，唔使開呢個應用都可以輕鬆管理熱點。</string>
+    <string name="tile_add_button">添加磁貼</string>
+    <string name="tile_added">磁貼成功添加咗！</string>
+    <string name="tile_already_added">磁貼已經加咗啦。</string>
+    <string name="tile_add_error">添加磁貼失敗，請遲啲再試。</string>
+    <string name="tasker_integration_field_icon">自動化圖標</string>
+    <string name="tasker_integration_field_label">Tasker 集成</string>
+    <string name="tasker_integration_field_desc">[唔安全] 允許 Tasker 通過呢個應用管理熱點設定。</string>
+    <string name="tasker_integration_info_button">設置資訊</string>
+    <string name="tasker_integration_info">呢個應用提供咗兩個 Intent — &lt;tt>dev.shadoe.delta.action.START_SOFT_AP&lt;/tt> 用嚟開熱點，&lt;tt>dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt> 用嚟關熱點。雖然呢個功能對想自動化好多嘢嘅高級用戶好有幫助，但系要知道，開咗呢個功能會俾&lt;b>任何應用&lt;/b>（&lt;b>唔淨止 Tasker&lt;/b>）廣播呢個操作，咁就為惡意應用提供咗攻擊途徑。&lt;br>&lt;br>一個可能危險嘅情況系，如果兩部設備都有相同嘅惡意軟件，佢哋可能會通過局域網互相通信，然後濫用 Delta 嚟做壞事。</string>
+    <string name="tasker_integration_info_copy_start_action">複製 &lt;tt>START_SOFT_AP&lt;/tt></string>
+    <string name="tasker_integration_info_copy_stop_action">複製 &lt;tt>STOP_SOFT_AP&lt;/tt></string>
+    <string name="tasker_integration_info_copy_pkg_name">複製包名</string>
+    <string name="tasker_integration_info_copy_cls_name">複製類名</string>
+    <string name="data_export_field_icon">數據導出圖標</string>
+    <string name="data_export_field_name">導出/導入</string>
+    <string name="data_export_field_desc">為咗備份而導出/導入應用數據。</string>
+    <string name="data_export_export_button">導出</string>
+    <string name="data_export_import_button">導入</string>
+    <string name="export_success">導出成功。</string>
+    <string name="export_failed">導出失敗。</string>
+    <string name="restart_required">要重新啟動</string>
+    <string name="restart_required_import_success_desc">資料庫導入成功。應用要重新啟動先可以應用新設置。</string>
+    <string name="restart_app">重新啟動</string>
+    <string name="import_failed">導入失敗。</string>
+    <string name="cancel_button">取消</string>
+    <string name="save_button">保存</string>
+    <string name="save_icon">保存圖標</string>
+    <string name="passphrase_empty_warning">請輸入密碼。</string>
+    <string name="save_changes_failed_warning">更新熱點設定失敗。</string>
+    <string name="save_changes_succeeded">已更新熱點設定。</string>
+    <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">設置應用</string>
+    <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">應用圖標</string>
+    <string name="app_tagline">熱點設定，已解鎖。</string>
+    <string name="setup_start_button">開始設置 »</string>
+    <string name="setup_note">需要 Shizuku 或者 root 權限先用得。</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">已連接到 Shizuku，繼續設置啦！</string>
+    <string name="setup_continue_button">繼續設置</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">呢個應用要用 Android SDK 正常訪問唔到嘅系統 API，所以要 Shizuku 嚟獲取熱點 API 嘅訪問權限。</string>
+    <string name="shizuku_grant_access">授予訪問權限</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">未安裝 Shizuku。</string>
+    <string name="github">GitHub</string>
+    <string name="install_from_icon">安裝來源</string>
+    <string name="play_store">Play 商店</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku 未運行。</string>
+    <string name="shizuku_start">啟動 Shizuku</string>
+    <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">設置崩潰報告器。</string>
+    <string name="crash_report_setup_desc">我哋需要通知權限，如果發生崩潰，就可以向你顯示崩潰日誌。</string>
+    <string name="crash_report_setup_grant_perm">授予權限</string>
+    <string name="crash_report_setup_done">已授予權限 ✅</string>
+    <string name="setup_finish_button">搞掂設置</string>
+    <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Shizuku 圖標</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">未安裝。</string>
+    <string name="shizuku_setup_not_running">未運行。</string>
+    <string name="shizuku_setup_not_connected">未連接。</string>
+    <string name="shizuku_setup_connected">已連接 ✅</string>
+</resources>
