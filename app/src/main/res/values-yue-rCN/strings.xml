@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- dev.shadoe.delta -->
+    <string name="app_name">Delta</string>
+    <string name="back_button">返回</string>
+    <string name="blocklist">封锁名单</string>
+    <string name="no_connected_devices">冇连接到嘅设备。</string>
+    <string name="open_icon">打开</string>
+    <string name="decrement">减少</string>
+    <string name="increment">增加</string>
+    <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
+    <string name="soft_ap_failure_notif_title">开启热点失败。</string>
+    <string name="soft_ap_failure_notif_content">Shizuku 系唔系运行紧而且连接咗到呢个应用？</string>
+    <string name="soft_ap_failure_notif_channel_name">出错通知</string>
+    <string name="soft_ap_failure_notif_channel_desc">发布应用里面发生嘅任何出错嘅通知。</string>
+    <!-- dev.shadoe.delta.SoftApTile -->
+    <string name="tile_title">热点</string>
+    <string name="tile_disabling">闩紧…</string>
+    <string name="tile_disabled">已关闭</string>
+    <string name="tile_enabling">开紧…</string>
+    <string name="tile_enabled">%d 部设备</string>
+    <string name="tile_failed">用唔到</string>
+    <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">控制</string>
+    <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
+    <string name="blocklist_none_blocked">冇设备被封锁。</string>
+    <string name="unblock_button">解除封锁</string>
+    <string name="blocklist_blocked">设备已加到封锁名单。</string>
+    <string name="blocklist_unblocked">设备已从封锁名单度移除。</string>
+    <!-- dev.shadoe.delta.crash -->
+    <string name="crash_notif_action">报告</string>
+    <!-- dev.shadoe.delta.crash.CrashHandler -->
+    <string name="crash_notif_title">应用程式已崩溃</string>
+    <string name="crash_notif_sub_text">应用程式崩溃处理程序</string>
+    <string name="crash_notif_content">应用程式因为意外出错而崩溃。</string>
+    <string name="crash_notif_channel_name">崩溃频道</string>
+    <string name="crash_notif_channel_desc">报告带有崩溃日志嘅一啲意外错误。</string>
+    <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_title">崩溃日志</string>
+    <string name="crash_report_desc">应用程式崩溃咗 :(</string>
+    <string name="crash_report_no_log">冇崩溃信息</string>
+    <!-- dev.shadoe.delta.control.buttons.ControlButton -->
+    <string name="control_button_loading">加载紧</string>
+    <string name="control_button_stop">停止热点</string>
+    <string name="control_button_start">开启热点</string>
+    <!-- dev.shadoe.delta.control.buttons.FailedButton -->
+    <string name="failed_button">热点失败：开唔到</string>
+    <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">已连接</string>
+    <string name="no_client_hostname">（未识别嘅设备：冇名）</string>
+    <string name="ip_not_allocated">（仲未分配 IP 地址）</string>
+    <string name="block_button">封锁</string>
+    <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">（冇）</string>
+    <string name="passphrase_hidden">（已隐藏）</string>
+    <string name="passphrase_show">显示密码</string>
+    <string name="passphrase_hide">隐藏密码</string>
+    <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="triggered_debug_screen">调试画面已解锁</string>
+    <string name="hotspot_not_supported">呢部设备唔支持热点功能。</string>
+    <string name="close_button">关闭</string>
+    <string name="qr_code_button">显示二维码</string>
+    <string name="no_ssid">冇 SSID</string>
+    <string name="connected_devices_button">已连接设备 (%d)</string>
+    <string name="feature_not_supported">你部设备唔支持呢个功能。</string>
+    <string name="hotspot_not_enabled">热点仲未开启。</string>
+    <string name="hotspot_enable_action">开启</string>
+    <string name="edit_button">编辑</string>
+    <string name="copy_button">复制</string>
+    <!-- dev.shadoe.delta.debug.DebugActivity -->
+    <string name="debug_title">调试画面</string>
+    <string name="debug_trigger_crash">触发崩溃</string>
+    <!-- dev.shadoe.delta.settings.SettingsScreen -->
+    <string name="settings">设置</string>
+    <string name="error_icon">出错</string>
+    <string name="warning_icon">警告</string>
+    <string name="settings_warn_samsung">喺好多三星型号度，高级设置同自动关闭冇办法透过 Delta 控制。呢啲设置应该喺系统设置应用度配置。</string>
+    <string name="open_system_settings">打开设置应用</string>
+    <string name="settings_desc">根据你嘅喜好配置下面所有值 :)</string>
+    <string name="ssid_field_icon">热点名称图标</string>
+    <string name="ssid_field_label">热点名称</string>
+    <string name="ssid_too_short_warning">热点名称太短。</string>
+    <string name="ssid_too_long_warning">热点名称太长。</string>
+    <string name="security_proto_field_icon">安全类型图标</string>
+    <string name="security_proto_field_label">安全类型</string>
+    <string name="security_proto_open">冇</string>
+    <string name="security_proto_open_desc">冇安全性，任何人唔使密码就可以连接。</string>
+    <string name="security_proto_wpa2_psk_desc">为大多数设备提供最大兼容性。</string>
+    <string name="security_proto_wpa3_sae_transition_desc">用 WPA3，但会为旧设备降级到 WPA2。</string>
+    <string name="security_proto_wpa3_sae_desc">最新嘅安全协议，通常 2020 年之后发布嘅设备都支持。</string>
+    <string name="security_proto_not_supported">唔支持</string>
+    <string name="passphrase_field_icon">密码图标</string>
+    <string name="passphrase_field_label">密码</string>
+    <string name="passphrase_too_short_warning">密码太短。</string>
+    <string name="passphrase_too_long_warning">密码太长。</string>
+    <string name="auto_shutdown_field_icon">自动关闭图标</string>
+    <string name="auto_shutdown_field_title">自动关闭</string>
+    <string name="auto_shutdown_field_desc">当一段时间冇设备连接嗰时，就会关闭热点。</string>
+    <string name="freq_band_field_icon">频段图标</string>
+    <string name="freq_band_field_label">速度类型</string>
+    <string name="freq_band_2_4_GHz_desc">差唔多所有设备都支持，但系速度唔快。</string>
+    <string name="freq_band_5_GHz_desc">双频模式：喺支持嘅设备上速度更快 + 兼容旧设备。</string>
+    <string name="freq_band_6_GHz_desc">三频模式：最新技术，唔系所有国家/地区都有。</string>
+    <string name="freq_band_60_GHz_desc">唔系咁流行嘅频段，范围好短。</string>
+    <string name="freq_band_unknown">未知</string>
+    <string name="advanced_settings_label">高级设置</string>
+    <string name="collapse_icon">收起</string>
+    <string name="expand_icon">展开</string>
+    <string name="hidden_network_field_icon">隐藏网络图标</string>
+    <string name="hidden_network_field_label">隐藏网络</string>
+    <string name="hidden_network_field_desc">“除非手动添加，唔系嘅话热点唔会被其他设备发现。”</string>
+    <string name="max_client_limit_field_icon">最大客户端限制图标</string>
+    <string name="max_client_limit_field_label">最大客户端限制</string>
+    <string name="max_client_limit_field_empty">客户端限制唔可以系空。</string>
+    <string name="max_client_limit_field_desc">你部设备最多支持连接 %d 个客户端。</string>
+    <string name="mac_randomization_field_icon">MAC 随机化图标</string>
+    <string name="mac_randomization_field_label">MAC 随机化</string>
+    <string name="mac_randomization_none">冇</string>
+    <string name="mac_randomization_none_desc">喺提供热点嗰时用设备 MAC 地址嚟识别自己。</string>
+    <string name="mac_randomization_persistent">持久</string>
+    <string name="mac_randomization_persistent_desc">每次热点名称改咗，MAC 地址都会随机化。</string>
+    <string name="mac_randomization_non_persistent">非持久</string>
+    <string name="mac_randomization_non_persistent_desc">每次开热点嗰时，MAC 地址都会随机化。</string>
+    <string name="auto_shutdown_timeout_field_icon">超时图标</string>
+    <string name="auto_shutdown_timeout_field_label">自动关闭超时</string>
+    <string name="auto_shutdown_5">5 分钟</string>
+    <string name="auto_shutdown_10">10 分钟</string>
+    <string name="auto_shutdown_20">20 分钟</string>
+    <string name="auto_shutdown_30">30 分钟</string>
+    <string name="auto_shutdown_60">1 小时</string>
+    <string name="auto_shutdown_default">默认</string>
+    <string name="auto_shutdown_timeout_desc">如果冇设备连接，就喺上面设置嘅时间之后关闭热点。</string>
+    <string name="presets_setting">预设</string>
+    <string name="presets_field_icon">预设图标</string>
+    <string name="presets_field_desc">保存同恢复各种热点设置，方便喺唔同设置之间快速切换。</string>
+    <string name="presets_show_button">显示预设</string>
+    <string name="presets_save_config_button">保存配置</string>
+    <string name="preset_save_title">提供预设名称</string>
+    <string name="preset_save_empty">预设名称唔可以系空。</string>
+    <string name="presets_none_saved">冇保存到嘅预设。</string>
+    <string name="preset_saved_on">保存于 %s</string>
+    <string name="preset_delete_button">删除</string>
+    <string name="preset_apply_button">应用</string>
+    <string name="tile_field_icon">磁贴图标</string>
+    <string name="tile_field_label">加个快速设置磁贴？</string>
+    <string name="tile_field_desc">喺快速设置面板加一个磁贴，唔使开呢个应用都可以轻松管理热点。</string>
+    <string name="tile_add_button">添加磁贴</string>
+    <string name="tile_added">磁贴成功添加咗！</string>
+    <string name="tile_already_added">磁贴已经加咗啦。</string>
+    <string name="tile_add_error">添加磁贴失败，请迟啲再试。</string>
+    <string name="tasker_integration_field_icon">自动化图标</string>
+    <string name="tasker_integration_field_label">Tasker 集成</string>
+    <string name="tasker_integration_field_desc">[唔安全] 允许 Tasker 通过呢个应用管理热点设置。</string>
+    <string name="tasker_integration_info_button">设置信息</string>
+    <string name="tasker_integration_info">呢个应用提供咗两个 Intent — &lt;tt>dev.shadoe.delta.action.START_SOFT_AP&lt;/tt> 用嚟开热点，&lt;tt>dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt> 用嚟关热点。虽然呢个功能对想自动化好多嘢嘅高级用户好有帮助，但系要知道，开咗呢个功能会俾&lt;b>任何应用&lt;/b>（&lt;b>唔净止 Tasker&lt;/b>）广播呢个操作，咁就为恶意应用提供咗攻击途径。&lt;br>&lt;br>一个可能危险嘅情况系，如果两部设备都有相同嘅恶意软件，佢哋可能会通过局域网互相通信，然后滥用 Delta 嚟做坏事。</string>
+    <string name="tasker_integration_info_copy_start_action">复制 &lt;tt>START_SOFT_AP&lt;/tt></string>
+    <string name="tasker_integration_info_copy_stop_action">复制 &lt;tt>STOP_SOFT_AP&lt;/tt></string>
+    <string name="tasker_integration_info_copy_pkg_name">复制包名</string>
+    <string name="tasker_integration_info_copy_cls_name">复制类名</string>
+    <string name="data_export_field_icon">数据导出图标</string>
+    <string name="data_export_field_name">导出/导入</string>
+    <string name="data_export_field_desc">为咗备份而导出/导入应用数据。</string>
+    <string name="data_export_export_button">导出</string>
+    <string name="data_export_import_button">导入</string>
+    <string name="export_success">导出成功。</string>
+    <string name="export_failed">导出失败。</string>
+    <string name="restart_required">要重新启动</string>
+    <string name="restart_required_import_success_desc">数据库导入成功。应用要重新启动先可以应用新设置。</string>
+    <string name="restart_app">重新启动</string>
+    <string name="import_failed">导入失败。</string>
+    <string name="cancel_button">取消</string>
+    <string name="save_button">保存</string>
+    <string name="save_icon">保存图标</string>
+    <string name="passphrase_empty_warning">请输入密码。</string>
+    <string name="save_changes_failed_warning">更新热点设置失败。</string>
+    <string name="save_changes_succeeded">已更新热点设置。</string>
+    <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">设置应用</string>
+    <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">应用图标</string>
+    <string name="app_tagline">热点设置，已解锁。</string>
+    <string name="setup_start_button">开始设置 »</string>
+    <string name="setup_note">需要 Shizuku 或者 root 权限先用得。</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
+    <string name="shizuku_connected_desc">已连接到 Shizuku，继续设置啦！</string>
+    <string name="setup_continue_button">继续设置</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
+    <string name="shizuku_not_connected_desc">呢个应用要用 Android SDK 正常访问唔到嘅系统 API，所以要 Shizuku 嚟获取热点 API 嘅访问权限。</string>
+    <string name="shizuku_grant_access">授予访问权限</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
+    <string name="shizuku_not_installed">未安装 Shizuku。</string>
+    <string name="github">GitHub</string>
+    <string name="install_from_icon">安装来源</string>
+    <string name="play_store">Play 商店</string>
+    <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
+    <string name="shizuku_not_running">Shizuku 未运行。</string>
+    <string name="shizuku_start">启动 Shizuku</string>
+    <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">设置崩溃报告器。</string>
+    <string name="crash_report_setup_desc">我哋需要通知权限，如果发生崩溃，就可以向你显示崩溃日志。</string>
+    <string name="crash_report_setup_grant_perm">授予权限</string>
+    <string name="crash_report_setup_done">权限已授予 ✅</string>
+    <string name="setup_finish_button">设置搞掂</string>
+    <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Shizuku 图标</string>
+    <string name="shizuku_setup_title">Shizuku</string>
+    <string name="shizuku_setup_not_installed">未安装。</string>
+    <string name="shizuku_setup_not_running">未运行。</string>
+    <string name="shizuku_setup_not_connected">未连接。</string>
+    <string name="shizuku_setup_connected">已连接 ✅</string>
+</resources>
