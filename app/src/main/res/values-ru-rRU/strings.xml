@@ -6,6 +6,8 @@
     <string name="blocklist">Список заблокированных устройств</string>
     <string name="no_connected_devices">Нет подключённых устройств.</string>
     <string name="open_icon">Открыть</string>
+    <string name="decrement">Убавить</string>
+    <string name="increment">Добавить</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <string name="soft_ap_failure_notif_title">Не удалось запустить точку доступа.</string>
     <string name="soft_ap_failure_notif_content">Shizuku запущен и подключён к приложению?</string>
@@ -72,6 +74,7 @@
     <string name="settings">Настройки</string>
     <string name="error_icon">Ошибка</string>
     <string name="warning_icon">Предупреждение</string>
+    <string name="settings_warn_samsung">Во многих моделях Samsung расширенные настройки и автовыключение не могут управляться из Delta. Эти параметры могут быть настроены во встроенном приложении настроек системы.</string>
     <string name="open_system_settings">Открыть приложение настроек</string>
     <string name="settings_desc">Настройте все значения ниже по своему вкусу )</string>
     <string name="ssid_field_icon">Значок названия точки доступа</string>
@@ -108,6 +111,8 @@
     <string name="hidden_network_field_desc">"Точка доступа не будет отображаться на других устройствах, если ее не добавить вручную."</string>
     <string name="max_client_limit_field_icon">Значок максимального количества подключённых устройств</string>
     <string name="max_client_limit_field_label">Максимальное количество подключённых устройств</string>
+    <string name="max_client_limit_field_empty">Лимит устройств не может быть пустым.</string>
+    <string name="max_client_limit_field_desc">Ваше устройство поддерживает подключение не более %d устройств.</string>
     <string name="mac_randomization_field_icon">Значок рандомизации MAC-адреса</string>
     <string name="mac_randomization_field_label">Рандомизация MAC-адреса</string>
     <string name="mac_randomization_none">Нет</string>
@@ -147,6 +152,7 @@
     <string name="tasker_integration_field_label">Интеграция Tasker</string>
     <string name="tasker_integration_field_desc">[небезопасно] Позволяет Tasker управлять настройками точки доступа через это приложение.</string>
     <string name="tasker_integration_info_button">Настройка</string>
+    <string name="tasker_integration_info">Это приложение предоставляет два намерения - &lt;tt&gt;dev.shadoe.delta.action.START_SOFT_AP&lt;/tt&gt; и &lt;tt&gt;dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt&gt; для запуска и остановки точки доступа соответственно. Хотя это очень полезно для опытных пользователей, которые хотят многое автоматизировать, следует знать, что включение этой функции позволяет &lt;b&gt;ЛЮБОМУ приложению&lt;/b&gt; использовать это действие (&lt;b&gt;не только Tasker&lt;/b&gt;), тем самым обеспечивая вектор атаки для вредоносного приложения. &lt;br&gt;&lt;br&gt;Один из гипотетических сценариев, когда это может быть опасно, - если на двух устройствах установлено одно и то же вредоносное ПО, и они пытаются общаться друг с другом по локальной сети, используя для этого Delta.</string>
     <string name="tasker_integration_info_copy_start_action">Скопировать &lt;tt&gt;START_SOFT_AP&lt;/tt&gt;</string>
     <string name="tasker_integration_info_copy_stop_action">Скопировать &lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt;</string>
     <string name="tasker_integration_info_copy_pkg_name">Скопировать имя пакета</string>
