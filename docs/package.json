@@ -12,12 +12,12 @@
   "dependencies": {
     "@astrojs/starlight": "^0.34.8",
     "@astrojs/starlight-tailwind": "^4.0.1",
-    "@tailwindcss/vite": "^4.1.11",
-    "astro": "^5.12.9",
+    "@tailwindcss/vite": "^4.1.12",
+    "astro": "^5.13.5",
     "sharp": "^0.34.3",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "wrangler": "^4.29.1"
+    "wrangler": "^4.34.0"
   }
 }
