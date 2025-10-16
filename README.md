@@ -2,7 +2,7 @@
 
 # Delta
 
-https://ibb.co/35thsdxb
+https://i.postimg.cc/k4YhfQ39/1000047238.png
 
 Access Advanced Hotspot Settings Without Root !
 
