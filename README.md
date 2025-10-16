@@ -2,7 +2,7 @@
 
 # Delta
 
-[![](https://i.postimg.cc/k4RhYVnx/1000047246.png)](https://postimg.cc/r0cJKwRm)
+<img src="https://i.postimg.cc/k4RhYVnx/1000047246.png)](https://postimg.cc/r0cJKwRm" height="32" />
 
 Access Advanced Hotspot Settings Without Root !
 
