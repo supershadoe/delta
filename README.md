@@ -31,23 +31,23 @@ Which Has Step-by-Step Instructions on How To Set up The App.
 
 ## Any Questions 🤔
 
-Refer to the [FAQ section](https://delta.shadoe.dev/faq/)
+Refer To The [FAQ section](https://delta.shadoe.dev/faq/)
 
 ## Translations 🖍️
 
-If You Wish To Translate The Project To a language that you are fluent in, you
-can contribute through [Crowdin](https://crowdin.com/project/delta-app)
+If You Wish To Translate The Project To Your Own Language You
+Can Contribute Through [Crowdin](https://crowdin.com/project/delta-app)
 
-Open up a Discussion on [GitHub](https://github.com/supershadoe/delta/discussions/new?category=ideas)
-or [mail me](mailto:shadoe@shadoe.dev) to enable any language on Crowdin other
-than the ones already enabled.
+Open Up A Discussion On [GitHub](https://github.com/supershadoe/delta/discussions/new?category=ideas)
+Or [Mail me](mailto:shadoe@shadoe.dev) To Enable Any Language On Crowdin Other
+Than The Ones Already Enabled.
 
 > [!NOTE]
-> By providing translations on Crowdin, you agree that your translated content
-> will be licensed under BSD-3-Clause, similar to the app.
+> By Providing Translations On Crowdin, You Agree That Your Translated Content
+> Will Be Licensed Under BSD-3-Clause, Similar To The App.
 
-Signing-off on commits is enforced on GitHub but not on Crowdin and thus, I
-wanted to make it explicit.
+Signing-Off On Commits is Enforced on GitHub but not on Crowdin and Thus, I
+Wanted To Make it Explicit.
 
 ## Want to Contribute ? 👨‍💻
 
