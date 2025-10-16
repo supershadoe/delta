@@ -49,6 +49,6 @@ Than The Ones Already Enabled.
 Signing-Off On Commits is Enforced on GitHub but not on Crowdin and Thus, I
 Wanted To Make it Explicit.
 
-## Want to Contribute ? 👨‍💻
+## Want to Contribute 👨‍💻
 
-To Start Check Out [This](https://github.com/supershadoe/delta/contribute)
+If You Don't Know How To Create PR Check Out [This](https://github.com/supershadoe/delta/contribute)
