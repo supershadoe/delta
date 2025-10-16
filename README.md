@@ -1,39 +1,46 @@
-## delta
+<div align="center">
 
-This app allows accessing advanced hotspot settings not exposed through the
-system settings app on devices that use Stock Android (Pixel, Nothing, etc.)
+# Delta
 
-It provides various information and features such as:
-- Usual info provided by settings app such as hotspot name, passphrase, security
-type, frequency bands, quick connect using QR, etc.
-- List of connected devices.
-- Modifying amount of devices that can connect.
-- Changing MAC randomization settings.
-- Setting auto turn-off timeout.
-- Blocklist to prevent certain devices from connecting.
-- Make hotspot's SSID hidden (device doesn't appear on WiFi scans)
-- Quick setting tile to easily turn hotspot on/off from notification shade.
-- Control hotspot using Tasker/other automation apps.
+[![](https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png)](https://github.com/supershadoe/delta)
 
-It uses Shizuku to obtain hotspot related details and to modify hotspot
-settings. It is also useful on devices like Samsung Tabs (WiFi-only) where
-hotspot settings are hidden from Settings app and SystemUI.
+Allows You To Accessing Advanced Hotspot Settings Without Root !
+- Powered by [Shizuku](https://shizuku.rikka.app/).
 
-### Installation and queries
+## Download
 
-Get started with the app using the [quick start guide](https://delta.shadoe.dev/quick-start-guide/)
-which has step-by-step instructions on how to install the app.
+[![](https://delta.shadoe.dev/_astro/IzzyOnDroidButton_21Vuwp.webp)](https://github.com/ImranR98/Obtainium)
+[![](https://delta.shadoe.dev/_astro/badge_obtainium_Z1x2eGK.webp)](https://github.com/ImranR98/Obtainium)
+[![](https://ibb.co/SDPBWRy4)](https://github.com/supershadoe/delta/releases)
 
-### Any questions?
+
+### App Features:
+It Provides Various Information And Features Such As:
+- ⚙️ Usual Info provided by settings app such as hotspot name, passphrase, Security type, Frequency bands, Quick connect using QR, etc.
+- 📃 List of connected devices.
+- 📱 Modifying amount of devices that can connect.
+- hanging MAC randomization settings.
+- ⌛ Setting Auto Turn-off timeout.
+- 🚧 Blocklist to prevent certain devices from connecting.
+- 🔐 Make Hotspot's SSID hidden (device doesn't appear on WiFi scans)
+- 🔗 Quick Setting Tile to easily turn hotspot on/off from notification shade.
+- 🛠️ Control hotspot using Tasker/other automation apps.
+
+### Quick Start ✅
+
+Get Started With The App For Beginners Using The [Quick Start guide](https://delta.shadoe.dev/quick-start-guide/)
+Which Has Step-by-Step Instructions on How To Set up The App.
+
+### Any Questions ? 🤔
 
 Refer to the [FAQ section](https://delta.shadoe.dev/faq/)
 
-### Localization
+### Translations 🖍️
 
-If you wish to translate the project to a language that you are fluent in, you
+If You Wish To Translate The Project To a language that you are fluent in, you
 can contribute through [Crowdin](https://crowdin.com/project/delta-app)
 
-Open up a discussion on [GitHub](https://github.com/supershadoe/delta/discussions/new?category=ideas)
+Open up a Discussion on [GitHub](https://github.com/supershadoe/delta/discussions/new?category=ideas)
 or [mail me](mailto:shadoe@shadoe.dev) to enable any language on Crowdin other
 than the ones already enabled.
 
@@ -44,7 +51,7 @@ than the ones already enabled.
 Signing-off on commits is enforced on GitHub but not on Crowdin and thus, I
 wanted to make it explicit.
 
-### Want to contribute?
+### Want to Contribute ? 👨‍💻
 
-Check out this [page](https://github.com/supershadoe/delta/contribute) on how
-to start! :hugs:
+Check Out This [page](https://github.com/supershadoe/delta/contribute) on how
+to start !:hugs:
