@@ -2,7 +2,7 @@
 
 # Delta
 
-  <img src="https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png" height="110" />
+https://ibb.co/35thsdxb
 
 Access Advanced Hotspot Settings Without Root !
 
