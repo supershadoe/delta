@@ -51,5 +51,4 @@ Wanted To Make it Explicit.
 
 ## Want to Contribute ? 👨‍💻
 
-Check Out This [page](https://github.com/supershadoe/delta/contribute) on how
-to start !:hugs:
+Check Out [This](https://github.com/supershadoe/delta/contribute) On How To Start !:hugs:
