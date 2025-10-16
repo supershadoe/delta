@@ -14,14 +14,14 @@ Powered By [Shizuku](https://shizuku.rikka.app/) 🤩
 
 It Provides Various Information And Features Such As:
 - ⚙️ Usual Info Provided By Settings App Such As Hotspot Name, Password, Security Type, Frequency Bands, Quick Connect Using QR...
-- 📃 List of connected devices.
+- 📃 List Of Connected Devices.
 - 📱 Modifying amount of devices that can connect.
-- hanging MAC randomization settings.
+- hanging MAC Randomization Settings.
 - ⌛ Setting Auto Turn-off timeout.
 - 🚧 Blocklist to prevent certain devices from connecting.
 - 🔐 Make Hotspot's SSID hidden (device doesn't appear on WiFi scans)
-- 🔗 Quick Setting Tile to Easily turn hotspot On/Off from notification shade.
-- 🛠️ Control hotspot using Tasker/other automation apps.
+- 🔗 Quick Setting Tile to Easily Turn Hotspot On/Off From Notification Shade.
+- 🛠️ Control Hotspot Using Tasker/Other Automation Apps.
 
 ---
 ## Quick Start ✅
