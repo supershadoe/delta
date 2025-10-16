@@ -4,11 +4,11 @@
 
 Access Advanced Hotspot Settings Without Root !
 
-Powered By [Shizuku](https://shizuku.rikka.app/).
+Powered By [Shizuku](https://shizuku.rikka.app/) 🤩
 
 ---
 
-## App Features:
+## App Features 🥳
 It Provides Various Information And Features Such As:
 - ⚙️ Usual Info Provided By Settings App Such As Hotspot Name, Password, Security Type, Frequency Bands, Quick Connect Using QR...
 - 📃 List of connected devices.
