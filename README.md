@@ -51,4 +51,4 @@ Wanted To Make it Explicit.
 
 ## Want to Contribute 👨‍💻
 
-If You Don't Know How To Create PR Check Out [This](https://github.com/supershadoe/delta/contribute)
+Check The Guide To Contribute [Here](https://github.com/supershadoe/delta/contribute)
