@@ -9,7 +9,9 @@ Access Advanced Hotspot Settings Without Root !
 Powered By [Shizuku](https://shizuku.rikka.app/) 🤩
 
 </div>
+
 ---
+
 ## App Features 🥳
 
 It Provides Various Information And Features Such As:
