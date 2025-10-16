@@ -11,6 +11,7 @@ Powered By [Shizuku](https://shizuku.rikka.app/) 🤩
 ---
 
 ## App Features 🥳
+
 It Provides Various Information And Features Such As:
 - ⚙️ Usual Info Provided By Settings App Such As Hotspot Name, Password, Security Type, Frequency Bands, Quick Connect Using QR...
 - 📃 List of connected devices.
