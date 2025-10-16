@@ -8,8 +8,8 @@ Access Advanced Hotspot Settings Without Root !
 
 Powered By [Shizuku](https://shizuku.rikka.app/) 🤩
 
+</div>
 ---
-
 ## App Features 🥳
 
 It Provides Various Information And Features Such As:
@@ -24,7 +24,6 @@ It Provides Various Information And Features Such As:
 - 🛠️ Control hotspot using Tasker/other automation apps.
 
 ---
-
 ## Quick Start ✅
 
 Get Started With The App For Beginners Using The [Quick Start guide](https://delta.shadoe.dev/quick-start-guide/)
