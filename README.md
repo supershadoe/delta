@@ -1,6 +1,6 @@
 # Delta
 
-  <img src="https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png" height="100" />
+  <img src="https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png" height="110" />
 
 Allows You To Accessing Advanced Hotspot Settings Without Root !
 Powered by [Shizuku](https://shizuku.rikka.app/).
@@ -26,7 +26,7 @@ It Provides Various Information And Features Such As:
 Get Started With The App For Beginners Using The [Quick Start guide](https://delta.shadoe.dev/quick-start-guide/)
 Which Has Step-by-Step Instructions on How To Set up The App.
 
-## Any Questions ? 🤔
+## Any Questions 🤔
 
 Refer to the [FAQ section](https://delta.shadoe.dev/faq/)
 
