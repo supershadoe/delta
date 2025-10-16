@@ -1,3 +1,5 @@
+<div align="center">
+
 # Delta
 
   <img src="https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png" height="110" />
@@ -5,7 +7,7 @@
 Access Advanced Hotspot Settings Without Root !
 
 Powered By [Shizuku](https://shizuku.rikka.app/) 🤩
-
+</a>
 ---
 
 ## App Features 🥳
