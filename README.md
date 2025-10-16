@@ -14,7 +14,7 @@ Allows You To Accessing Advanced Hotspot Settings Without Root !
 [![](https://ibb.co/SDPBWRy4)](https://github.com/supershadoe/delta/releases)
 
 
-### App Features:
+## App Features:
 It Provides Various Information And Features Such As:
 - ⚙️ Usual Info provided by settings app such as hotspot name, passphrase, Security type, Frequency bands, Quick connect using QR, etc.
 - 📃 List of connected devices.
@@ -26,16 +26,16 @@ It Provides Various Information And Features Such As:
 - 🔗 Quick Setting Tile to easily turn hotspot on/off from notification shade.
 - 🛠️ Control hotspot using Tasker/other automation apps.
 
-### Quick Start ✅
+## Quick Start ✅
 
 Get Started With The App For Beginners Using The [Quick Start guide](https://delta.shadoe.dev/quick-start-guide/)
 Which Has Step-by-Step Instructions on How To Set up The App.
 
-### Any Questions ? 🤔
+## Any Questions ? 🤔
 
 Refer to the [FAQ section](https://delta.shadoe.dev/faq/)
 
-### Translations 🖍️
+## Translations 🖍️
 
 If You Wish To Translate The Project To a language that you are fluent in, you
 can contribute through [Crowdin](https://crowdin.com/project/delta-app)
@@ -51,7 +51,7 @@ than the ones already enabled.
 Signing-off on commits is enforced on GitHub but not on Crowdin and thus, I
 wanted to make it explicit.
 
-### Want to Contribute ? 👨‍💻
+## Want to Contribute ? 👨‍💻
 
 Check Out This [page](https://github.com/supershadoe/delta/contribute) on how
 to start !:hugs:
