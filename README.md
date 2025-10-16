@@ -2,7 +2,7 @@
 
 # Delta
 
-[![](https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png)](https://github.com/supershadoe/delta)
+  <img src="https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png" height="31" />
 
 Allows You To Accessing Advanced Hotspot Settings Without Root !
 - Powered by [Shizuku](https://shizuku.rikka.app/).
@@ -13,6 +13,7 @@ Allows You To Accessing Advanced Hotspot Settings Without Root !
 [![](https://delta.shadoe.dev/_astro/badge_obtainium_Z1x2eGK.webp)](https://github.com/ImranR98/Obtainium)
 [![](https://ibb.co/SDPBWRy4)](https://github.com/supershadoe/delta/releases)
 
+---
 
 ## App Features:
 It Provides Various Information And Features Such As:
@@ -25,6 +26,8 @@ It Provides Various Information And Features Such As:
 - 🔐 Make Hotspot's SSID hidden (device doesn't appear on WiFi scans)
 - 🔗 Quick Setting Tile to easily turn hotspot on/off from notification shade.
 - 🛠️ Control hotspot using Tasker/other automation apps.
+
+---
 
 ## Quick Start ✅
 
