@@ -1,17 +1,9 @@
-<div align="center">
-
 # Delta
 
   <img src="https://raw.githubusercontent.com/supershadoe/delta/main/app/src/main/ic_launcher-playstore.png" height="100" />
 
 Allows You To Accessing Advanced Hotspot Settings Without Root !
 Powered by [Shizuku](https://shizuku.rikka.app/).
-
-## Download
-
-[![](https://delta.shadoe.dev/_astro/IzzyOnDroidButton_21Vuwp.webp)](https://github.com/ImranR98/Obtainium)
-[![](https://delta.shadoe.dev/_astro/badge_obtainium_Z1x2eGK.webp)](https://github.com/ImranR98/Obtainium)
-[![](https://ibb.co/SDPBWRy4)](https://github.com/supershadoe/delta/releases)
 
 ---
 
