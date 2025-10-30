@@ -6,20 +6,27 @@
     <string name="blocklist">ブロックリスト</string>
     <string name="no_connected_devices">繋がってるデバイスはありません。</string>
     <string name="open_icon">開く</string>
+    <string name="decrement">減算</string>
+    <string name="increment">増分</string>
     <!-- dev.shadoe.delta.SoftApBroadcastReceiver -->
     <string name="soft_ap_failure_notif_title">テザリング を開始できませんでした。</string>
+    <string name="soft_ap_failure_notif_content">Shizukuは起動されていて、アプリに接続されていますか？</string>
+    <string name="soft_ap_failure_notif_channel_name">エラー通知</string>
+    <string name="soft_ap_failure_notif_channel_desc">アプリ内で発生したエラーの通知を投稿します。</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">テザリング</string>
     <string name="tile_disabling">オフにしています…</string>
     <string name="tile_disabled">オフ</string>
     <string name="tile_enabling">オンにしています…</string>
     <string name="tile_enabled">%d台のデバイス</string>
+    <string name="tile_failed">利用できません</string>
     <!-- dev.shadoe.delta.common.SoftApScreenDestinations -->
+    <string name="controls_icon">コントロール</string>
     <!-- dev.shadoe.delta.blocklist.BlocklistScreen -->
     <string name="blocklist_none_blocked">ブロックされているデバイスはありません。</string>
     <string name="unblock_button">ブロック解除</string>
     <string name="blocklist_blocked">デバイスがブロックリストに追加されました。</string>
-    <string name="blocklist_unblocked">ブロックリストからデバイスを外しました。</string>
+    <string name="blocklist_unblocked">ブロックリストからデバイスを除外しました。</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">報告する</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
@@ -27,9 +34,10 @@
     <string name="crash_notif_sub_text">クラッシュハンドラー</string>
     <string name="crash_notif_content">予想外なバグによりアプリがクラッシュしました。</string>
     <string name="crash_notif_channel_name">クラッシュ報告</string>
+    <string name="crash_notif_channel_desc">クラッシュログで予期しないエラーを報告します。</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
     <string name="crash_report_title">クラッシュ報告</string>
-    <string name="crash_report_desc">アプリが死んだ o(╥﹏╥)o</string>
+    <string name="crash_report_desc">アプリがクラッシュしました o(╥﹏╥)o</string>
     <string name="crash_report_no_log">クラッシュの事情はわかりません、ログが全くないです</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
     <string name="control_button_loading">切り替え中</string>
@@ -44,12 +52,13 @@
     <string name="block_button">ブロック</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
     <string name="no_passphrase">(パスワードなし)</string>
-    <string name="passphrase_hidden">(隠している)</string>
+    <string name="passphrase_hidden">(非表示)</string>
     <string name="passphrase_show">パスワードを見せる</string>
     <string name="passphrase_hide">パスワードを隠す</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
-    <string name="triggered_debug_screen">デバッグ画面を作動しました</string>
+    <string name="triggered_debug_screen">デバッグ画面を解放しました</string>
     <string name="hotspot_not_supported">このデバイスではテザリングはサポートされていません。</string>
+    <string name="close_button">閉じる</string>
     <string name="qr_code_button">QRコードを表示</string>
     <string name="no_ssid">無名</string>
     <string name="connected_devices_button">繋がってるデバイス (%d)</string>
@@ -57,6 +66,7 @@
     <string name="hotspot_not_enabled">アクセスポイントはまだOFF状態でいます。</string>
     <string name="hotspot_enable_action">ON</string>
     <string name="edit_button">設定</string>
+    <string name="copy_button">コピー</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
     <string name="debug_title">デバッグ画面</string>
     <string name="debug_trigger_crash">クラッシュさせる</string>
@@ -65,29 +75,54 @@
     <string name="error_icon">エラー</string>
     <string name="warning_icon">警告</string>
     <string name="settings_warn_samsung">ほとんどのSamsungモデルでは、アプリ内から詳細設定や自動シャットダウンを変更できません。システム設定からの変更は可能です。</string>
+    <string name="open_system_settings">設定アプリを開く</string>
+    <string name="settings_desc">以下の値は好きなように設定することができます。</string>
+    <string name="ssid_field_icon">アクセスポイント名アイコン</string>
     <string name="ssid_field_label">アクセス ポイント名</string>
     <string name="ssid_too_short_warning">アクセスポイントの名前が短すぎる。</string>
     <string name="ssid_too_long_warning">アクセス ポイントの名前が長すぎる。</string>
+    <string name="security_proto_field_icon">セキュリティタイプアイコン</string>
     <string name="security_proto_field_label">セキュリティ</string>
+    <string name="security_proto_open">なし</string>
     <string name="security_proto_open_desc">パスワードの入力なしで誰でも接続できます。</string>
     <string name="security_proto_wpa2_psk_desc">ほとんどのデバイスとの最大限の互換性があります。</string>
     <string name="security_proto_wpa3_sae_transition_desc">WPA3 を使用しますが、古いデバイスでは WPA2 に落ちます。</string>
     <string name="security_proto_wpa3_sae_desc">最新のセキュリティ・プロトコルで、2020年以降のデバイスの多くがサポート済みです。</string>
+    <string name="security_proto_not_supported">非対応</string>
+    <string name="passphrase_field_icon">パスワードアイコン</string>
     <string name="passphrase_field_label">パスワード</string>
     <string name="passphrase_too_short_warning">パスワードが短すぎる。</string>
     <string name="passphrase_too_long_warning">パスワードが長すぎる。</string>
+    <string name="auto_shutdown_field_icon">自動シャットダウンアイコン</string>
     <string name="auto_shutdown_field_title">自動シャットダウン</string>
     <string name="auto_shutdown_field_desc">しばらくデバイスが接続されていない場合、テザリングをオフにします。</string>
+    <string name="freq_band_field_icon">周波数アイコン</string>
+    <string name="freq_band_field_label">速度タイプ</string>
     <string name="freq_band_2_4_GHz_desc">ほとんどのデバイスに対応していますが、あまり高速ではありません。</string>
     <string name="freq_band_5_GHz_desc">デュアルバンド モード: 対応デバイスでは高速に機能し、古いデバイスとも互換性があります。</string>
     <string name="freq_band_6_GHz_desc">トライバンド モード: 最新テクノロジーで、全ての国で利用出来るとは限りません。</string>
     <string name="freq_band_60_GHz_desc">一般的には使用されていない周波数帯です。通信が可能な範囲が非常に狭いです。</string>
+    <string name="freq_band_unknown">不明</string>
+    <string name="advanced_settings_label">詳細設定</string>
+    <string name="collapse_icon">折りたたむ</string>
+    <string name="expand_icon">展開</string>
+    <string name="hidden_network_field_icon">テザリング非表示アイコン</string>
+    <string name="hidden_network_field_label">非表示のテザリング</string>
     <string name="hidden_network_field_desc">"手動で追加しない限り、他の端末から非公開のアクセスポイントを検出することはできません。"</string>
+    <string name="max_client_limit_field_icon">クライアント数制限アイコン</string>
     <string name="max_client_limit_field_label">接続できるクライアント数の制限</string>
+    <string name="max_client_limit_field_empty">空白にできません。</string>
+    <string name="max_client_limit_field_desc">このデバイスでは %d 台まで接続できます。</string>
+    <string name="mac_randomization_field_icon">MACアドレスのランダム化アイコン</string>
     <string name="mac_randomization_field_label">MACアドレスのランダム化</string>
+    <string name="mac_randomization_none">なし</string>
+    <string name="mac_randomization_none_desc">テザリングを提供する際、デバイスのMACアドレスを使用して識別します。</string>
+    <string name="mac_randomization_persistent">永続的</string>
     <string name="mac_randomization_persistent_desc">MACアドレスは、アクセスポイント名が変更される度にランダム化されます。</string>
+    <string name="mac_randomization_non_persistent">非永続的</string>
     <string name="mac_randomization_non_persistent_desc">MACアドレスは、テザリングが開始される度にランダム化されます。</string>
-    <string name="auto_shutdown_timeout_field_label">自動シャットダウン タイムアウト</string>
+    <string name="auto_shutdown_timeout_field_icon">タイムアウトアイコン</string>
+    <string name="auto_shutdown_timeout_field_label">自動シャットダウンタイムアウト</string>
     <string name="auto_shutdown_5">5 分</string>
     <string name="auto_shutdown_10">10 分</string>
     <string name="auto_shutdown_20">20 分</string>
@@ -96,42 +131,80 @@
     <string name="auto_shutdown_default">デフォルト</string>
     <string name="auto_shutdown_timeout_desc">しばらくデバイスが接続されていない場合、テザリングをオフにします。</string>
     <string name="presets_setting">プリセット</string>
+    <string name="presets_field_icon">プリセットアイコン</string>
+    <string name="presets_field_desc">テザリングの設定を保存・復元し、素早く切り替えることができます。</string>
+    <string name="presets_show_button">プリセット一覧</string>
+    <string name="presets_save_config_button">設定を保存</string>
+    <string name="preset_save_title">プリセット名を設定</string>
     <string name="preset_save_empty">プリセットの名前を空白にすることはできません。</string>
+    <string name="presets_none_saved">プリセットは保存されていません。</string>
+    <string name="preset_saved_on">%s に保存</string>
     <string name="preset_delete_button">削除</string>
+    <string name="preset_apply_button">適用</string>
+    <string name="tile_field_icon">タイルアイコン</string>
+    <string name="tile_field_label">クイック設定タイルを追加</string>
     <string name="tile_field_desc">クイック設定にタイルを追加し、このアプリを起動せずにアクセスポイントを簡単に管理できるようにします。</string>
     <string name="tile_add_button">タイルを追加</string>
     <string name="tile_added">タイルの追加に成功しました！</string>
     <string name="tile_already_added">タイルは既に追加されています。</string>
     <string name="tile_add_error">タイルの追加に失敗しました。後ほどお試しください</string>
+    <string name="tasker_integration_field_icon">自動化アイコン</string>
+    <string name="tasker_integration_field_label">Taskerと連携</string>
     <string name="tasker_integration_field_desc">[セキュリティ低下] Taskerがこのアプリを通してアクセスポイントの設定を管理できるようになります。</string>
+    <string name="tasker_integration_info_button">セットアップについて</string>
     <string name="tasker_integration_info">このアプリは、テザリングの開始と停止をそれぞれ行うための2つのインテント ( &lt;tt&gt;dev.shadoe.delta.action.START_SOFT_AP&lt;/tt&gt; と &lt;tt&gt;dev.shadoe.delta.action.STOP_SOFT_AP&lt;/tt&gt;)を提供します。
 この機能は、自動化を望むパワーユーザーに非常に役立つものですが、有効にすると&lt;b&gt;任意のアプリ&lt;/b&gt;がこのアクションをブロードキャストできるようになり（&lt;b&gt;Tasker に限りません&lt;/b&gt;）、悪意のあるアプリによる攻撃の経路を提供してしまう点に注意が必要です。&lt;br&gt;&lt;br&gt; この機能が危険になる可能性のある仮定の一つは、2つのデバイスが同じマルウェアに感染し、LAN経由で通信を試み、Deltaを悪用して目的を達成しようとする場合です。</string>
     <string name="tasker_integration_info_copy_start_action">&lt;tt&gt;START_SOFT_AP&lt;/tt&gt; をコピー</string>
     <string name="tasker_integration_info_copy_stop_action">&lt;tt&gt;STOP_SOFT_AP&lt;/tt&gt; をコピー</string>
     <string name="tasker_integration_info_copy_pkg_name">パッケージ名 をコピー</string>
     <string name="tasker_integration_info_copy_cls_name">クラス名 をコピー</string>
+    <string name="data_export_field_icon">エクスポートアイコン</string>
+    <string name="data_export_field_name">エクスポート/インポート</string>
+    <string name="data_export_field_desc">バックアップするために、アプリのデータをエクスポート/インポートします。</string>
+    <string name="data_export_export_button">エクスポート</string>
+    <string name="data_export_import_button">インポート</string>
+    <string name="export_success">エクスポートに成功しました。</string>
+    <string name="export_failed">エクスポートに失敗しました。</string>
+    <string name="restart_required">再起動してください</string>
     <string name="restart_required_import_success_desc">データベースのインポートに成功しました。設定を有効化するにはアプリの再起動が必要です。</string>
+    <string name="restart_app">再起動</string>
+    <string name="import_failed">インポートに失敗しました。</string>
+    <string name="cancel_button">キャンセル</string>
+    <string name="save_button">保存</string>
+    <string name="save_icon">アイコンを保存</string>
     <string name="passphrase_empty_warning">パスワードを入力。</string>
     <string name="save_changes_failed_warning">設定を更新できませんでした。</string>
     <string name="save_changes_succeeded">設定が更新されました。</string>
     <!-- dev.shadoe.delta.setup -->
+    <string name="setup_title">アプリをセットアップ</string>
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
+    <string name="app_icon">アプリアイコン</string>
+    <string name="app_tagline">テザリング設定、解放。</string>
+    <string name="setup_start_button">セットアップ開始 ＞</string>
     <string name="setup_note">機能するには Shizuku や root 権限が必要です。</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
     <string name="shizuku_connected_desc">Shizuku に接続しました。セットアップを続けてください！</string>
+    <string name="setup_continue_button">セットアップを続ける</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotConnected -->
     <string name="shizuku_not_connected_desc">このアプリは Android SDK にいないシステムAPIを利用するため Shizuku アプリが必要です。</string>
+    <string name="shizuku_grant_access">アクセスを許可</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotInstalled -->
     <string name="shizuku_not_installed">Shizuku がインストールされていません。</string>
     <string name="github">GitHub</string>
+    <string name="install_from_icon">Install fromアイコン</string>
     <string name="play_store">Play ストア</string>
     <!-- dev.shadoe.delta.setup.components.ShizukuNotRunning -->
     <string name="shizuku_not_running">Shizuku が起動していません。</string>
+    <string name="shizuku_start">Shizukuを開始</string>
     <!-- dev.shadoe.delta.setup.CrashHandlerSetupScreen -->
+    <string name="crash_report_setup_subtitle">クラッシュレポートをセットアップ。</string>
     <string name="crash_report_setup_desc">アプリがクラッシュしたときに、エラーログを通知でお知らせするには、通知の許可が必要です。</string>
     <string name="crash_report_setup_grant_perm">権限を付与</string>
     <string name="crash_report_setup_done">権限が付与されました✅</string>
+    <string name="setup_finish_button">セットアップ完了</string>
     <!-- dev.shadoe.delta.setup.ShizukuSetupScreen -->
+    <string name="shizuku_icon">Shizukuのアイコン</string>
+    <string name="shizuku_setup_title">Shizuku</string>
     <string name="shizuku_setup_not_installed">インストールしてません。</string>
     <string name="shizuku_setup_not_running">実行してません。</string>
     <string name="shizuku_setup_not_connected">繋がってません。</string>
