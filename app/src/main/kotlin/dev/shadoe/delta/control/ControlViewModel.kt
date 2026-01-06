@@ -43,19 +43,21 @@ constructor(
     softApBlocklistManager.unblockDevices(devices)
 
   fun applyPreset(preset: Preset) =
-    softApController.updateSoftApConfiguration(preset.run {
-      SoftApConfiguration(
-        ssid = ssid,
-        passphrase = passphrase,
-        securityType = securityType,
-        macRandomizationSetting = macRandomizationSetting,
-        isHidden = isHidden,
-        speedType = speedType,
-        blockedDevices = blockedDevices,
-        allowedClients = allowedClients,
-        isAutoShutdownEnabled = isAutoShutdownEnabled,
-        autoShutdownTimeout = autoShutdownTimeout,
-        maxClientLimit = maxClientLimit,
-      )
-    })
+    softApController.updateSoftApConfiguration(
+      preset.run {
+        SoftApConfiguration(
+          ssid = ssid,
+          passphrase = passphrase,
+          securityType = securityType,
+          macRandomizationSetting = macRandomizationSetting,
+          isHidden = isHidden,
+          speedType = speedType,
+          blockedDevices = blockedDevices,
+          allowedClients = allowedClients,
+          isAutoShutdownEnabled = isAutoShutdownEnabled,
+          autoShutdownTimeout = autoShutdownTimeout,
+          maxClientLimit = maxClientLimit,
+        )
+      }
+    )
 }

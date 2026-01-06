@@ -118,7 +118,7 @@ fun ControlScreen(
         applyPreset = {
           vm.applyPreset(it)
           onShowSnackbar(presetAppliedSnackbar)
-        }
+        },
       )
     }
     if (supportsBlocklist) {

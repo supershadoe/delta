@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
 import dev.shadoe.delta.data.database.models.Preset
 
-
 internal fun LazyListScope.presetsComponent(
   presets: List<Preset>,
   applyPreset: (Preset) -> Unit,
@@ -45,10 +44,7 @@ internal fun LazyListScope.presetsComponent(
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      PresetComponent(
-        it.presetName,
-        applyPreset = { applyPreset(it) }
-      )
+      PresetComponent(it.presetName, applyPreset = { applyPreset(it) })
     }
   }
 }

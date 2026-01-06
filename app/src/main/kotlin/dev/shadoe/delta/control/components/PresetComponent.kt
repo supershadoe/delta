@@ -26,15 +26,12 @@ fun PresetComponent(
       modifier.then(Modifier.padding(horizontal = 16.dp, vertical = 4.dp)),
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    Column(modifier = Modifier.weight(1f)) {
-      Text(text = presetName)
-    }
+    Column(modifier = Modifier.weight(1f)) { Text(text = presetName) }
     Row {
       IconButton(onClick = applyPreset) {
         Icon(
           imageVector = Icons.Rounded.SaveAlt,
-          contentDescription =
-            stringResource(R.string.preset_apply_button),
+          contentDescription = stringResource(R.string.preset_apply_button),
         )
       }
     }
