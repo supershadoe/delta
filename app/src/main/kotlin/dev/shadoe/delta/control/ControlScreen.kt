@@ -24,10 +24,13 @@ import dev.shadoe.delta.control.components.BlocklistComponentActions
 import dev.shadoe.delta.control.components.BlocklistComponentState
 import dev.shadoe.delta.control.components.ConnectedClientsListActions
 import dev.shadoe.delta.control.components.ConnectedClientsListState
+import dev.shadoe.delta.control.components.PresetConfirmDialog
 import dev.shadoe.delta.control.components.SoftApControl
 import dev.shadoe.delta.control.components.SoftApControlViewModel
 import dev.shadoe.delta.control.components.blocklistComponent
 import dev.shadoe.delta.control.components.connectedClientsList
+import dev.shadoe.delta.control.components.presetsComponent
+import dev.shadoe.delta.data.database.models.Preset
 
 @Composable
 fun ControlScreen(
@@ -36,6 +39,8 @@ fun ControlScreen(
   vm: ControlViewModel = viewModel(),
 ) {
   var isBlocklistShown by remember { mutableStateOf(false) }
+  var isPresetsListShown by remember { mutableStateOf(false) }
+  var presetToApply by remember { mutableStateOf<Preset?>(null) }
   var devicesToBlock by
     remember(isBlocklistShown) { mutableStateOf(setOf<TetheredClient>()) }
   var devicesToUnblock by
@@ -46,6 +51,7 @@ fun ControlScreen(
   val tetheredClients by vm.connectedClients.collectAsState(listOf())
   val blockedClients by vm.blockedClients.collectAsState(listOf())
   val supportsBlocklist by vm.supportsBlocklist.collectAsState(false)
+  val presets by vm.presets.collectAsState(listOf())
 
   val featureNotSupportedSnackbar =
     object : SnackbarVisuals {
@@ -64,6 +70,13 @@ fun ControlScreen(
   val clientsUnblockedSnackbar =
     object : SnackbarVisuals {
       override val message = stringResource(R.string.blocklist_unblocked)
+      override val duration = SnackbarDuration.Short
+      override val withDismissAction = true
+      override val actionLabel = null
+    }
+  val presetAppliedSnackbar =
+    object : SnackbarVisuals {
+      override val message = stringResource(R.string.preset_applied)
       override val duration = SnackbarDuration.Short
       override val withDismissAction = true
       override val actionLabel = null
@@ -103,6 +116,12 @@ fun ControlScreen(
           ),
       )
     }
+    presetsComponent(
+      isPresetsShown = isPresetsListShown,
+      presets = presets,
+      applyPreset = { presetToApply = it },
+      onPresetsListToggled = { isPresetsListShown = !isPresetsListShown },
+    )
     if (supportsBlocklist) {
       blocklistComponent(
         state =
@@ -124,5 +143,17 @@ fun ControlScreen(
           ),
       )
     }
+  }
+
+  presetToApply?.let { it1 ->
+    PresetConfirmDialog(
+      preset = it1,
+      onApply = {
+        vm.applyPreset(it)
+        presetToApply = null
+        onShowSnackbar(presetAppliedSnackbar)
+      },
+      onDismiss = { presetToApply = null },
+    )
   }
 }

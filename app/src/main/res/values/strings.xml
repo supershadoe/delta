@@ -215,4 +215,7 @@
     <string name="shizuku_setup_not_running">Not running.</string>
     <string name="shizuku_setup_not_connected">Not connected.</string>
     <string name="shizuku_setup_connected">Connected ✅</string>
+    <string name="preset_applied">Preset applied.</string>
+    <string name="preset_confirm_title">Apply %s</string>
+    <string name="preset_confirm_body">Are you sure you want to apply this preset? Hotspot will be restarted if running.</string>
 </resources>
