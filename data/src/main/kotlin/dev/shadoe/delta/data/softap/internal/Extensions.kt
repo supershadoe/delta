@@ -99,15 +99,11 @@ internal object Extensions {
         when (speedType) {
           SoftApSpeedType.BAND_6GHZ -> {
             setBand(@SuppressLint("WrongConstant") band2To6)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-              setBands(
-                intArrayOf(SoftApSpeedType.BAND_2GHZ, band2To5, band2To6)
-              )
-            }
           }
           SoftApSpeedType.BAND_5GHZ -> {
             setBand(@SuppressLint("WrongConstant") band2To5)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+              // FIXME: check isBridgedApConcurrencySupported() on wifimanager
               setBands(intArrayOf(SoftApSpeedType.BAND_2GHZ, band2To5))
             }
           }
