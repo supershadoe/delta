@@ -40,9 +40,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -60,6 +60,7 @@ import dev.shadoe.delta.settings.components.FrequencyBandField
 import dev.shadoe.delta.settings.components.HiddenHotspotField
 import dev.shadoe.delta.settings.components.MacRandomizationField
 import dev.shadoe.delta.settings.components.MaxClientLimitField
+import dev.shadoe.delta.settings.components.OpenSystemSettingsField
 import dev.shadoe.delta.settings.components.PassphraseField
 import dev.shadoe.delta.settings.components.PresetField
 import dev.shadoe.delta.settings.components.PresetSaveDialog
@@ -106,7 +107,7 @@ fun SettingsScreen(
 ) {
   val context = LocalContext.current
   val focusManager = LocalFocusManager.current
-  val isBigScreen = LocalWindowInfo.current.containerSize.width >= 700
+  val isBigScreen = LocalConfiguration.current.screenWidthDp >= 700
   @OptIn(ExperimentalMaterial3Api::class)
   val sheetState = rememberModalBottomSheetState()
 
@@ -377,6 +378,13 @@ fun SettingsScreen(
             onImportData = {
               pickImportFileLauncher.launch(arrayOf("application/zip"))
             },
+          )
+        }
+      }
+      item {
+        FadeInExpanded(isAdvancedSettingsEnabled) {
+          OpenSystemSettingsField(
+            onOpenSettings = { openSystemSettings(context, isBigScreen) },
           )
         }
       }
