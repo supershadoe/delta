@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.ApplicationExtension
 import delta.buildsrc.readSigningConfig
 import delta.buildsrc.versionConfig
 
@@ -12,7 +13,7 @@ plugins {
   id("delta.lint.kts")
 }
 
-android {
+configure<ApplicationExtension> {
   namespace = "dev.shadoe.delta"
   compileSdk = 36
 
@@ -83,8 +84,6 @@ android {
 
   buildFeatures { compose = true }
 
-  java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
-
   packaging {
     resources {
       excludes += "META-INF/LICENSE.md"
@@ -92,6 +91,8 @@ android {
     }
   }
 }
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 
 dependencies {
   compileOnly(project(path = ":system-api-stubs"))

@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.LibraryExtension
+
 plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.serialization)
@@ -9,7 +11,7 @@ plugins {
   id("delta.lint.kts")
 }
 
-android {
+configure<LibraryExtension> {
   namespace = "dev.shadoe.delta.data"
   compileSdk = 36
 
@@ -28,8 +30,6 @@ android {
     }
   }
 
-  java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
-
   testOptions {
     unitTests {
       all {
@@ -39,6 +39,8 @@ android {
     }
   }
 }
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 
 room { schemaDirectory("$projectDir/schema") }
 

@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.tasks.AidlCompile
 
 plugins {
@@ -6,7 +7,7 @@ plugins {
   id("delta.lint.kts")
 }
 
-android {
+configure<LibraryExtension> {
   namespace = "dev.shadoe.systemapistubs"
   compileSdk = 36
   enableKotlin = false
@@ -28,8 +29,8 @@ android {
 
   buildFeatures { aidl = true }
 
-  java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
-
+  // TODO check if we can switch this with a gradle task where we compile
+  //   using aidl ourselves (using androidComponents.sdkComponents.aidl)
   afterEvaluate {
     tasks.withType<AidlCompile>().configureEach {
       doLast {
@@ -47,6 +48,8 @@ android {
     }
   }
 }
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 
 dependencies {
   implementation(libs.androidx.annotation)
