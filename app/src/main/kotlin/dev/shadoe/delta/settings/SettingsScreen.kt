@@ -384,7 +384,7 @@ fun SettingsScreen(
       item {
         FadeInExpanded(isAdvancedSettingsEnabled) {
           OpenSystemSettingsField(
-            onOpenSettings = { openSystemSettings(context, isBigScreen) },
+            onOpenSettings = { openSystemSettings(context, isBigScreen) }
           )
         }
       }

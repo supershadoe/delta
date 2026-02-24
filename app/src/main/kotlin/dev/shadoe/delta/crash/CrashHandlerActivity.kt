@@ -59,7 +59,7 @@ class CrashHandlerActivity : ComponentActivity() {
     """
 
     === end of crash log
-  """
+    """
       .trimIndent()
 
   private fun formatLog(crashLog: String) = "$logHeader$crashLog$logTrailer"

@@ -21,9 +21,7 @@ import androidx.compose.ui.unit.dp
 import dev.shadoe.delta.R
 
 @Composable
-internal fun OpenSystemSettingsField(
-  onOpenSettings: () -> Unit,
-) {
+internal fun OpenSystemSettingsField(onOpenSettings: () -> Unit) {
   Row(
     modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
     verticalAlignment = Alignment.CenterVertically,
