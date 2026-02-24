@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.34.8",
-    "@astrojs/starlight-tailwind": "^4.0.1",
-    "@tailwindcss/vite": "^4.1.12",
-    "astro": "^5.13.5",
-    "sharp": "^0.34.3",
+    "@astrojs/starlight-tailwind": "^4.0.2",
+    "@tailwindcss/vite": "^4.2.1",
+    "astro": "^5.17.3",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "wrangler": "^4.34.0"
+    "wrangler": "^4.68.0"
   }
 }
