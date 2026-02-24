@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm")
+  alias(libs.plugins.kotlin.jvm)
   id("delta.lint.kotlin")
   id("delta.lint.kts")
 }
