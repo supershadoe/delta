@@ -28,6 +28,7 @@ import dev.shadoe.delta.control.components.SoftApControl
 import dev.shadoe.delta.control.components.SoftApControlViewModel
 import dev.shadoe.delta.control.components.blocklistComponent
 import dev.shadoe.delta.control.components.connectedClientsList
+import dev.shadoe.delta.control.components.presetsComponent
 
 @Composable
 fun ControlScreen(
@@ -46,6 +47,7 @@ fun ControlScreen(
   val tetheredClients by vm.connectedClients.collectAsState(listOf())
   val blockedClients by vm.blockedClients.collectAsState(listOf())
   val supportsBlocklist by vm.supportsBlocklist.collectAsState(false)
+  val presets by vm.presets.collectAsState(listOf())
 
   val featureNotSupportedSnackbar =
     object : SnackbarVisuals {
@@ -64,6 +66,13 @@ fun ControlScreen(
   val clientsUnblockedSnackbar =
     object : SnackbarVisuals {
       override val message = stringResource(R.string.blocklist_unblocked)
+      override val duration = SnackbarDuration.Short
+      override val withDismissAction = true
+      override val actionLabel = null
+    }
+  val presetAppliedSnackbar =
+    object : SnackbarVisuals {
+      override val message = stringResource(R.string.preset_applied)
       override val duration = SnackbarDuration.Short
       override val withDismissAction = true
       override val actionLabel = null
@@ -101,6 +110,15 @@ fun ControlScreen(
               onShowSnackbar(clientsBlockedSnackbar)
             },
           ),
+      )
+    }
+    if (enabledState == SoftApEnabledState.WIFI_AP_STATE_DISABLED) {
+      presetsComponent(
+        presets,
+        applyPreset = {
+          vm.applyPreset(it)
+          onShowSnackbar(presetAppliedSnackbar)
+        },
       )
     }
     if (supportsBlocklist) {

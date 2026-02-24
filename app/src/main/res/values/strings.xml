@@ -215,4 +215,5 @@
     <string name="shizuku_setup_not_running">Not running.</string>
     <string name="shizuku_setup_not_connected">Not connected.</string>
     <string name="shizuku_setup_connected">Connected ✅</string>
+    <string name="preset_applied">Preset applied.</string>
 </resources>
