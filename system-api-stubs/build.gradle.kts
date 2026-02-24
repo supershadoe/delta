@@ -9,6 +9,7 @@ plugins {
 android {
   namespace = "dev.shadoe.systemapistubs"
   compileSdk = 36
+  enableKotlin = false
 
   defaultConfig {
     minSdk = 30

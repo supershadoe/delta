@@ -1,28 +1,29 @@
 [versions]
-agp = "8.11.1"
-activityCompose = "1.10.1"
+agp = "9.0.1"
+activityCompose = "1.12.4"
 androidx-annotation = "1.9.1"
-composeBom = "2025.07.00"
-coreKtx = "1.16.0"
+composeBom = "2026.02.00"
+coreKtx = "1.17.0"
 coroutines = "1.10.2"
 espressoCore = "3.7.0"
-graphics-shapes = "1.0.1"
+graphics-shapes = "1.1.0"
 hiddenapibypass = "6.1"
-hilt = "2.57"
-hilt-nav-compose = "1.2.0"
+hilt = "2.59.2"
+hilt-nav-compose = "1.3.0"
 junitx = "1.3.0"
-kotlin = "2.2.0"
-ksp = "2.2.0-2.0.2"
+# locking kotlin to latest gradle-bundled kotlin version
+kotlin = "2.2.21"
+ksp = "2.3.6"
 leakcanary = "2.14"
-lifecycle = "2.9.2"
-mockk = "1.14.5"
-navigation-compose = "2.9.3"
+lifecycle = "2.10.0"
+mockk = "1.14.9"
+navigation-compose = "2.9.7"
 refine = "4.4.0"
-roboelectric = "4.15.1"
-room = "2.7.2"
-serialization-json = "1.9.0"
+roboelectric = "4.16.1"
+room = "2.8.4"
+serialization-json = "1.10.0"
 shizuku = "13.1.5"
-spotless = "7.2.1"
+spotless = "8.2.1"
 
 [libraries]
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
@@ -85,7 +86,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
