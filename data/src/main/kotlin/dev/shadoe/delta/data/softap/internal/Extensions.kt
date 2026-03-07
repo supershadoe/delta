@@ -64,6 +64,13 @@ internal object Extensions {
       isAutoShutdownEnabled = isAutoShutdownEnabled,
       autoShutdownTimeout = shutdownTimeoutMillis,
       maxClientLimit = maxNumberOfClients,
+      channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        // Get channel from channels SparseIntArray using the current band as key
+        val band = bands.max()
+        channels.get(band, 0)
+      } else {
+        @Suppress("DEPRECATION") channel
+      },
     )
 
   fun SoftApConfiguration.toOriginalClass() =
@@ -124,6 +131,11 @@ internal object Extensions {
           setBridgedModeOpportunisticShutdownEnabled(isAutoShutdownEnabled)
         }
         setMaxNumberOfClients(maxClientLimit)
+        
+        // Set channel if specified (channel > 0), otherwise use automatic channel selection
+        if (channel > 0) {
+          setChannel(channel, speedType)
+        }
       }
       .build()
 }

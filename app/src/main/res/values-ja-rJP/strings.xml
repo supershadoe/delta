@@ -103,6 +103,12 @@
     <string name="freq_band_6_GHz_desc">トライバンド モード: 最新テクノロジーで、全ての国で利用出来るとは限りません。</string>
     <string name="freq_band_60_GHz_desc">一般的には使用されていない周波数帯です。通信が可能な範囲が非常に狭いです。</string>
     <string name="freq_band_unknown">不明</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">チャンネルアイコン</string>
+    <string name="channel_field_label">チャンネル</string>
+    <string name="channel_auto">自動</string>
+    <string name="channel_auto_desc">最適なチャンネルを自動選択</string>
+    <string name="channel_manual_desc">チャンネル %d を使用中</string>
     <string name="advanced_settings_label">詳細設定</string>
     <string name="collapse_icon">折りたたむ</string>
     <string name="expand_icon">展開</string>

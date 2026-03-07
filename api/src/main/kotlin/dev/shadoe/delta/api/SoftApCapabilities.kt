@@ -9,4 +9,6 @@ data class SoftApCapabilities(
   val isMacAddressCustomizationSupported: Boolean,
   @BandType val supportedFrequencyBands: List<Int>,
   @SecurityType val supportedSecurityTypes: List<Int>,
+  /** Map of band to list of supported channels. Empty list means all channels are supported. */
+  val supportedChannels: Map<Int, List<Int>>,
 )

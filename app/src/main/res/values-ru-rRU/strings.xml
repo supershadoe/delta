@@ -103,6 +103,12 @@
     <string name="freq_band_6_GHz_desc">Трехдиапазонный режим: Новейшая технология, доступная не во всех странах.</string>
     <string name="freq_band_60_GHz_desc">Не самая популярная частота, очень маленький радиус действия.</string>
     <string name="freq_band_unknown">Неизвестно</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">Значок канала</string>
+    <string name="channel_field_label">Канал</string>
+    <string name="channel_auto">Авто</string>
+    <string name="channel_auto_desc">Автоматически выбирать лучший канал</string>
+    <string name="channel_manual_desc">Используется канал %d</string>
     <string name="advanced_settings_label">Расширенные настройки</string>
     <string name="collapse_icon">Свернуть расширенные настройки</string>
     <string name="expand_icon">Развернуть расширенные настройки</string>

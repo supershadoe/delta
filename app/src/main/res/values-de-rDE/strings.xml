@@ -101,6 +101,12 @@
     <string name="freq_band_6_GHz_desc">Tri-Band-Modus: Neueste Technologie, nicht in allen Ländern verfügbar.</string>
     <string name="freq_band_60_GHz_desc">Kein beliebtes Frequenzband, sehr kurze Reichweite.</string>
     <string name="freq_band_unknown">Unbekannt</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">Kanal-Symbol</string>
+    <string name="channel_field_label">Kanal</string>
+    <string name="channel_auto">Automatisch</string>
+    <string name="channel_auto_desc">Automatisch den besten Kanal wählen</string>
+    <string name="channel_manual_desc">Verwende Kanal %d</string>
     <string name="advanced_settings_label">Erweiterte Einstellungen</string>
     <string name="collapse_icon">Einklappen</string>
     <string name="expand_icon">Erweitern</string>
