@@ -95,6 +95,12 @@ internal class SoftApCallback(
                 querySupportedFrequencyBands(wifiManager)
               },
             supportedSecurityTypes = querySupportedSecurityTypes(capability),
+            supportedChannels =
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                querySupportedChannels(capability)
+              } else {
+                emptyMap()
+              },
           )
         )
       }
@@ -154,6 +160,21 @@ internal class SoftApCallback(
         bands += SoftApSpeedType.BAND_6GHZ
       }
       bands.toList()
+    }
+
+  @RequiresApi(Build.VERSION_CODES.S)
+  private suspend fun querySupportedChannels(
+    capability: SoftApCapability
+  ) =
+    withContext(Dispatchers.Unconfined) {
+      val channels2g = capability.getSupportedChannelList(SoftApSpeedType.BAND_2GHZ).toList()
+      val channels5g = capability.getSupportedChannelList(SoftApSpeedType.BAND_5GHZ).toList()
+      val channels6g = capability.getSupportedChannelList(SoftApSpeedType.BAND_6GHZ).toList()
+      mapOf(
+        SoftApSpeedType.BAND_2GHZ to channels2g,
+        SoftApSpeedType.BAND_5GHZ to channels5g,
+        SoftApSpeedType.BAND_6GHZ to channels6g,
+      )
     }
 
   @RequiresApi(Build.VERSION_CODES.S)

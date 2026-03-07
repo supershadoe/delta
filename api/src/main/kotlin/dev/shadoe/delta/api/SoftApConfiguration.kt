@@ -14,4 +14,6 @@ data class SoftApConfiguration(
   /** Timeout in milliseconds for auto shutdown. */
   val autoShutdownTimeout: Long,
   val maxClientLimit: Int,
+  /** Channel number, 0 means automatic channel selection */
+  val channel: Int,
 )

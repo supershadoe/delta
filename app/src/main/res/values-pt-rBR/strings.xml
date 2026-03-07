@@ -103,6 +103,12 @@
     <string name="freq_band_6_GHz_desc">Modo tribanda: tecnologia de última geração, não disponível em todos os países.</string>
     <string name="freq_band_60_GHz_desc">Não é uma faixa de frequência popular, tem alcance muito curto.</string>
     <string name="freq_band_unknown">Desconhecido</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">Ícone de canal</string>
+    <string name="channel_field_label">Canal</string>
+    <string name="channel_auto">Automático</string>
+    <string name="channel_auto_desc">Selecionar automaticamente o melhor canal</string>
+    <string name="channel_manual_desc">Usando canal %d</string>
     <string name="advanced_settings_label">Configurações avançadas</string>
     <string name="collapse_icon">Colapsar</string>
     <string name="expand_icon">Expandir</string>

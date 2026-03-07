@@ -103,6 +103,12 @@
     <string name="freq_band_6_GHz_desc">Üç bant modu: En son teknoloji, tüm ülkelerde mevcut değil.</string>
     <string name="freq_band_60_GHz_desc">Popüler bir frekans bandı değil, çok kısa menzilli.</string>
     <string name="freq_band_unknown">Bilinmiyor</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">Kanal simgesi</string>
+    <string name="channel_field_label">Kanal</string>
+    <string name="channel_auto">Otomatik</string>
+    <string name="channel_auto_desc">En iyi kanalı otomatik olarak seç</string>
+    <string name="channel_manual_desc">Kanal %d kullanılıyor</string>
     <string name="advanced_settings_label">Gelişmiş ayarlar</string>
     <string name="collapse_icon">Daralt</string>
     <string name="expand_icon">Genişlet</string>

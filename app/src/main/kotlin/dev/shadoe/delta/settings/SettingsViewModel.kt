@@ -116,6 +116,8 @@ constructor(
     _config.value =
       _config.value.copy(
         speedType = speedType,
+        // Reset channel when changing bands (channel numbers differ per band)
+        channel = 0,
         securityType =
           if (shouldSwitchToSAE) {
             SoftApSecurityType.SECURITY_TYPE_WPA3_SAE
@@ -123,6 +125,10 @@ constructor(
             _config.value.securityType
           },
       )
+  }
+
+  fun updateChannel(channel: Int) {
+    _config.value = _config.value.copy(channel = channel)
   }
 
   fun updateIsHidden(isHidden: Boolean) {
@@ -173,6 +179,7 @@ constructor(
               isAutoShutdownEnabled = isAutoShutdownEnabled,
               autoShutdownTimeout = autoShutdownTimeout,
               maxClientLimit = maxClientLimit,
+              channel = channel,
               presetName = name,
               timestamp = Clock.System.now().toEpochMilliseconds(),
             )
@@ -207,6 +214,7 @@ constructor(
           isAutoShutdownEnabled = isAutoShutdownEnabled,
           autoShutdownTimeout = autoShutdownTimeout,
           maxClientLimit = maxClientLimit,
+          channel = channel,
         )
       }
     }

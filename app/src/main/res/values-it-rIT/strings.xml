@@ -28,6 +28,12 @@
     <string name="blocklist_unblocked">Dispositivi rimossi dalla lista bloccati.</string>
     <!-- dev.shadoe.delta.crash -->
     <string name="crash_notif_action">Segnala</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">Icona canale</string>
+    <string name="channel_field_label">Canale</string>
+    <string name="channel_auto">Automatico</string>
+    <string name="channel_auto_desc">Seleziona automaticamente il miglior canale</string>
+    <string name="channel_manual_desc">Utilizzando canale %d</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
     <string name="crash_notif_title">App arrestata inaspettatamente</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
