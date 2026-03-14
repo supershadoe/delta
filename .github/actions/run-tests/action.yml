@@ -17,4 +17,4 @@ runs:
         cache-encryption-key: ${{ inputs.cache-encryption-key || '' }}
     - name: Run unit tests
       shell: bash
-      run: ./gradlew testReleaseUnitTest
+      run: ./gradlew test
