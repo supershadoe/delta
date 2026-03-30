@@ -2,7 +2,7 @@
 agp = "9.0.1"
 activityCompose = "1.12.4"
 androidx-annotation = "1.9.1"
-composeBom = "2026.02.00"
+composeBom = "2026.03.01"
 coreKtx = "1.17.0"
 coroutines = "1.10.2"
 espressoCore = "3.7.0"
