@@ -23,7 +23,7 @@ roboelectric = "4.16.1"
 room = "2.8.4"
 serialization-json = "1.10.0"
 shizuku = "13.1.5"
-spotless = "8.2.1"
+spotless = "8.4.0"
 
 [libraries]
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
