@@ -36,6 +36,7 @@ data class Preset(
   @ColumnInfo(defaultValue = SoftApAutoShutdownTimeout.DEFAULT.toString())
   val autoShutdownTimeout: Long,
   @ColumnInfo(defaultValue = "0") val maxClientLimit: Int,
+  @ColumnInfo(defaultValue = "0") val channel: Int,
   @ColumnInfo(defaultValue = "") val presetName: String,
   @ColumnInfo(defaultValue = "0") val timestamp: Long,
 )

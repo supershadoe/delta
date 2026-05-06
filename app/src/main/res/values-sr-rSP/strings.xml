@@ -101,6 +101,12 @@
     <string name="freq_band_6_GHz_desc">Način rada s 3 antene: Najnovija tehnologija, nije podržana u svim državama.</string>
     <string name="freq_band_60_GHz_desc">Nepopularna frekvencija, veoma mala distanca rada.</string>
     <string name="freq_band_unknown">Nepoznato</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">Ikona kanala</string>
+    <string name="channel_field_label">Kanal</string>
+    <string name="channel_auto">Automatski</string>
+    <string name="channel_auto_desc">Automatski odaberi najbolji kanal</string>
+    <string name="channel_manual_desc">Koristi kanal %d</string>
     <string name="advanced_settings_label">Napredna podešavanja</string>
     <string name="collapse_icon">Skupi</string>
     <string name="expand_icon">Otvori</string>

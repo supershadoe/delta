@@ -27,13 +27,14 @@ class SoftApStateStore @Inject constructor() {
       SoftApStatus(
         enabledState = SoftApEnabledState.WIFI_AP_STATE_DISABLED,
         tetheredClients = emptyList(),
-        capabilities =
+          capabilities =
           SoftApCapabilities(
             maxSupportedClients = 0,
             clientForceDisconnectSupported = false,
             isMacAddressCustomizationSupported = false,
             supportedFrequencyBands = emptyList(),
             supportedSecurityTypes = emptyList(),
+            supportedChannels = emptyMap(),
           ),
         isSoftApSupported = true,
       )
@@ -53,6 +54,7 @@ class SoftApStateStore @Inject constructor() {
         isAutoShutdownEnabled = false,
         autoShutdownTimeout = SoftApAutoShutdownTimeout.DEFAULT,
         maxClientLimit = 0,
+        channel = 0,
       )
     )
 

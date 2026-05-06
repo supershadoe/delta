@@ -110,6 +110,12 @@
     <string name="freq_band_60_GHz" translatable="false">60 GHz</string>
     <string name="freq_band_60_GHz_desc">Not a popular frequency band, very short range.</string>
     <string name="freq_band_unknown">Unknown</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">Channel icon</string>
+    <string name="channel_field_label">Channel</string>
+    <string name="channel_auto">Auto</string>
+    <string name="channel_auto_desc">Automatically select the best channel</string>
+    <string name="channel_manual_desc">Using channel %d</string>
     <string name="advanced_settings_label">Advanced settings</string>
     <string name="collapse_icon">Collapse</string>
     <string name="expand_icon">Expand</string>

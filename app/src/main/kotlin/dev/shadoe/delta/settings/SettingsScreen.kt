@@ -55,6 +55,7 @@ import dev.shadoe.delta.common.components.FoldableWrapper
 import dev.shadoe.delta.settings.components.AppRestartDialog
 import dev.shadoe.delta.settings.components.AutoShutDownTimeOutField
 import dev.shadoe.delta.settings.components.AutoShutdownField
+import dev.shadoe.delta.settings.components.ChannelField
 import dev.shadoe.delta.settings.components.DataExportField
 import dev.shadoe.delta.settings.components.FrequencyBandField
 import dev.shadoe.delta.settings.components.HiddenHotspotField
@@ -294,6 +295,14 @@ fun SettingsScreen(
           frequencyBand = config.speedType,
           supportedBands = status.capabilities.supportedFrequencyBands,
           onBandChange = { vm.updateSpeedType(it) },
+        )
+      }
+      item {
+        ChannelField(
+          bandType = config.speedType,
+          currentChannel = config.channel,
+          supportedChannels = status.capabilities.supportedChannels[config.speedType] ?: emptyList(),
+          onChannelChange = { vm.updateChannel(it) },
         )
       }
       item {

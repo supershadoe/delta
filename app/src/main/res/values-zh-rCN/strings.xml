@@ -103,6 +103,12 @@
     <string name="freq_band_6_GHz_desc">三频模式：最新技术，并非所有国家/地区都可用。</string>
     <string name="freq_band_60_GHz_desc">不是一个流行的频段，范围非常短。</string>
     <string name="freq_band_unknown">未知</string>
+    <!-- dev.shadoe.delta.settings.components.ChannelField -->
+    <string name="channel_field_icon">信道图标</string>
+    <string name="channel_field_label">信道</string>
+    <string name="channel_auto">自动</string>
+    <string name="channel_auto_desc">自动选择最佳信道</string>
+    <string name="channel_manual_desc">使用信道 %d</string>
     <string name="advanced_settings_label">高级设置</string>
     <string name="collapse_icon">折叠</string>
     <string name="expand_icon">展开</string>
