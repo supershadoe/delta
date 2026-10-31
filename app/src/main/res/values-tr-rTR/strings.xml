@@ -208,4 +208,7 @@
     <string name="shizuku_setup_not_running">Çalışmıyor.</string>
     <string name="shizuku_setup_not_connected">Bağlı değil.</string>
     <string name="shizuku_setup_connected">Bağlandı ✅</string>
+    <string name="preset_applied">Ön ayar uygulandı.</string>
+    <string name="preset_confirm_title">%s uygula</string>
+    <string name="preset_confirm_body">Bu ön ayarı uygulamak istediğinizden emin misiniz? Hotspot çalışıyorsa yeniden başlatılacaktır.</string>
 </resources>
