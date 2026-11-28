@@ -12,6 +12,7 @@
     <string name="soft_ap_failure_notif_title">Impossibile avviare l\'hotspot.</string>
     <string name="soft_ap_failure_notif_content">Shizuku è in esecuzione e connesso all\'app?</string>
     <string name="soft_ap_failure_notif_channel_name">Notifiche di errore</string>
+    <string name="soft_ap_failure_notif_channel_desc">Notifica messaggi per eventuali errori nell\'app.</string>
     <!-- dev.shadoe.delta.SoftApTile -->
     <string name="tile_title">Hotspot</string>
     <string name="tile_disabling">Spegnendo…</string>
@@ -30,14 +31,71 @@
     <string name="crash_notif_action">Segnala</string>
     <!-- dev.shadoe.delta.crash.CrashHandler -->
     <string name="crash_notif_title">App arrestata inaspettatamente</string>
+    <string name="crash_notif_sub_text">Gestore crash applicazione</string>
+    <string name="crash_notif_content">L\'applicazione è andata in crash a causa di un errore inatteso.</string>
+    <string name="crash_notif_channel_name">Canale dei crash</string>
+    <string name="crash_notif_channel_desc">Segnala alcuni errori inattesi con i crash log.</string>
     <!-- dev.shadoe.delta.crash.CrashHandlerActivity -->
+    <string name="crash_report_title">Crash Log</string>
+    <string name="crash_report_desc">L\'applicazione è andata in crash :(</string>
+    <string name="crash_report_no_log">Nessuna informazione sul crash disponibile</string>
     <!-- dev.shadoe.delta.control.buttons.ControlButton -->
+    <string name="control_button_loading">Caricamento</string>
+    <string name="control_button_stop">Interrompi hotspot</string>
+    <string name="control_button_start">Avvia hotspot</string>
     <!-- dev.shadoe.delta.control.buttons.FailedButton -->
+    <string name="failed_button">Hotspot non riuscito: impossibile avviare</string>
     <!-- dev.shadoe.delta.control.components.ConnectedDevicesList -->
+    <string name="connected_devices">Connessi</string>
+    <string name="no_client_hostname">(dispositivo non identificato: nessun nome)</string>
+    <string name="ip_not_allocated">(indirizzo IP non ancora assegnato)</string>
+    <string name="block_button">BLOCCA</string>
     <!-- dev.shadoe.delta.control.components.PassphraseDisplay -->
+    <string name="no_passphrase">(nessuno)</string>
+    <string name="passphrase_hidden">(nascosta)</string>
+    <string name="passphrase_show">Mostra passphrase</string>
+    <string name="passphrase_hide">Nascondi passphrase</string>
     <!-- dev.shadoe.delta.control.ControlScreen -->
+    <string name="triggered_debug_screen">Schermata di debug sbloccata</string>
+    <string name="hotspot_not_supported">Hotspot non supportato da questo dispositivo.</string>
+    <string name="close_button">CHIUDI</string>
+    <string name="qr_code_button">Visualizza il codice QR</string>
+    <string name="no_ssid">nessun ssid</string>
+    <string name="connected_devices_button">Dispositivi Connessi (%d)</string>
+    <string name="feature_not_supported">Funzionalità non supportata sul tuo dispositivo.</string>
+    <string name="hotspot_not_enabled">L\'hotspot non è ancora attivo.</string>
+    <string name="hotspot_enable_action">ABILITA</string>
+    <string name="edit_button">Modifica</string>
+    <string name="copy_button">Copia</string>
     <!-- dev.shadoe.delta.debug.DebugActivity -->
+    <string name="debug_title">Schermata di debug</string>
+    <string name="debug_trigger_crash">Innesca un crash</string>
     <!-- dev.shadoe.delta.settings.SettingsScreen -->
+    <string name="settings">Impostazioni</string>
+    <string name="error_icon">Errore</string>
+    <string name="warning_icon">Avviso</string>
+    <string name="settings_warn_samsung">In molti modelli Samsung, le impostazioni avanzate e l\'arresto automatico non possono essere controllate da Delta. Queste impostazioni devono essere configurate nell\'app delle impostazioni di sistema.</string>
+    <string name="open_system_settings">Apri app impostazioni</string>
+    <string name="settings_desc">Configura tutti i valori sottostanti secondo le tue preferenze :)</string>
+    <string name="ssid_field_icon">Icona nome hotspot</string>
+    <string name="ssid_field_label">Nome hotspot</string>
+    <string name="ssid_too_short_warning">Il nome dell\'hotspot è troppo breve.</string>
+    <string name="ssid_too_long_warning">Il nome dell\'hotspot è troppo lungo.</string>
+    <string name="security_proto_field_icon">Icona tipo di sicurezza</string>
+    <string name="security_proto_field_label">Tipo di sicurezza</string>
+    <string name="security_proto_open">Nessuno</string>
+    <string name="security_proto_open_desc">Nessuna sicurezza, chiunque può connettersi senza una passphrase.</string>
+    <string name="security_proto_wpa2_psk_desc">Offre la massima compatibilità con la maggior parte dei dispositivi.</string>
+    <string name="security_proto_wpa3_sae_transition_desc">Utilizza WPA3 ma scende a WPA2 per i dispositivi più vecchi.</string>
+    <string name="security_proto_wpa3_sae_desc">Ultimo protocollo di sicurezza, generalmente supportato da dispositivi rilasciati dopo il 2020.</string>
+    <string name="preset_saved_on">Salvato il %s</string>
+    <string name="preset_delete_button">Elimina</string>
+    <string name="preset_apply_button">Applica</string>
+    <string name="tile_field_icon">Icona tile</string>
+    <string name="tile_field_label">Aggiungere la tile di impostazione rapida?</string>
+    <string name="tile_field_desc">Aggiunge una tile nelle impostazioni rapide che aiuta a gestire facilmente l\'hotspot senza avviare questa app.</string>
+    <string name="tile_add_button">Aggiungi tile</string>
+    <string name="tile_added">Tile aggiunta con successo!</string>
     <!-- dev.shadoe.delta.setup -->
     <!-- dev.shadoe.delta.setup.FirstUseScreen -->
     <!-- dev.shadoe.delta.setup.components.ShizukuConnected -->
