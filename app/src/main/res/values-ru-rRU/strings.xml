@@ -208,4 +208,7 @@
     <string name="shizuku_setup_not_running">Не запущен.</string>
     <string name="shizuku_setup_not_connected">Не подключено.</string>
     <string name="shizuku_setup_connected">Подключено ✅</string>
+    <string name="preset_applied">Профиль применен.</string>
+    <string name="preset_confirm_title">Применить %s</string>
+    <string name="preset_confirm_body">Вы уверены, что хотите применить этот профиль? Точка доступа будет перезапущена.</string>
 </resources>
